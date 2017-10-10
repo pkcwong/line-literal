@@ -19,30 +19,18 @@ import java.util.concurrent.ExecutionException;
 public class KitchenSinkController {
 
 	@Autowired
-	private LineMessagingClient lineMessagingClient;
+	private static LineMessagingClient lineMessagingClient;
 
 	@EventMapping
 	public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
 		TextHandler.handle(lineMessagingClient, event);
 	}
 
-	private void reply(String replyToken, Message message) {
-		this.reply(replyToken, Collections.singletonList(message));
+	public static void reply(String replyToken, Message message) {
+		KitchenSinkController.reply(replyToken, Collections.singletonList(message));
 	}
 
-	private void reply(String replyToken, List<Message> messages) {
-		try {
-			lineMessagingClient.replyMessage(new ReplyMessage(replyToken, messages)).get();
-		} catch (InterruptedException | ExecutionException e) {
-			throw  new RuntimeException(e);
-		}
-	}
-
-	public static void reply(LineMessagingClient lineMessagingClient, String replyToken, Message message) {
-		KitchenSinkController.reply(lineMessagingClient, replyToken, Collections.singletonList(message));
-	}
-
-	public static void reply(LineMessagingClient lineMessagingClient, String replyToken, List<Message> messages) {
+	public static void reply(String replyToken, List<Message> messages) {
 		try {
 			lineMessagingClient.replyMessage(new ReplyMessage(replyToken, messages)).get();
 		} catch (InterruptedException | ExecutionException e) {
