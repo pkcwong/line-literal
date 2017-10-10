@@ -5,7 +5,6 @@ import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.Message;
-import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import com.pwned.line.handler.TextHandler;
@@ -23,7 +22,7 @@ public class KitchenSinkController {
 
 	@EventMapping
 	public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
-		TextHandler.handle(lineMessagingClient, event);
+		TextHandler.handle(event);
 	}
 
 	public static void reply(String replyToken, Message message) {
@@ -34,7 +33,7 @@ public class KitchenSinkController {
 		try {
 			lineMessagingClient.replyMessage(new ReplyMessage(replyToken, messages)).get();
 		} catch (InterruptedException | ExecutionException e) {
-			throw  new RuntimeException(e);
+			throw new RuntimeException(e);
 		}
 	}
 
