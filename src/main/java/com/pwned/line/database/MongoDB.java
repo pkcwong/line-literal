@@ -19,11 +19,21 @@ public class MongoDB {
 		this.db = this.mongo.getDatabase(database);
 	}
 
+	/***
+	 * Inserts a document into mongodb by Map.
+	 * @param collection collection name
+	 * @param map data
+	 */
 	public void insert(String collection, Map<String, Object> map) {
 		Document doc = new Document(map);
 		this.db.getCollection(collection).insertOne(doc);
 	}
 
+	/***
+	 * Inserts a document into mongodb by JSON.
+	 * @param collection collection name
+	 * @param json data
+	 */
 	public void insert(String collection, JSONObject json) {
 		Document doc = Document.parse(json.toString());
 		this.db.getCollection(collection).insertOne(doc);
