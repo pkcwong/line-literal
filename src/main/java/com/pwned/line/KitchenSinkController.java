@@ -1,6 +1,7 @@
 package com.pwned.line;
 
-import com.linecorp.bot.client.LineMessagingClient;
+import com.linecorp.bot.client.LineMessagingServiceBuilder;
+import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
@@ -8,44 +9,42 @@ import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 import com.pwned.line.handler.TextHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
+import java.io.IOException;
 
 @LineMessageHandler
 public class KitchenSinkController {
 
-	@Autowired
-	private LineMessagingClient lineMessagingClient;
-
 	@EventMapping
-	public void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
-		TextHandler.handle(lineMessagingClient, event);
+	public static void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
+		TextHandler.handle(event);
 	}
 
-	private void reply(String replyToken, Message message) {
-		this.reply(replyToken, Collections.singletonList(message));
-	}
-
-	private void reply(String replyToken, List<Message> messages) {
+	/***
+	 * Respond to events from users, groups, and rooms.
+	 * @param replyToken replyToken received via webhook
+	 * @param message messages
+	 */
+	public static void reply(String replyToken, Message message) {
 		try {
-			lineMessagingClient.replyMessage(new ReplyMessage(replyToken, messages)).get();
-		} catch (InterruptedException | ExecutionException e) {
-			throw  new RuntimeException(e);
+			ReplyMessage replyMessage = new ReplyMessage(replyToken, message);
+			LineMessagingServiceBuilder.create(System.getenv("LINE_BOT_CHANNEL_TOKEN")).build().replyMessage(replyMessage).execute();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
-	public static void reply(LineMessagingClient lineMessagingClient, String replyToken, Message message) {
-		KitchenSinkController.reply(lineMessagingClient, replyToken, Collections.singletonList(message));
-	}
-
-	public static void reply(LineMessagingClient lineMessagingClient, String replyToken, List<Message> messages) {
+	/***
+	 * Send messages to a user, group, or room at any time.
+	 * @param id id of the receiver
+	 * @param message messages
+	 */
+	public static void push(String id, Message message) {
 		try {
-			lineMessagingClient.replyMessage(new ReplyMessage(replyToken, messages)).get();
-		} catch (InterruptedException | ExecutionException e) {
-			throw  new RuntimeException(e);
+			PushMessage pushMessage = new PushMessage(id, message);
+			LineMessagingServiceBuilder.create(System.getenv("LINE_BOT_CHANNEL_TOKEN")).build().pushMessage(pushMessage).execute();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

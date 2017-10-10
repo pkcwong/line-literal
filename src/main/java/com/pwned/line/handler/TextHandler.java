@@ -1,20 +1,18 @@
 package com.pwned.line.handler;
 
-import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
-import com.pwned.line.interpreter.ApiAI;
+import com.linecorp.bot.model.message.TextMessage;
+import com.pwned.line.KitchenSinkController;
 
 import java.net.URISyntaxException;
-import java.sql.SQLException;
 
 public class TextHandler {
 
-	public static void handle(LineMessagingClient lineMessagingClient, MessageEvent<TextMessageContent> event) throws URISyntaxException, SQLException {
-		String resolve = null;
+	public static void handle(MessageEvent<TextMessageContent> event) throws URISyntaxException {
 		TextMessageContent message = event.getMessage();
-		resolve = message.getText();
-		ApiAI.request(resolve);
+		String incoming = message.getText();
+		KitchenSinkController.reply(event.getReplyToken(), new TextMessage(incoming));
 	}
 
 }
