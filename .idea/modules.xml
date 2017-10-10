@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/line-literal.iml" filepath="$PROJECT_DIR$/.idea/modules/line-literal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/line-literal.iml" filepath="$PROJECT_DIR$/line-literal.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/line-literal_main.iml" filepath="$PROJECT_DIR$/.idea/modules/line-literal_main.iml" group="line-literal" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/line-literal_test.iml" filepath="$PROJECT_DIR$/.idea/modules/line-literal_test.iml" group="line-literal" />
     </modules>
