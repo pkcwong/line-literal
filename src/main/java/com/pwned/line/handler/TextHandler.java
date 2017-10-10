@@ -19,7 +19,7 @@ public class TextHandler {
 		TextMessageContent message = event.getMessage();
 		String incoming = message.getText();
 
-		MongoDB mongo = new MongoDB("mongodb://admin:root@ds115045.mlab.com:15045/heroku_0s8hc3hf");
+		MongoDB mongo = new MongoDB("mongodb://user:password@ds115045.mlab.com:15045/heroku_0s8hc3hf");
 		MongoDatabase db = mongo.selectDB("log");
 		MongoCollection<Document> collection = db.getCollection("log");
 		Map<String, Object> data = new HashMap<>();
