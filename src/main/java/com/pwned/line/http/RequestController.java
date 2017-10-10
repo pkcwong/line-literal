@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class RequestController {
 
-	@RequestMapping(value = {"/"}, method = {RequestMethod.GET})
+	@RequestMapping(value = {"/"}, method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
 	public String getRequest(HttpServletRequest request) {
 		JSONObject json = new JSONObject(request.getParameterMap());
