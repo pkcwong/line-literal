@@ -1,5 +1,7 @@
 package com.pwned.line.interpreter;
 
+import com.linecorp.bot.model.message.TextMessage;
+import com.pwned.line.KitchenSinkController;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.json.JSONObject;
@@ -16,11 +18,11 @@ public class ApiAI {
 	 * send GET request to Heroku
 	 * @param query
 	 */
-	public static void request(String query) {
+	public static void request(String replyToken, String query) {
 
 		try {
 			URIBuilder host = new URIBuilder();
-			host.setHost(BASE_URL).setParameter(query, "query");
+			host.setHost(BASE_URL).setParameter("query", query).setParameter("sessionId", replyToken);
 			URI uri = host.build();
 			//HttpClient httpClient = HttpClientBuilder.create().build();
 			HttpGet request = new HttpGet(uri);
@@ -36,7 +38,13 @@ public class ApiAI {
 	 * @param json
 	 */
 	public static void handler(JSONObject json) {
-
+		try {
+			String replyToken = json.getString("sessionId");
+			String message = json.getJSONObject("fulfillment").getString("speech");
+			TextMessage msg = new TextMessage(message);
+			KitchenSinkController.reply(replyToken, msg);
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 	}
-
 }
