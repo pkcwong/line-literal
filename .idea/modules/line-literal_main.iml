@@ -16,6 +16,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Gradle: com.linecorp.bot:line-bot-spring-boot:1.10.0" level="project" />
     <orderEntry type="library" name="Gradle: postgresql:postgresql:9.0-801.jdbc4" level="project" />
+    <orderEntry type="library" name="Gradle: org.json:json:20090211" level="project" />
     <orderEntry type="library" name="Gradle: com.linecorp.bot:line-bot-api-client:1.10.0" level="project" />
     <orderEntry type="library" name="Gradle: com.linecorp.bot:line-bot-model:1.10.0" level="project" />
     <orderEntry type="library" name="Gradle: com.linecorp.bot:line-bot-servlet:1.10.0" level="project" />
