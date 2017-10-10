@@ -3,7 +3,6 @@ package com.pwned.line.handler;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.pwned.line.KitchenSinkController;
@@ -20,8 +19,8 @@ public class TextHandler {
 		TextMessageContent message = event.getMessage();
 		String incoming = message.getText();
 
-		MongoDB mongo = new MongoDB("ds115045.mlab.com", 15045);
-		MongoDatabase db = mongo.selectDB("heroku_0s8hc3hf", "admin", "root");
+		MongoDB mongo = new MongoDB("mongodb://admin:root@ds115045.mlab.com:15045/heroku_0s8hc3hf");
+		MongoDatabase db = mongo.selectDB("log");
 		MongoCollection<Document> collection = db.getCollection("log");
 		Map<String, Object> data = new HashMap<>();
 		data.put("id", event.getSource().getUserId());
