@@ -20,6 +20,7 @@ public class HTTP {
 
 	public HTTP(String url) {
 		this.url = url;
+		this.headers = new HashMap<>();
 		this.params = new HashMap<>();
 	}
 
