@@ -23,7 +23,7 @@ public class ApiAI {
 			http.setParams("v", VERSION);
 			http.setParams("query", query);
 			http.setParams("sessionId", replyToken);
-			http.get();
+			System.out.println(http.get());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -35,6 +35,7 @@ public class ApiAI {
 	 */
 	public static void handler(JSONObject json) {
 		try {
+			System.out.println(json.toString());
 			String replyToken = json.getString("sessionId");
 			String message = json.getJSONObject("fulfillment").getString("speech");
 			TextMessage msg = new TextMessage(message);
