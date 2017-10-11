@@ -23,7 +23,8 @@ public class ApiAI {
 			http.setParams("v", VERSION);
 			http.setParams("query", query);
 			http.setParams("sessionId", replyToken);
-			ApiAI.handler(new JSONObject(http.get()));
+			JSONObject json = new JSONObject(http.get());
+			ApiAI.handler(json);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -37,7 +38,7 @@ public class ApiAI {
 		try {
 			System.out.println(json.toString());
 			String replyToken = json.getString("sessionId");
-			String message = json.getJSONObject("fulfillment").getString("speech");
+			String message = json.getJSONObject("result").getJSONObject("fulfillment").getString("speech");
 			TextMessage msg = new TextMessage(message);
 			KitchenSinkController.reply(replyToken, msg);
 		} catch (Exception e) {
