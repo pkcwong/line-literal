@@ -2,15 +2,12 @@ package com.pwned.line.interpreter;
 
 import com.linecorp.bot.model.message.TextMessage;
 import com.pwned.line.KitchenSinkController;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.utils.URIBuilder;
+import com.pwned.line.http.HTTP;
 import org.json.JSONObject;
-
-import java.net.URI;
 
 public class ApiAI {
 
-	private static final String BASE_URL = "https://api.api.ai/v1/query?";
+	private static final String BASE_URL = "https://api.api.ai/v1/query";
 	private static final String DEVELOPER_ACCESS_TOKEN = "9fcc04ad79974d15880465050230ecaf";
 	private static final String VERSION = "20170712";
 
@@ -21,11 +18,12 @@ public class ApiAI {
 	public static void request(String replyToken, String query) {
 
 		try {
-			URIBuilder host = new URIBuilder();
-			host.setHost(BASE_URL).setParameter("v", VERSION).setParameter("query", query).setParameter("sessionId", replyToken);
-			URI uri = host.build();
-			HttpGet request = new HttpGet(uri);
-			request.addHeader("Authorization: Bearer", DEVELOPER_ACCESS_TOKEN);
+			HTTP http = new HTTP(BASE_URL);
+			http.setHeaders("Authorization: Bearer", DEVELOPER_ACCESS_TOKEN);
+			http.setParams("v", VERSION);
+			http.setParams("query", query);
+			http.setParams("sessionId", replyToken);
+			http.get();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
