@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.pwned.line.interpreter.ApiAI;
-
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -19,7 +17,6 @@ public class RequestController {
 	@ResponseBody
 	public String getHandler(HttpServletRequest request) {
 		JSONObject json = new JSONObject(request.getParameterMap());
-		System.out.println(json.toString());
 		return json.toString();
 	}
 
@@ -28,7 +25,6 @@ public class RequestController {
 	public String postHandler(@RequestBody String request) {
 		try {
 			JSONObject json = new JSONObject(request);
-			System.out.println(json.toString());
 			return json.toString();
 		} catch (JSONException e) {
 			e.printStackTrace();

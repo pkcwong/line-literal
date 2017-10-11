@@ -12,7 +12,8 @@ public class ApiAI {
 	private static final String VERSION = "20170712";
 
 	/***
-	 * Send GET request to DialogFlow
+	 * Sends a request to DialogFlow
+	 * @param replyToken Line replyToken
 	 * @param query query string
 	 */
 	public static void request(String replyToken, String query) {
@@ -31,12 +32,11 @@ public class ApiAI {
 	}
 
 	/***
-	 * Function of where api.ai will give response
+	 * DialogFlow response handler
 	 * @param json received callback
 	 */
 	public static void handler(JSONObject json) {
 		try {
-			System.out.println(json.toString());
 			String replyToken = json.getString("sessionId");
 			String message = json.getJSONObject("result").getJSONObject("fulfillment").getString("speech");
 			TextMessage msg = new TextMessage(message);

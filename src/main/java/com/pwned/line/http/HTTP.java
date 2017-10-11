@@ -24,14 +24,28 @@ public class HTTP {
 		this.params = new HashMap<>();
 	}
 
+	/***
+	 * Sets additional headers
+	 * @param key header
+	 * @param value value
+	 */
 	public void setHeaders(String key, Object value) {
 		this.headers.put(key, value);
 	}
 
+	/***
+	 * Sets additional parameters
+	 * @param key key
+	 * @param value value
+	 */
 	public void setParams(String key, Object value) {
 		this.params.put(key, value);
 	}
 
+	/***
+	 * Executes a blocking GET request
+	 * @return response
+	 */
 	public String get() {
 		try {
 			HttpGet request = null;
