@@ -28,7 +28,6 @@ public class RequestController {
 	public String postHandler(@RequestBody String request) {
 		try {
 			JSONObject json = new JSONObject(request);
-			ApiAI.handler(json);
 			System.out.println(json.toString());
 			return json.toString();
 		} catch (JSONException e) {

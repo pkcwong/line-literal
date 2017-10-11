@@ -23,7 +23,7 @@ public class ApiAI {
 			http.setParams("v", VERSION);
 			http.setParams("query", query);
 			http.setParams("sessionId", replyToken);
-			System.out.println(http.get());
+			ApiAI.handler(new JSONObject(http.get()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
