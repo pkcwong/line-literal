@@ -10,23 +10,21 @@ import java.net.URI;
 
 public class ApiAI {
 
-	private static final String BASE_URL = "https://api.api.ai/v1/";
+	private static final String BASE_URL = "https://api.api.ai/v1/query?";
 	private static final String DEVELOPER_ACCESS_TOKEN = "9fcc04ad79974d15880465050230ecaf";
 	private static final String VERSION = "20170712";
 
 	/***
-	 * send GET request to Heroku
-	 * @param query
+	 * Send GET request to DialogFlow
+	 * @param query query string
 	 */
 	public static void request(String replyToken, String query) {
 
 		try {
 			URIBuilder host = new URIBuilder();
-			host.setHost(BASE_URL).setParameter("query", query).setParameter("sessionId", replyToken);
+			host.setHost(BASE_URL).setParameter("v", VERSION).setParameter("query", query).setParameter("sessionId", replyToken);
 			URI uri = host.build();
-			//HttpClient httpClient = HttpClientBuilder.create().build();
 			HttpGet request = new HttpGet(uri);
-
 			request.addHeader("Authorization: Bearer", DEVELOPER_ACCESS_TOKEN);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -34,8 +32,8 @@ public class ApiAI {
 	}
 
 	/***
-	 * function of where api.ai will give response
-	 * @param json
+	 * Function of where api.ai will give response
+	 * @param json received callback
 	 */
 	public static void handler(JSONObject json) {
 		try {
@@ -43,8 +41,9 @@ public class ApiAI {
 			String message = json.getJSONObject("fulfillment").getString("speech");
 			TextMessage msg = new TextMessage(message);
 			KitchenSinkController.reply(replyToken, msg);
-		}catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 }
