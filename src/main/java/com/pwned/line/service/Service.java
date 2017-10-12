@@ -22,14 +22,28 @@ public class Service {
 		this.args = args;
 	}
 
+	/***
+	 * Default fulfillment with no processing.
+	 * @return
+	 */
 	public String resolve() {
 		return this.fulfillment;
 	}
 
+	/***
+	 * Sets a variable.
+	 * @param key key
+	 * @param value value
+	 */
 	public void setArgs(String key, Object value) {
 		this.args.put(key, value);
 	}
 
+	/***
+	 * Gets a passed or resolved variable.
+	 * @param key key
+	 * @return value
+	 */
 	public Object getArgs(String key) {
 		return this.args.get(key);
 	}
