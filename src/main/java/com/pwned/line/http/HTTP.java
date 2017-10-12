@@ -3,6 +3,7 @@ package com.pwned.line.http;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -36,7 +37,11 @@ public class HTTP {
 	 * @param value value
 	 */
 	public void setParams(String key, Object value) {
-		this.params.put(key, value);
+		try {
+			this.params.put(key, URLEncoder.encode(value.toString(), "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/***
@@ -46,12 +51,12 @@ public class HTTP {
 	public String get() {
 		try {
 			HttpURLConnection conn = null;
-			URL uri = null;
+			URL uri;
 			String readLine;
 			StringBuilder url = new StringBuilder(this.url);
 			StringBuilder param = new StringBuilder("");
 			StringBuilder response = new StringBuilder("");
-			BufferedReader reader = null;
+			BufferedReader reader;
 			for (Map.Entry<String, Object> item : this.params.entrySet()) {
 				if (param.toString().length() != 0) {
 					param.append('&');

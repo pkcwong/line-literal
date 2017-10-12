@@ -2,7 +2,9 @@ package com.pwned.line.handler;
 
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
-import com.pwned.line.interpreter.ApiAI;
+import com.linecorp.bot.model.message.TextMessage;
+import com.pwned.line.KitchenSinkController;
+import com.pwned.line.service.ApiAI;
 
 import java.net.URISyntaxException;
 
@@ -16,7 +18,10 @@ public class TextHandler {
 	public static void handle(MessageEvent<TextMessageContent> event) throws URISyntaxException {
 		TextMessageContent message = event.getMessage();
 		String incoming = message.getText();
-		ApiAI.request(event.getReplyToken(), incoming);
+		ApiAI apiAIEngine = new ApiAI(incoming);
+		apiAIEngine.setArgs("ACCESS_TOKEN", System.getenv("API_AI_ACCESS_TOKEN"));
+		apiAIEngine.setArgs("uid", event.getSource().getUserId());
+		KitchenSinkController.reply(event.getReplyToken(), new TextMessage(apiAIEngine.resolve()));
 	}
 
 }
