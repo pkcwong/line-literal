@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class ApiAI extends Service {
 
-	private static final String BASE_URL = "https://api.api.ai/v1/query";
+	private static final String BASE_URL = "https://api.dialogflow.com/v1/query";
 	private static final String VERSION = "20170712";
 
 	public ApiAI(String query) {
@@ -38,6 +38,7 @@ public class ApiAI extends Service {
 			http.setParams("query", super.fulfillment);
 			http.setParams("sessionId", super.getArgs("uid"));
 			JSONObject json = new JSONObject(http.get());
+			System.out.println(json);
 			handler(json);
 		} catch (Exception e) {
 			e.printStackTrace();
