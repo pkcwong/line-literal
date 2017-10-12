@@ -8,6 +8,8 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +32,11 @@ public class HTTP {
 	 * @param value value
 	 */
 	public void setHeaders(String key, Object value) {
-		this.headers.put(key, value);
+		try {
+			this.headers.put(key, URLEncoder.encode(value.toString(), "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/***
@@ -39,7 +45,11 @@ public class HTTP {
 	 * @param value value
 	 */
 	public void setParams(String key, Object value) {
-		this.params.put(key, value);
+		try {
+			this.params.put(key, URLEncoder.encode(value.toString(),"UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/***
