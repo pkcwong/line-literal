@@ -3,6 +3,7 @@ package com.pwned.line.interpreter;
 import com.linecorp.bot.model.message.TextMessage;
 import com.pwned.line.KitchenSinkController;
 import com.pwned.line.http.HTTP;
+import org.apache.http.HttpHeaders;
 import org.json.JSONObject;
 
 public class ApiAI {
@@ -20,7 +21,7 @@ public class ApiAI {
 
 		try {
 			HTTP http = new HTTP(BASE_URL);
-			http.setHeaders("Authorization", "Bearer " + CLIENT_ACCESS_TOKEN);
+			http.setHeaders(HttpHeaders.AUTHORIZATION, "Bearer " + CLIENT_ACCESS_TOKEN);
 			http.setParams("v", VERSION);
 			http.setParams("query", query);
 			http.setParams("sessionId", replyToken);
