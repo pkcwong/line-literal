@@ -9,6 +9,7 @@ import java.util.Map;
 /***
  * Service for sending requests to DialogFlow.
  * Required params: [ACCESS_TOKEN, uid]
+ * Resolved params: [parameters]
  * @author Christopher Wong, Calvin Ku
  */
 public class ApiAI extends Service {
@@ -38,7 +39,6 @@ public class ApiAI extends Service {
 			http.setParams("query", super.fulfillment);
 			http.setParams("sessionId", super.getArgs("uid"));
 			JSONObject json = new JSONObject(http.get());
-			System.out.println(json);
 			handler(json);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -53,6 +53,7 @@ public class ApiAI extends Service {
 	private void handler(JSONObject json) {
 		try {
 			super.fulfillment = json.getJSONObject("result").getJSONObject("fulfillment").getString("speech");
+			super.setArgs("parameters", json.getJSONObject("result").getJSONObject("parameters"));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
