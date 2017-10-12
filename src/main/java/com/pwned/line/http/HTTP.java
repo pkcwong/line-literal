@@ -66,7 +66,7 @@ public class HTTP {
 				url.append('=');
 				url.append(item.getValue().toString());
 			}
-			request = new HttpGet(url.toString());
+			request = new HttpGet(url.toString().replace(' ', '+'));
 			for (Map.Entry<String, Object> item : this.headers.entrySet()) {
 				request.addHeader(item.getKey(), item.getValue().toString());
 			}
