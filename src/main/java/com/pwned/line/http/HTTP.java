@@ -8,6 +8,8 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -64,10 +66,11 @@ public class HTTP {
 				url.append('=');
 				url.append(item.getValue().toString());
 			}
-			request = new HttpGet(URLEncoder.encode(url.toString(), "UTF-8"));
+			request = new HttpGet();
 			for (Map.Entry<String, Object> item : this.headers.entrySet()) {
 				request.addHeader(item.getKey(), item.getValue().toString());
 			}
+			request.setURI(new URI(URLEncoder.encode(url.toString(), "UTF-8")));
 			client = HttpClientBuilder.create().build();
 			response = client.execute(request);
 			reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
@@ -75,7 +78,7 @@ public class HTTP {
 				result.append(line);
 			}
 			return result.toString();
-		} catch (IOException e) {
+		} catch (IOException | URISyntaxException e) {
 			e.printStackTrace();
 		}
 		return null;

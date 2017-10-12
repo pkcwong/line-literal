@@ -21,7 +21,7 @@ public class ApiAI {
 
 		try {
 			HTTP http = new HTTP(BASE_URL);
-			http.setHeaders(HttpHeaders.AUTHORIZATION, "Bearer " + CLIENT_ACCESS_TOKEN);
+			http.setHeaders("Authorization", "Bearer " + CLIENT_ACCESS_TOKEN);
 			http.setParams("v", VERSION);
 			http.setParams("query", query);
 			http.setParams("sessionId", replyToken);
