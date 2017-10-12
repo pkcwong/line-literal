@@ -20,6 +20,7 @@ public class ApiAI {
 		try {
 			HTTP http = new HTTP(BASE_URL);
 			http.setHeaders("Authorization", "Bearer " + System.getenv("API_AI_ACCESS_TOKEN"));
+			http.setHeaders("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
 			http.setParams("v", VERSION);
 			http.setParams("query", query);
 			http.setParams("sessionId", replyToken);
