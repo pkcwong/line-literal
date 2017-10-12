@@ -25,7 +25,6 @@ public class ApiAI {
 			http.setParams("query", query);
 			http.setParams("sessionId", replyToken);
 			JSONObject json = new JSONObject(http.get());
-			System.out.println(json);
 			ApiAI.handler(json);
 		} catch (Exception e) {
 			e.printStackTrace();
