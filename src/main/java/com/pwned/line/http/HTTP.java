@@ -66,11 +66,11 @@ public class HTTP {
 				url.append('=');
 				url.append(item.getValue().toString());
 			}
-			request = new HttpGet();
+			request = new HttpGet(url.toString());
 			for (Map.Entry<String, Object> item : this.headers.entrySet()) {
 				request.addHeader(item.getKey(), item.getValue().toString());
 			}
-			request.setURI(new URI(URLEncoder.encode(url.toString(), "UTF-8")));
+			//request.setURI(new URI(URLEncoder.encode(url.toString(), "UTF-8")));
 			client = HttpClientBuilder.create().build();
 			response = client.execute(request);
 			reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
@@ -78,7 +78,7 @@ public class HTTP {
 				result.append(line);
 			}
 			return result.toString();
-		} catch (IOException | URISyntaxException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return null;
