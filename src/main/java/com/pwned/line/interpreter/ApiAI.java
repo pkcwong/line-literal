@@ -3,13 +3,11 @@ package com.pwned.line.interpreter;
 import com.linecorp.bot.model.message.TextMessage;
 import com.pwned.line.KitchenSinkController;
 import com.pwned.line.http.HTTP;
-import org.apache.http.HttpHeaders;
 import org.json.JSONObject;
 
 public class ApiAI {
 
 	private static final String BASE_URL = "https://api.api.ai/v1/query";
-	private static final String CLIENT_ACCESS_TOKEN = "5d14b8306ce0427fb32ced2c3bdd0b25";
 	private static final String VERSION = "20170712";
 
 	/***
@@ -21,7 +19,7 @@ public class ApiAI {
 
 		try {
 			HTTP http = new HTTP(BASE_URL);
-			http.setHeaders("Authorization", "Bearer " + CLIENT_ACCESS_TOKEN);
+			http.setHeaders("Authorization", "Bearer " + System.getenv("API_AI_ACCESS_TOKEN"));
 			http.setParams("v", VERSION);
 			http.setParams("query", query);
 			http.setParams("sessionId", replyToken);
