@@ -47,7 +47,6 @@ public class HTTP {
 		try {
 			HttpURLConnection conn = null;
 			URL uri = null;
-			String encoded;
 			String readLine;
 			StringBuilder url = new StringBuilder(this.url);
 			StringBuilder param = new StringBuilder("");
@@ -61,9 +60,8 @@ public class HTTP {
 				param.append('=');
 				param.append(item.getValue().toString());
 			}
-			encoded = param.toString();
 			url.append('?');
-			url.append(encoded);
+			url.append(param.toString());
 			uri = new URL(url.toString());
 			conn = (HttpURLConnection) (uri.openConnection());
 			conn.setRequestMethod("GET");
@@ -75,7 +73,6 @@ public class HTTP {
 				response.append(readLine);
 			}
 			reader.close();
-			System.out.println(response.toString());
 			return response.toString();
 		} catch (IOException e) {
 			e.printStackTrace();
