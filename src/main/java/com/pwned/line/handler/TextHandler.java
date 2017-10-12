@@ -8,6 +8,10 @@ import com.pwned.line.service.ApiAI;
 
 import java.net.URISyntaxException;
 
+/***
+ * Handler for incoming text message
+ * @author Christopher Wong
+ */
 public class TextHandler {
 
 	/***

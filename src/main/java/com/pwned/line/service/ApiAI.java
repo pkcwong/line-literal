@@ -6,6 +6,11 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
+/***
+ * Service for sending requests to DialogFlow.
+ * Required params: [ACCESS_TOKEN, uid]
+ * @author Christopher Wong, Calvin Ku
+ */
 public class ApiAI extends Service {
 
 	private static final String BASE_URL = "https://api.api.ai/v1/query";
@@ -19,6 +24,10 @@ public class ApiAI extends Service {
 		super(query, args);
 	}
 
+	/***
+	 * Sends a query to DialogFlow.
+	 * @return fulfillment
+	 */
 	@Override
 	public String resolve() {
 		try {
@@ -36,6 +45,10 @@ public class ApiAI extends Service {
 		return super.fulfillment;
 	}
 
+	/***
+	 * Handles DialogFlow response.
+	 * @param json http response
+	 */
 	private void handler(JSONObject json) {
 		try {
 			super.fulfillment = json.getJSONObject("result").getJSONObject("fulfillment").getString("speech");

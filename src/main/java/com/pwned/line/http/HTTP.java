@@ -10,6 +10,10 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
+/***
+ * Library for external http requests
+ * @author Christopher Wong
+ */
 public class HTTP {
 
 	private String url = null;

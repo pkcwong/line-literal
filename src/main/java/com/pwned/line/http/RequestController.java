@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
+/***
+ * class RequestController
+ * This is a web-hook for incoming requests.
+ */
 @Controller
 public class RequestController {
 

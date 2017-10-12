@@ -3,6 +3,10 @@ package com.pwned.line.service;
 import java.util.HashMap;
 import java.util.Map;
 
+/***
+ * Service prototype for chat-bot engine.
+ * @author Christopher Wong
+ */
 public class Service {
 
 	protected String fulfillment = null;
