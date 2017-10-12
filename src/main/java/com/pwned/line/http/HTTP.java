@@ -61,7 +61,7 @@ public class HTTP {
 				param.append('=');
 				param.append(item.getValue().toString());
 			}
-			encoded = URLEncoder.encode(param.toString(), "UTF-8");
+			encoded = URLEncoder.encode(param.toString(), "ASCII");
 			url.append('?');
 			url.append(encoded);
 			uri = new URL(url.toString());
