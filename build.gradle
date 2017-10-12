@@ -32,7 +32,6 @@ dependencies {
     compile 'com.linecorp.bot:line-bot-spring-boot:1.10.0'
     compile group: 'postgresql', name: 'postgresql', version: '9.0-801.jdbc4'
     compile group: 'org.json', name: 'json', version: '20090211'
-    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.3'
     compile 'org.mongodb:mongodb-driver:3.3.0'
 }
 

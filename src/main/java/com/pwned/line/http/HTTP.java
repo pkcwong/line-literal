@@ -1,15 +1,10 @@
 package com.pwned.line.http;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClientBuilder;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,34 +45,38 @@ public class HTTP {
 	 */
 	public String get() {
 		try {
-			HttpClient client = null;
-			HttpGet request = null;
-			HttpResponse response = null;
-			BufferedReader reader = null;
-			StringBuffer result = new StringBuffer();
+			HttpURLConnection conn = null;
+			URL uri = null;
+			String encoded;
+			String readLine;
 			StringBuilder url = new StringBuilder(this.url);
-			String line = "";
-			url.append('?');
+			StringBuilder param = new StringBuilder("");
+			StringBuilder response = new StringBuilder("");
+			BufferedReader reader = null;
 			for (Map.Entry<String, Object> item : this.params.entrySet()) {
-				if (url.toString().charAt(url.toString().length() - 1) != '?') {
-					url.append('&');
+				if (param.toString().length() != 0) {
+					param.append('&');
 				}
-				url.append(item.getKey());
-				url.append('=');
-				url.append(item.getValue().toString());
+				param.append(item.getKey());
+				param.append('=');
+				param.append(item.getValue().toString());
 			}
-			request = new HttpGet(url.toString().replace(' ', '+'));
+			encoded = URLEncoder.encode(param.toString(), "UTF-8");
+			url.append('?');
+			url.append(encoded);
+			uri = new URL(url.toString());
+			conn = (HttpURLConnection) (uri.openConnection());
+			conn.setRequestMethod("GET");
 			for (Map.Entry<String, Object> item : this.headers.entrySet()) {
-				request.addHeader(item.getKey(), item.getValue().toString());
+				conn.setRequestProperty(item.getKey(), item.getValue().toString());
 			}
-			//request.setURI(new URI(URLEncoder.encode(url.toString(), "UTF-8")));
-			client = HttpClientBuilder.create().build();
-			response = client.execute(request);
-			reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-			while ((line = reader.readLine()) != null) {
-				result.append(line);
+			reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			while ((readLine = reader.readLine()) != null) {
+				response.append(readLine);
 			}
-			return result.toString();
+			reader.close();
+			System.out.println(response.toString());
+			return response.toString();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
