@@ -5,6 +5,8 @@ import com.pwned.line.KitchenSinkController;
 import com.pwned.line.http.HTTP;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
+
 public class ApiAI {
 
 	private static final String BASE_URL = "https://api.api.ai/v1/query";
@@ -22,7 +24,7 @@ public class ApiAI {
 			http.setHeaders("Authorization", "Bearer " + System.getenv("API_AI_ACCESS_TOKEN"));
 			http.setHeaders("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
 			http.setParams("v", VERSION);
-			http.setParams("query", query);
+			http.setParams("query", URLEncoder.encode(query, "UTF-8"));
 			http.setParams("sessionId", replyToken);
 			JSONObject json = new JSONObject(http.get());
 			ApiAI.handler(json);
