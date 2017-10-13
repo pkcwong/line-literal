@@ -31,12 +31,9 @@ public class TextHandler {
 		QuotaCrawler quotaCrawlerEngine = new QuotaCrawler(apiAIEngine.resolve());
 		System.out.println(apiAIEngine.getArgs("parameters").toString());
 		try {
-			quotaCrawlerEngine.setArgs("DEPARTMENT", ((JSONObject) (quotaCrawlerEngine.getArgs("parameters"))).getString("sis-department"));
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		try {
-			quotaCrawlerEngine.setArgs("COURSE_CODE", ((JSONObject) (quotaCrawlerEngine.getArgs("parameters"))).getString("number"));
+			JSONObject apiParam = new JSONObject(apiAIEngine.getArgs("parameters").toString());
+			quotaCrawlerEngine.setArgs("DEPARTMENT", apiParam.getString("sis-department"));
+			quotaCrawlerEngine.setArgs("COURSE_CODE", apiParam.getString("number"));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
