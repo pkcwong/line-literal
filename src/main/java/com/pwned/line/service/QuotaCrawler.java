@@ -23,7 +23,7 @@ public class QuotaCrawler extends Service{
 		Pattern departmentPattern = Pattern.compile("<h2>" + department + " " + courseCode + ".+</h2>");
 		Matcher courseMatcher = departmentPattern.matcher(httpClient.get());
 		courseMatcher.find();
-		super.fulfillment = courseMatcher.group(0);
+		super.fulfillment = courseMatcher.group(1);
 		System.out.println(super.fulfillment);
 		return super.fulfillment;
 	}
