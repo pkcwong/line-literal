@@ -6,6 +6,8 @@ import com.linecorp.bot.model.message.TextMessage;
 import com.pwned.line.KitchenSinkController;
 import com.pwned.line.service.ApiAI;
 import com.pwned.line.service.QuotaCrawler;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 
@@ -27,8 +29,17 @@ public class TextHandler {
 		apiAIEngine.setArgs("ACCESS_TOKEN", System.getenv("API_AI_ACCESS_TOKEN"));
 		apiAIEngine.setArgs("uid", event.getSource().getUserId());
 		QuotaCrawler quotaCrawlerEngine = new QuotaCrawler(apiAIEngine.resolve());
-		quotaCrawlerEngine.setArgs("DEPARTMENT", "ACCT");
-		quotaCrawlerEngine.setArgs("COURSE_CODE", "1010");
+		System.out.println(apiAIEngine.getArgs("parameters").toString());
+		try {
+			quotaCrawlerEngine.setArgs("DEPARTMENT", ((JSONObject) (quotaCrawlerEngine.getArgs("parameters"))).getString("sis-department"));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		try {
+			quotaCrawlerEngine.setArgs("COURSE_CODE", ((JSONObject) (quotaCrawlerEngine.getArgs("parameters"))).getString("number"));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 		KitchenSinkController.reply(event.getReplyToken(), new TextMessage(quotaCrawlerEngine.resolve()));
 	}
 
