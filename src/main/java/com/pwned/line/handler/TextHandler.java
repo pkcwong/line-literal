@@ -26,11 +26,10 @@ public class TextHandler {
 		ApiAI apiAIEngine = new ApiAI(incoming);
 		apiAIEngine.setArgs("ACCESS_TOKEN", System.getenv("API_AI_ACCESS_TOKEN"));
 		apiAIEngine.setArgs("uid", event.getSource().getUserId());
-		KitchenSinkController.reply(event.getReplyToken(), new TextMessage(apiAIEngine.resolve()));
-		QuotaCrawler quotaCrawlerEngine = new QuotaCrawler("The course title is @data");
+		QuotaCrawler quotaCrawlerEngine = new QuotaCrawler(apiAIEngine.resolve());
 		quotaCrawlerEngine.setArgs("DEPARTMENT", "ACCT");
 		quotaCrawlerEngine.setArgs("COURSE_CODE", "1010");
-		System.out.println(quotaCrawlerEngine.resolve());
+		KitchenSinkController.reply(event.getReplyToken(), new TextMessage(quotaCrawlerEngine.resolve()));
 	}
 
 }
