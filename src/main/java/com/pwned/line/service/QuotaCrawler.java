@@ -24,6 +24,7 @@ public class QuotaCrawler extends Service{
 		Matcher courseMatcher = departmentPattern.matcher(httpClient.get());
 		courseMatcher.find();
 		super.fulfillment = courseMatcher.group(0);
+		System.out.println(super.fulfillment);
 		return super.fulfillment;
 	}
 }
