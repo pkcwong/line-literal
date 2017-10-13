@@ -27,7 +27,7 @@ public class TextHandler {
 		apiAIEngine.setArgs("ACCESS_TOKEN", System.getenv("API_AI_ACCESS_TOKEN"));
 		apiAIEngine.setArgs("uid", event.getSource().getUserId());
 		KitchenSinkController.reply(event.getReplyToken(), new TextMessage(apiAIEngine.resolve()));
-		QuotaCrawler quotaCrawlerEngine = new QuotaCrawler("The course title of @course is @data");
+		QuotaCrawler quotaCrawlerEngine = new QuotaCrawler("The course title is @data");
 		quotaCrawlerEngine.setArgs("DEPARTMENT", "ACCT");
 		quotaCrawlerEngine.setArgs("COURSE_CODE", "1010");
 		System.out.println(quotaCrawlerEngine.resolve());

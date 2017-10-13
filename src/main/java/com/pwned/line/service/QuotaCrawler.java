@@ -2,6 +2,9 @@ package com.pwned.line.service;
 
 import com.pwned.line.http.HTTP;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /***
  * Service for sending requests to HKUST QUOTA WEBSITE.
  *  * Required params: [DEPARTMENT, COURSE_CODE]
@@ -15,9 +18,12 @@ public class QuotaCrawler extends Service{
 	@Override
 	public String resolve() {
 		String department = super.getArgs("DEPARTMENT").toString();
+		String courseCode = super.getArgs("COURSE_CODE").toString();
 		HTTP httpClient = new HTTP(QUOTA_URL + department);
-		System.out.println(httpClient.get());
-		
+		Pattern departmentPattern = Pattern.compile("<h2>" + department + " " + courseCode + ".+</h2>");
+		Matcher courseMatcher = departmentPattern.matcher(httpClient.get());
+		courseMatcher.find();
+		super.fulfillment = courseMatcher.group();
 		return super.fulfillment;
 	}
 }
