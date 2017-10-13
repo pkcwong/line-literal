@@ -19,7 +19,7 @@ public class QuotaCrawler extends Service{
 	public String resolve() {
 		String department = super.getArgs("DEPARTMENT").toString();
 		String courseCode = super.getArgs("COURSE_CODE").toString();
-		String regex = "<h2>" + department + "\\s" + courseCode + "(.+?)</h2>";
+		String regex = "<h2>" + department + "\\s" + courseCode + "\\s-\\s(.+?)\\s\\(\\d\\sunits\\)</h2>";
 		String courseName = "";
 		HTTP httpClient = new HTTP(QUOTA_URL + department);
 		Pattern departmentPattern = Pattern.compile(regex);
@@ -32,5 +32,10 @@ public class QuotaCrawler extends Service{
 		System.out.println(super.fulfillment);
 		return super.fulfillment;
 	}
+
+	private String getCourseName(String httpResponse) {
+		return null;
+	}
+
 }
 
