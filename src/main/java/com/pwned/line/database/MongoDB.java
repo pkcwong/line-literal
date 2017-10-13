@@ -8,6 +8,10 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
+/***
+ * Helper class for accessing MongoDB
+ * @author Christopher Wong
+ */
 public class MongoDB {
 
 	private MongoClient mongo = null;
