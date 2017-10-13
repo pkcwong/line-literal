@@ -19,11 +19,14 @@ public class QuotaCrawler extends Service{
 	public String resolve() {
 		String department = super.getArgs("DEPARTMENT").toString();
 		String courseCode = super.getArgs("COURSE_CODE").toString();
+		String courseName = "";
 		HTTP httpClient = new HTTP(QUOTA_URL + department);
 		Pattern departmentPattern = Pattern.compile("<h2>" + department + " " + courseCode + ".+</h2>");
 		Matcher courseMatcher = departmentPattern.matcher(httpClient.get());
-		courseMatcher.find();
-		super.fulfillment = courseMatcher.group(1);
+		while(courseMatcher.find()){
+			courseName = courseMatcher.group(1);
+		}
+		super.fulfillment = courseName;
 		System.out.println(super.fulfillment);
 		return super.fulfillment;
 	}
