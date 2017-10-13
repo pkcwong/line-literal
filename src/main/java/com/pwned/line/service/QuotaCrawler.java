@@ -28,8 +28,7 @@ public class QuotaCrawler extends Service{
 			System.out.println(regex);
 			courseName = courseMatcher.group(1);
 		}
-		super.fulfillment = courseName;
-		System.out.println(super.fulfillment);
+		super.fulfillment = super.fulfillment.replace("@data", courseName);
 		return super.fulfillment;
 	}
 

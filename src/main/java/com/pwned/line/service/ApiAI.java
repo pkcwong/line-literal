@@ -40,7 +40,6 @@ public class ApiAI extends Service {
 			http.setParams("sessionId", super.getArgs("uid"));
 			JSONObject json = new JSONObject(http.get());
 			handler(json);
-			System.out.println(json);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
