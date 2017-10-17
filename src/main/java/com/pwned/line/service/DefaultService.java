@@ -29,7 +29,6 @@ public class DefaultService implements Service {
 	@Override
 	public Service resolve() {
 		CompletableFuture<Service> future = CompletableFuture.supplyAsync(() -> {
-			this.fulfillment = "handler(" + this.fulfillment + ")";
 			return this;
 		});
 		try {
