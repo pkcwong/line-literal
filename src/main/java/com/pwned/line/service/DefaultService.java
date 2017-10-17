@@ -19,9 +19,17 @@ public class DefaultService implements Service {
 		this.args = args;
 	}
 
+	public DefaultService(Service service) {
+		this.fulfillment = service.getFulfillment();
+		this.args = service.getArgs();
+	}
+
 	@Override
-	public CompletableFuture<String> resolve() {
-		return CompletableFuture.supplyAsync(() -> this.fulfillment);
+	public CompletableFuture<Service> resolve() {
+		return CompletableFuture.supplyAsync(() -> {
+			this.fulfillment = "handled(" + this.fulfillment + ")";
+			return this;
+		});
 	}
 
 	@Override
@@ -32,6 +40,16 @@ public class DefaultService implements Service {
 	@Override
 	public Object getParam(String key) {
 		return this.args.get(key);
+	}
+
+	@Override
+	public String getFulfillment() {
+		return this.fulfillment;
+	}
+
+	@Override
+	public Map<String, Object> getArgs() {
+		return this.args;
 	}
 
 }
