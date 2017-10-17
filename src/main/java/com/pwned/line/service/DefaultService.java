@@ -37,6 +37,7 @@ public class DefaultService implements Service {
 		} catch (InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
+		return this;
 	}
 
 	@Override
