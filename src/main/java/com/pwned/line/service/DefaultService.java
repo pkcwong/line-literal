@@ -26,16 +26,10 @@ public class DefaultService implements Service {
 	}
 
 	@Override
-	public Service resolve() {
-		CompletableFuture<Service> future = CompletableFuture.supplyAsync(() -> {
+	public CompletableFuture<Service> resolve() {
+		return CompletableFuture.supplyAsync(() -> {
 			return this;
 		});
-		try {
-			return future.get();
-		} catch (InterruptedException | ExecutionException e) {
-			e.printStackTrace();
-		}
-		return this;
 	}
 
 	@Override

@@ -1,10 +1,11 @@
 package com.pwned.line.service;
 
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public interface Service {
 
-	Service resolve();
+	CompletableFuture resolve();
 	void setParam(String key, Object value);
 	Object getParam(String key);
 
