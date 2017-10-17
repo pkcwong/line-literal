@@ -3,6 +3,10 @@ package com.pwned.line.service;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+/***
+ * Service interface
+ * @author Christopher Wong
+ */
 public interface Service {
 
 	/***

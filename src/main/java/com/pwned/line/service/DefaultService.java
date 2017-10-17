@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+/***
+ * Default text message handler class.
+ * @author Christopher Wong
+ */
 public class DefaultService implements Service {
 
 	private String fulfillment = null;
