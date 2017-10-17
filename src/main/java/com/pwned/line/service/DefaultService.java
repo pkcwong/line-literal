@@ -3,7 +3,6 @@ package com.pwned.line.service;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 public class DefaultService implements Service {
 
@@ -25,12 +24,13 @@ public class DefaultService implements Service {
 		this.args = service.getArgs();
 	}
 
+	/***
+	 * Default handler for text messages.
+	 * @return instance
+	 */
 	@Override
 	public CompletableFuture<Service> resolve() {
-		return CompletableFuture.supplyAsync(() -> {
-			this.fulfillment = "handler(" + this.fulfillment + ")";
-			return this;
-		});
+		return CompletableFuture.supplyAsync(() -> this);
 	}
 
 	@Override

@@ -8,7 +8,6 @@ import com.pwned.line.service.DefaultService;
 import com.pwned.line.service.Service;
 
 import java.net.URISyntaxException;
-import java.util.concurrent.ExecutionException;
 
 /***
  * Handler for incoming text message
@@ -24,16 +23,8 @@ public class TextHandler {
 	public static void handle(MessageEvent<TextMessageContent> event) throws URISyntaxException {
 		TextMessageContent message = event.getMessage();
 		String incoming = message.getText();
-		Service defaultServiceEngine = new DefaultService(incoming);
-		defaultServiceEngine.resolve().thenApply((service) -> {
-			try {
-				return new DefaultService((Service) service).resolve().get();
-			} catch (InterruptedException | ExecutionException e) {
-				e.printStackTrace();
-			}
-			return null;
-		}).thenApply((service) -> {
-			KitchenSinkController.reply(event.getReplyToken(), new TextMessage(((Service) service).getFulfillment()));
+		new DefaultService(incoming).resolve().thenApply((Service service) -> {
+			KitchenSinkController.reply(event.getReplyToken(), new TextMessage((service).getFulfillment()));
 			return null;
 		});
 	}
