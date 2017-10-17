@@ -22,16 +22,11 @@ public class TextHandler {
 	 */
 	public static void handle(MessageEvent<TextMessageContent> event) throws URISyntaxException {
 		TextMessageContent message = event.getMessage();
-		String resolve = message.getText();
-		Service engine = new DefaultService(resolve);
-		engine.resolve().thenApply(service -> {
-			return new DefaultService(service);
-		}).thenApply(service -> {
-			return new DefaultService(service);
-		}).thenApply(service -> {
-			KitchenSinkController.reply(event.getReplyToken(), new TextMessage(service.getFulfillment()));
-			return null;
-		});
+		String incoming = message.getText();
+		Service defaultServiceEngine = new DefaultService(incoming);
+		Service defaultServiceEngineAgain = new DefaultService(defaultServiceEngine.resolve());
+		Service defaultServiceEngineAgainAgain = new DefaultService(defaultServiceEngineAgain.resolve());
+		KitchenSinkController.reply(event.getReplyToken(), new TextMessage(defaultServiceEngineAgainAgain.getFulfillment()));
 	}
 
 }

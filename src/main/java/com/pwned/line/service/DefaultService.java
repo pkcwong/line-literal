@@ -3,6 +3,8 @@ package com.pwned.line.service;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.function.Supplier;
 
 public class DefaultService implements Service {
 
@@ -25,11 +27,16 @@ public class DefaultService implements Service {
 	}
 
 	@Override
-	public CompletableFuture<Service> resolve() {
-		return CompletableFuture.supplyAsync(() -> {
-			this.fulfillment = "handled(" + this.fulfillment + ")";
+	public Service resolve() {
+		CompletableFuture<Service> future = CompletableFuture.supplyAsync(() -> {
+			this.fulfillment = "handler(" + this.fulfillment + ")";
 			return this;
 		});
+		try {
+			return future.get();
+		} catch (InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
