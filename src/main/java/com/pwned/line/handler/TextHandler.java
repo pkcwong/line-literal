@@ -5,15 +5,11 @@ import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import com.pwned.line.KitchenSinkController;
 import com.pwned.line.service.ApiAI;
-import com.pwned.line.service.CourseQuota;
 import com.pwned.line.service.DefaultService;
 import com.pwned.line.service.Service;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 /***
  * Handler for incoming text message
@@ -32,7 +28,7 @@ public class TextHandler {
 		CompletableFuture.supplyAsync(() -> {
 			try {
 				return new DefaultService(incoming).resolve().get();
-			} catch (InterruptedException | ExecutionException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			return null;
@@ -42,7 +38,7 @@ public class TextHandler {
 				apiAiEngine.setParam("ACCESS_TOKEN", System.getenv("API_AI_ACCESS_TOKEN"));
 				apiAiEngine.setParam("uid", event.getSource().getUserId());
 				return apiAiEngine.resolve().get();
-			} catch (InterruptedException | ExecutionException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			return null;

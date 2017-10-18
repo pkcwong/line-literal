@@ -13,7 +13,7 @@ public interface Service {
 	 * Main payload of service.
 	 * @return async method
 	 */
-	CompletableFuture<Service> resolve();
+	CompletableFuture<Service> resolve() throws Exception;
 
 	/***
 	 * Setter for parameters.
