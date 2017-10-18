@@ -29,6 +29,7 @@ public class TextHandler {
 		TextMessageContent message = event.getMessage();
 		String incoming = message.getText();
 		new DefaultService(incoming).resolve().thenApply((Service service) -> {
+			System.out.println("PIPE IN: " + service.getFulfillment());
 			try {
 				Service apiAiEngine = new ApiAI(service);
 				apiAiEngine.setParam("ACCESS_TOKEN", System.getenv("API_AI_ACCESS_TOKEN"));
@@ -39,6 +40,7 @@ public class TextHandler {
 			}
 			return null;
 		}).thenApply((Service service) -> {
+			System.out.println("PIPE IN: " + service.getFulfillment());
 			try {
 				Service courseQuotaEngine = new CourseQuota(service);
 				JSONObject apiParam = new JSONObject(service.getParam("parameters").toString());
@@ -50,6 +52,7 @@ public class TextHandler {
 			}
 			return null;
 		}).thenApply((Service service) -> {
+			System.out.println("PIPE IN: " + service.getFulfillment());
 			KitchenSinkController.reply(event.getReplyToken(), new TextMessage(service.getFulfillment()));
 			return null;
 		});
