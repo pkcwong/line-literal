@@ -5,11 +5,14 @@ import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import com.pwned.line.KitchenSinkController;
 import com.pwned.line.service.ApiAI;
-import com.pwned.line.service.QuotaCrawler;
+import com.pwned.line.service.CourseQuota;
+import com.pwned.line.service.DefaultService;
+import com.pwned.line.service.Service;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
+import java.util.concurrent.ExecutionException;
 
 /***
  * Handler for incoming text message
@@ -25,19 +28,31 @@ public class TextHandler {
 	public static void handle(MessageEvent<TextMessageContent> event) throws URISyntaxException {
 		TextMessageContent message = event.getMessage();
 		String incoming = message.getText();
-		ApiAI apiAIEngine = new ApiAI(incoming);
-		apiAIEngine.setArgs("ACCESS_TOKEN", System.getenv("API_AI_ACCESS_TOKEN"));
-		apiAIEngine.setArgs("uid", event.getSource().getUserId());
-		QuotaCrawler quotaCrawlerEngine = new QuotaCrawler(apiAIEngine.resolve());
-		System.out.println(apiAIEngine.getArgs("parameters").toString());
-		try {
-			JSONObject apiParam = new JSONObject(apiAIEngine.getArgs("parameters").toString());
-			quotaCrawlerEngine.setArgs("DEPARTMENT", apiParam.getString("sis-department"));
-			quotaCrawlerEngine.setArgs("COURSE_CODE", apiParam.getString("number"));
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		KitchenSinkController.reply(event.getReplyToken(), new TextMessage(quotaCrawlerEngine.resolve()));
+		new DefaultService(incoming).resolve().thenApply((Service service) -> {
+			try {
+				Service apiAiEngine = new ApiAI(service);
+				apiAiEngine.setParam("ACCESS_TOKEN", System.getenv("API_AI_ACCESS_TOKEN"));
+				apiAiEngine.setParam("uid", event.getSource().getUserId());
+				return apiAiEngine.resolve().get();
+			} catch (InterruptedException | ExecutionException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}).thenApply((Service service) -> {
+			try {
+				Service courseQuotaEngine = new CourseQuota(service);
+				JSONObject apiParam = new JSONObject(service.getParam("parameters").toString());
+				courseQuotaEngine.setParam("DEPARTMENT", apiParam.getString("sis-department"));
+				courseQuotaEngine.setParam("COURSE_CODE", apiParam.getString("number"));
+				return courseQuotaEngine.resolve().get();
+			} catch (JSONException | InterruptedException | ExecutionException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}).thenApply((Service service) -> {
+			KitchenSinkController.reply(event.getReplyToken(), new TextMessage(service.getFulfillment()));
+			return null;
+		});
 	}
 
 }

@@ -4,7 +4,9 @@ import com.pwned.line.http.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 /***
  * Service for sending requests to DialogFlow.
@@ -12,38 +14,49 @@ import java.util.Map;
  * Resolved params: [parameters]
  * @author Christopher Wong, Calvin Ku
  */
-public class ApiAI extends Service {
+public class ApiAI implements Service {
 
 	private static final String BASE_URL = "https://api.dialogflow.com/v1/query";
 	private static final String VERSION = "20170712";
 
+	private String fulfillment = null;
+	private Map<String, Object> args = null;
+
 	public ApiAI(String query) {
-		super(query);
+		this.fulfillment = query;
+		this.args = new HashMap<>();
 	}
 
 	public ApiAI(String query, Map<String, Object> args) {
-		super(query, args);
+		this.fulfillment = query;
+		this.args = args;
+	}
+
+	public ApiAI(Service service) {
+		this.fulfillment = service.getFulfillment();
+		this.args = service.getArgs();
 	}
 
 	/***
-	 * Sends a query to DialogFlow.
-	 * @return fulfillment
+	 * DialogFlow payload
+	 * @return instance
 	 */
 	@Override
-	public String resolve() {
+	public CompletableFuture<Service> resolve() {
 		try {
 			HTTP http = new HTTP(BASE_URL);
-			http.setHeaders("Authorization", "Bearer " + super.getArgs("ACCESS_TOKEN"));
+			http.setHeaders("Authorization", "Bearer " + this.getParam("ACCESS_TOKEN"));
 			http.setHeaders("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
 			http.setParams("v", VERSION);
-			http.setParams("query", super.fulfillment);
-			http.setParams("sessionId", super.getArgs("uid"));
+			http.setParams("query", this.fulfillment);
+			http.setParams("sessionId", this.getParam("uid"));
 			JSONObject json = new JSONObject(http.get());
-			handler(json);
-		} catch (Exception e) {
+			this.handler(json);
+			return CompletableFuture.supplyAsync(() -> this);
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return super.fulfillment;
+		return null;
 	}
 
 	/***
@@ -52,11 +65,31 @@ public class ApiAI extends Service {
 	 */
 	private void handler(JSONObject json) {
 		try {
-			super.fulfillment = json.getJSONObject("result").getJSONObject("fulfillment").getString("speech");
-			super.setArgs("parameters", json.getJSONObject("result").getJSONObject("parameters"));
+			this.fulfillment = json.getJSONObject("result").getJSONObject("fulfillment").getString("speech");
+			this.setParam("parameters", json.getJSONObject("result").getJSONObject("parameters"));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public void setParam(String key, Object value) {
+		this.args.put(key, value);
+	}
+
+	@Override
+	public Object getParam(String key) {
+		return this.args.get(key);
+	}
+
+	@Override
+	public String getFulfillment() {
+		return this.fulfillment;
+	}
+
+	@Override
+	public Map<String, Object> getArgs() {
+		return this.args;
 	}
 
 }

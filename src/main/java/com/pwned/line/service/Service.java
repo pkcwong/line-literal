@@ -1,51 +1,44 @@
 package com.pwned.line.service;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 /***
- * Service prototype for chat-bot engine.
+ * Service interface
  * @author Christopher Wong
  */
-public class Service {
-
-	protected String fulfillment = null;
-	protected Map<String, Object> args = null;
-
-	public Service(String query) {
-		this.fulfillment = query;
-		this.args = new HashMap<>();
-	}
-
-	public Service(String query, Map<String, Object> args) {
-		this.fulfillment = query;
-		this.args = args;
-	}
+public interface Service {
 
 	/***
-	 * Default fulfillment with no processing.
-	 * @return
+	 * Main payload of service.
+	 * @return async method
 	 */
-	public String resolve() {
-		return this.fulfillment;
-	}
+	CompletableFuture<Service> resolve();
 
 	/***
-	 * Sets a variable.
+	 * Setter for parameters.
 	 * @param key key
 	 * @param value value
 	 */
-	public void setArgs(String key, Object value) {
-		this.args.put(key, value);
-	}
+	void setParam(String key, Object value);
 
 	/***
-	 * Gets a passed or resolved variable.
+	 * Getter for parameters.
 	 * @param key key
-	 * @return value
+	 * @return
 	 */
-	public Object getArgs(String key) {
-		return this.args.get(key);
-	}
+	Object getParam(String key);
+
+	/***
+	 * Getter for data member 'fulfillment'.
+	 * @return
+	 */
+	String getFulfillment();
+
+	/***
+	 * Getter for data member 'args'.
+	 * @return
+	 */
+	Map<String, Object> getArgs();
 
 }
