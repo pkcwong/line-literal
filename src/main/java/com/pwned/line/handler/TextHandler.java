@@ -37,7 +37,7 @@ public class TextHandler {
 			} catch (InterruptedException | ExecutionException e) {
 				e.printStackTrace();
 			}
-			return service;
+			return null;
 		})/*.thenApply((Service service) -> {
 			try {
 				Service courseQuotaEngine = new CourseQuota(service);
