@@ -37,7 +37,7 @@ public class TextHandler {
 			} catch (InterruptedException | ExecutionException e) {
 				e.printStackTrace();
 			}
-			return null;
+			return service;
 		}).thenApply((Service service) -> {
 			try {
 				Service courseQuotaEngine = new CourseQuota(service);
@@ -48,7 +48,7 @@ public class TextHandler {
 			} catch (JSONException | InterruptedException | ExecutionException e) {
 				e.printStackTrace();
 			}
-			return null;
+			return service;
 		}).thenApply((Service service) -> {
 			KitchenSinkController.reply(event.getReplyToken(), new TextMessage(service.getFulfillment()));
 			return null;
