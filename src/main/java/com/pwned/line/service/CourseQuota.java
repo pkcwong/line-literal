@@ -2,7 +2,6 @@ package com.pwned.line.service;
 
 import com.pwned.line.http.HTTP;
 
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,14 +14,6 @@ import java.util.regex.Pattern;
 public class CourseQuota extends DefaultService {
 
 	private static final String QUOTA_URL = "https://w5.ab.ust.hk/wcq/cgi-bin/1710/subject/";
-
-	public CourseQuota(String query) {
-		super(query);
-	}
-
-	public CourseQuota(String query, Map<String, Object> args) {
-		super(query, args);
-	}
 
 	public CourseQuota(Service service) {
 		super(service);
