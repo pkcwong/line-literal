@@ -41,6 +41,7 @@ public class Yandex extends DefaultService {
 	 */
 	private void handler(JSONObject httpResponse) throws Exception {
 		this.fulfillment = httpResponse.toString();
+		this.setParam("parameters", httpResponse.getJSONObject("result").getJSONObject("parameters"));
 	}
 
 }

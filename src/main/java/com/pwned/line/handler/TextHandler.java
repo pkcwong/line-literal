@@ -42,8 +42,8 @@ public class TextHandler {
 				return apiAiEngine.resolve().get();
 			} catch (Exception e) {
 				e.printStackTrace();
+				return service;
 			}
-			return service;
 		}).thenApply((Service service) -> {
 			try {
 				Service yandexEngine = new Yandex(service);
@@ -53,8 +53,8 @@ public class TextHandler {
 				return yandexEngine.resolve().get();
 			} catch (Exception e) {
 				e.printStackTrace();
+				return service;
 			}
-			return service;
 		})/*.thenApply((Service service) -> {
 			try {
 				Service courseQuotaEngine = new CourseQuota(service);
