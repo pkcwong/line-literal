@@ -37,7 +37,6 @@ public class DefaultService implements Service {
 	 */
 	@Override
 	public CompletableFuture<Service> resolve() throws Exception {
-		this.dump();
 		return CompletableFuture.supplyAsync(() -> this);
 	}
 

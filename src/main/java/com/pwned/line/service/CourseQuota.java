@@ -25,7 +25,6 @@ public class CourseQuota extends DefaultService {
 	 */
 	@Override
 	public CompletableFuture<Service> resolve() {
-		this.dump();
 		String department = this.getParam("DEPARTMENT").toString();
 		HTTP httpClient = new HTTP(QUOTA_URL + department);
 		this.fulfillment = getCourseName(httpClient.get());

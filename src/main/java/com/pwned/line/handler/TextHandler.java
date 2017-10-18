@@ -35,6 +35,7 @@ public class TextHandler {
 			}
 			return null;
 		}).thenApply((Service service) -> {
+			service.dump();
 			try {
 				Service apiAiEngine = new ApiAI(service);
 				apiAiEngine.setParam("ACCESS_TOKEN", System.getenv("API_AI_ACCESS_TOKEN"));
@@ -45,6 +46,7 @@ public class TextHandler {
 				return service;
 			}
 		}).thenApply((Service service) -> {
+			service.dump();
 			try {
 				Service yandexEngine = new Yandex(service);
 				yandexEngine.setParam("YANDEX_ACCESS_TOKEN", System.getenv("YANDEX_ACCESS_TOKEN"));

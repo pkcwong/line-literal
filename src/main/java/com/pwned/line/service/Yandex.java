@@ -25,7 +25,6 @@ public class Yandex extends DefaultService {
 	 */
 	@Override
 	public CompletableFuture<Service> resolve() throws Exception {
-		this.dump();
 		HTTP http = new HTTP(BASE_URL);
 		http.setParams("key", this.getParam("YANDEX_ACCESS_TOKEN"));
 		http.setParams("text", this.fulfillment);

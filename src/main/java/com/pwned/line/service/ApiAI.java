@@ -26,7 +26,6 @@ public class ApiAI extends DefaultService {
 	 */
 	@Override
 	public CompletableFuture<Service> resolve() throws Exception {
-		this.dump();
 		HTTP http = new HTTP(BASE_URL);
 		http.setHeaders("Authorization", "Bearer " + this.getParam("ACCESS_TOKEN"));
 		http.setHeaders("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
