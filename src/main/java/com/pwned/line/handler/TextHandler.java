@@ -58,6 +58,7 @@ public class TextHandler {
 			}
 			return service;
 		})*/.thenApply((Service service) -> {
+			service.dump();
 			KitchenSinkController.reply(event.getReplyToken(), new TextMessage(service.getFulfillment()));
 			return null;
 		});
