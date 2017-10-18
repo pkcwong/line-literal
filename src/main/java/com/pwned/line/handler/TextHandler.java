@@ -38,7 +38,7 @@ public class TextHandler {
 				e.printStackTrace();
 			}
 			return service;
-		}).thenApply((Service service) -> {
+		})/*.thenApply((Service service) -> {
 			try {
 				Service courseQuotaEngine = new CourseQuota(service);
 				JSONObject apiParam = new JSONObject(service.getParam("parameters").toString());
@@ -49,7 +49,7 @@ public class TextHandler {
 				e.printStackTrace();
 			}
 			return service;
-		}).thenApply((Service service) -> {
+		})*/.thenApply((Service service) -> {
 			KitchenSinkController.reply(event.getReplyToken(), new TextMessage(service.getFulfillment()));
 			return null;
 		});
