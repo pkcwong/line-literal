@@ -2,7 +2,6 @@ package com.pwned.line.service;
 
 import com.pwned.line.http.HTTP;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.regex.Matcher;
@@ -13,26 +12,20 @@ import java.util.regex.Pattern;
  * Required params: [DEPARTMENT, COURSE_CODE]
  * @author Calvin Ku, Christopher Wong
  */
-public class CourseQuota implements Service {
+public class CourseQuota extends DefaultService {
 
 	private static final String QUOTA_URL = "https://w5.ab.ust.hk/wcq/cgi-bin/1710/subject/";
 
-	private String fulfillment = null;
-	private Map<String, Object> args = null;
-
 	public CourseQuota(String query) {
-		this.fulfillment = query;
-		this.args = new HashMap<>();
+		super(query);
 	}
 
 	public CourseQuota(String query, Map<String, Object> args) {
-		this.fulfillment = query;
-		this.args = args;
+		super(query, args);
 	}
 
 	public CourseQuota(Service service) {
-		this.fulfillment = service.getFulfillment();
-		this.args = service.getArgs();
+		super(service);
 	}
 
 	/***
@@ -41,6 +34,7 @@ public class CourseQuota implements Service {
 	 */
 	@Override
 	public CompletableFuture<Service> resolve() {
+		this.dump();
 		String department = this.getParam("DEPARTMENT").toString();
 		HTTP httpClient = new HTTP(QUOTA_URL + department);
 		this.fulfillment = getCourseName(httpClient.get());
@@ -64,26 +58,6 @@ public class CourseQuota implements Service {
 			courseName = courseMatcher.group(1);
 		}
 		return this.fulfillment.replace("@data", courseName);
-	}
-
-	@Override
-	public void setParam(String key, Object value) {
-		this.args.put(key, value);
-	}
-
-	@Override
-	public Object getParam(String key) {
-		return this.args.get(key);
-	}
-
-	@Override
-	public String getFulfillment() {
-		return this.fulfillment;
-	}
-
-	@Override
-	public Map<String, Object> getArgs() {
-		return this.args;
 	}
 
 }

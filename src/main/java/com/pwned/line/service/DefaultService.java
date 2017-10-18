@@ -1,5 +1,8 @@
 package com.pwned.line.service;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -10,8 +13,8 @@ import java.util.concurrent.CompletableFuture;
  */
 public class DefaultService implements Service {
 
-	private String fulfillment = null;
-	private Map<String, Object> args = null;
+	protected String fulfillment = null;
+	protected Map<String, Object> args = null;
 
 	public DefaultService(String query) {
 		this.fulfillment = query;
@@ -34,6 +37,7 @@ public class DefaultService implements Service {
 	 */
 	@Override
 	public CompletableFuture<Service> resolve() {
+		this.dump();
 		return CompletableFuture.supplyAsync(() -> this);
 	}
 
@@ -55,6 +59,20 @@ public class DefaultService implements Service {
 	@Override
 	public Map<String, Object> getArgs() {
 		return this.args;
+	}
+
+	@Override
+	public void dump() {
+		try {
+			JSONObject dump = new JSONObject();
+			JSONObject mem = new JSONObject(this.getArgs());
+			dump.put("class", this.getClass().getSimpleName());
+			dump.put("fulfillment", this.getFulfillment());
+			dump.put("args", mem);
+			System.out.println(dump.toString());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

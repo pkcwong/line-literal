@@ -5,7 +5,7 @@ import java.util.concurrent.CompletableFuture;
 
 /***
  * Service interface
- * @author Christopher Wong
+ * @author Christopher Wong, Calvin Ku
  */
 public interface Service {
 
@@ -40,5 +40,10 @@ public interface Service {
 	 * @return
 	 */
 	Map<String, Object> getArgs();
+
+	/***
+	 * Memory dump of Service.
+	 */
+	void dump();
 
 }

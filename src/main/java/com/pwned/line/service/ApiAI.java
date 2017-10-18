@@ -4,7 +4,6 @@ import com.pwned.line.http.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -14,7 +13,7 @@ import java.util.concurrent.CompletableFuture;
  * Resolved params: [parameters]
  * @author Christopher Wong, Calvin Ku
  */
-public class ApiAI implements Service {
+public class ApiAI extends DefaultService {
 
 	private static final String BASE_URL = "https://api.dialogflow.com/v1/query";
 	private static final String VERSION = "20170712";
@@ -23,18 +22,15 @@ public class ApiAI implements Service {
 	private Map<String, Object> args = null;
 
 	public ApiAI(String query) {
-		this.fulfillment = query;
-		this.args = new HashMap<>();
+		super(query);
 	}
 
 	public ApiAI(String query, Map<String, Object> args) {
-		this.fulfillment = query;
-		this.args = args;
+		super(query, args);
 	}
 
 	public ApiAI(Service service) {
-		this.fulfillment = service.getFulfillment();
-		this.args = service.getArgs();
+		super(service);
 	}
 
 	/***
@@ -43,6 +39,7 @@ public class ApiAI implements Service {
 	 */
 	@Override
 	public CompletableFuture<Service> resolve() {
+		this.dump();
 		try {
 			HTTP http = new HTTP(BASE_URL);
 			http.setHeaders("Authorization", "Bearer " + this.getParam("ACCESS_TOKEN"));
@@ -70,26 +67,6 @@ public class ApiAI implements Service {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public void setParam(String key, Object value) {
-		this.args.put(key, value);
-	}
-
-	@Override
-	public Object getParam(String key) {
-		return this.args.get(key);
-	}
-
-	@Override
-	public String getFulfillment() {
-		return this.fulfillment;
-	}
-
-	@Override
-	public Map<String, Object> getArgs() {
-		return this.args;
 	}
 
 }
