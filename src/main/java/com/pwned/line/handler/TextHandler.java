@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 /***
@@ -28,7 +29,14 @@ public class TextHandler {
 	public static void handle(MessageEvent<TextMessageContent> event) throws URISyntaxException {
 		TextMessageContent message = event.getMessage();
 		String incoming = message.getText();
-		new DefaultService(incoming).resolve().thenApply((Service service) -> {
+		CompletableFuture.supplyAsync(() -> {
+			try {
+				return new DefaultService(incoming).resolve().get();
+			} catch (InterruptedException | ExecutionException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}).thenApply((Service service) -> {
 			try {
 				Service apiAiEngine = new ApiAI(service);
 				apiAiEngine.setParam("ACCESS_TOKEN", System.getenv("API_AI_ACCESS_TOKEN"));
