@@ -52,10 +52,11 @@ public class ApiAI implements Service {
 			http.setParams("sessionId", this.getParam("uid"));
 			JSONObject json = new JSONObject(http.get());
 			this.handler(json);
-		} catch (Exception e) {
+			return CompletableFuture.supplyAsync(() -> this);
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return CompletableFuture.supplyAsync(() -> this);
+		return null;
 	}
 
 	/***

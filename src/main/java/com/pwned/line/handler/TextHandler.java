@@ -27,7 +27,7 @@ public class TextHandler {
 		String incoming = message.getText();
 		new DefaultService(incoming).resolve().thenApply((Service service) -> {
 			try {
-				ApiAI apiAiEngine = new ApiAI(service);
+				Service apiAiEngine = new ApiAI(service);
 				apiAiEngine.setParam("ACCESS_TOKEN", System.getenv("API_AI_ACCESS_TOKEN"));
 				apiAiEngine.setParam("uid", event.getSource().getUserId());
 				return apiAiEngine.resolve().get();
