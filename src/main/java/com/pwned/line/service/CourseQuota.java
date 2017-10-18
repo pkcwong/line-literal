@@ -39,6 +39,7 @@ public class CourseQuota implements Service {
 	}
 
 	private String getCourseName(String httpResponse) {
+		System.out.println(httpResponse);
 		String department = this.getParam("DEPARTMENT").toString();
 		String courseCode = this.getParam("COURSE_CODE").toString();
 		String regex = "<h2>" + department + "\\s" + courseCode + "\\s-\\s(.+?)\\s\\(\\d\\sunits\\)</h2>";
