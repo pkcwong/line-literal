@@ -17,9 +17,6 @@ public class ApiAI extends DefaultService {
 	private static final String BASE_URL = "https://api.dialogflow.com/v1/query";
 	private static final String VERSION = "20170712";
 
-	private String fulfillment = null;
-	private Map<String, Object> args = null;
-
 	public ApiAI(String query) {
 		super(query);
 	}
@@ -46,7 +43,6 @@ public class ApiAI extends DefaultService {
 		http.setParams("query", this.fulfillment);
 		http.setParams("sessionId", this.getParam("uid"));
 		JSONObject json = new JSONObject(http.get());
-		System.out.println(json.toString());
 		this.handler(json);
 		return CompletableFuture.supplyAsync(() -> this);
 	}
