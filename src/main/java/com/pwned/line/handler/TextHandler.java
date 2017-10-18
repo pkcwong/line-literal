@@ -40,7 +40,6 @@ public class TextHandler {
 			}
 			return null;
 		}).thenApply((Service service) -> {
-			System.out.println("PIPE IN: " + service.getFulfillment());
 			try {
 				Service courseQuotaEngine = new CourseQuota(service);
 				JSONObject apiParam = new JSONObject(service.getParam("parameters").toString());
