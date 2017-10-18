@@ -48,6 +48,7 @@ public class ApiAI extends DefaultService {
 			http.setParams("query", this.fulfillment);
 			http.setParams("sessionId", this.getParam("uid"));
 			JSONObject json = new JSONObject(http.get());
+			System.out.println(json.toString());
 			this.handler(json);
 			return CompletableFuture.supplyAsync(() -> this);
 		} catch (JSONException e) {
