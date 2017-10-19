@@ -1,5 +1,8 @@
 package com.pwned.line.service;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -10,17 +13,12 @@ import java.util.concurrent.CompletableFuture;
  */
 public class DefaultService implements Service {
 
-	private String fulfillment = null;
-	private Map<String, Object> args = null;
+	protected String fulfillment = null;
+	protected Map<String, Object> args = null;
 
 	public DefaultService(String query) {
 		this.fulfillment = query;
 		this.args = new HashMap<>();
-	}
-
-	public DefaultService(String query, Map<String, Object> args) {
-		this.fulfillment = query;
-		this.args = args;
 	}
 
 	public DefaultService(Service service) {
@@ -33,7 +31,7 @@ public class DefaultService implements Service {
 	 * @return instance
 	 */
 	@Override
-	public CompletableFuture<Service> resolve() {
+	public CompletableFuture<Service> resolve() throws Exception {
 		return CompletableFuture.supplyAsync(() -> this);
 	}
 
@@ -55,6 +53,20 @@ public class DefaultService implements Service {
 	@Override
 	public Map<String, Object> getArgs() {
 		return this.args;
+	}
+
+	@Override
+	public void dump() {
+		try {
+			JSONObject dump = new JSONObject();
+			JSONObject mem = new JSONObject(this.getArgs());
+			dump.put("args", mem);
+			dump.put("fulfillment", this.getFulfillment());
+			dump.put("class", this.getClass().getSimpleName());
+			System.out.println(dump.toString());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

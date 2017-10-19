@@ -5,7 +5,7 @@ import java.util.concurrent.CompletableFuture;
 
 /***
  * Service interface
- * @author Christopher Wong
+ * @author Christopher Wong, Calvin Ku
  */
 public interface Service {
 
@@ -13,7 +13,7 @@ public interface Service {
 	 * Main payload of service.
 	 * @return async method
 	 */
-	CompletableFuture<Service> resolve();
+	CompletableFuture<Service> resolve() throws Exception;
 
 	/***
 	 * Setter for parameters.
@@ -40,5 +40,10 @@ public interface Service {
 	 * @return
 	 */
 	Map<String, Object> getArgs();
+
+	/***
+	 * Memory dump of Service.
+	 */
+	void dump();
 
 }
