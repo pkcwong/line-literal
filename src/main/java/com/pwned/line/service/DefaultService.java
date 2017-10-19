@@ -21,11 +21,6 @@ public class DefaultService implements Service {
 		this.args = new HashMap<>();
 	}
 
-	public DefaultService(String query, Map<String, Object> args) {
-		this.fulfillment = query;
-		this.args = args;
-	}
-
 	public DefaultService(Service service) {
 		this.fulfillment = service.getFulfillment();
 		this.args = service.getArgs();
@@ -65,9 +60,9 @@ public class DefaultService implements Service {
 		try {
 			JSONObject dump = new JSONObject();
 			JSONObject mem = new JSONObject(this.getArgs());
-			dump.put("class", this.getClass().getSimpleName());
-			dump.put("fulfillment", this.getFulfillment());
 			dump.put("args", mem);
+			dump.put("fulfillment", this.getFulfillment());
+			dump.put("class", this.getClass().getSimpleName());
 			System.out.println(dump.toString());
 		} catch (JSONException e) {
 			e.printStackTrace();

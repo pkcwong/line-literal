@@ -51,7 +51,7 @@ public class TextHandler {
 				Service yandexEngine = new Yandex(service);
 				yandexEngine.setParam("YANDEX_ACCESS_TOKEN", System.getenv("YANDEX_ACCESS_TOKEN"));
 				JSONObject apiParam = new JSONObject(service.getParam("parameters").toString());
-				yandexEngine.setParam("LANG", apiParam.getString("lang-to"));
+				yandexEngine.setParam("LANG", apiParam.has("lang-to") ? apiParam.getString("lang-to") : null);
 				return yandexEngine.resolve().get();
 			} catch (Exception e) {
 				e.printStackTrace();
