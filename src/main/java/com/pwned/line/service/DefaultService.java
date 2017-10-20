@@ -7,10 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-/***
- * Default text message handler class.
- * @author Christopher Wong
- */
 public class DefaultService implements Service {
 
 	protected String fulfillment = null;
@@ -26,13 +22,16 @@ public class DefaultService implements Service {
 		this.args = service.getArgs();
 	}
 
-	/***
-	 * Default handler for text messages.
-	 * @return instance
-	 */
 	@Override
-	public CompletableFuture<Service> resolve() throws Exception {
-		return CompletableFuture.supplyAsync(() -> this);
+	public CompletableFuture<Service> resolve() {
+		return CompletableFuture.supplyAsync(() -> {
+			try {
+				return new ApiAI(this).resolve().get();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		});
 	}
 
 	@Override
