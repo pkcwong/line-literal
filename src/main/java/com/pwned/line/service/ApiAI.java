@@ -1,5 +1,6 @@
 package com.pwned.line.service;
 
+import com.pwned.line.config.Environment;
 import com.pwned.line.http.HTTP;
 import org.json.JSONObject;
 
@@ -20,7 +21,7 @@ public class ApiAI extends DefaultService {
 		return CompletableFuture.supplyAsync(() -> {
 			try {
 				HTTP http = new HTTP(BASE_URL);
-				http.setHeaders("Authorization", "Bearer " + this.getParam("ACCESS_TOKEN"));
+				http.setHeaders("Authorization", "Bearer " + Environment.API_AI_ACCESS_TOKEN);
 				http.setHeaders("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
 				http.setParams("v", VERSION);
 				http.setParams("query", this.fulfillment);
