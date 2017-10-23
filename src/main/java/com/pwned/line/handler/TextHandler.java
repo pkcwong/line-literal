@@ -26,7 +26,9 @@ public class TextHandler {
 		String incoming = message.getText();
 		CompletableFuture.supplyAsync(() -> {
 			try {
-				return new DefaultService(incoming).resolve().get();
+				Service module = new DefaultService(incoming);
+				module.setParam("uid", event.getSource().getUserId());
+				return module.resolve().get();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
