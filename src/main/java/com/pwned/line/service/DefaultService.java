@@ -9,6 +9,9 @@ import java.util.concurrent.CompletableFuture;
 
 /***
  * Default Service module.
+ * Required params: []
+ * Reserved tokens: []
+ * Resolved params: []
  * @author Christopher Wong
  */
 public class DefaultService implements Service {
@@ -30,6 +33,7 @@ public class DefaultService implements Service {
 	public CompletableFuture<Service> resolve() {
 		this.dump();
 		this.payload();
+		this.dump();
 		return CompletableFuture.supplyAsync(() -> {
 			try {
 				return this.chain();

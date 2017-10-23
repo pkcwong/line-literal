@@ -8,6 +8,7 @@ import org.json.JSONObject;
 /***
  * Service for sending requests to DialogFlow.
  * Required params: [uid]
+ * Reserved tokens: []
  * Resolved params: [parameters]
  * @author Christopher Wong, Calvin Ku
  */

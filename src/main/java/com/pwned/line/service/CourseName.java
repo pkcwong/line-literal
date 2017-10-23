@@ -1,13 +1,17 @@
 package com.pwned.line.service;
 
 import com.pwned.line.http.HTTP;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /***
  * Service for sending requests to HKUST QUOTA WEBSITE.
- * Required params: [DEPARTMENT, COURSE_CODE]
+ * Required params: [parameters]
+ * Reserved tokens: []
+ * Resolved params: []
  * @author Calvin Ku, Christopher Wong
  */
 public class CourseName extends DefaultService {
@@ -34,17 +38,23 @@ public class CourseName extends DefaultService {
 	 * @return Course name
 	 */
 	private String getCourseName(String httpResponse) {
-		String department = this.getParam("DEPARTMENT").toString();
-		String courseCode = this.getParam("COURSE_CODE").toString();
-		String regex = "<h2>" + department + "\\s" + courseCode + "\\s-\\s(.+?)\\s\\(\\d\\sunits\\)</h2>";
-		String courseName = "";
-		Pattern departmentPattern = Pattern.compile(regex);
-		Matcher courseMatcher = departmentPattern.matcher(httpResponse);
-		while (courseMatcher.find()) {
-			System.out.println(regex);
-			courseName = courseMatcher.group(1);
+		try {
+			JSONObject apiParam = new JSONObject(this.getParam("parameters").toString());
+			String department = apiParam.getString("sis-department");
+			String courseCode = apiParam.getString("number");
+			String regex = "<h2>" + department + "\\s" + courseCode + "\\s-\\s(.+?)\\s\\(\\d\\sunits\\)</h2>";
+			String courseName = "";
+			Pattern departmentPattern = Pattern.compile(regex);
+			Matcher courseMatcher = departmentPattern.matcher(httpResponse);
+			while (courseMatcher.find()) {
+				System.out.println(regex);
+				courseName = courseMatcher.group(1);
+			}
+			return this.fulfillment.replace("@data", courseName);
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
-		return this.fulfillment.replace("@data", courseName);
+		return null;
 	}
 
 	@Override
