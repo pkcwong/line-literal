@@ -24,6 +24,7 @@ public class DefaultService implements Service {
 
 	@Override
 	public CompletableFuture<Service> resolve() {
+		this.dump();
 		return CompletableFuture.supplyAsync(() -> {
 			try {
 				return new ApiAI(this).resolve().get();

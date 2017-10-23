@@ -16,6 +16,7 @@ public class ApiAI extends DefaultService {
 
 	@Override
 	public CompletableFuture<Service> resolve() {
+		this.dump();
 		return CompletableFuture.supplyAsync(() -> {
 			try {
 				HTTP http = new HTTP(BASE_URL);
