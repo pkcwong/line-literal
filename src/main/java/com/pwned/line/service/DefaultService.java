@@ -8,7 +8,10 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /***
- * Default text message handler class.
+ * Default Service module.
+ * Required params: []
+ * Reserved tokens: []
+ * Resolved params: []
  * @author Christopher Wong
  */
 public class DefaultService implements Service {
@@ -26,13 +29,37 @@ public class DefaultService implements Service {
 		this.args = service.getArgs();
 	}
 
+	@Override
+	public CompletableFuture<Service> resolve() {
+		this.dump();
+		this.payload();
+		this.dump();
+		return CompletableFuture.supplyAsync(() -> {
+			try {
+				return this.chain();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		});
+	}
+
 	/***
-	 * Default handler for text messages.
-	 * @return instance
+	 * Default Service provides no processing.
 	 */
 	@Override
-	public CompletableFuture<Service> resolve() throws Exception {
-		return CompletableFuture.supplyAsync(() -> this);
+	public void payload() {
+
+	}
+
+	/***
+	 * Pass query to API.AI
+	 * @return Service
+	 * @throws Exception Exception
+	 */
+	@Override
+	public Service chain() throws Exception {
+		return new ApiAI(this).resolve().get();
 	}
 
 	@Override

@@ -4,45 +4,57 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /***
- * Service interface
- * @author Christopher Wong, Calvin Ku
+ * Service interface.
+ * @author Christopher Wong
  */
 public interface Service {
 
 	/***
-	 * Main payload of service.
-	 * @return async method
+	 * Threading manager for Service modules.
+	 * @return CompletableFuture
 	 */
-	CompletableFuture<Service> resolve() throws Exception;
+	CompletableFuture<Service> resolve();
 
 	/***
-	 * Setter for parameters.
+	 * Payload of Service module.
+	 */
+	void payload();
+
+	/***
+	 * Request processing from next Service module.
+	 * @return Service state
+	 * @throws Exception Exception
+	 */
+	Service chain() throws Exception;
+
+	/***
+	 * Sets resolved parameters.
 	 * @param key key
 	 * @param value value
 	 */
 	void setParam(String key, Object value);
 
 	/***
-	 * Getter for parameters.
+	 * Gets resolved parameters.
 	 * @param key key
-	 * @return
+	 * @return Object
 	 */
 	Object getParam(String key);
 
 	/***
-	 * Getter for data member 'fulfillment'.
-	 * @return
+	 * Getter for fulfillment.
+	 * @return String
 	 */
 	String getFulfillment();
 
 	/***
-	 * Getter for data member 'args'.
-	 * @return
+	 * Getter for args.
+	 * @return Map
 	 */
 	Map<String, Object> getArgs();
 
 	/***
-	 * Memory dump of Service.
+	 * Debug messages dump.
 	 */
 	void dump();
 
