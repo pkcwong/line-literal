@@ -5,6 +5,12 @@ import com.pwned.line.http.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/***
+ * Service for sending requests to DialogFlow.
+ * Required params: [uid]
+ * Resolved params: [parameters]
+ * @author Christopher Wong, Calvin Ku
+ */
 public class ApiAI extends DefaultService {
 
 	private static final String BASE_URL = "https://api.dialogflow.com/v1/query";
@@ -14,6 +20,9 @@ public class ApiAI extends DefaultService {
 		super(service);
 	}
 
+	/***
+	 * DialogFlow payload
+	 */
 	@Override
 	public void payload() {
 		try {
@@ -33,6 +42,7 @@ public class ApiAI extends DefaultService {
 
 	@Override
 	public Service chain() throws Exception {
-		return this;
+		return new CourseName(this);
 	}
+
 }

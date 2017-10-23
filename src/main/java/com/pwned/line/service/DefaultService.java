@@ -7,6 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+/***
+ * Default Service module.
+ * @author Christopher Wong
+ */
 public class DefaultService implements Service {
 
 	protected String fulfillment = null;
@@ -36,11 +40,19 @@ public class DefaultService implements Service {
 		});
 	}
 
+	/***
+	 * Default Service provides no processing.
+	 */
 	@Override
 	public void payload() {
 
 	}
 
+	/***
+	 * Pass query to API.AI
+	 * @return Service
+	 * @throws Exception Exception
+	 */
 	@Override
 	public Service chain() throws Exception {
 		return new ApiAI(this).resolve().get();
