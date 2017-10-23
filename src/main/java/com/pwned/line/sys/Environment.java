@@ -1,4 +1,4 @@
-package com.pwned.line.config;
+package com.pwned.line.sys;
 
 public class Environment {
 

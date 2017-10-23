@@ -25,14 +25,25 @@ public class DefaultService implements Service {
 	@Override
 	public CompletableFuture<Service> resolve() {
 		this.dump();
+		this.payload();
 		return CompletableFuture.supplyAsync(() -> {
 			try {
-				return new ApiAI(this).resolve().get();
+				return this.chain();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			return null;
 		});
+	}
+
+	@Override
+	public void payload() {
+
+	}
+
+	@Override
+	public Service chain() throws Exception {
+		return new ApiAI(this).resolve().get();
 	}
 
 	@Override

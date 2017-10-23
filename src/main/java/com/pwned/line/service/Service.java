@@ -7,6 +7,10 @@ public interface Service {
 
 	CompletableFuture<Service> resolve();
 
+	void payload();
+
+	Service chain() throws Exception;
+
 	void setParam(String key, Object value);
 
 	Object getParam(String key);
