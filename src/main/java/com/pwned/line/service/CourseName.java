@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  */
 public class CourseName extends DefaultService {
 
-	private static final String ACCESS_TOKEN = "bd33003adb6c4a5d8da4e278eaee8ee6";
+	private static final String API_AI_ACCESS_TOKEN = "bd33003adb6c4a5d8da4e278eaee8ee6";
 	private static final String QUOTA_URL = "https://w5.ab.ust.hk/wcq/cgi-bin/1710/subject/";
 
 	public CourseName(Service service) {
@@ -28,7 +28,7 @@ public class CourseName extends DefaultService {
 	 */
 	@Override
 	public void payload() throws Exception {
-		JSONObject json = new ApiAI(ACCESS_TOKEN, this.getParam("uid").toString(), this.fulfillment).execute();
+		JSONObject json = new ApiAI(API_AI_ACCESS_TOKEN, this.getParam("uid").toString(), this.fulfillment).execute();
 		this.fulfillment = json.getJSONObject("result").getJSONObject("fulfillment").getString("speech");
 		this.setParam("parameters", json.getJSONObject("result").getJSONObject("parameters"));
 		JSONObject apiParam = new JSONObject(this.getParam("parameters").toString());
