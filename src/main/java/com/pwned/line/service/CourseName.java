@@ -27,7 +27,8 @@ public class CourseName extends DefaultService {
 	 */
 	@Override
 	public void payload() throws Exception {
-		String department = this.getParam("DEPARTMENT").toString();
+		JSONObject apiParam = new JSONObject(this.getParam("parameters").toString());
+		String department = apiParam.getString("sis-department");
 		HTTP httpClient = new HTTP(QUOTA_URL + department);
 		this.fulfillment = getCourseName(httpClient.get());
 	}
