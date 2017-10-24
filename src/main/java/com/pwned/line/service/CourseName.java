@@ -42,6 +42,7 @@ public class CourseName extends DefaultService {
 			JSONObject apiParam = new JSONObject(this.getParam("parameters").toString());
 			String department = apiParam.getString("sis-department");
 			String courseCode = apiParam.getString("number");
+			System.out.println(department + '\n' + courseCode);
 			String regex = "<h2>" + department + "\\s" + courseCode + "\\s-\\s(.+?)\\s\\(\\d\\sunits\\)</h2>";
 			String courseName = "";
 			Pattern departmentPattern = Pattern.compile(regex);
