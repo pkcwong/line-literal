@@ -1,4 +1,4 @@
-package com.pwned.line.database;
+package com.pwned.line.web;
 
 import java.net.URI;
 import java.net.URISyntaxException;
