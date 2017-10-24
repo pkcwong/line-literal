@@ -26,7 +26,7 @@ public class CourseName extends DefaultService {
 	 * Fetch the course information from HKUST Course Quota Page.
 	 */
 	@Override
-	public void payload() {
+	public void payload() throws Exception {
 		String department = this.getParam("DEPARTMENT").toString();
 		HTTP httpClient = new HTTP(QUOTA_URL + department);
 		this.fulfillment = getCourseName(httpClient.get());
@@ -37,25 +37,20 @@ public class CourseName extends DefaultService {
 	 * @param httpResponse http response
 	 * @return Course name
 	 */
-	private String getCourseName(String httpResponse) {
-		try {
-			JSONObject apiParam = new JSONObject(this.getParam("parameters").toString());
-			String department = apiParam.getString("sis-department");
-			String courseCode = apiParam.getString("number");
-			System.out.println(department + '\n' + courseCode);
-			String regex = "<h2>" + department + "\\s" + courseCode + "\\s-\\s(.+?)\\s\\(\\d\\sunits\\)</h2>";
-			String courseName = "";
-			Pattern departmentPattern = Pattern.compile(regex);
-			Matcher courseMatcher = departmentPattern.matcher(httpResponse);
-			while (courseMatcher.find()) {
-				System.out.println(regex);
-				courseName = courseMatcher.group(1);
-			}
-			return this.fulfillment.replace("@data", courseName);
-		} catch (JSONException e) {
-			e.printStackTrace();
+	private String getCourseName(String httpResponse) throws Exception {
+		JSONObject apiParam = new JSONObject(this.getParam("parameters").toString());
+		String department = apiParam.getString("sis-department");
+		String courseCode = apiParam.getString("number");
+		System.out.println(department + '\n' + courseCode);
+		String regex = "<h2>" + department + "\\s" + courseCode + "\\s-\\s(.+?)\\s\\(\\d\\sunits\\)</h2>";
+		String courseName = "";
+		Pattern departmentPattern = Pattern.compile(regex);
+		Matcher courseMatcher = departmentPattern.matcher(httpResponse);
+		while (courseMatcher.find()) {
+			System.out.println(regex);
+			courseName = courseMatcher.group(1);
 		}
-		return null;
+		return this.fulfillment.replace("@data", courseName);
 	}
 
 	@Override

@@ -25,20 +25,16 @@ public class ApiAI extends DefaultService {
 	 * DialogFlow payload
 	 */
 	@Override
-	public void payload() {
-		try {
-			HTTP http = new HTTP(BASE_URL);
-			http.setHeaders("Authorization", "Bearer " + Environment.API_AI_ACCESS_TOKEN);
-			http.setHeaders("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
-			http.setParams("v", VERSION);
-			http.setParams("query", this.fulfillment);
-			http.setParams("sessionId", this.getParam("uid"));
-			JSONObject json = new JSONObject(http.get());
-			this.fulfillment = json.getJSONObject("result").getJSONObject("fulfillment").getString("speech");
-			this.setParam("parameters", json.getJSONObject("result").getJSONObject("parameters"));
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+	public void payload() throws Exception {
+		HTTP http = new HTTP(BASE_URL);
+		http.setHeaders("Authorization", "Bearer " + Environment.API_AI_ACCESS_TOKEN);
+		http.setHeaders("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
+		http.setParams("v", VERSION);
+		http.setParams("query", this.fulfillment);
+		http.setParams("sessionId", this.getParam("uid"));
+		JSONObject json = new JSONObject(http.get());
+		this.fulfillment = json.getJSONObject("result").getJSONObject("fulfillment").getString("speech");
+		this.setParam("parameters", json.getJSONObject("result").getJSONObject("parameters"));
 	}
 
 	@Override

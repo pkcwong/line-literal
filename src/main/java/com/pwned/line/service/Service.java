@@ -18,7 +18,7 @@ public interface Service {
 	/***
 	 * Payload of Service module.
 	 */
-	void payload();
+	void payload() throws Exception;
 
 	/***
 	 * Request processing from next Service module.
