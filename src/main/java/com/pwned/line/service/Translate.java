@@ -25,7 +25,7 @@ public class Translate extends DefaultService {
 		JSONObject apiai = new ApiAI(API_AI_ACCESS_TOKEN, this.getParam("uid").toString(), this.fulfillment).execute();
 		JSONObject parameters = apiai.getJSONObject("result").getJSONObject("parameters");
 		JSONObject yandex = new YandexTranslate(YANDEX_ACCESS_TOKEN, parameters.getString("phrase"), parameters.getString("lang-to")).execute();
-		this.fulfillment = this.fulfillment.replace("@translate", yandex.getJSONArray("text").get(0).toString());
+		this.fulfillment = yandex.getJSONArray("text").get(0).toString();
 	}
 
 	@Override
