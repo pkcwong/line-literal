@@ -28,7 +28,7 @@ public class CourseName extends DefaultService {
 	@Override
 	public void payload() throws Exception {
 		JSONObject apiParam = new JSONObject(this.getParam("parameters").toString());
-		String department = apiParam.getString("sis-department");
+		String department = apiParam.getString("department");
 		HTTP httpClient = new HTTP(QUOTA_URL + department);
 		this.fulfillment = getCourseName(httpClient.get());
 	}
@@ -40,7 +40,7 @@ public class CourseName extends DefaultService {
 	 */
 	private String getCourseName(String httpResponse) throws Exception {
 		JSONObject apiParam = new JSONObject(this.getParam("parameters").toString());
-		String department = apiParam.getString("sis-department");
+		String department = apiParam.getString("department");
 		String courseCode = apiParam.getString("number");
 		System.out.println(department + '\n' + courseCode);
 		String regex = "<h2>" + department + "\\s" + courseCode + "\\s-\\s(.+?)\\s\\(\\d\\sunits\\)</h2>";
