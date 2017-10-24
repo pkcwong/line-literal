@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 /***
  * Service for sending requests to HKUST QUOTA WEBSITE.
  * Required params: [parameters]
- * Reserved tokens: []
+ * Reserved tokens: [@course::title]
  * Resolved params: []
  * @author Calvin Ku, Christopher Wong
  */
@@ -51,7 +51,7 @@ public class CourseName extends DefaultService {
 			System.out.println(regex);
 			courseName = courseMatcher.group(1);
 		}
-		return this.fulfillment.replace("@data", courseName);
+		return this.fulfillment.replace("@course::title", courseName);
 	}
 
 	@Override
