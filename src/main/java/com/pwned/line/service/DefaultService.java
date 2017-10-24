@@ -40,7 +40,7 @@ public class DefaultService implements Service {
 		this.dump();
 		return CompletableFuture.supplyAsync(() -> {
 			try {
-				return this.chain().resolve().get();
+				return this.chain();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -63,7 +63,7 @@ public class DefaultService implements Service {
 	 */
 	@Override
 	public Service chain() throws Exception {
-		return new ApiAI(this);
+		return new ApiAI(this).resolve().get();
 	}
 
 	@Override

@@ -39,7 +39,7 @@ public class ApiAI extends DefaultService {
 
 	@Override
 	public Service chain() throws Exception {
-		return new CourseName(this);
+		return new CourseName(this).resolve().get();
 	}
 
 }
