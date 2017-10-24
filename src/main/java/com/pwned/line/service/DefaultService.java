@@ -32,7 +32,11 @@ public class DefaultService implements Service {
 	@Override
 	public CompletableFuture<Service> resolve() {
 		this.dump();
-		this.payload();
+		try {
+			this.payload();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		this.dump();
 		return CompletableFuture.supplyAsync(() -> {
 			try {
@@ -48,7 +52,7 @@ public class DefaultService implements Service {
 	 * Default Service provides no processing.
 	 */
 	@Override
-	public void payload() {
+	public void payload() throws Exception {
 
 	}
 
