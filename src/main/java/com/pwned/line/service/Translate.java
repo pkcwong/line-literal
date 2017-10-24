@@ -1,13 +1,12 @@
 package com.pwned.line.service;
 
-import com.pwned.line.web.ApiAI;
 import com.pwned.line.web.YandexTranslate;
 import org.json.JSONObject;
 
 /***
  * Service module for translation.
- * Required params: [uid]
- * Reserved tokens: [@translate]
+ * Required params: [parameters]
+ * Reserved tokens: []
  * Resolved params: []
  * @author Christopher Wong, Calvin Ku
  */

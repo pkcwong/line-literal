@@ -3,6 +3,13 @@ package com.pwned.line.service;
 import com.pwned.line.web.ApiAI;
 import org.json.JSONObject;
 
+/***
+ * Service module for DialogFlow translation
+ * Required params: [uid]
+ * Reserved tokens: []
+ * Resolved params: [parameters]
+ * @author Christopher Wong, Calvin Ku
+ */
 public class DialogFlowTranslate extends DefaultService {
 
 	private static String API_AI_ACCESS_TOKEN = "6ad9c104380b49d6803939577310156a";
