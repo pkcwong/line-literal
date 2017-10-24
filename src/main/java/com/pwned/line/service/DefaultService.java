@@ -30,7 +30,7 @@ public class DefaultService implements Service {
 	}
 
 	@Override
-	public CompletableFuture<Service> resolve() {
+	public final CompletableFuture<Service> resolve() {
 		this.dump();
 		try {
 			this.payload();
@@ -63,31 +63,31 @@ public class DefaultService implements Service {
 	 */
 	@Override
 	public Service chain() throws Exception {
-		return new ApiAI(this).resolve().get();
+		return new DialogFlowCourse(this).resolve().get();
 	}
 
 	@Override
-	public void setParam(String key, Object value) {
+	public final void setParam(String key, Object value) {
 		this.args.put(key, value);
 	}
 
 	@Override
-	public Object getParam(String key) {
+	public final Object getParam(String key) {
 		return this.args.get(key);
 	}
 
 	@Override
-	public String getFulfillment() {
+	public final String getFulfillment() {
 		return this.fulfillment;
 	}
 
 	@Override
-	public Map<String, Object> getArgs() {
+	public final Map<String, Object> getArgs() {
 		return this.args;
 	}
 
 	@Override
-	public void dump() {
+	public final void dump() {
 		try {
 			JSONObject dump = new JSONObject();
 			JSONObject mem = new JSONObject(this.getArgs());
