@@ -40,7 +40,7 @@ public class DefaultService implements Service {
 		this.dump();
 		return CompletableFuture.supplyAsync(() -> {
 			try {
-				return this.chain();
+				return this.chain().resolve().get();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
