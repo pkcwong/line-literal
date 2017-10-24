@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
  * Service for course information.
  * Required params: [uid]
  * Reserved tokens: [@course::title]
- * Resolved params: [parameters]
+ * Resolved params: []
  * @author Christopher Wong, Calvin Ku
  */
 public class CourseName extends DefaultService {

@@ -16,7 +16,7 @@ public class Translate extends DefaultService {
 	@Override
 	public void payload() throws Exception {
 		JSONObject apiai = new ApiAI(API_AI_ACCESS_TOKEN, this.getParam("uid").toString(), this.fulfillment).execute();
-		JSONObject parameters = apiai.getJSONObject("parameters");
+		JSONObject parameters = apiai.getJSONObject("result").getJSONObject("parameters");
 		JSONObject yandex = new YandexTranslate(YANDEX_ACCESS_TOKEN, this.fulfillment, parameters.getString("lang-to")).execute();
 		this.fulfillment = yandex.getJSONArray("text").get(0).toString();
 	}
