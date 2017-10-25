@@ -1,5 +1,8 @@
 # Line Literal
+
 Author: Christopher Wong
+
+[Issues and Project Management](https://waffle.io/pkcwong/line-literal)
 
 ## Installation
 This section describes the deployment procedure.
