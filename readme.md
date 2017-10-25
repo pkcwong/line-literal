@@ -51,6 +51,6 @@ The entry point of the processing services is defined in ```DefaultService.java`
 ```Java
 @Override
 public Service chain() throws Exception {
-	return new DialogFlowTranslate(this).resolve().get();
+	return new SampleService(this).resolve().get();
 }
 ```
