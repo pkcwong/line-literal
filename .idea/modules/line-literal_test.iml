@@ -14,6 +14,7 @@
     <orderEntry type="library" name="Gradle: postgresql:postgresql:9.0-801.jdbc4" level="project" />
     <orderEntry type="library" name="Gradle: org.json:json:20090211" level="project" />
     <orderEntry type="library" name="Gradle: org.mongodb:mongodb-driver:3.3.0" level="project" />
+    <orderEntry type="library" name="Gradle: org.jdom:jdom2:2.0.5" level="project" />
     <orderEntry type="library" name="Gradle: junit:junit:4.12" level="project" />
     <orderEntry type="library" name="Gradle: com.linecorp.bot:line-bot-api-client:1.10.0" level="project" />
     <orderEntry type="library" name="Gradle: com.linecorp.bot:line-bot-model:1.10.0" level="project" />
