@@ -51,7 +51,7 @@ public class Weather extends DefaultService{
 			temperature = "27";
 		}
 		//String weather_reply = "The temperate of " + city + "is " + temperature + " degrees Celsius at " + time;
-		this.fulfillment = this.fulfillment.replace("@weather::temperature", weather_string);
+		this.fulfillment = this.fulfillment.replace("@weather::temperature", temperature);
 	}
 
 	/*public static Document loadXMLFromString(String xml) throws Exception{
