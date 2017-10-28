@@ -35,7 +35,7 @@ public class AnonymousChat extends DefaultService {
 			constraint.append("uid", new BasicDBObject("$eq", this.getParam("uid")));
 
 			BasicDBObject op = new BasicDBObject();
-			op.append("$set", uid.get(index));
+			op.append("$set", new BasicDBObject().append("bind", uid.get(index)));
 
 			mongo.getCollection("user").updateOne(own, op);
 
