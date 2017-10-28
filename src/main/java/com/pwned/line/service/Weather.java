@@ -25,30 +25,26 @@ public class Weather extends DefaultService{
 	public Weather(Service service) {
 		super(service);
 	}
-	//private static String UNDERGROUNDWEATHER_ACCESS_TOKEN = "de8a21a31f2cd2b9";
 	@Override
 	public void payload() throws Exception {
 
-		String city = "Hong Kong";
-		//scity = new JSONObject(this.getParam("parameters").toString()).getString("city");
-		//String link = "http://api.wunderground.com/api/de8a21a31f2cd2b9/conditions/q/" + city + ".json";
+		String city = new JSONObject(this.getParam("parameters").toString()).getString("Region1");
 		String link = "http://rss.weather.gov.hk/rss/CurrentWeather.xml";
 		HTTP weather = new HTTP(link);
 		String weather_string = weather.get();
-
-		//Document weather_xml_document = loadXMLFromString(weather_string);
-		//weather_xml_document.getDocumentElement().normalize();
-		//NodeList nList = weather_xml_document.getElementsByTagName("tr");
-		weather_string.indexOf("Bulletin");
-		String time = weather_string.substring(weather_string.indexOf("<pubDate>") + 9, weather_string.indexOf("</pubDate>") - 1);
 		String temperature = "";
-		if(weather_string.indexOf("degrees Celsius<br/>") - 1 > weather_string.indexOf("Air temperature : ") + 18){
-			temperature = weather_string.substring(weather_string.indexOf("Air temperature : ") + 18, weather_string.indexOf("degrees Celsius<br/>") - 1);
+		if(weather_string.contains(city)){
+			temperature = weather_string.substring(weather_string.indexOf(city) + city.length() + 59, weather_string.indexOf(city) + city.length() + 61);
 		}else{
-			temperature = (weather_string.indexOf("degrees Celsius<br/>") - 1) + " " + (weather_string.indexOf("Air temperature : ") + 18);
+			if(weather_string.indexOf("degrees Celsius<br/>") - 1 > weather_string.indexOf("Air temperature : ") + 18){
+				temperature = weather_string.substring(weather_string.indexOf("Air temperature : ") + 18, weather_string.indexOf("degrees Celsius<br/>") - 1);
+			}else{
+				temperature = (weather_string.indexOf("degrees Celsius<br/>") - 1) + " " + (weather_string.indexOf("Air temperature : ") + 18);
+			}
 		}
+
 		if(temperature == ""){
-			temperature = "27";
+			temperature = "10";
 		}
 		//String weather_reply = "The temperate of " + city + "is " + temperature + " degrees Celsius at " + time;
 		this.fulfillment = this.fulfillment.replace("@weather::temperature", temperature);
