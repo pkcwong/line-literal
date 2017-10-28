@@ -30,6 +30,7 @@ public class TextHandler {
 				Service module = new DefaultService(incoming);
 				module.setParam("uid", event.getSource().getUserId());
 				module.setParam("replyToken", event.getReplyToken());
+				module.setParam("timestamp", event.getTimestamp().toString());
 				return new MasterController(module).resolve().get();
 			} catch (Exception e) {
 				e.printStackTrace();
