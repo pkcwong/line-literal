@@ -33,64 +33,83 @@ public class MasterController extends DefaultService {
 		String[] weather = {"weather"};
 		String[] quota = {"COMP", "ENGG", "class"};
 		String[] anonymousChat = {"chat"};
-		String[] translate = {"translate"};
+		String[] translate = {"translate", "english", "chinese", "korean", "malaysian", "indonesian", "indo"};
 		String[] review = {"review"};
 
-		for(int i=0; i<timetable.length; i++){
-			String[] keywords = fulfillment.split("\\s+");
-			if(keywords[i].toLowerCase() == timetable[i]){
-				//return new DialogFlowTranslate(this).resolve().get();
+		for(String keywords: timetable){
+			String[] words = fulfillment.split("\\s+");
+			for(String word: words){
+				if(word.toLowerCase().equals(keywords)){
+					//return new DialogFlowTranslate(this).resolve().get();
+				}
 			}
 		}
-		for(int i=0; i<lift.length; i++){
-			String[] keywords = fulfillment.split("\\s+");
-			if(keywords[i].toLowerCase() == timetable[i]){
-				//return new DialogFlowTranslate(this).resolve().get();
+		for(String keywords: lift){
+			String[] words = fulfillment.split("\\s+");
+			for(String word: words){
+				if(word.toLowerCase().equals(keywords)){
+					//return new DialogFlowTranslate(this).resolve().get();
+				}
 			}
 		}
-		for(int i=0; i<societies.length; i++){
-			String[] keywords = fulfillment.split("\\s+");
-			if(keywords[i].toLowerCase() == timetable[i]){
-				//return new DialogFlowTranslate(this).resolve().get();
+		for(String keywords: societies){
+			String[] words = fulfillment.split("\\s+");
+			for(String word: words){
+				if(word.toLowerCase().equals(keywords)){
+					//return new DialogFlowTranslate(this).resolve().get();
+				}
 			}
 		}
-		for(int i=0; i<KMB.length; i++){
-			String[] keywords = fulfillment.split("\\s+");
-			if(keywords[i].toLowerCase() == timetable[i]){
-				//return new DialogFlowTranslate(this).resolve().get();
+		for(String keywords: KMB){
+			String[] words = fulfillment.split("\\s+");
+			for(String word: words){
+				if(word.toLowerCase().equals(keywords)){
+					//return new DialogFlowTranslate(this).resolve().get();
+				}
 			}
 		}
-		for(int i=0; i<weather.length; i++){
-			String[] keywords = fulfillment.split("\\s+");
-			if(keywords[i].toLowerCase() == timetable[i]){
-				//return new DialogFlowTranslate(this).resolve().get();
+		for(String keywords: weather){
+			String[] words = fulfillment.split("\\s+");
+			for(String word: words){
+				if(word.toLowerCase().equals(keywords)){
+					return new DialogFlowWeather(this).resolve().get();
+				}
 			}
 		}
-		for(int i=0; i<quota.length; i++){
-			String[] keywords = fulfillment.split("\\s+");
-			if(keywords[i].toLowerCase() == timetable[i]){
-				return new CourseName(this).resolve().get();
-				//return new DialogFlowTranslate(this).resolve().get();
+		for(String keywords: quota){
+			String[] words = fulfillment.split("\\s+");
+			for(String word: words){
+				if(word.toLowerCase().equals(keywords)){
+					return new CourseName(this).resolve().get();
+					//return new DialogFlowTranslate(this).resolve().get();
+				}
 			}
 		}
-		for(int i=0; i<anonymousChat.length; i++){
-			String[] keywords = fulfillment.split("\\s+");
-			if(keywords[i].toLowerCase() == timetable[i]){
-				//return new DialogFlowTranslate(this).resolve().get();
+		for(String keywords: anonymousChat){
+			String[] words = fulfillment.split("\\s+");
+			for(String word: words){
+				if(word.toLowerCase().equals(keywords)){
+					//return new DialogFlowTranslate(this).resolve().get();
+				}
 			}
 		}
-		for(int i=0; i<translate.length; i++){
-			String[] keywords = fulfillment.split("\\s+");
-			if(keywords[i].toLowerCase() == timetable[i]){
-				return new DialogFlowTranslate(this).resolve().get();
+		for(String keywords: translate){
+			String[] words = fulfillment.split("\\s+");
+			for(String word: words){
+				if(word.toLowerCase().equals(keywords)){
+					return new DialogFlowTranslate(this).resolve().get();
+				}
 			}
 		}
-		for(int i=0; i<review.length; i++){
-			String[] keywords = fulfillment.split("\\s+");
-			if(keywords[i].toLowerCase() == timetable[i]){
-				//return new DialogFlowTranslate(this).resolve().get();
+		for(String keywords: review){
+			String[] words = fulfillment.split("\\s+");
+			for(String word: words){
+				if(word.toLowerCase().equals(keywords)){
+					//return new DialogFlowTranslate(this).resolve().get();
+				}
 			}
 		}
+
 		this.fulfillment = "Sorry, we don't understand this.";
 		return this;
 	}
