@@ -27,7 +27,7 @@ public class DialogFlowWeather extends DefaultService {
 
 	@Override
 	public Service chain() throws Exception {
-		return new Temperature(this).resolve().get();
+		return new Weather(this).resolve().get();
 	}
 
 }
