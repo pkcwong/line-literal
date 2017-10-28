@@ -34,7 +34,7 @@ public class AnonymousChat extends DefaultService {
 			int index = (int) (Math.random() * uid.size());
 
 			BasicDBObject own = new BasicDBObject();
-			constraint.append("uid", new BasicDBObject("$eq", this.getParam("uid")));
+			constraint.append("uid", new BasicDBObject("$eq", this.getParam("uid").toString()));
 
 			BasicDBObject op = new BasicDBObject();
 			op.append("$set", new BasicDBObject().append("bind", uid.get(index)));
@@ -45,7 +45,7 @@ public class AnonymousChat extends DefaultService {
 			con.append("uid", new BasicDBObject("$eq", uid.get(index)));
 
 			BasicDBObject tar = new BasicDBObject();
-			tar.append("$set", new BasicDBObject().append("bind", this.getParam("uid")));
+			tar.append("$set", new BasicDBObject().append("bind", this.getParam("uid").toString()));
 
 			mongo.getCollection("user").updateOne(con, tar);
 
