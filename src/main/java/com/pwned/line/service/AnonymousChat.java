@@ -41,9 +41,13 @@ public class AnonymousChat extends DefaultService {
 
 			mongo.getCollection("user").updateOne(own, op);
 
+			BasicDBObject con = new BasicDBObject();
+			con.append("uid", new BasicDBObject("$eq", uid.get(index)));
+
 			BasicDBObject tar = new BasicDBObject();
 			tar.append("$set", new BasicDBObject().append("bind", this.getParam("uid")));
-			mongo.getCollection("user").updateOne(constraint, tar);
+
+			mongo.getCollection("user").updateOne(con, tar);
 
 			KitchenSinkController.push(uid.get(index), new TextMessage("You are connected to a random user!"));
 
