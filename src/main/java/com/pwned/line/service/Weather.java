@@ -33,9 +33,9 @@ public class Weather extends DefaultService{
 		String[] messages = {"Here is the latest weather bulletin issued by the Hong Kong Observatory.", "(The above forecast period is valid up to"};
 		weather = weather.substring(weather.indexOf(messages[0]), weather.indexOf(messages[1]));
 		weather.replace("<br/>", "\n");
-		while (weather.contains("<")){
+		/*while (weather.contains("<")){
 			weather = weather.substring(0, weather.indexOf("<")) + weather.substring(weather.indexOf(">") + 1);
-		}
+		}*/
 		this.fulfillment = this.fulfillment.replace("@weather::weather", weather);
 	}
 
