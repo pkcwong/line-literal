@@ -47,7 +47,8 @@ public class MasterController extends DefaultService {
 		String[] lift = {"classroom", "room", "lift"};
 		String[] societies = {"societies"};
 		String[] KMB = {"bus", "arrival", "departure"};
-		String[] weather = {"weather", "temperature", "degrees", "climate"};
+		String[] weather = {"weather", "degrees", "climate"};
+		String[] temperature = {"temperature"};
 		String[] quota = {"comp", "engg", "class"};
 		String[] anonymousChat = {"chat"};
 		String[] translate = {"translate", "english", "chinese", "korean", "malaysian", "indonesian", "indo"};
@@ -86,6 +87,14 @@ public class MasterController extends DefaultService {
 			}
 		}
 		for(String keywords: weather){
+			String[] words = fulfillment.split("\\s+");
+			for(String word: words){
+				if(word.toLowerCase().equals(keywords)){
+					return new DialogFlowWeather(this).resolve().get();
+				}
+			}
+		}
+		for(String keywords: temperature){
 			String[] words = fulfillment.split("\\s+");
 			for(String word: words){
 				if(word.toLowerCase().equals(keywords)){
