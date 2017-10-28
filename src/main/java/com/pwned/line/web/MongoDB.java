@@ -2,6 +2,7 @@ package com.pwned.line.web;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.json.JSONObject;
@@ -41,6 +42,15 @@ public class MongoDB {
 	public void insert(String collection, JSONObject json) {
 		Document doc = Document.parse(json.toString());
 		this.db.getCollection(collection).insertOne(doc);
+	}
+
+	/***
+	 * Returns a Mongo Collection
+	 * @param collection collection name
+	 * @return MongoCollection
+	 */
+	public MongoCollection<Document> getCollection(String collection) {
+		return this.db.getCollection(collection);
 	}
 
 }

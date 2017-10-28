@@ -1,5 +1,8 @@
 package com.pwned.line.service;
 
+import com.mongodb.BasicDBObject;
+import com.pwned.line.web.MongoDB;
+
 /***
  * Master Controller for Service modules.
  * Required params: []
@@ -16,7 +19,10 @@ public class MasterController extends DefaultService {
 
 	@Override
 	public void payload() throws Exception {
-
+		MongoDB mongo = new MongoDB("mongodb://user:password@ds115045.mlab.com:15045/heroku_0s8hc3hf", "heroku_0s8hc3hf");
+		BasicDBObject lookup = new BasicDBObject("uid", this.getParam("uid").toString());
+		BasicDBObject operation = new BasicDBObject("$addToSet", new BasicDBObject("replyToken", this.getParam("replyToken").toString()));
+		mongo.getCollection("user").findOneAndUpdate(lookup, operation);
 	}
 
 	/***
