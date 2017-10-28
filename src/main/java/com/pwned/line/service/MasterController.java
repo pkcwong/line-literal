@@ -53,75 +53,76 @@ public class MasterController extends DefaultService {
 		String[] translate = {"translate", "english", "chinese", "korean", "malaysian", "indonesian", "indo"};
 		String[] review = {"review"};
 
-		for(String keywords: timetable){
+		for (String keywords : timetable) {
 			String[] words = fulfillment.split("\\s+");
-			for(String word: words){
-				if(word.toLowerCase().equals(keywords)){
+			for (String word : words) {
+				if (word.toLowerCase().equals(keywords)) {
 					//return new DialogFlowTranslate(this).resolve().get();
 				}
 			}
 		}
-		for(String keywords: lift){
+		for (String keywords : lift) {
 			String[] words = fulfillment.split("\\s+");
-			for(String word: words){
-				if(word.toLowerCase().equals(keywords)){
+			for (String word : words) {
+				if (word.toLowerCase().equals(keywords)) {
 					//return new DialogFlowTranslate(this).resolve().get();
 				}
 			}
 		}
-		for(String keywords: societies){
+		for (String keywords : societies) {
 			String[] words = fulfillment.split("\\s+");
-			for(String word: words){
-				if(word.toLowerCase().equals(keywords)){
+			for (String word : words) {
+				if (word.toLowerCase().equals(keywords)) {
 					//return new DialogFlowTranslate(this).resolve().get();
 				}
 			}
 		}
-		for(String keywords: KMB){
+		for (String keywords : KMB) {
 			String[] words = fulfillment.split("\\s+");
-			for(String word: words){
-				if(word.toLowerCase().equals(keywords)){
+			for (String word : words) {
+				if (word.toLowerCase().equals(keywords)) {
 					//return new DialogFlowTranslate(this).resolve().get();
 				}
 			}
 		}
-		for(String keywords: weather){
+		for (String keywords : weather) {
 			String[] words = fulfillment.split("\\s+");
-			for(String word: words){
-				if(word.toLowerCase().equals(keywords)){
+			for (String word : words) {
+				if (word.toLowerCase().equals(keywords)) {
 					return new DialogFlowWeather(this).resolve().get();
 				}
 			}
 		}
-		for(String keywords: quota){
+		for (String keywords : quota) {
 			String[] words = fulfillment.split("\\s+");
-			for(String word: words){
-				if(word.toLowerCase().equals(keywords)){
+			for (String word : words) {
+				if (word.toLowerCase().equals(keywords)) {
 					return new CourseName(this).resolve().get();
 					//return new DialogFlowTranslate(this).resolve().get();
 				}
 			}
 		}
-		for(String keywords: anonymousChat){
+		for (String keywords : anonymousChat) {
 			String[] words = fulfillment.split("\\s+");
-			for(String word: words){
-				if(word.toLowerCase().equals(keywords)){
+			for (String word : words) {
+				if (word.toLowerCase().equals(keywords)) {
+					return new AnonymousChat(this).resolve().get();
 					//return new DialogFlowTranslate(this).resolve().get();
 				}
 			}
 		}
-		for(String keywords: translate){
+		for (String keywords : translate) {
 			String[] words = fulfillment.split("\\s+");
-			for(String word: words){
-				if(word.toLowerCase().equals(keywords)){
+			for (String word : words) {
+				if (word.toLowerCase().equals(keywords)) {
 					return new DialogFlowTranslate(this).resolve().get();
 				}
 			}
 		}
-		for(String keywords: review){
+		for (String keywords : review) {
 			String[] words = fulfillment.split("\\s+");
-			for(String word: words){
-				if(word.toLowerCase().equals(keywords)){
+			for (String word : words) {
+				if (word.toLowerCase().equals(keywords)) {
 					//return new DialogFlowTranslate(this).resolve().get();
 				}
 			}
