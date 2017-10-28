@@ -11,6 +11,14 @@ import org.xml.sax.InputSource;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+/***
+ * Service for course information.
+ * Required params: [uid]
+ * Reserved tokens: [@weather::temperature]
+ * Resolved params: []
+ * @author Timothy Pak
+ */
+
 public class Weather extends DefaultService{
 
 
