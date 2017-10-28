@@ -32,7 +32,7 @@ public class Weather extends DefaultService{
 		String city = "Hong Kong";
 		//scity = new JSONObject(this.getParam("parameters").toString()).getString("city");
 		//String link = "http://api.wunderground.com/api/de8a21a31f2cd2b9/conditions/q/" + city + ".json";
-		String link = "http://rss.weather.gov.hk/rss/CurrentWeather_uc.xml";
+		String link = "http://rss.weather.gov.hk/rss/CurrentWeather.xml";
 		HTTP weather = new HTTP(link);
 		String weather_string = weather.get();
 
