@@ -1,7 +1,9 @@
 package com.pwned.line.service;
 
+import com.linecorp.bot.model.message.TextMessage;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCursor;
+import com.pwned.line.KitchenSinkController;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 
@@ -38,6 +40,12 @@ public class AnonymousChat extends DefaultService {
 			op.append("$set", new BasicDBObject().append("bind", uid.get(index)));
 
 			mongo.getCollection("user").updateOne(own, op);
+
+			BasicDBObject tar = new BasicDBObject();
+			tar.append("$set", new BasicDBObject().append("bind", this.getParam("uid")));
+			mongo.getCollection("user").updateOne(constraint, tar);
+
+			KitchenSinkController.push(uid.get(index), new TextMessage("You are connected to a random user!"));
 
 			this.fulfillment = "You are connected to a random user!";
 		}
