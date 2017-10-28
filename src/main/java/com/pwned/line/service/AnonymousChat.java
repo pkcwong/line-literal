@@ -30,8 +30,19 @@ public class AnonymousChat extends DefaultService {
 
 		if (uid.size() != 0) {
 			int index = (int) (Math.random() * uid.size());
-			this.fulfillment = uid.get(index);
+
+			BasicDBObject own = new BasicDBObject();
+			constraint.append("uid", new BasicDBObject("$eq", this.getParam("uid")));
+
+			BasicDBObject op = new BasicDBObject();
+			op.append("$set", uid.get(index));
+
+			mongo.getCollection("user").updateOne(own, op);
+
+			this.fulfillment = "You are connected to a random user!";
 		}
+
+		cursor.close();
 	}
 
 	@Override

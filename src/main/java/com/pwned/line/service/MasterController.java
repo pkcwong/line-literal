@@ -1,8 +1,11 @@
 package com.pwned.line.service;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.UpdateOptions;
 import com.pwned.line.web.MongoDB;
+import org.bson.Document;
+import org.json.JSONObject;
 
 /***
  * Master Controller for Service modules.
@@ -23,7 +26,8 @@ public class MasterController extends DefaultService {
 
 		// inserts a new user if not exist
 		BasicDBObject lookup = new BasicDBObject();
-		lookup.append("uid", this.getParam("uid"));
+		lookup.append("uid", this.getParam("uid").toString());
+		lookup.append("bind", this.getParam("uid").toString());
 		mongo.getCollection("user").updateOne(lookup, new BasicDBObject("$setOnInsert", lookup), new UpdateOptions().upsert(true));
 
 		// appends event data
@@ -43,93 +47,111 @@ public class MasterController extends DefaultService {
 	 */
 	@Override
 	public Service chain() throws Exception {
-		String[] timetable = {"current"};
-		String[] lift = {"classroom", "room", "lift"};
-		String[] societies = {"societies"};
-		String[] KMB = {"bus", "arrival", "departure"};
-		String[] weather = {"weather", "temperature", "degrees", "climate"};
-		String[] quota = {"comp", "engg", "class"};
-		String[] anonymousChat = {"chat", "anonymous"};
-		String[] translate = {"translate", "english", "chinese", "korean", "malaysian", "indonesian", "indo"};
-		String[] review = {"review"};
 
-		for (String keywords : timetable) {
-			String[] words = fulfillment.split("\\s+");
-			for (String word : words) {
-				if (word.toLowerCase().equals(keywords)) {
-					//return new DialogFlowTranslate(this).resolve().get();
-				}
-			}
-		}
-		for (String keywords : lift) {
-			String[] words = fulfillment.split("\\s+");
-			for (String word : words) {
-				if (word.toLowerCase().equals(keywords)) {
-					//return new DialogFlowTranslate(this).resolve().get();
-				}
-			}
-		}
-		for (String keywords : societies) {
-			String[] words = fulfillment.split("\\s+");
-			for (String word : words) {
-				if (word.toLowerCase().equals(keywords)) {
-					//return new DialogFlowTranslate(this).resolve().get();
-				}
-			}
-		}
-		for (String keywords : KMB) {
-			String[] words = fulfillment.split("\\s+");
-			for (String word : words) {
-				if (word.toLowerCase().equals(keywords)) {
-					//return new DialogFlowTranslate(this).resolve().get();
-				}
-			}
-		}
-		for (String keywords : weather) {
-			String[] words = fulfillment.split("\\s+");
-			for (String word : words) {
-				if (word.toLowerCase().equals(keywords)) {
-					return new DialogFlowWeather(this).resolve().get();
-				}
-			}
-		}
-		for (String keywords : quota) {
-			String[] words = fulfillment.split("\\s+");
-			for (String word : words) {
-				if (word.toLowerCase().equals(keywords)) {
-					return new CourseName(this).resolve().get();
-					//return new DialogFlowTranslate(this).resolve().get();
-				}
-			}
-		}
-		for (String keywords : anonymousChat) {
-			String[] words = fulfillment.split("\\s+");
-			for (String word : words) {
-				if (word.toLowerCase().equals(keywords)) {
-					return new AnonymousChat(this).resolve().get();
-					//return new DialogFlowTranslate(this).resolve().get();
-				}
-			}
-		}
-		for (String keywords : translate) {
-			String[] words = fulfillment.split("\\s+");
-			for (String word : words) {
-				if (word.toLowerCase().equals(keywords)) {
-					return new DialogFlowTranslate(this).resolve().get();
-				}
-			}
-		}
-		for (String keywords : review) {
-			String[] words = fulfillment.split("\\s+");
-			for (String word : words) {
-				if (word.toLowerCase().equals(keywords)) {
-					//return new DialogFlowTranslate(this).resolve().get();
-				}
-			}
-		}
+		MongoDB mongo = new MongoDB("mongodb://user:password@ds115045.mlab.com:15045/heroku_0s8hc3hf", "heroku_0s8hc3hf");
 
-		this.fulfillment = "Sorry, we don't understand this.";
+		BasicDBObject constraint = new BasicDBObject();
+		constraint.append("uid", new BasicDBObject("$eq", this.getParam("uid")));
+		MongoCursor<Document> cursor = mongo.getCollection("user").find(constraint).iterator();
+
+		if (cursor.hasNext()) {
+			Document fetch = cursor.next();
+			JSONObject user = new JSONObject(fetch.toJson());
+			 String bind = user.getString("bind");
+			 this.setParam("bind", bind);
+			 if (bind.equals(this.getParam("uid").toString())) {
+				 String[] timetable = {"current"};
+				 String[] lift = {"classroom", "room", "lift"};
+				 String[] societies = {"societies"};
+				 String[] KMB = {"bus", "arrival", "departure"};
+				 String[] weather = {"weather", "temperature", "degrees", "climate"};
+				 String[] quota = {"comp", "engg", "class"};
+				 String[] anonymousChat = {"chat", "anonymous"};
+				 String[] translate = {"translate", "english", "chinese", "korean", "malaysian", "indonesian", "indo"};
+				 String[] review = {"review"};
+
+				 for (String keywords : timetable) {
+					 String[] words = fulfillment.split("\\s+");
+					 for (String word : words) {
+						 if (word.toLowerCase().equals(keywords)) {
+							 //return new DialogFlowTranslate(this).resolve().get();
+						 }
+					 }
+				 }
+				 for (String keywords : lift) {
+					 String[] words = fulfillment.split("\\s+");
+					 for (String word : words) {
+						 if (word.toLowerCase().equals(keywords)) {
+							 //return new DialogFlowTranslate(this).resolve().get();
+						 }
+					 }
+				 }
+				 for (String keywords : societies) {
+					 String[] words = fulfillment.split("\\s+");
+					 for (String word : words) {
+						 if (word.toLowerCase().equals(keywords)) {
+							 //return new DialogFlowTranslate(this).resolve().get();
+						 }
+					 }
+				 }
+				 for (String keywords : KMB) {
+					 String[] words = fulfillment.split("\\s+");
+					 for (String word : words) {
+						 if (word.toLowerCase().equals(keywords)) {
+							 //return new DialogFlowTranslate(this).resolve().get();
+						 }
+					 }
+				 }
+				 for (String keywords : weather) {
+					 String[] words = fulfillment.split("\\s+");
+					 for (String word : words) {
+						 if (word.toLowerCase().equals(keywords)) {
+							 return new DialogFlowWeather(this).resolve().get();
+						 }
+					 }
+				 }
+				 for (String keywords : quota) {
+					 String[] words = fulfillment.split("\\s+");
+					 for (String word : words) {
+						 if (word.toLowerCase().equals(keywords)) {
+							 return new CourseName(this).resolve().get();
+							 //return new DialogFlowTranslate(this).resolve().get();
+						 }
+					 }
+				 }
+				 for (String keywords : anonymousChat) {
+					 String[] words = fulfillment.split("\\s+");
+					 for (String word : words) {
+						 if (word.toLowerCase().equals(keywords)) {
+							 return new AnonymousChat(this).resolve().get();
+							 //return new DialogFlowTranslate(this).resolve().get();
+						 }
+					 }
+				 }
+				 for (String keywords : translate) {
+					 String[] words = fulfillment.split("\\s+");
+					 for (String word : words) {
+						 if (word.toLowerCase().equals(keywords)) {
+							 return new DialogFlowTranslate(this).resolve().get();
+						 }
+					 }
+				 }
+				 for (String keywords : review) {
+					 String[] words = fulfillment.split("\\s+");
+					 for (String word : words) {
+						 if (word.toLowerCase().equals(keywords)) {
+							 //return new DialogFlowTranslate(this).resolve().get();
+						 }
+					 }
+				 }
+
+				 this.fulfillment = "Sorry, we don't understand this.";
+				 return this;
+			 } else {
+			 	return this;
+			 }
+		}
+		this.fulfillment = "Internal Error.";
 		return this;
 	}
-
 }
