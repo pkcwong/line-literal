@@ -1,6 +1,7 @@
 package com.pwned.line.service;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.client.model.UpdateOptions;
 import com.pwned.line.web.MongoDB;
 
 /***
@@ -21,6 +22,11 @@ public class MasterController extends DefaultService {
 	public void payload() throws Exception {
 		MongoDB mongo = new MongoDB("mongodb://user:password@ds115045.mlab.com:15045/heroku_0s8hc3hf", "heroku_0s8hc3hf");
 		BasicDBObject lookup = new BasicDBObject("uid", this.getParam("uid").toString());
+
+		// inserts a new user if not exist
+		mongo.getCollection("user").updateOne(lookup, lookup, new UpdateOptions().upsert(true));
+
+		// appends replyToken
 		BasicDBObject operation = new BasicDBObject("$addToSet", new BasicDBObject("replyToken", this.getParam("replyToken").toString()));
 		mongo.getCollection("user").findOneAndUpdate(lookup, operation);
 	}
