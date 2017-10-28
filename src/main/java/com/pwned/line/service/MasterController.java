@@ -37,7 +37,10 @@ public class MasterController extends DefaultService {
 		event.append("replyToken", this.getParam("replyToken").toString());
 		event.append("text", this.fulfillment);
 		data.append("msg", event);
-		mongo.getCollection("user").findOneAndUpdate(lookup, new BasicDBObject("$addToSet", data));
+
+		BasicDBObject own = new BasicDBObject();
+		own.append("uid", this.getParam("uid").toString());
+		mongo.getCollection("user").findOneAndUpdate(own, new BasicDBObject("$addToSet", data));
 	}
 
 	/***
