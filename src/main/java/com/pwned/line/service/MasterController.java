@@ -17,7 +17,6 @@ public class MasterController extends DefaultService {
 		super(service);
 	}
 
-
 	@Override
 	public void payload() throws Exception {
 		MongoDB mongo = new MongoDB("mongodb://user:password@ds115045.mlab.com:15045/heroku_0s8hc3hf", "heroku_0s8hc3hf");
@@ -25,7 +24,7 @@ public class MasterController extends DefaultService {
 		lookup.append("uid", this.getParam("uid"));
 
 		// inserts a new user if not exist
-		mongo.getCollection("user").updateOne(lookup, lookup, new UpdateOptions().upsert(true));
+		mongo.getCollection("user").updateOne(lookup, new BasicDBObject("$setOnInsert", lookup), new UpdateOptions().upsert(true));
 
 		// appends replyToken
 		BasicDBObject data = new BasicDBObject();
