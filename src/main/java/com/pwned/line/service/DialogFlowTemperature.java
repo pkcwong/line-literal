@@ -4,17 +4,17 @@ import com.pwned.line.web.ApiAI;
 import org.json.JSONObject;
 
 /***
- * Service module for DialogFlow weather
+ * Service module for DialogFlow temperature
  * Required params: [uid]
  * Reserved tokens: []
  * Resolved params: [parameters]
  * @author Timothy Pak
  */
-public class DialogFlowWeather extends DefaultService {
+public class DialogFlowTemperature extends DefaultService {
 
 	private static String API_AI_ACCESS_TOKEN = "1918af645bed436db988189c2f77f832";
 
-	public DialogFlowWeather(Service service) {
+	public DialogFlowTemperature(Service service) {
 		super(service);
 	}
 

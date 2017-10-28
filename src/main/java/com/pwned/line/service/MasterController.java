@@ -3,7 +3,6 @@ package com.pwned.line.service;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.model.UpdateOptions;
 import com.pwned.line.web.MongoDB;
-import org.json.JSONObject;
 
 /***
  * Master Controller for Service modules.
@@ -90,7 +89,7 @@ public class MasterController extends DefaultService {
 			String[] words = fulfillment.split("\\s+");
 			for(String word: words){
 				if(word.toLowerCase().equals(keywords)){
-					return new DialogFlowWeather(this).resolve().get();
+					return new DialogFlowTemperature(this).resolve().get();
 				}
 			}
 		}
