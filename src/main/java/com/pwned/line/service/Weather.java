@@ -34,7 +34,7 @@ public class Weather extends DefaultService{
 		String weather_string = weather.get();
 		String temperature = "";
 		if(weather_string.contains(city)){
-			temperature = weather_string.substring(weather_string.indexOf(city) + city.length() + 59, weather_string.indexOf(city) + city.length() + 61);
+			temperature = weather_string.substring(weather_string.indexOf(city) + city.length() + 58, weather_string.indexOf(city) + city.length() + 60);
 		}else{
 			if(weather_string.indexOf("degrees Celsius<br/>") - 1 > weather_string.indexOf("Air temperature : ") + 18){
 				temperature = weather_string.substring(weather_string.indexOf("Air temperature : ") + 18, weather_string.indexOf("degrees Celsius<br/>") - 1);
