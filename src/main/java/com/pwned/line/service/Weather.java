@@ -48,8 +48,8 @@ public class Weather extends DefaultService{
 		if(temperature == ""){
 			temperature = "27";
 		}
-		String weather_reply = "The temperate of " + city + "is " + temperature + " degrees Celsius at " + time;
-		this.fulfillment.replace("@weather::temperature", temperature);
+		//String weather_reply = "The temperate of " + city + "is " + temperature + " degrees Celsius at " + time;
+		this.fulfillment = this.fulfillment.replace("@weather::temperature", temperature);
 	}
 
 	/*public static Document loadXMLFromString(String xml) throws Exception{
