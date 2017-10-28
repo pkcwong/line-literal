@@ -5,6 +5,7 @@ import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
 import com.pwned.line.KitchenSinkController;
 import com.pwned.line.service.DefaultService;
+import com.pwned.line.service.MasterController;
 import com.pwned.line.service.Service;
 
 import java.net.URISyntaxException;
@@ -28,7 +29,9 @@ public class TextHandler {
 			try {
 				Service module = new DefaultService(incoming);
 				module.setParam("uid", event.getSource().getUserId());
-				return module.resolve().get();
+				module.setParam("replyToken", event.getReplyToken());
+				module.setParam("timestamp", event.getTimestamp().toString());
+				return new MasterController(module).resolve().get();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

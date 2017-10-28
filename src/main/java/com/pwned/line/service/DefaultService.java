@@ -63,7 +63,7 @@ public class DefaultService implements Service {
 	 */
 	@Override
 	public Service chain() throws Exception {
-		return new MasterController(this).resolve().get();
+		return this;
 	}
 
 	@Override
