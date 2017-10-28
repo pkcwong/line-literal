@@ -29,7 +29,7 @@ public class MasterController extends DefaultService {
 
 		// appends event data
 		BasicDBObject data = new BasicDBObject();
-		JSONObject event = new JSONObject();
+		BasicDBObject event = new BasicDBObject();
 		event.append("timestamp", this.getParam("timestamp").toString());
 		event.append("replyToken", this.getParam("replyToken").toString());
 		event.append("text", this.fulfillment);
