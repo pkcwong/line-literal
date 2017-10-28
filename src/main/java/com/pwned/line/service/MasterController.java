@@ -91,9 +91,8 @@ public class MasterController extends DefaultService {
 				//return new DialogFlowTranslate(this).resolve().get();
 			}
 		}
-
-
 		this.fulfillment = "Sorry, we don't understand this.";
+		return this;
 	}
 
 }
