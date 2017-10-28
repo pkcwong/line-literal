@@ -35,7 +35,7 @@ public class Weather extends DefaultService{
 		while (weather.contains("<")){
 			weather = weather.substring(0, weather.indexOf("<") - 1) + weather.substring(weather.indexOf(">") + 1);
 		}
-		this.fulfillment = weather;
+		this.fulfillment = this.fulfillment.replace("@weather::weather", weather);
 	}
 
 
