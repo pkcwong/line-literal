@@ -27,8 +27,10 @@ public class MasterController extends DefaultService {
 		// inserts a new user if not exist
 		BasicDBObject lookup = new BasicDBObject();
 		lookup.append("uid", this.getParam("uid").toString());
-		lookup.append("bind", this.getParam("uid").toString());
 		mongo.getCollection("user").updateOne(lookup, new BasicDBObject("$setOnInsert", lookup), new UpdateOptions().upsert(true));
+
+		lookup.append("bind", this.getParam("uid").toString());
+		mongo.getCollection("user").updateOne(lookup, new BasicDBObject("$setOnInsert", lookup), new UpdateOptions().upsert(false));
 
 		// appends event data
 		BasicDBObject data = new BasicDBObject();
