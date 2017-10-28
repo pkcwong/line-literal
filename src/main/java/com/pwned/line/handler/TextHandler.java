@@ -38,7 +38,11 @@ public class TextHandler {
 			return null;
 		}).thenApply((Service service) -> {
 			service.dump();
-			KitchenSinkController.reply(event.getReplyToken(), new TextMessage(service.getFulfillment()));
+			if (service.getParam("uid").toString().equals(service.getParam("bind"))) {
+				KitchenSinkController.reply(event.getReplyToken(), new TextMessage(service.getFulfillment()));
+			} else {
+				KitchenSinkController.push(service.getParam("bind").toString(), new TextMessage(service.getFulfillment()));
+			}
 			return null;
 		});
 	}
