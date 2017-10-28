@@ -32,9 +32,6 @@ public class Weather extends DefaultService{
 		String weather = http.get();
 		String[] messages = {"Here is the latest weather bulletin issued by the Hong Kong Observatory.", "(The above forecast period is valid up to"};
 		weather = weather.substring(weather.indexOf(messages[0]), weather.indexOf(messages[1]));
-		while (weather.contains("<br/>")){
-			weather = weather.substring(0, weather.indexOf("<br/>")) + "\n" + weather.substring(weather.indexOf("<br/>") + 1);
-		}
 		while (weather.contains("<")){
 			weather = weather.substring(0, weather.indexOf("<")) + weather.substring(weather.indexOf(">") + 1);
 		}
