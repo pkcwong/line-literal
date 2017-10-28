@@ -3,7 +3,6 @@ package com.pwned.line.service;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.model.UpdateOptions;
 import com.pwned.line.web.MongoDB;
-import org.json.JSONObject;
 
 /***
  * Master Controller for Service modules.
@@ -50,7 +49,7 @@ public class MasterController extends DefaultService {
 		String[] KMB = {"bus", "arrival", "departure"};
 		String[] weather = {"weather", "temperature", "degrees", "climate"};
 		String[] quota = {"comp", "engg", "class"};
-		String[] anonymousChat = {"chat"};
+		String[] anonymousChat = {"chat", "anonymous"};
 		String[] translate = {"translate", "english", "chinese", "korean", "malaysian", "indonesian", "indo"};
 		String[] review = {"review"};
 
