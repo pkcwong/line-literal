@@ -33,6 +33,7 @@ dependencies {
     compile group: 'postgresql', name: 'postgresql', version: '9.0-801.jdbc4'
     compile group: 'org.json', name: 'json', version: '20090211'
     compile 'org.mongodb:mongodb-driver:3.3.0'
+    compile group: 'org.jdom', name: 'jdom2', version: '2.0.5'
 }
 
 apply plugin: 'org.springframework.boot'
