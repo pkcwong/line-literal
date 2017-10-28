@@ -63,7 +63,7 @@ public class DefaultService implements Service {
 	 */
 	@Override
 	public Service chain() throws Exception {
-		return new DialogFlowTranslate(this).resolve().get();
+		return new MasterController(this).resolve().get();
 	}
 
 	@Override
