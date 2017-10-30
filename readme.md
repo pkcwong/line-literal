@@ -44,13 +44,3 @@ The ```payload``` method implements the processing service of the module. The me
 
 ## Chaining
 The ```chain``` method passes the current state to the next processing module. To pass to the next ```Service``` module, return ```Service.resolve().get()```. To end the processing chain, return ```this```.
-
-## Processing Entry
-The entry point of the processing services is defined in ```DefaultService.java```. Change it accordingly.
-
-```Java
-@Override
-public Service chain() throws Exception {
-	return new SampleService(this).resolve().get();
-}
-```
