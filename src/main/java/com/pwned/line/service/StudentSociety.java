@@ -41,7 +41,7 @@ public class StudentSociety extends DefaultService {
         JSONObject apiParam = new JSONObject(this.getParam("parameters").toString());
         String SocietyCode = apiParam.getString("society");  //get the entity "society" from Dialogflow
         System.out.println(SocietyCode);
-        String regex = "<tr>\\s(.+?)<td><a href=(.+?)target="+"_blank"+">(.+?)</a></td>\\s(.+?)<td>(.+?)</td>\\s(.+?)<td>"+SocietyCode+"</td>"; //<tr>\s(.+?)<td><a href=(.+?)target="_blank">(.+?)<\/a><\/td>\s(.+?)<td>(.+?)<\/td>\s(.+?)<td>(.+?)<\/td>
+        String regex = "<tr>\\s(.+?)<td><a href=(.+?)target=(.+?)>(.+?)</a></td>\\s(.+?)<td>(.+?)</td>\\s(.+?)<td>"+SocietyCode+"</td>"; //<tr>\s(.+?)<td><a href=(.+?)target="_blank">(.+?)<\/a><\/td>\s(.+?)<td>(.+?)<\/td>\s(.+?)<td>(.+?)<\/td>
         String SocietyName = "null";
         System.out.println(regex);
         Pattern SocietyInfoPattern = Pattern.compile(regex);
@@ -50,7 +50,7 @@ public class StudentSociety extends DefaultService {
 
         while (SocietyMatcher.find()) {
             System.out.println("regex is"+regex);
-            SocietyName = SocietyMatcher.group(3);
+            SocietyName = SocietyMatcher.group(4);
         }
 
         System.out.println("SocietyName = "+SocietyName);
