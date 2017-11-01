@@ -51,7 +51,9 @@ public class CourseName extends DefaultService {
 		Pattern departmentPattern = Pattern.compile(regex);
 		System.out.println(regex+departmentPattern);
 		Matcher courseMatcher = departmentPattern.matcher(httpResponse);
+		System.out.println(courseMatcher);
 		while (courseMatcher.find()) {
+			System.out.println("found");
 			courseName = courseMatcher.group(1);
 		}
 		return this.fulfillment.replace("@course::title", courseName);
