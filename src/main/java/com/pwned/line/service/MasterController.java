@@ -87,7 +87,7 @@ public class MasterController extends DefaultService {
 			String[] words = fulfillment.split("\\s+");
 			for (String word : words) {
 				if (word.toLowerCase().equals(keywords)) {
-					//return new DialogFlowTranslate(this).resolve().get();
+					return new DialogFlowLiftAdvisor(this).resolve().get();
 				}
 			}
 		}
