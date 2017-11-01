@@ -42,13 +42,14 @@ public class StudentSociety extends DefaultService {
         String SocietyCode = apiParam.getString("society");  //get the entity "society" from Dialogflow
         System.out.println(SocietyCode);
         String regex = "<tr>\\s(.+?)<td><a href=(.+?)target="+"_blank"+">(.+?)</a></td>\\s(.+?)<td>(.+?)</td>\\s(.+?)<td>"+SocietyCode+"</td>"; //<tr>\s(.+?)<td><a href=(.+?)target="_blank">(.+?)<\/a><\/td>\s(.+?)<td>(.+?)<\/td>\s(.+?)<td>(.+?)<\/td>
-        String SocietyName = "";
+        String SocietyName = "null";
         Pattern SocietyInfoPattern = Pattern.compile(regex);
         Matcher SocietyMatcher = SocietyInfoPattern.matcher(httpResponse);
         while (SocietyMatcher.find()) {
             System.out.println(regex);
             SocietyName = SocietyMatcher.group(3);
         }
+
         System.out.println("SocietyName = "+SocietyName);
         return this.fulfillment.replace("@Society::Name", SocietyName);
     }
