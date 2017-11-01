@@ -32,6 +32,7 @@ public class Weather extends DefaultService{
 		String weather = http.get();
 		String[] messages = {"Weather forecast", "Outlook"};
 		weather = weather.substring(weather.indexOf(messages[0]), weather.indexOf(messages[1]));
+		weather = weather.replace("<br/>", "\\n");
 		while (weather.contains("<")){
 			weather = weather.substring(0, weather.indexOf("<")) + weather.substring(weather.indexOf(">") + 1);
 		}
