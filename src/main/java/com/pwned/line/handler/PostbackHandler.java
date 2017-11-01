@@ -39,6 +39,9 @@ public class PostbackHandler {
 		}).thenApply((Service service) -> {
 			service.dump();
 			KitchenSinkController.reply(event.getReplyToken(), new TextMessage(service.getFulfillment()));
+			return service;
+		}).thenApply((Service service) -> {
+			AnonymousChat.run();
 			return null;
 		});
 	}
