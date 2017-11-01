@@ -49,6 +49,7 @@ public class CourseName extends DefaultService {
 		String regex = "<h2>" + department + "\\s" + courseCode + "\\s-\\s(.+?)\\s\\(\\d\\sunits\\)</h2>";
 		String courseName = "";
 		Pattern departmentPattern = Pattern.compile(regex);
+		System.out.println(regex+departmentPattern);
 		Matcher courseMatcher = departmentPattern.matcher(httpResponse);
 		while (courseMatcher.find()) {
 			courseName = courseMatcher.group(1);
