@@ -47,7 +47,7 @@ public class StudentSociety extends DefaultService {
         Pattern SocietyInfoPattern = Pattern.compile(regex);
         System.out.println(SocietyInfoPattern);
         Matcher SocietyMatcher = SocietyInfoPattern.matcher(httpResponse);
-        System.out.println(SocietyMatcher.groupCount());
+        System.out.println(SocietyMatcher.group());
         System.out.println(SocietyMatcher.find());
         while (SocietyMatcher.find()) {
             System.out.println("regex is"+regex);
