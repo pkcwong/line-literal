@@ -22,27 +22,6 @@ public class MasterController extends DefaultService {
 	@Override
 	public void payload() throws Exception {
 
-		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
-
-		BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
-		ArrayList<Document> user = MongoDB.get(mongo.getCollection("user").find(SELF));
-
-		if (user.size() == 0) {
-			Document data = new Document();
-			data.append("uid", this.getParam("uid").toString());
-			data.append("bind", this.getParam("uid").toString());
-			mongo.getCollection("user").insertOne(data);
-		}
-
-		BasicDBObject data = new BasicDBObject();
-		BasicDBObject event = new BasicDBObject();
-		event.append("timestamp", this.getParam("timestamp").toString());
-		event.append("replyToken", this.getParam("replyToken").toString());
-		event.append("text", this.fulfillment);
-		data.append("msg", event);
-
-		mongo.getCollection("user").findOneAndUpdate(SELF, new BasicDBObject("$addToSet", data));
-
 	}
 
 	/***
