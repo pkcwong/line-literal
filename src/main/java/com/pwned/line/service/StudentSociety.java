@@ -40,15 +40,12 @@ public class StudentSociety extends DefaultService {
     private String getSocietyInfo(String httpResponse) throws Exception {
         JSONObject apiParam = new JSONObject(this.getParam("parameters").toString());
         String SocietyCode = apiParam.getString("society");  //get the entity "society" from Dialogflow
-        System.out.println(SocietyCode);
+        System.out.println(SocietyCode);   //e.g SocietyCode = su_civil;
         String regex = "target=(.+?)>(.+?)</a></td>\\s(.+?)<td>(.+?)</td>\\s(.+?)<td>"+SocietyCode+"</td>"; //<tr>\s(.+?)<td><a href=(.+?)target="_blank">(.+?)<\/a><\/td>\s(.+?)<td>(.+?)<\/td>\s(.+?)<td>(.+?)<\/td>
-        String SocietyName = "null";
-        System.out.println(regex);
+        String SocietyName = "";
         Pattern SocietyInfoPattern = Pattern.compile(regex);
-        System.out.println(SocietyInfoPattern);
         Matcher SocietyMatcher = SocietyInfoPattern.matcher(httpResponse);
-        System.out.println(SocietyMatcher.toString());
-        if(SocietyMatcher.find()) {
+        while(SocietyMatcher.find()) {
             System.out.println("regex is"+regex);
             SocietyName = SocietyMatcher.group(2);
         }
