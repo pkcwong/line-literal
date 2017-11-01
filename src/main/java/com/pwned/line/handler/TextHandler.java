@@ -29,7 +29,6 @@ public class TextHandler {
 			try {
 				Service module = new DefaultService(incoming);
 				module.setParam("uid", event.getSource().getUserId());
-				module.setParam("bind", event.getSource().getUserId());
 				module.setParam("replyToken", event.getReplyToken());
 				module.setParam("timestamp", event.getTimestamp().toString());
 				return new MasterController(module).resolve().get();
