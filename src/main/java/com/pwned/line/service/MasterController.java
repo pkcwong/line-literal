@@ -31,6 +31,7 @@ public class MasterController extends DefaultService {
 			data.append("uid", this.getParam("uid").toString());
 			data.append("bind", this.getParam("uid").toString());
 			mongo.getCollection("user").insertOne(data);
+			this.setParam("bind", this.getParam("uid").toString());
 		} else {
 			this.setParam("bind", user.get(0).get("bind").toString());
 		}
