@@ -60,11 +60,11 @@ public class MasterController extends DefaultService {
 			return new AnonymousChat(this).resolve().get();
 		}
 
-		if (!this.getParam("uid").toString().equals(this.getParam("bind").toString())) {
+		/*if (!this.getParam("uid").toString().equals(this.getParam("bind").toString())) {
 			KitchenSinkController.push(this.getParam("bind").toString(), new TextMessage(this.fulfillment));
 			this.fulfillment = "";
 			return this;
-		}
+		}*/
 
 		String[] timetable = {"current"};
 		String[] lift = {"classroom", "room", "lift"};
