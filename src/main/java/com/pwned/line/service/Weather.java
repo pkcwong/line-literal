@@ -30,7 +30,7 @@ public class Weather extends DefaultService{
 		String link = "http://www.hko.gov.hk/wxinfo/currwx/flw.htm";
 		HTTP http = new HTTP(link);
 		String weather = http.get();
-		String[] messages = {"Weather forecast", "Outlook"};
+		String[] messages = {"Weather forecast", "<br/><br/>Outlook"};
 		weather = weather.substring(weather.indexOf(messages[0]), weather.indexOf(messages[1]));
 		weather = weather.replace("<br/>", "\n");
 		while (weather.contains("<")){
