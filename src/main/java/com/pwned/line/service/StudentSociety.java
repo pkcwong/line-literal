@@ -43,7 +43,9 @@ public class StudentSociety extends DefaultService {
         System.out.println(SocietyCode);
         String regex = "<tr>\\s(.+?)<td><a href=(.+?)target="+"_blank"+">(.+?)</a></td>\\s(.+?)<td>(.+?)</td>\\s(.+?)<td>"+SocietyCode+"</td>"; //<tr>\s(.+?)<td><a href=(.+?)target="_blank">(.+?)<\/a><\/td>\s(.+?)<td>(.+?)<\/td>\s(.+?)<td>(.+?)<\/td>
         String SocietyName = "null";
+        System.out.println(regex);
         Pattern SocietyInfoPattern = Pattern.compile(regex);
+        System.out.println(SocietyInfoPattern);
         Matcher SocietyMatcher = SocietyInfoPattern.matcher(httpResponse);
         while (SocietyMatcher.find()) {
             System.out.println("regex is"+regex);
