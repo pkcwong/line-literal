@@ -15,8 +15,8 @@ public class LiftAdvisor extends DefaultService {
     @Override
     public void payload() throws Exception {
         MongoDB mongo = new MongoDB("mongodb://admin:admin@ds243085.mlab.com:43085/lift");
-        MongoCollection collection=  mongo.getCollection("lift");
-        String lift = collection.find().toString();
+        MongoCollection collection =  mongo.getCollection("lift");
+        String lift = mongo.get(collection.find()).toString();
         this.fulfillment = this.fulfillment.replace("@LiftAdvisor", lift);
     }
 
