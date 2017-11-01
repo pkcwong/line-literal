@@ -1,6 +1,8 @@
 package com.pwned.line.handler;
 
 import com.linecorp.bot.model.event.PostbackEvent;
+import com.linecorp.bot.model.message.TextMessage;
+import com.pwned.line.KitchenSinkController;
 import com.pwned.line.service.AnonymousChat;
 import com.pwned.line.service.DefaultService;
 import com.pwned.line.service.Service;
@@ -33,6 +35,10 @@ public class PostbackHandler {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			return null;
+		}).thenApply((Service service) -> {
+			service.dump();
+			KitchenSinkController.reply(event.getReplyToken(), new TextMessage(service.getFulfillment()));
 			return null;
 		});
 	}
