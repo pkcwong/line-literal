@@ -18,10 +18,10 @@ public class AnonymousChat extends DefaultService {
 			ConfirmTemplate confirmTemplate;
 			if (this.getParam("uid").toString().equals(this.getParam("bind").toString())) {
 				this.fulfillment = "***\nTap \'Connect\' to chat with a random user!\n***";
-				confirmTemplate = new ConfirmTemplate("Anonymous Chat System", new PostbackAction("anonymous", "anonymous::connect", "connect"), new MessageAction("cancel", "Cancel"));
+				confirmTemplate = new ConfirmTemplate("Anonymous Chat System", new PostbackAction("connect", "anonymous::connect"), new PostbackAction("cancel", "anonymous::cancel"));
 			} else {
 				this.fulfillment = "***\nTap \'Terminate\' to close the session.\n***";
-				confirmTemplate = new ConfirmTemplate("Anonymous Chat System", new PostbackAction("anonymous", "anonymous::terminate", "terminate"), new MessageAction("cancel", "Cancel"));
+				confirmTemplate = new ConfirmTemplate("Anonymous Chat System", new PostbackAction("terminate", "anonymous::terminate"), new PostbackAction("cancel", "anonymous::cancel"));
 			}
 			KitchenSinkController.push(this.getParam("uid").toString(), new TemplateMessage("Anonymous Chat System", confirmTemplate));
 		} else if (this.fulfillment.equals("anonymous::connect")) {
