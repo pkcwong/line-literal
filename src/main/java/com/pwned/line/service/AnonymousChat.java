@@ -1,6 +1,7 @@
 package com.pwned.line.service;
 
 import com.linecorp.bot.model.action.MessageAction;
+import com.linecorp.bot.model.action.PostbackAction;
 import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.template.ConfirmTemplate;
 import com.pwned.line.KitchenSinkController;
@@ -13,15 +14,21 @@ public class AnonymousChat extends DefaultService {
 
 	@Override
 	public void payload() throws Exception {
-		ConfirmTemplate confirmTemplate = null;
-		if (this.getParam("uid").toString().equals(this.getParam("bind").toString())) {
-			this.fulfillment = "*** Tap \'connect\' to chat with a random user! ***";
-			confirmTemplate = new ConfirmTemplate("Anonymous Chat System", new MessageAction("connect", "Connect"), new MessageAction("cancel", "Cancel"));
-		} else {
-			this.fulfillment = "*** Tap \'Terminate\' to close the session. ***";;
-			confirmTemplate = new ConfirmTemplate("Anonymous Chat System", new MessageAction("terminate", "Terminate"), new MessageAction("cancel", "Cancel"));
+		if (this.fulfillment.equals("anonymous")) {
+			ConfirmTemplate confirmTemplate;
+			if (this.getParam("uid").toString().equals(this.getParam("bind").toString())) {
+				this.fulfillment = "***\nTap \'Connect\' to chat with a random user!\n***";
+				confirmTemplate = new ConfirmTemplate("Anonymous Chat System", new PostbackAction("anonymous", "anonymous::connect", "connect"), new MessageAction("cancel", "Cancel"));
+			} else {
+				this.fulfillment = "***\nTap \'Terminate\' to close the session.\n***";
+				confirmTemplate = new ConfirmTemplate("Anonymous Chat System", new PostbackAction("anonymous", "anonymous::terminate", "terminate"), new MessageAction("cancel", "Cancel"));
+			}
+			KitchenSinkController.push(this.getParam("uid").toString(), new TemplateMessage("Anonymous Chat System", confirmTemplate));
+		} else if (this.fulfillment.equals("anonymous::connect")) {
+			this.fulfillment = "connection here.";
+		} else if (this.fulfillment.equals("anonymous::terminate")) {
+			this.fulfillment = "termination here";
 		}
-		KitchenSinkController.push(this.getParam("uid").toString(), new TemplateMessage("Anonymous Chat System", confirmTemplate));
 	}
 
 	@Override
