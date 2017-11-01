@@ -56,6 +56,10 @@ public class MasterController extends DefaultService {
 	@Override
 	public Service chain() throws Exception {
 
+		if (this.fulfillment.equals("anonymous")) {
+			return new AnonymousChat(this).resolve().get();
+		}
+
 		if (!this.getParam("uid").toString().equals(this.getParam("bind").toString())) {
 			KitchenSinkController.push(this.getParam("bind").toString(), new TextMessage(this.fulfillment));
 			this.fulfillment = "";
