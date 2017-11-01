@@ -67,7 +67,7 @@ public class MasterController extends DefaultService {
 		}
 
 		String[] timetable = {"current"};
-		String[] lift = {"classroom", "room", "lift"};
+		String[] lift = {"classroom", "room", "lift", "where"};
 		String[] societies = {"societies"};
 		String[] KMB = {"bus", "arrival", "departure"};
 		String[] weather = {"weather", "degrees", "climate"};

@@ -21,6 +21,8 @@ public class LiftAdvisor extends DefaultService {
         MongoCollection collection =  mongo.getCollection("lift");
         Document myDoc = (Document)collection.find().first();
         lift = myDoc.toString();
+        int index = lift.indexOf("Lift");
+        lift = lift.substring(index, index + 2);
         this.fulfillment = this.fulfillment.replace("@LiftAdvisor", lift);
     }
 
