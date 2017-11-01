@@ -8,6 +8,7 @@ import com.mongodb.BasicDBObject;
 import com.pwned.line.KitchenSinkController;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -52,7 +53,7 @@ public class AnonymousChat extends DefaultService {
 			BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
 			ArrayList<Document> user = MongoDB.get(mongo.getCollection("user").find(SELF));
 
-			String partner = user.get(0).getString("bind");
+			String partner = new JSONObject(user.get(0).toJson()).getString("bind");
 			BasicDBObject PARTNER = new BasicDBObject().append("uid", partner);
 
 			mongo.getCollection("user").updateOne(SELF, new BasicDBObject("bind", this.getParam("uid").toString()));
