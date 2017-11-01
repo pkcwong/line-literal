@@ -4,7 +4,7 @@ import com.pwned.line.web.ApiAI;
 import org.json.JSONObject;
 
 /***
- * Service module for DialogFlow temperature
+ * Service module for DialogFlow Lift Advisor
  * Required params: []
  * Reserved tokens: []
  * Resolved params: []

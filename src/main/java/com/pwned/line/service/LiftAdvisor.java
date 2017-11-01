@@ -1,11 +1,16 @@
 package com.pwned.line.service;
 
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.pwned.line.web.MongoDB;
-import com.pwned.line.web.YandexTranslate;
 import org.bson.Document;
-import org.json.JSONObject;
+
+/*******
+ * Service for finding closest lift.
+ * Required params: [location]
+ * Reserved tokens: [@LiftAdvisor]
+ * Resolved params: []
+ * @author Bear
+ */
 
 public class LiftAdvisor extends DefaultService {
 
@@ -17,11 +22,11 @@ public class LiftAdvisor extends DefaultService {
     @Override
     public void payload() throws Exception {
         String lift = "";
-        MongoDB mongo = new MongoDB("mongodb://admin:admin@ds243085.mlab.com:43085/lift");
-        MongoCollection collection =  mongo.getCollection("lift");
-        Document myDoc = (Document)collection.find().first();
+        MongoDB mongo = new MongoDB("mongodb://admin:admin@ds243085.mlab.com:43085/lift");  //Connecting DB
+        MongoCollection collection =  mongo.getCollection("lift");   // Get DB called lift
+        Document myDoc = (Document)collection.find().first();     //Get the document; need to use get() to get more documents
         lift = myDoc.toString();
-        int index = lift.indexOf("Lift");
+        int index = lift.indexOf("Lift") + 6;
         lift = lift.substring(index, index + 2);
         this.fulfillment = this.fulfillment.replace("@LiftAdvisor", lift);
     }
