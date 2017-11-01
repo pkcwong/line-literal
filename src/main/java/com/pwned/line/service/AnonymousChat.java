@@ -2,6 +2,7 @@ package com.pwned.line.service;
 
 import com.linecorp.bot.model.action.PostbackAction;
 import com.linecorp.bot.model.message.TemplateMessage;
+import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.message.template.ConfirmTemplate;
 import com.mongodb.BasicDBObject;
 import com.pwned.line.KitchenSinkController;
@@ -64,6 +65,26 @@ public class AnonymousChat extends DefaultService {
 	@Override
 	public Service chain() throws Exception {
 		return this;
+	}
+
+	public static void run() {
+
+		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
+		ArrayList<Document> list = MongoDB.get(mongo.getCollection("anonymous").find());
+
+		System.out.println("Anonymous bin size: " + list.size());
+
+		if (list.size() >= 2) {
+			String NORTH = list.get(0).getString("uid");
+			String SOUTH = list.get(1).getString("uid");
+			mongo.getCollection("user").updateOne(new BasicDBObject("uid", NORTH), new BasicDBObject("bind", SOUTH));
+			mongo.getCollection("user").updateOne(new BasicDBObject("uid", SOUTH), new BasicDBObject("bind", NORTH));
+			KitchenSinkController.push(NORTH, new TextMessage("***\nYou are connected to a random user!\n***"));
+			KitchenSinkController.push(SOUTH, new TextMessage("***\nYou are connected to a random user!\n***"));
+			mongo.getCollection("anonymous").deleteOne(new BasicDBObject("uid", NORTH));
+			mongo.getCollection("anonymous").deleteOne(new BasicDBObject("uid", SOUTH));
+		}
+
 	}
 
 }

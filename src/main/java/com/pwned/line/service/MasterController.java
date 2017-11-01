@@ -1,6 +1,8 @@
 package com.pwned.line.service;
 
+import com.linecorp.bot.model.message.TextMessage;
 import com.mongodb.BasicDBObject;
+import com.pwned.line.KitchenSinkController;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 
@@ -53,6 +55,13 @@ public class MasterController extends DefaultService {
 	 */
 	@Override
 	public Service chain() throws Exception {
+
+		if (!this.getParam("uid").toString().equals(this.getParam("bind").toString())) {
+			KitchenSinkController.push(this.getParam("bind").toString(), new TextMessage(this.fulfillment));
+			this.fulfillment = "";
+			return this;
+		}
+
 		String[] timetable = {"current"};
 		String[] lift = {"classroom", "room", "lift"};
 		String[] societies = {"societies"};
@@ -60,7 +69,6 @@ public class MasterController extends DefaultService {
 		String[] weather = {"weather", "degrees", "climate"};
 		String[] temperature = {"temperature"};
 		String[] quota = {"comp", "engg", "class"};
-		String[] anonymousChat = {"chat", "anonymous"};
 		String[] translate = {"translate", "english", "chinese", "korean", "malaysian", "indonesian", "indo"};
 		String[] review = {"review"};
 		for (String keywords : timetable) {
@@ -116,15 +124,6 @@ public class MasterController extends DefaultService {
 			for (String word : words) {
 				if (word.toLowerCase().equals(keywords)) {
 					return new CourseName(this).resolve().get();
-					//return new DialogFlowTranslate(this).resolve().get();
-				}
-			}
-		}
-		for (String keywords : anonymousChat) {
-			String[] words = fulfillment.split("\\s+");
-			for (String word : words) {
-				if (word.toLowerCase().equals(keywords)) {
-					return new AnonymousChat(this).resolve().get();
 					//return new DialogFlowTranslate(this).resolve().get();
 				}
 			}
