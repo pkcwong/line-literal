@@ -1,8 +1,10 @@
 package com.pwned.line.service;
 
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import com.pwned.line.web.MongoDB;
 import com.pwned.line.web.YandexTranslate;
+import org.bson.Document;
 import org.json.JSONObject;
 
 public class LiftAdvisor extends DefaultService {
@@ -14,9 +16,11 @@ public class LiftAdvisor extends DefaultService {
 
     @Override
     public void payload() throws Exception {
+        String lift = "";
         MongoDB mongo = new MongoDB("mongodb://admin:admin@ds243085.mlab.com:43085/lift");
         MongoCollection collection =  mongo.getCollection("lift");
-        String lift = mongo.get(collection.find()).toString();
+        Document myDoc = (Document)collection.find().first();
+        lift = myDoc.toString();
         this.fulfillment = this.fulfillment.replace("@LiftAdvisor", lift);
     }
 
