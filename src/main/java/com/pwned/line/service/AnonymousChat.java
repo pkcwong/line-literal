@@ -78,8 +78,8 @@ public class AnonymousChat extends DefaultService {
 		if (list.size() >= 2) {
 			String NORTH = new JSONObject(list.get(0).toJson()).getString("uid");
 			String SOUTH = new JSONObject(list.get(1).toJson()).getString("uid");
-			mongo.getCollection("user").updateOne(new BasicDBObject("uid", NORTH), new BasicDBObject("bind", SOUTH));
-			mongo.getCollection("user").updateOne(new BasicDBObject("uid", SOUTH), new BasicDBObject("bind", NORTH));
+			mongo.getCollection("user").updateOne(new BasicDBObject("uid", NORTH), new BasicDBObject("$set", new BasicDBObject("bind", SOUTH)));
+			mongo.getCollection("user").updateOne(new BasicDBObject("uid", SOUTH), new BasicDBObject("$set", new BasicDBObject("bind", NORTH)));
 			KitchenSinkController.push(NORTH, new TextMessage("***\nYou are connected to a random user!\n***"));
 			KitchenSinkController.push(SOUTH, new TextMessage("***\nYou are connected to a random user!\n***"));
 			mongo.getCollection("anonymous").deleteOne(new BasicDBObject("uid", NORTH));
