@@ -28,8 +28,20 @@ public class StudentSociety extends DefaultService {
     @Override
     public void payload() throws Exception {
         JSONObject apiParam = new JSONObject(this.getParam("parameters").toString());
+        String SocietyCode = apiParam.getString("society");
         HTTP link = new HTTP(SocInfo_URL);
-        //this.fulfillment = getSocietyInfo(httpClient.get());
+        String societypage = link.get();
+        String SocietyName = "";
+        String[] keywords = {"<a href=\"http://ihome.ust.hk/~","\" target=\"_blank\">", "</a></td>"};
+        String societyURL = keywords[0]+SocietyCode;
+        String societyweb = societypage.substring(societypage.indexOf(societyURL),societypage.indexOf(keywords[2]));
+        if(societyweb.contains(societyURL)){
+            String societynamecode = societyweb.substring(societyweb.indexOf(keywords[1])+1, societyweb.indexOf(keywords[2]));
+            SocietyName = societynamecode;
+        }
+
+
+        this.fulfillment.replace("@Society::Name", SocietyName);
     }
 
     /***
