@@ -37,7 +37,7 @@ public class LiftAdvisor extends DefaultService {
 		while (matcher.find()) {
 			lift = matcher.group(1);
 		}
-		this.fulfillment = this.fulfillment.replace("@LiftAdvisor", lift);
+		this.fulfillment = this.fulfillment.replace("@LiftAdvisor", "Lift " + lift);
 	}
 
 	@Override
