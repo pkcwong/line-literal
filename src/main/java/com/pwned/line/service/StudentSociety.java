@@ -27,8 +27,7 @@ public class StudentSociety extends DefaultService {
      */
     @Override
     public void payload() throws Exception {
-        JSONObject apiParam = new JSONObject(this.getParam("parameters").toString());
-        String SocietyCode = apiParam.getString("society");
+        String SocietyCode = new JSONObject(this.getParam("parameters").toString()).getString("society");
         System.out.println(SocietyCode);
         HTTP link = new HTTP(SocInfo_URL);
         String societypage = link.get();
