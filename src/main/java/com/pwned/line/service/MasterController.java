@@ -5,6 +5,7 @@ import com.mongodb.BasicDBObject;
 import com.pwned.line.KitchenSinkController;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -35,7 +36,7 @@ public class MasterController extends DefaultService {
 			mongo.getCollection("user").insertOne(data);
 			this.setParam("bind", this.getParam("uid").toString());
 		} else {
-			this.setParam("bind", user.get(0).get("bind").toString());
+			this.setParam("bind", new JSONObject(user.get(0).toJson()).getString("bind"));
 		}
 
 		BasicDBObject data = new BasicDBObject();
@@ -67,7 +68,7 @@ public class MasterController extends DefaultService {
 		}
 
 		String[] timetable = {"current"};
-		String[] lift = {"classroom", "room", "lift"};
+		String[] lift = {"classroom", "room", "lift", "where"};
 		String[] societies = {"societies", "society", "student Club", "club", "interest group"};
 		String[] KMB = {"bus", "arrival", "departure"};
 		String[] weather = {"weather", "degrees", "climate"};
@@ -87,7 +88,7 @@ public class MasterController extends DefaultService {
 			String[] words = fulfillment.split("\\s+");
 			for (String word : words) {
 				if (word.toLowerCase().equals(keywords)) {
-					//return new DialogFlowTranslate(this).resolve().get();
+					return new DialogFlowLiftAdvisor(this).resolve().get();
 				}
 			}
 		}
