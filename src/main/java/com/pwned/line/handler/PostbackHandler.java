@@ -41,7 +41,11 @@ public class PostbackHandler {
 			KitchenSinkController.reply(event.getReplyToken(), new TextMessage(service.getFulfillment()));
 			return service;
 		}).thenApply((Service service) -> {
-			AnonymousChat.run();
+			try {
+				AnonymousChat.run();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			return null;
 		});
 	}

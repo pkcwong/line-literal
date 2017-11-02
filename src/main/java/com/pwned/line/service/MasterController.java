@@ -5,6 +5,7 @@ import com.mongodb.BasicDBObject;
 import com.pwned.line.KitchenSinkController;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -35,7 +36,7 @@ public class MasterController extends DefaultService {
 			mongo.getCollection("user").insertOne(data);
 			this.setParam("bind", this.getParam("uid").toString());
 		} else {
-			this.setParam("bind", user.get(0).get("bind").toString());
+			this.setParam("bind", new JSONObject(user.get(0).toJson()).getString("bind"));
 		}
 
 		BasicDBObject data = new BasicDBObject();
