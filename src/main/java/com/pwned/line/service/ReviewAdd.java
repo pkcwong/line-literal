@@ -1,6 +1,7 @@
 package com.pwned.line.service;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 import org.json.JSONObject;
@@ -33,7 +34,7 @@ public class ReviewAdd extends DefaultService {
 		obj.add(new BasicDBObject("department", dept));
 		obj.add(new BasicDBObject("code", courseCode));
 		andQuery.put("$and", obj);
-		mongo.getCollection("courseReview").findOneAndUpdate(andQuery, new BasicDBObject("$addToSet", this.fulfillment));
+		mongo.getCollection("courseReview").findOneAndUpdate(andQuery, new BasicDBObject("$addToSet", new BasicDBObject("reviews", this.fulfillment)), new FindOneAndUpdateOptions().upsert(true));
 	}
 
 	@Override
