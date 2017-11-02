@@ -60,6 +60,7 @@ public class AnonymousChat extends DefaultService {
 			mongo.getCollection("user").updateOne(PARTNER, new BasicDBObject("$set", new BasicDBObject("bind", partner)));
 
 			this.fulfillment = "***\nYour session is terminated.\n***";
+			KitchenSinkController.push(partner, new TextMessage(this.fulfillment));
 		}
 	}
 
@@ -70,21 +71,25 @@ public class AnonymousChat extends DefaultService {
 
 	public static void run() throws Exception {
 
-		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
-		ArrayList<Document> list = MongoDB.get(mongo.getCollection("anonymous").find());
+		ArrayList<Document> list;
 
-		System.out.println("Anonymous bin size: " + list.size());
+		do {
 
-		if (list.size() >= 2) {
-			String NORTH = new JSONObject(list.get(0).toJson()).getString("uid");
-			String SOUTH = new JSONObject(list.get(1).toJson()).getString("uid");
-			mongo.getCollection("user").updateOne(new BasicDBObject("uid", NORTH), new BasicDBObject("$set", new BasicDBObject("bind", SOUTH)));
-			mongo.getCollection("user").updateOne(new BasicDBObject("uid", SOUTH), new BasicDBObject("$set", new BasicDBObject("bind", NORTH)));
-			KitchenSinkController.push(NORTH, new TextMessage("***\nYou are connected to a random user!\n***"));
-			KitchenSinkController.push(SOUTH, new TextMessage("***\nYou are connected to a random user!\n***"));
-			mongo.getCollection("anonymous").deleteOne(new BasicDBObject("uid", NORTH));
-			mongo.getCollection("anonymous").deleteOne(new BasicDBObject("uid", SOUTH));
-		}
+			MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
+			list = MongoDB.get(mongo.getCollection("anonymous").find());
+
+			if (list.size() > 1) {
+				String NORTH = new JSONObject(list.get(0).toJson()).getString("uid");
+				String SOUTH = new JSONObject(list.get(1).toJson()).getString("uid");
+				mongo.getCollection("user").updateOne(new BasicDBObject("uid", NORTH), new BasicDBObject("$set", new BasicDBObject("bind", SOUTH)));
+				mongo.getCollection("user").updateOne(new BasicDBObject("uid", SOUTH), new BasicDBObject("$set", new BasicDBObject("bind", NORTH)));
+				KitchenSinkController.push(NORTH, new TextMessage("***\nYou are connected to a random user!\n***"));
+				KitchenSinkController.push(SOUTH, new TextMessage("***\nYou are connected to a random user!\n***"));
+				mongo.getCollection("anonymous").deleteOne(new BasicDBObject("uid", NORTH));
+				mongo.getCollection("anonymous").deleteOne(new BasicDBObject("uid", SOUTH));
+			}
+
+		} while (list.size() > 1);
 
 	}
 
