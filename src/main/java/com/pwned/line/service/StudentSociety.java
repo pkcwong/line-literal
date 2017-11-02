@@ -45,6 +45,7 @@ public class StudentSociety extends DefaultService {
             System.out.println("contains");
             String societynamecode = societyweb.substring(societyweb.indexOf(societyURL)+societyURL.length(), societyweb.indexOf(keywords[3]));
             SocietyName = societynamecode;
+            SocietyName = SocietyName+"\ntheir website is http://ihome.ust.hk/~"+SocietyCode;
             System.out.println("SocietyName = "+ SocietyName);
 
         }else{
