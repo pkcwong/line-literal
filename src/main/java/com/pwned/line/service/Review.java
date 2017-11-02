@@ -19,15 +19,13 @@ public class Review extends DefaultService {
 		JSONObject apiParam = new JSONObject(this.getParam("parameters").toString());
 		String department = apiParam.getString("department");
 		String courseCode = apiParam.getString("number");
-		if(this.fulfillment.contains("add")){
-			BasicDBObject SELF = new BasicDBObject("uid", this.getParam("uid").toString());
-			mongo.getCollection("user").updateOne(SELF, new BasicDBObject("$set", new BasicDBObject("buff", new BasicDBObject().append("cmd", "review::add").append("data", new BasicDBObject().append("department", department).append("code", courseCode)))));
-			this.fulfillment = "You can type your detail review here: ";
-		}
-		else {
+		try {
+			apiParam.getString("ReviewAdd");
+
+		} catch (Exception e) {
 			this.fulfillment = "";
 			ArrayList<Document> courseReview = MongoDB.get(mongo.getCollection("courseReview").find());
-			for(int i = 0; i < courseReview.size(); i++){
+			for (int i = 0; i < courseReview.size(); i++) {
 				JSONObject course = new JSONObject(courseReview.get(i).toJson());
 				String dep = course.getString("department");
 				String code = course.getString("code");
@@ -43,6 +41,9 @@ public class Review extends DefaultService {
 			if (this.fulfillment.equals("")) {
 				this.fulfillment = "Sorry, no reviews yet. Help us make one! :D :D";
 			}
+			BasicDBObject SELF = new BasicDBObject("uid", this.getParam("uid").toString());
+			mongo.getCollection("user").updateOne(SELF, new BasicDBObject("$set", new BasicDBObject("buff", new BasicDBObject().append("cmd", "review::add").append("data", new BasicDBObject().append("department", department).append("code", courseCode)))));
+			this.fulfillment = "You can type your detail review here: ";
 		}
 	}
 
