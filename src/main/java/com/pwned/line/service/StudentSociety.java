@@ -29,6 +29,7 @@ public class StudentSociety extends DefaultService {
     public void payload() throws Exception {
         JSONObject apiParam = new JSONObject(this.getParam("parameters").toString());
         String SocietyCode = apiParam.getString("society");
+        System.out.println(SocietyCode);
         HTTP link = new HTTP(SocInfo_URL);
         String societypage = link.get();
 
@@ -48,7 +49,7 @@ public class StudentSociety extends DefaultService {
         System.out.println("societyweb = "+societyweb);
         if(societypage.contains(societyURL)){
             System.out.println("contains");
-            String societynamecode = societyweb.substring(societyweb.indexOf(keywords[1])+keywords[1].length(), societyweb.indexOf(keywords[3]));
+            String societynamecode = societyweb.substring(societyweb.indexOf(societyURL)+societyURL.length(), societyweb.indexOf(keywords[3]));
             SocietyName = societynamecode;
             System.out.println("SocietyName = "+ SocietyName);
 
