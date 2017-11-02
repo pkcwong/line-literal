@@ -38,17 +38,13 @@ public class StudentSociety extends DefaultService {
         String societyURL = SocietyCode+keywords[1];
         System.out.println(societypage.indexOf(SocietyCode)+keywords[1].length()+" "+ societypage.lastIndexOf(SocietyCode));
 
-        //if(societypage.contains(SocietyCode)){
-          //  SocietyName = societypage.substring(societypage.indexOf(SocietyCode)+keywords[1].length(), societypage.lastIndexOf(SocietyCode));
-
-        //}
 
         System.out.println(societypage.indexOf(societyURL)+" keywords[2]+9 = "+(societypage.indexOf(keywords[2])+9));
         String societyweb = societypage.substring(societypage.indexOf(societyURL),societypage.lastIndexOf(SocietyCode));
         System.out.println("societyweb = "+societyweb);
         if(societypage.contains(societyURL)){
             System.out.println("contains");
-            String societynamecode = societyweb.substring(societyweb.indexOf(keywords[1])+keywords[1].length(), societyweb.indexOf(keywords[3]));
+            String societynamecode = societyweb.substring(societyweb.indexOf(societyURL)+SocietyCode.length()+keywords[1].length(), societyweb.indexOf(keywords[3]));
             SocietyName = societynamecode;
             System.out.println("SocietyName = "+ SocietyName);
 
