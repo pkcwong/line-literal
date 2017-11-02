@@ -31,8 +31,7 @@ public class LiftAdvisor extends DefaultService {
 		http.setParams("keyword", location);
 		http.setParams("type", "lift");
 		String response = http.get();
-		System.out.println(response);
-		Pattern regex = Pattern.compile("lift\\s\\sLIFT\\s(.+?);(.+)");
+		Pattern regex = Pattern.compile("liftLIFT\\s(.+?);(.+)");
 		Matcher matcher = regex.matcher(response);
 		String lift = "";
 		while (matcher.find()) {
