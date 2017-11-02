@@ -31,6 +31,7 @@ public class StudentSociety extends DefaultService {
         String SocietyCode = apiParam.getString("society");
         HTTP link = new HTTP(SocInfo_URL);
         String societypage = link.get();
+        System.out.println(societypage);
         String SocietyName = "";
         String[] keywords = {"<a href=\"http://ihome.ust.hk/~","\" target=\"_blank\">", "</a></td>"};
         String societyURL = keywords[0]+SocietyCode;
