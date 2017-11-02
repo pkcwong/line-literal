@@ -68,7 +68,7 @@ public class AnonymousChat extends DefaultService {
 		return this;
 	}
 
-	public static void run() {
+	public static void run() throws Exception {
 
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
 		ArrayList<Document> list = MongoDB.get(mongo.getCollection("anonymous").find());
@@ -76,8 +76,8 @@ public class AnonymousChat extends DefaultService {
 		System.out.println("Anonymous bin size: " + list.size());
 
 		if (list.size() >= 2) {
-			String NORTH = list.get(0).getString("uid");
-			String SOUTH = list.get(1).getString("uid");
+			String NORTH = new JSONObject(list.get(0).toJson()).getString("uid");
+			String SOUTH = new JSONObject(list.get(1).toJson()).getString("uid");
 			mongo.getCollection("user").updateOne(new BasicDBObject("uid", NORTH), new BasicDBObject("bind", SOUTH));
 			mongo.getCollection("user").updateOne(new BasicDBObject("uid", SOUTH), new BasicDBObject("bind", NORTH));
 			KitchenSinkController.push(NORTH, new TextMessage("***\nYou are connected to a random user!\n***"));
