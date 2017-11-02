@@ -27,12 +27,11 @@ public class LiftAdvisor extends DefaultService {
 	public void payload() throws Exception {
 		JSONObject apiParams = new JSONObject(this.getParam("parameters").toString());
 		String location = apiParams.getString("location");
-		System.out.println(apiParams.toString());
-		System.out.println(location);
 		HTTP http = new HTTP("http://pathadvisor.ust.hk/phplib/search.php");
 		http.setParams("keyword", location);
 		http.setParams("type", "lift");
 		String response = http.get();
+		System.out.println(response);
 		Pattern regex = Pattern.compile("lift\\s\\sLIFT\\s(.+?);(.+)");
 		Matcher matcher = regex.matcher(response);
 		String lift = "";
