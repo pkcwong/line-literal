@@ -35,9 +35,11 @@ public class StudentSociety extends DefaultService {
         String[] keywords = {"<a href=\"http://ihome.ust.hk/~","\" target=\"_blank\">", "</a></td>"};
         String societyURL = keywords[0]+SocietyCode;
         String societyweb = societypage.substring(societypage.indexOf(societyURL),societypage.indexOf(keywords[2]));
+        System.out.println("societyweb = "+societyweb);
         if(societyweb.contains(societyURL)){
             String societynamecode = societyweb.substring(societyweb.indexOf(keywords[1])+1, societyweb.indexOf(keywords[2]));
             SocietyName = societynamecode;
+            System.out.println("SocietyName = "+SocietyName);
         }
 
 
