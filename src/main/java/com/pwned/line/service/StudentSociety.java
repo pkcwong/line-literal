@@ -34,7 +34,7 @@ public class StudentSociety extends DefaultService {
 
         String SocietyName = "";
 
-        String[] keywords = {"<a href=\"http://ihome.ust.hk/~","\" target=\"_blank\">", ", HKUSTSU"};
+        String[] keywords = {"<a href=\"http://ihome.ust.hk/~","\" target=\"_blank\">", ", HKUSTSU", "</a>"};
         String societyURL = SocietyCode+keywords[1];
         System.out.println(societyURL);
         System.out.println(societypage.indexOf(SocietyCode)+keywords[1].length()+" "+ societypage.lastIndexOf(SocietyCode));
@@ -45,11 +45,11 @@ public class StudentSociety extends DefaultService {
         //}
 
         System.out.println(societypage.indexOf(societyURL)+" keywords[2]+9 = "+(societypage.indexOf(keywords[2])+9));
-        String societyweb = societypage.substring(societypage.indexOf(societyURL),societypage.indexOf(keywords[2])+9);
+        String societyweb = societypage.substring(societypage.indexOf(societyURL),societypage.lastIndexOf(SocietyCode);
         System.out.println("societyweb = "+societyweb);
         if(societypage.contains(societyURL)){
             System.out.println("contains");
-            String societynamecode = societyweb.substring(societyweb.indexOf(keywords[1])+1, societyweb.indexOf(keywords[2]));
+            String societynamecode = societyweb.substring(societyweb.indexOf(keywords[1])+1, societyweb.indexOf(keywords[3]));
             SocietyName = societynamecode;
             System.out.println("SocietyName = "+ SocietyName);
         }
