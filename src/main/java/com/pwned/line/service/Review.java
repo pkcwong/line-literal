@@ -1,5 +1,6 @@
 package com.pwned.line.service;
 
+import com.mongodb.BasicDBObject;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 import org.json.JSONObject;
@@ -19,7 +20,9 @@ public class Review extends DefaultService {
 		String department = apiParam.getString("department");
 		String courseCode = apiParam.getString("number");
 		if(this.fulfillment.contains("add")){
-
+			BasicDBObject SELF = new BasicDBObject("uid", this.getParam("uid").toString());
+			mongo.getCollection("user").updateOne(SELF, new BasicDBObject("$set", new BasicDBObject("buff", new BasicDBObject().append("cmd", "review::add").append("data", new BasicDBObject().append("department", department).append("code", courseCode)))));
+			this.fulfillment = "You can type your detail review here: ";
 		}
 		else {
 			this.fulfillment = "";
@@ -32,9 +35,8 @@ public class Review extends DefaultService {
 					if (course.getJSONArray("reviews").length() > 0) {
 						JSONObject review = course.getJSONArray("reviews").getJSONObject((int) (Math.random() * course.getJSONArray("reviews").length()));
 						String text = review.getString("text");
-						String impression = review.getString("impression");
 						this.fulfillment = "Here is a random review of " + department + courseCode + ":\n" +
-								"Opinion: " + text + "\nImpression(A-F without sub grade): " + impression;
+								"Opinion: " + text;
 					}
 				}
 			}

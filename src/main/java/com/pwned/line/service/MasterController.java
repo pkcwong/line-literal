@@ -33,9 +33,11 @@ public class MasterController extends DefaultService {
 			Document data = new Document();
 			data.append("uid", this.getParam("uid").toString());
 			data.append("bind", this.getParam("uid").toString());
+			data.append("buff", "");
 			mongo.getCollection("user").insertOne(data);
 			this.setParam("bind", this.getParam("uid").toString());
 		} else {
+			this.setParam("buff", new JSONObject(user.get(0).toJson()).getString("buff"));
 			this.setParam("bind", new JSONObject(user.get(0).toJson()).getString("bind"));
 		}
 
@@ -56,6 +58,13 @@ public class MasterController extends DefaultService {
 	 */
 	@Override
 	public Service chain() throws Exception {
+
+		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
+		ArrayList<Document> user = MongoDB.get(mongo.getCollection("user").find());
+		JSONObject USER = new JSONObject(user.get(0).toJson());
+		if (USER.getString("buff").equals("review::add")) {
+			return new ReviewAdd(this).resolve().get();
+		}
 
 		if (this.fulfillment.equals("anonymous") || this.fulfillment.equals("Anonymous")) {
 			return new AnonymousChat(this).resolve().get();
