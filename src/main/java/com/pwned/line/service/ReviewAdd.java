@@ -2,6 +2,8 @@ package com.pwned.line.service;
 
 import com.mongodb.BasicDBObject;
 import com.pwned.line.web.MongoDB;
+import org.bson.Document;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +17,20 @@ public class ReviewAdd extends DefaultService {
 	@Override
 	public void payload() throws Exception {
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
-		BasicDBObject SELF = new BasicDBObject().append("buff", this.getParam("data").toString());
-		BasicDBObject department = new BasicDBObject().append("department", SELF);
-		BasicDBObject courseCode = new BasicDBObject().append("code", SELF);
+
+		//fetch buff -> data from MongoDB
+		BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
+		ArrayList<Document> user = MongoDB.get(mongo.getCollection("user").find(SELF));
+		JSONObject USER = new JSONObject(user.get(0).toJson());
+		String department = USER.getJSONObject("buff").getJSONObject("data").getString("department");
+		String code = USER.getJSONObject("buff").getJSONObject("data").getString("code");
+
+		// build query
+		BasicDBObject dept = new BasicDBObject().append("department", department);
+		BasicDBObject courseCode = new BasicDBObject().append("code", code);
 		BasicDBObject andQuery = new BasicDBObject();
 		List<BasicDBObject> obj = new ArrayList<>();
-		obj.add(new BasicDBObject("department", department));
+		obj.add(new BasicDBObject("department", dept));
 		obj.add(new BasicDBObject("code", courseCode));
 		andQuery.put("$and", obj);
 		mongo.getCollection("courseReview").findOneAndUpdate(andQuery, new BasicDBObject("$addToSet", this.fulfillment));
