@@ -73,7 +73,7 @@ public class MasterController extends DefaultService {
 		String[] KMB = {"bus", "arrival", "departure"};
 		String[] weather = {"weather", "degrees", "climate"};
 		String[] temperature = {"temperature"};
-		String[] quota = {"comp", "engg", "class"};
+		String[] quota = {"class"};
 		String[] translate = {"translate", "english", "chinese", "korean", "malaysian", "indonesian", "indo"};
 		String[] review = {"review"};
 		String[] help = {"help"};
