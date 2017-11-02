@@ -28,8 +28,8 @@ public class StudentSociety extends DefaultService {
     @Override
     public void payload() throws Exception {
         JSONObject apiParam = new JSONObject(this.getParam("parameters").toString());
-        HTTP httpClient = new HTTP(SocInfo_URL);
-        this.fulfillment = getSocietyInfo(httpClient.get());
+        HTTP link = new HTTP(SocInfo_URL);
+        //this.fulfillment = getSocietyInfo(httpClient.get());
     }
 
     /***
@@ -46,7 +46,7 @@ public class StudentSociety extends DefaultService {
         Pattern SocietyInfoPattern = Pattern.compile(regex);
         Matcher SocietyMatcher = SocietyInfoPattern.matcher(httpResponse);
         while(SocietyMatcher.find()) {
-            System.out.println("regex is"+regex);
+            System.out.println("regex is "+regex);
             SocietyName = SocietyMatcher.group(2);
         }
 
