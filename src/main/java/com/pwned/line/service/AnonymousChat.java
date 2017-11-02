@@ -56,8 +56,8 @@ public class AnonymousChat extends DefaultService {
 			String partner = new JSONObject(user.get(0).toJson()).getString("bind");
 			BasicDBObject PARTNER = new BasicDBObject().append("uid", partner);
 
-			mongo.getCollection("user").updateOne(SELF, new BasicDBObject("bind", this.getParam("uid").toString()));
-			mongo.getCollection("user").updateOne(PARTNER, new BasicDBObject("bind", partner));
+			mongo.getCollection("user").updateOne(SELF, new BasicDBObject("$set", new BasicDBObject("bind", this.getParam("uid").toString())));
+			mongo.getCollection("user").updateOne(PARTNER, new BasicDBObject("$set", new BasicDBObject("bind", partner)));
 
 			this.fulfillment = "***\nYour session is terminated.\n***";
 		}
