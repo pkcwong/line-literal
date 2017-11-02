@@ -37,12 +37,13 @@ public class StudentSociety extends DefaultService {
         String societyURL = SocietyCode+keywords[1];
         System.out.println(societyURL);
 
-        String societyweb = societypage.substring(societypage.indexOf(keywords[0]),societypage.indexOf(societyURL));
+        String societyweb = societypage.substring(societypage.indexOf(keywords[0]),societypage.indexOf(keywords[2]));
         System.out.println("societyweb = "+societyweb);
         if(societyweb.contains(societyURL)){
+            System.out.println("contains");
             String societynamecode = societyweb.substring(societyweb.indexOf(keywords[1])+1, societyweb.indexOf(keywords[2]));
             SocietyName = societynamecode;
-            System.out.println("SocietyName = "+SocietyName);
+            System.out.println("SocietyName = "+ SocietyName);
         }
 
 
