@@ -62,7 +62,7 @@ public class MasterController extends DefaultService {
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
 		ArrayList<Document> user = MongoDB.get(mongo.getCollection("user").find());
 		JSONObject USER = new JSONObject(user.get(0).toJson());
-		if (USER.getString("buff").equals("review::add")) {
+		if (USER.getJSONObject("buff").getString("cmd").equals("review::add")) {
 			return new ReviewAdd(this).resolve().get();
 		}
 
