@@ -36,7 +36,6 @@ public class StudentSociety extends DefaultService {
 
         String[] keywords = {"<a href=\"http://ihome.ust.hk/~","\" target=\"_blank\">", ", HKUSTSU", "</a>"};
         String societyURL = SocietyCode+keywords[1];
-        System.out.println(societyURL);
         System.out.println(societypage.indexOf(SocietyCode)+keywords[1].length()+" "+ societypage.lastIndexOf(SocietyCode));
 
         //if(societypage.contains(SocietyCode)){
