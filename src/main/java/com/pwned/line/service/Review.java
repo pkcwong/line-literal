@@ -5,6 +5,7 @@ import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 import org.json.JSONObject;
 
+import javax.websocket.RemoteEndpoint;
 import java.util.ArrayList;
 
 public class Review extends DefaultService {
@@ -44,7 +45,11 @@ public class Review extends DefaultService {
 				this.fulfillment = "Sorry, no reviews yet. Help us make one! :D :D";
 			}
 		}
-		BasicDBObject SELF = new BasicDBObject("uid", this.getParam("uid").toString());
+		BasicDBObject SELF = new BasicDBObject("buff", this.getParam("buff").toString());
+		//BasicDBObject cmd = new BasicDBObject("cmd", "review::add");
+		//BasicDBObject data = new BasicDBObject("data", new BasicDBObject("data",  new BasicDBObject().append("department", department).append("code", courseCode)));
+		//mongo.getCollection("user").updateOne(SELF, cmd);
+		//mongo.getCollection("user").updateOne()
 		mongo.getCollection("user").updateOne(SELF, new BasicDBObject("$set", new BasicDBObject("buff", new BasicDBObject().append("cmd", "review::add").append("data", new BasicDBObject().append("department", department).append("code", courseCode)))));
 		this.fulfillment = "You can type your detail review here: ";
 	}
