@@ -22,7 +22,7 @@ public class Review extends DefaultService {
 		String courseCode = apiParam.getString("number");
 		String add = apiParam.getString("ReviewAdd");
 		//find
-		if(add.equals("")){
+		if(!add.equals("add")){
 			this.fulfillment = "";
 			ArrayList<Document> courseReview = MongoDB.get(mongo.getCollection("courseReview").find());
 			for (int i = 0; i < courseReview.size(); i++) {

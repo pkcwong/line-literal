@@ -33,7 +33,7 @@ public class MasterController extends DefaultService {
 			Document data = new Document();
 			data.append("uid", this.getParam("uid").toString());
 			data.append("bind", this.getParam("uid").toString());
-			data.append("buff", new BasicDBObject("cmd", ""));
+			data.append("buff", new BasicDBObject("cmd", "master"));
 			mongo.getCollection("user").insertOne(data);
 			this.setParam("bind", this.getParam("uid").toString());
 		} else {
