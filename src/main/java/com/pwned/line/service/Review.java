@@ -46,11 +46,11 @@ public class Review extends DefaultService {
 			}
 		}
 		BasicDBObject SELF = new BasicDBObject("buff", this.getParam("buff").toString());
-		//BasicDBObject cmd = new BasicDBObject("cmd", "review::add");
-		//BasicDBObject data = new BasicDBObject("data", new BasicDBObject("data",  new BasicDBObject().append("department", department).append("code", courseCode)));
-		//mongo.getCollection("user").updateOne(SELF, cmd);
-		//mongo.getCollection("user").updateOne()
-		mongo.getCollection("user").updateOne(SELF, new BasicDBObject("$set", new BasicDBObject("buff", new BasicDBObject().append("cmd", "review::add").append("data", new BasicDBObject().append("department", department).append("code", courseCode)))));
+		BasicDBObject cmd = new BasicDBObject("cmd", "review::add");
+		BasicDBObject data = new BasicDBObject("data", new BasicDBObject("data",  new BasicDBObject().append("department", department).append("code", courseCode)));
+		mongo.getCollection("user").updateOne(SELF, cmd);
+		mongo.getCollection("user").updateOne(SELF, data);
+		//mongo.getCollection("user").updateOne(SELF, new BasicDBObject("$set", new BasicDBObject("buff", new BasicDBObject().append("cmd", "review::add").append("data", new BasicDBObject().append("department", department).append("code", courseCode)))));
 		this.fulfillment = "You can type your detail review here: ";
 	}
 
