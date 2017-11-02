@@ -36,12 +36,7 @@ public class StudentSociety extends DefaultService {
 
         String[] keywords = {"<a href=\"http://ihome.ust.hk/~","\" target=\"_blank\">", ", HKUSTSU", "</a>"};
         String societyURL = SocietyCode+keywords[1];
-        System.out.println(societypage.indexOf(SocietyCode)+keywords[1].length()+" "+ societypage.lastIndexOf(SocietyCode));
 
-        //if(societypage.contains(SocietyCode)){
-          //  SocietyName = societypage.substring(societypage.indexOf(SocietyCode)+keywords[1].length(), societypage.lastIndexOf(SocietyCode));
-
-        //}
 
         System.out.println(societypage.indexOf(societyURL)+" keywords[2]+9 = "+(societypage.indexOf(keywords[2])+9));
         String societyweb = societypage.substring(societypage.indexOf(societyURL),societypage.lastIndexOf(SocietyCode));
@@ -52,6 +47,8 @@ public class StudentSociety extends DefaultService {
             SocietyName = societynamecode;
             System.out.println("SocietyName = "+ SocietyName);
 
+        }else{
+            SocietyName = "null";
         }
         this.fulfillment=this.fulfillment.replace("@Society::Name", SocietyName);
 
