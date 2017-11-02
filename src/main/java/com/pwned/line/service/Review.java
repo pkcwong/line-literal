@@ -52,7 +52,7 @@ public class Review extends DefaultService {
 		//BasicDBObject set2 = new BasicDBObject("$set", new BasicDBObject("buff", new BasicDBObject("data", data)));
 		//mongo.getCollection("user").
 		//mongo.getCollection("user").updateOne(SELF, set2);
-		mongo.getCollection("user").updateOne(SELF, new BasicDBObject("$addToSet", new BasicDBObject("buff", new BasicDBObject().append("cmd", "review::add").append("data", new BasicDBObject().append("department", department).append("code", courseCode)))));
+		mongo.getCollection("user").updateOne(SELF, new BasicDBObject("$set", new BasicDBObject("buff", new BasicDBObject().append("cmd", "review::add").append("data", new BasicDBObject().append("department", department).append("code", courseCode)))));
 		this.fulfillment = "You can type your detail review here: ";
 	}
 
