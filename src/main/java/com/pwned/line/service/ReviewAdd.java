@@ -29,17 +29,14 @@ public class ReviewAdd extends DefaultService {
 		// build query
 		BasicDBObject dept = new BasicDBObject().append("department", department);
 		BasicDBObject courseCode = new BasicDBObject().append("code", code);
-		BasicDBObject andQuery = new BasicDBObject();
-		List<BasicDBObject> obj = new ArrayList<>();
-		obj.add(new BasicDBObject("code", courseCode));
-		obj.add(new BasicDBObject("department", dept));
-		andQuery.put("$and", obj);
-		mongo.getCollection("courseReview").findOneAndUpdate(andQuery, new BasicDBObject("$addToSet", new BasicDBObject("reviews", this.fulfillment)), new FindOneAndUpdateOptions().upsert(true));
+
+		mongo.getCollection("courseReview").findOneAndUpdate(new BasicDBObject().append("department", department).append("code", code), new BasicDBObject("$addToSet", new BasicDBObject("reviews", this.fulfillment)), new FindOneAndUpdateOptions().upsert(true));
+
 		Document data = new Document();
 		data.append("uid", this.getParam("uid").toString());
 		data.append("bind", this.getParam("uid").toString());
 		data.append("buff", new BasicDBObject("cmd", "master"));
-		mongo.getCollection("user").findOneAndUpdate(SELF, new BasicDBObject("$addToSet", data));
+		mongo.getCollection("user").findOneAndUpdate(SELF, new BasicDBObject("$set", data));
 		this.fulfillment = "Your course review had been added";
 	}
 
