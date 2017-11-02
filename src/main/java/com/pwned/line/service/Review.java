@@ -21,8 +21,10 @@ public class Review extends DefaultService {
 		String courseCode = apiParam.getString("number");
 		try {
 			apiParam.getString("ReviewAdd");
+			// add
 
 		} catch (Exception e) {
+			//no add
 			this.fulfillment = "";
 			ArrayList<Document> courseReview = MongoDB.get(mongo.getCollection("courseReview").find());
 			for (int i = 0; i < courseReview.size(); i++) {
@@ -41,10 +43,10 @@ public class Review extends DefaultService {
 			if (this.fulfillment.equals("")) {
 				this.fulfillment = "Sorry, no reviews yet. Help us make one! :D :D";
 			}
-			BasicDBObject SELF = new BasicDBObject("uid", this.getParam("uid").toString());
-			mongo.getCollection("user").updateOne(SELF, new BasicDBObject("$set", new BasicDBObject("buff", new BasicDBObject().append("cmd", "review::add").append("data", new BasicDBObject().append("department", department).append("code", courseCode)))));
-			this.fulfillment = "You can type your detail review here: ";
 		}
+		BasicDBObject SELF = new BasicDBObject("uid", this.getParam("uid").toString());
+		mongo.getCollection("user").updateOne(SELF, new BasicDBObject("$set", new BasicDBObject("buff", new BasicDBObject().append("cmd", "review::add").append("data", new BasicDBObject().append("department", department).append("code", courseCode)))));
+		this.fulfillment = "You can type your detail review here: ";
 	}
 
 	@Override
