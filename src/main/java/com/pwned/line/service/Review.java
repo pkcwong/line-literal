@@ -22,8 +22,10 @@ public class Review extends DefaultService {
 		String courseCode = apiParam.getString("number");
 		try {
 			// add
+			System.out.println(apiParam.toString());
 			apiParam.getString("ReviewAdd");
 			BasicDBObject SELF = new BasicDBObject("uid", this.getParam("uid").toString());
+			System.out.println(SELF);
 			//BasicDBObject cmd = new BasicDBObject("cmd", "review::add");
 			//BasicDBObject data = new BasicDBObject("data", new BasicDBObject("data",  new BasicDBObject().append("department", department).append("code", courseCode)));
 			//BasicDBObject set1 = new BasicDBObject("$set", new BasicDBObject("buff", new BasicDBObject("cmd", cmd)));
