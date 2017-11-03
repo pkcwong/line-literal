@@ -26,9 +26,17 @@ public class ReviewAdd extends DefaultService {
 		String department = USER.getJSONObject("buff").getJSONObject("data").getString("department");
 		String code = USER.getJSONObject("buff").getJSONObject("data").getString("code");
 
-		// build query
-		BasicDBObject dept = new BasicDBObject().append("department", department);
-		BasicDBObject courseCode = new BasicDBObject().append("code", code);
+		// find self, save to arraylist
+		BasicDBObject courseRSELF = new BasicDBObject().append("department", department).append("code", code);
+		ArrayList<Document> courseRuser = MongoDB.get(mongo.getCollection("courseReview").find(courseRSELF));
+		// if arraylist.size is 0, create new coursereview doc, else do nothing
+		if(courseRuser.size() == 0){
+			Document data = new Document();
+			data.append("department", department);
+			data.append("code", code);
+			mongo.getCollection("courseReview").updateOne(courseRSELF, new BasicDBObject("$set", data));
+		}
+		// add review
 
 		mongo.getCollection("courseReview").findOneAndUpdate(new BasicDBObject().append("department", department).append("code", code), new BasicDBObject("$addToSet", new BasicDBObject("reviews", this.fulfillment)), new FindOneAndUpdateOptions().upsert(true));
 
