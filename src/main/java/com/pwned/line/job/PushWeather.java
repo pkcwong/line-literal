@@ -14,6 +14,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class PushWeather extends DefaultJob{
 
@@ -108,6 +109,7 @@ public class PushWeather extends DefaultJob{
         for (int i = 0; i < usersArrayList.size(); i++) {
             try {
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Hong_Kong"));
                 Date date = new Date();
                 KitchenSinkController.push(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"), new TextMessage(weatherForecast + "\n" + dateFormat.format(date)));
             } catch (JSONException e) {
