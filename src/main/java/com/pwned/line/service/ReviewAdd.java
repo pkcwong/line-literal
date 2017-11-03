@@ -34,7 +34,7 @@ public class ReviewAdd extends DefaultService {
 			Document data = new Document();
 			data.append("department", department);
 			data.append("code", code);
-			mongo.getCollection("courseReview").updateOne(courseRSELF, new BasicDBObject("$set", data));
+			mongo.getCollection("courseReview").insertOne(data);
 		}
 		// add review
 
