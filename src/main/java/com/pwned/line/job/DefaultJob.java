@@ -1,8 +1,6 @@
 package com.pwned.line.job;
 
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
+import org.quartz.*;
 
 public class DefaultJob implements Job {
 
@@ -18,6 +16,19 @@ public class DefaultJob implements Job {
 
 	public void run() {
 
+	}
+
+	public static JobDetail buildJob(Class <? extends Job> job) {
+		return JobBuilder.newJob(DefaultJob.class).build();
+	}
+
+	public static Trigger buildTrigger(int seconds) {
+		return TriggerBuilder
+				.newTrigger()
+				.withSchedule(
+						SimpleScheduleBuilder.simpleSchedule()
+								.withIntervalInSeconds(seconds).repeatForever())
+				.build();
 	}
 
 }

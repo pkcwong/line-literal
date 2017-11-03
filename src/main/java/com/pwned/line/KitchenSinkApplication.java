@@ -18,17 +18,8 @@ public class KitchenSinkApplication {
 		KitchenSinkApplication.downloadedContentDir = Files.createTempDirectory("line-bot");
 		SpringApplication.run(KitchenSinkApplication.class, args);
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-		JobDetail pushWeather = JobBuilder.newJob(DefaultJob.class)
-				.withIdentity("Default", "service").build();
-		Trigger trigger = TriggerBuilder
-				.newTrigger()
-				.withIdentity("trigger", "trigger")
-				.withSchedule(
-						SimpleScheduleBuilder.simpleSchedule()
-								.withIntervalInSeconds(5).repeatForever())
-				.build();
 		scheduler.start();
-		scheduler.scheduleJob(pushWeather, trigger);
+		scheduler.scheduleJob(DefaultJob.buildJob(DefaultJob.class), DefaultJob.buildTrigger(5));
 	}
 
 }
