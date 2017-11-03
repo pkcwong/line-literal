@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  * Required params: [parameters]
  * Reserved tokens: [@Society::name]
  * Resolved params: []
- * @author Calvin Ku, Christopher Wong
+ * @author Eric Kwan
  */
 public class StudentSociety extends DefaultService {
 
