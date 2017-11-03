@@ -23,7 +23,7 @@ public class StudentSociety extends DefaultService {
     }
 
     /***
-     * Fetch the course information from HKUST Course Quota Page.
+     * Fetch the course information from HKUST Society Page.
      */
     @Override
     public void payload() throws Exception {
