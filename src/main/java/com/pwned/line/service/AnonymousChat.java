@@ -12,6 +12,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/***
+ * Anonymous Chat
+ * Required params: []
+ * Reserved tokens: []
+ * Resolved params: []
+ * @author Chrisopher
+ */
+
 public class AnonymousChat extends DefaultService {
 
 	public AnonymousChat(Service service) {
