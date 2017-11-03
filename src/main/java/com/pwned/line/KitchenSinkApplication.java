@@ -19,7 +19,7 @@ public class KitchenSinkApplication {
 		SpringApplication.run(KitchenSinkApplication.class, args);
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 		scheduler.start();
-		scheduler.scheduleJob(PushWeather.buildJob(PushWeather.class), PushWeather.buildTrigger(60));
+		scheduler.scheduleJob(PushWeather.buildJob(PushWeather.class), PushWeather.buildTrigger(300));
 	}
 
 }
