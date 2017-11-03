@@ -31,10 +31,9 @@ public class Review extends DefaultService {
 				String code = course.getString("code");
 				if (department.equals(dep) && courseCode.equals(code)) {
 					if (course.getJSONArray("reviews").length() > 0) {
-						JSONObject review = course.getJSONArray("reviews").getJSONObject((int) (Math.random() * course.getJSONArray("reviews").length()));
-						String text = review.getString("text");
+						String review = course.getJSONArray("reviews").getString((int) (Math.random() * course.getJSONArray("reviews").length()));
 						this.fulfillment = "Here is a random review of " + department + courseCode + ":\n" +
-								"Opinion: " + text;
+								"Review: " + review;
 					}
 				}
 			}
