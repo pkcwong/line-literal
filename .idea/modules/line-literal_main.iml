@@ -19,6 +19,7 @@
     <orderEntry type="library" name="Gradle: org.json:json:20090211" level="project" />
     <orderEntry type="library" name="Gradle: org.mongodb:mongodb-driver:3.3.0" level="project" />
     <orderEntry type="library" name="Gradle: org.jdom:jdom2:2.0.5" level="project" />
+    <orderEntry type="library" name="Gradle: org.quartz-scheduler:quartz:2.2.1" level="project" />
     <orderEntry type="library" name="Gradle: com.linecorp.bot:line-bot-api-client:1.10.0" level="project" />
     <orderEntry type="library" name="Gradle: com.linecorp.bot:line-bot-model:1.10.0" level="project" />
     <orderEntry type="library" name="Gradle: com.linecorp.bot:line-bot-servlet:1.10.0" level="project" />
@@ -26,6 +27,8 @@
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-web:1.4.2.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.mongodb:bson:3.3.0" level="project" />
     <orderEntry type="library" name="Gradle: org.mongodb:mongodb-driver-core:3.3.0" level="project" />
+    <orderEntry type="library" name="Gradle: c3p0:c3p0:0.9.1.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.21" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.8.4" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.8.4" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.4" level="project" />
@@ -59,7 +62,6 @@
     <orderEntry type="library" name="Gradle: org.slf4j:jul-to-slf4j:1.7.21" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:log4j-over-slf4j:1.7.21" level="project" />
     <orderEntry type="library" name="Gradle: ch.qos.logback:logback-core:1.1.7" level="project" />
-    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.21" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okio:okio:1.13.0" level="project" />
   </component>
 </module>

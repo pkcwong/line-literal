@@ -7,12 +7,14 @@ import com.pwned.line.http.HTTP;
 import com.pwned.line.web.MongoDB;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 
 /***
  * Service for course information.
@@ -22,14 +24,21 @@ import java.util.Date;
  * @author Timothy Pak
  */
 
-public class PushWeather{
+public class PushWeather implements Job {
 	public static String weatherForecast = "";
 	public static ArrayList<org.bson.Document> usersArrayList;
 	public static ArrayList<org.bson.Document> weatherArrayList;
 
-	public PushWeather(){}
+	public PushWeather() {
 
-	public static void updateWeather(){
+	}
+
+	@Override
+	public void execute(JobExecutionContext context) throws JobExecutionException {
+		PushWeather.updateWeather();
+	}
+
+	public static void updateWeather() {
 		usersArrayList = MongoDB.get(new MongoDB(System.getenv("MONGODB_URI")).getCollection("user").find());
 		weatherArrayList = MongoDB.get(new MongoDB(System.getenv("MONGODB_URI")).getCollection("weather").find());
 
@@ -47,7 +56,7 @@ public class PushWeather{
 		} else {
 			ArrayList<org.bson.Document> weatherArray = mongo.get(mongo.getCollection("weather").find());
 			try {
-				if(new JSONObject(weatherArray.get(0).toJson()).getString("forecast") != getWeather()){
+				if (new JSONObject(weatherArray.get(0).toJson()).getString("forecast") != getWeather()) {
 					pushWeather(getWeather() + "duplicated");
 					mongo.getCollection("weather").deleteOne(new org.bson.Document("forecast", new JSONObject(weatherArray.get(0).toJson()).getString("forecast")));
 					weatherForecast = getWeather();
@@ -61,25 +70,25 @@ public class PushWeather{
 		}
 	}
 
-	public static String getWeather(){
+	public static String getWeather() {
 		String link = "http://www.hko.gov.hk/wxinfo/currwx/flw.htm";
 		HTTP http = new HTTP(link);
 		String weather = http.get();
 		String[] messages = {"Weather forecast", "<br/><br/>Outlook"};
 		weather = weather.substring(weather.indexOf(messages[0]), weather.indexOf(messages[1]));
 		weather = weather.replace("<br/>", "\n");
-		while (weather.contains("<")){
+		while (weather.contains("<")) {
 			weather = weather.substring(0, weather.indexOf("<")) + weather.substring(weather.indexOf(">") + 1);
 		}
 		return weather;
 	}
 
-	public static void pushWeather(String weatherForecast){
-		for(int i = 0; i < usersArrayList.size(); i++){
+	public static void pushWeather(String weatherForecast) {
+		for (int i = 0; i < usersArrayList.size(); i++) {
 			try {
 				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 				Date date = new Date();
-				KitchenSinkController.push(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"), new TextMessage(weatherForecast+ "\n" + dateFormat.format(date)));
+				KitchenSinkController.push(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"), new TextMessage(weatherForecast + "\n" + dateFormat.format(date)));
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
