@@ -44,3 +44,9 @@ The ```payload``` method implements the processing service of the module. The me
 
 ## Chaining
 The ```chain``` method passes the current state to the next processing module. To pass to the next ```Service``` module, return ```Service.resolve().get()```. To end the processing chain, return ```this```.
+
+## public heroku account
+```
+lineliteral@gmail.com
+lineliteral1001
+```
