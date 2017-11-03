@@ -8,11 +8,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /***
- * Service for sending requests to HKUST QUOTA WEBSITE.
+ * Service for getting HKUST society infos
  * Required params: [parameters]
  * Reserved tokens: [@Society::name]
  * Resolved params: []
- * @author Calvin Ku, Christopher Wong
+ * @author Eric Kwan
  */
 public class StudentSociety extends DefaultService {
 
@@ -48,28 +48,7 @@ public class StudentSociety extends DefaultService {
 
 
     }
-
-    /***
-     * Returns the name of the course.
-     * @param httpResponse http response
-     * @return Course name
-     */
-    private String getSocietyInfo(String httpResponse) throws Exception {
-        JSONObject apiParam = new JSONObject(this.getParam("parameters").toString());
-        String SocietyCode = apiParam.getString("society");  //get the entity "society" from Dialogflow
-        System.out.println("SocietyCode is "+SocietyCode);   //e.g SocietyCode = su_civil;
-        String regex = "target=(.+?)>(.+?)</a></td>\\s(.+?)<td>(.+?)</td>\\s(.+?)<td>"+SocietyCode+"</td>"; //<tr>\s(.+?)<td><a href=(.+?)target="_blank">(.+?)<\/a><\/td>\s(.+?)<td>(.+?)<\/td>\s(.+?)<td>(.+?)<\/td>
-        String SocietyName = "";
-        Pattern SocietyInfoPattern = Pattern.compile(regex);
-        Matcher SocietyMatcher = SocietyInfoPattern.matcher(httpResponse);
-        while(SocietyMatcher.find()) {
-            System.out.println("regex is "+regex);
-            SocietyName = SocietyMatcher.group(2);
-        }
-
-        System.out.println("SocietyName = "+SocietyName);
-        return this.fulfillment.replace("@Society::Name", SocietyName);
-    }
+    
 
     @Override
     public Service chain() throws Exception {
