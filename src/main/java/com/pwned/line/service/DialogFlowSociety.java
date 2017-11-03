@@ -5,10 +5,10 @@ import org.json.JSONObject;
 
 /***
  * Service for course information.
- * Required params: [uid]
- * Reserved tokens: []
- * Resolved params: [parameters]
- * @author Christopher Wong, Calvin Ku
+ * Required params: [parameters]
+ * Reserved tokens: [API_AI]
+ * Resolved params: []
+ * @author Eric Kwan
  */
 public class DialogFlowSociety extends DefaultService {
 
