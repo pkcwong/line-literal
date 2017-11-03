@@ -28,6 +28,7 @@ public class PushWeather extends DefaultJob{
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
+        System.out.println(this.getClass().getSimpleName());
         this.updateWeather();
     }
 
