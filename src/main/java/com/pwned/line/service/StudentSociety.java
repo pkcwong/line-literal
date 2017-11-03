@@ -4,8 +4,6 @@ import com.pwned.line.http.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /***
  * Service for sending requests to HKUST QUOTA WEBSITE.
