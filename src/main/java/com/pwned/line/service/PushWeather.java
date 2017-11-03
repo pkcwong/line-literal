@@ -56,9 +56,10 @@ public class PushWeather implements Job {
 		} else {
 			ArrayList<org.bson.Document> weatherArray = mongo.get(mongo.getCollection("weather").find());
 			try {
-				if (new JSONObject(weatherArray.get(0).toJson()).getString("forecast") != getWeather()) {
-					pushWeather(getWeather() + "duplicated");
-					mongo.getCollection("weather").deleteOne(new org.bson.Document("forecast", new JSONObject(weatherArray.get(0).toJson()).getString("forecast")));
+				if (!new JSONObject(weatherArray.get(0).toJson()).getString("forecast").toString().equals(getWeather())) {
+					org.bson.Document deldata = new org.bson.Document();
+					deldata.append("forecast", new JSONObject(weatherArray.get(0).toJson()).getString("forecast"));
+					mongo.getCollection("weather").insertOne(deldata);
 					weatherForecast = getWeather();
 					org.bson.Document data = new org.bson.Document();
 					data.append("forecast", weatherForecast);

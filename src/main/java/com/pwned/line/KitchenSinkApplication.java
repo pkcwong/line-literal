@@ -15,15 +15,14 @@ public class KitchenSinkApplication {
 	public static Path downloadedContentDir;
 
 	public static void main(String[] args) throws Exception {
-		PushWeather.updateWeather();
 		KitchenSinkApplication.downloadedContentDir = Files.createTempDirectory("line-bot");
 		SpringApplication.run(KitchenSinkApplication.class, args);
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 		JobDetail pushWeather = JobBuilder.newJob(PushWeather.class)
-				.withIdentity("dummyJobName", "group1").build();
+				.withIdentity("PushWeather", "service").build();
 		Trigger trigger = TriggerBuilder
 				.newTrigger()
-				.withIdentity("PushWeather", "quartz")
+				.withIdentity("trigger", "trigger")
 				.withSchedule(
 						SimpleScheduleBuilder.simpleSchedule()
 								.withIntervalInSeconds(5).repeatForever())
