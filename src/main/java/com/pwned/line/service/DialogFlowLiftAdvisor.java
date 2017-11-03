@@ -3,9 +3,17 @@ package com.pwned.line.service;
 import com.pwned.line.web.ApiAI;
 import org.json.JSONObject;
 
+/***
+ * Service for finding closest lift by location.
+ * Required params: [uid]
+ * Reserved tokens: [API_AI]
+ * Resolved params: []
+ * @author Bear
+ */
+
 public class DialogFlowLiftAdvisor extends DefaultService {
 
-	private static String API_AI_ACCESS_TOKEN = "e6e935812bcb48a0a2f8a882e08a4928";
+	private static final String API_AI_ACCESS_TOKEN = "e6e935812bcb48a0a2f8a882e08a4928";
 
 	public DialogFlowLiftAdvisor(Service service) {
 		super(service);
