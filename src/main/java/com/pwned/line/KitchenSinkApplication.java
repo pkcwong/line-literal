@@ -1,6 +1,7 @@
 package com.pwned.line;
 
 import com.pwned.line.job.DefaultJob;
+import com.pwned.line.job.PushWeather;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.boot.SpringApplication;
@@ -19,7 +20,7 @@ public class KitchenSinkApplication {
 		SpringApplication.run(KitchenSinkApplication.class, args);
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 		scheduler.start();
-		scheduler.scheduleJob(DefaultJob.buildJob(DefaultJob.class), DefaultJob.buildTrigger(5));
+		scheduler.scheduleJob(DefaultJob.buildJob(PushWeather.class), DefaultJob.buildTrigger(5));
 	}
 
 }
