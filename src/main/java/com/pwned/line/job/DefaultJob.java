@@ -11,9 +11,7 @@ public class DefaultJob implements Job {
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		System.out.println(this.getClass().getSimpleName());
-		System.out.println("Running");
-		PushWeather.updateWeather();
-		//this.run();
+		this.run();
 	}
 
 	public void run() {

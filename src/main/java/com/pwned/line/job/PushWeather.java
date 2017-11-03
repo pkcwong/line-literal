@@ -8,8 +8,7 @@ import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
+import org.quartz.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,8 +27,22 @@ public class PushWeather extends DefaultJob{
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        System.out.println(this.getClass().getSimpleName());
+        System.out.println("PushWeather");
         this.updateWeather();
+    }
+
+
+    public static JobDetail buildJob(Class <? extends Job> job) {
+        return JobBuilder.newJob(PushWeather.class).build();
+    }
+
+    public static Trigger buildTrigger(int seconds) {
+        return TriggerBuilder
+                .newTrigger()
+                .withSchedule(
+                        SimpleScheduleBuilder.simpleSchedule()
+                                .withIntervalInSeconds(seconds).repeatForever())
+                .build();
     }
 
     public static void updateWeather() {
