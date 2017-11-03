@@ -12,6 +12,7 @@ public class DefaultJob implements Job {
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		System.out.println(this.getClass().getSimpleName());
 		this.run();
+		PushWeather.updateWeather();
 	}
 
 	public void run() {
