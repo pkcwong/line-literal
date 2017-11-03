@@ -28,7 +28,7 @@ public class PushWeather extends DefaultJob{
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        com.pwned.line.service.PushWeather.updateWeather();
+        this.updateWeather();
     }
 
     public static void updateWeather() {
