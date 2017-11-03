@@ -149,7 +149,7 @@ public class MasterController extends DefaultService {
 						"2. Translate: e.g. translate ... to (specific language)\n" +
 						"3. Lift advisor: where is ... \n" +
 						"4. Course Review: review of the course ... (department + course code)\n" +
-						"5. Weather: weather a place (e.g. HKUST, sai kung, CUHK, kowloon city)\n";
+						"5. Weather: weather or temperature of a place (e.g. HKUST, sai kung, CUHK, kowloon city)\n";
 				return this;
 			}
 		}

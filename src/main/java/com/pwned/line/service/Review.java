@@ -5,8 +5,15 @@ import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 import org.json.JSONObject;
 
-import javax.websocket.RemoteEndpoint;
 import java.util.ArrayList;
+
+/***
+ * Review, looks up course review in MongoDB.
+ * Required params: []
+ * Reserved tokens: []
+ * Resolved params: []
+ * @author Calvin Ku
+ */
 
 public class Review extends DefaultService {
 

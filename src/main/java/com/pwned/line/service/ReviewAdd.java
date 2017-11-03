@@ -7,7 +7,14 @@ import org.bson.Document;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
+
+/***
+ * Adding review to MongoDB.
+ * Required params: []
+ * Reserved tokens: []
+ * Resolved params: []
+ * @author Calvin Ku
+ */
 
 public class ReviewAdd extends DefaultService {
 
