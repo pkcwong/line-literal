@@ -150,6 +150,7 @@ public class MasterController extends DefaultService {
 						"3. Lift advisor: where is ... \n" +
 						"4. Course Review: review of the course ... (department + course code)\n" +
 						"5. Weather: weather a place (e.g. HKUST, sai kung, CUHK, kowloon city)\n";
+				return this;
 			}
 		}
 		this.fulfillment = "Sorry, we don't understand this. Please call out \"help\"!";
