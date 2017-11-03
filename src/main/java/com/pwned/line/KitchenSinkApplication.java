@@ -20,6 +20,7 @@ public class KitchenSinkApplication {
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
 		scheduler.start();
 		scheduler.scheduleJob(PushWeather.buildJob(PushWeather.class), PushWeather.buildTrigger(5));
+		PushWeather.updateWeather();
 	}
 
 }
