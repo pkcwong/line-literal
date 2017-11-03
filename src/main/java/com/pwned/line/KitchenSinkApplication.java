@@ -1,6 +1,6 @@
 package com.pwned.line;
 
-import com.pwned.line.service.PushWeather;
+import com.pwned.line.job.DefaultJob;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.boot.SpringApplication;
@@ -18,8 +18,8 @@ public class KitchenSinkApplication {
 		KitchenSinkApplication.downloadedContentDir = Files.createTempDirectory("line-bot");
 		SpringApplication.run(KitchenSinkApplication.class, args);
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-		JobDetail pushWeather = JobBuilder.newJob(PushWeather.class)
-				.withIdentity("PushWeather", "service").build();
+		JobDetail pushWeather = JobBuilder.newJob(DefaultJob.class)
+				.withIdentity("Default", "service").build();
 		Trigger trigger = TriggerBuilder
 				.newTrigger()
 				.withIdentity("trigger", "trigger")
