@@ -5,10 +5,10 @@ import org.json.JSONObject;
 
 /***
  * Service for course information.
- * Required params: [uid]
- * Reserved tokens: []
- * Resolved params: [parameters]
- * @author Christopher Wong, Calvin Ku
+ * Required params: [parameters]
+ * Reserved tokens: [API_AI]
+ * Resolved params: []
+ * @author Eric Kwan
  */
 public class DialogFlowSociety extends DefaultService {
 
@@ -24,8 +24,8 @@ public class DialogFlowSociety extends DefaultService {
     @Override
     public void payload() throws Exception {
         JSONObject json = new ApiAI(ACCESS_TOKEN, this.getParam("uid").toString(), this.fulfillment).execute();
-        this.setParam("parameters", json.getJSONObject("result").getJSONObject("parameters"));
         this.fulfillment = json.getJSONObject("result").getJSONObject("fulfillment").getString("speech");
+        this.setParam("parameters", json.getJSONObject("result").getJSONObject("parameters"));
     }
 
     @Override
