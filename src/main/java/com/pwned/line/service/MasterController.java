@@ -78,7 +78,7 @@ public class MasterController extends DefaultService {
 
 		String[] timetable = {"current"};
 		String[] lift = {"classroom", "room", "lift", "where"};
-		String[] societies = {"societies"};
+		String[] societies = {"societies", "society", "student Club", "club", "interest group"};
 		String[] KMB = {"bus", "arrival", "departure"};
 		String[] weather = {"weather", "degrees", "climate"};
 		String[] temperature = {"temperature"};
@@ -100,9 +100,11 @@ public class MasterController extends DefaultService {
 			}
 		}
 		for (String keywords : societies) {
-			String temp = this.fulfillment.toLowerCase();
-			if(temp.contains(keywords)){
-				//return new DialogFlowTranslate(this).resolve().get();
+			String[] words = fulfillment.split("\\s+");
+			for (String word : words) {
+				if (word.toLowerCase().equals(keywords)) {
+					return new DialogFlowSociety(this).resolve().get();
+				}
 			}
 		}
 		for (String keywords : KMB) {
