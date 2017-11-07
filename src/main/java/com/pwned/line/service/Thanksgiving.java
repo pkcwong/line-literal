@@ -15,24 +15,28 @@ import java.util.ArrayList;
  */
 
 public class Thanksgiving extends DefaultService{
-	public Thanksgiving(Service service){
+	private String keyword;
+	public Thanksgiving(Service service, String key){
 		super(service);
+		keyword = key;
 	}
 
 	@Override
 	public void payload(){
-		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
+		if(keyword.contains("accept")){
+			MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
 
-		BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
-		ArrayList<Document> user = MongoDB.get(mongo.getCollection("party").find(SELF));
+			BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
+			ArrayList<Document> user = MongoDB.get(mongo.getCollection("party").find(SELF));
 
-		if (user.size() == 0) {
-			Document data = new Document();
-			data.append("uid", this.getParam("uid").toString());
-			mongo.getCollection("party").insertOne(data);
-			this.fulfillment = "Thank you for your join! Have a fun night!";
-		} else {
-			this.fulfillment = "***\nAlready accept the party!\n***";
+			if (user.size() == 0) {
+				Document data = new Document();
+				data.append("uid", this.getParam("uid").toString());
+				mongo.getCollection("party").insertOne(data);
+				this.fulfillment = "Thank you for your join! Have a fun night!";
+			} else {
+				this.fulfillment = "Already accept the party!";
+			}
 		}
 	}
 

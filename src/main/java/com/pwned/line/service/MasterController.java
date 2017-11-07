@@ -90,10 +90,15 @@ public class MasterController extends DefaultService {
 		String[] review = {"review"};
 		String[] help = {"help"};
 		String[] event = {"event"};
+		String[] thanksgiving = {"accept","bring"};
 
 
-		if(this.fulfillment.toLowerCase().contains("accept")){
-			return new Thanksgiving(this).resolve().get();
+
+		for (String keywords : thanksgiving) {
+			String temp = this.fulfillment.toLowerCase();
+			if(temp.contains(keywords)){
+				return new Thanksgiving(this, temp).resolve().get();
+			}
 		}
 
 		for (String keywords : timetable) {
