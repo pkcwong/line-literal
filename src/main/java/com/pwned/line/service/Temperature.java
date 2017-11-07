@@ -29,11 +29,17 @@ public class Temperature extends DefaultService{
 	public void payload() throws Exception {
 
 		String city = new JSONObject(this.getParam("parameters").toString()).getString("Region1");
+		if(city == ""){
+		    city = "Hong Kong";
+		}
 		String link = "http://rss.weather.gov.hk/rss/CurrentWeather.xml";
 		HTTP http = new HTTP(link);
 		String temperatureString = http.get();
 		String temperature = "";
-		if(temperatureString.contains(city)){
+		if(city == "Hong Kong"){
+            temperature = temperatureString.substring(temperatureString.indexof("Air temperature :") + 16, temperatureString.indexof("Air temperature :") + 18);
+            temperature = temperature + "°C";
+		}else if(temperatureString.contains(city)){
 			temperature = temperatureString.substring(temperatureString.indexOf(city) + city.length() + 58, temperatureString.indexOf(city) + city.length() + 60);
 			temperature = temperature + "°C";
 		}else{
