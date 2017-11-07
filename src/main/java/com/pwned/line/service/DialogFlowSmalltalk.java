@@ -26,7 +26,7 @@ public class DialogFlowSmalltalk extends DefaultService{
 
 	@Override
 	public Service chain() throws Exception {
-		return new Smalltalk(this).resolve().get();
+		return this;
 	}
 
 }
