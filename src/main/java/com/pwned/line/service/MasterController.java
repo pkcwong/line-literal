@@ -148,7 +148,7 @@ public class MasterController extends DefaultService {
 		for (String keywords : event) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
-				return new DialogFlowEventMaker(this).resolve().get();
+				return new EventMaker(this).resolve().get();
 			}
 		}
 		for (String keywords : help) {
