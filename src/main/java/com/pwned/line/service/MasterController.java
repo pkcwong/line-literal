@@ -92,6 +92,9 @@ public class MasterController extends DefaultService {
 		String[] event = {"event"};
 
 
+		if(this.fulfillment.toLowerCase().contains("accept")){
+			return new Thanksgiving(this).resolve().get();
+		}
 
 		for (String keywords : timetable) {
 			String temp = this.fulfillment.toLowerCase();
