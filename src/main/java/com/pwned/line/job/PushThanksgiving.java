@@ -31,7 +31,7 @@ public class PushThanksgiving extends DefaultJob{
 				.withSchedule(
 						SimpleScheduleBuilder.simpleSchedule()
 								.withIntervalInSeconds(seconds).repeatForever())
-				.startAt(new Date(2017,11,8,2,15))
+				.startAt(new Date(2017,11,7,18,18))
 				.build();
 	}
 	public static JobDetail buildJob(Class <? extends Job> job) {
