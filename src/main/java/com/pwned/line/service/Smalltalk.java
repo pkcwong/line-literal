@@ -18,10 +18,6 @@ public class Smalltalk extends DefaultService {
 	}
 
 
-	@Override
-	public void payload() throws Exception {
-		return;
-	}
 
 	@Override
 	public Service chain() throws Exception {
