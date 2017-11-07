@@ -89,6 +89,8 @@ public class MasterController extends DefaultService {
 		String[] help = {"help"};
 		String[] event = {"event"};
 
+		KitchenSinkController.push(this.getParam("uid").toString(),new TextMessage("Let me show you the event"));
+
 		for (String keywords : timetable) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
