@@ -48,6 +48,7 @@ public class Temperature extends DefaultService{
 		if(temperature == ""){
 			temperature = "not available";
 		}
+		temperature = "The temperature at " + city + " is " + temperature + ".";
 		this.fulfillment = this.fulfillment.replace("@weather::temperature", temperature);
 	}
 
