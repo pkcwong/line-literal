@@ -91,7 +91,7 @@ public class MasterController extends DefaultService {
 		String[] help = {"help"};
 		String[] event = {"event"};
 
-		KitchenSinkController.push(this.getParam("uid").toString(),new ImageMessage("https://cdn.frip.in/wp-content/uploads/2013/11/Thanksgiving-Day-Party-Poster.jpg","https://cdn.frip.in/wp-content/uploads/2013/11/Thanksgiving-Day-Party-Poster.jpg"));
+
 
 		for (String keywords : timetable) {
 			String temp = this.fulfillment.toLowerCase();
