@@ -157,7 +157,6 @@ public class MasterController extends DefaultService {
 				return this;
 			}
 		}
-		//this.fulfillment = "Sorry, we don't understand this. Please call out \"help\"!";
 		return new DialogFlowSmalltalk(this).resolve().get();
 	}
 }
