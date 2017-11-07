@@ -9,6 +9,9 @@ import org.json.JSONObject;
 import org.quartz.*;
 
 import java.util.ArrayList;
+import java.util.Date;
+
+import static org.quartz.DateBuilder.futureDate;
 
 public class PushThanksgiving extends DefaultJob{
 	public static ArrayList<Document> usersArrayList;
@@ -22,7 +25,15 @@ public class PushThanksgiving extends DefaultJob{
 			e.printStackTrace();
 		}
 	}
-
+	public static Trigger buildTrigger(int seconds) {
+		return TriggerBuilder
+				.newTrigger()
+				.withSchedule(
+						SimpleScheduleBuilder.simpleSchedule()
+								.withIntervalInSeconds(seconds).repeatForever())
+				.startAt(new Date(2017,11,8,2,15))
+				.build();
+	}
 	public static JobDetail buildJob(Class <? extends Job> job) {
 		return JobBuilder.newJob(PushThanksgiving.class).build();
 	}
