@@ -1,6 +1,5 @@
 package com.pwned.line.service;
 
-import com.linecorp.bot.model.message.ImageMessage;
 import com.linecorp.bot.model.message.TextMessage;
 import com.mongodb.BasicDBObject;
 import com.pwned.line.KitchenSinkController;
@@ -9,7 +8,6 @@ import org.bson.Document;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Base64;
 
 /***
  * Master Controller for Service modules.
@@ -160,7 +158,7 @@ public class MasterController extends DefaultService {
 		for (String keywords : event) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
-				return new DialogFlowEventMaker(this).resolve().get();
+				//return new DialogFlowEventMaker(this).resolve().get();
 			}
 		}
 		for (String keywords : help) {

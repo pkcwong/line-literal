@@ -1,7 +1,6 @@
 package com.pwned.line.job;
 
 import com.linecorp.bot.model.message.ImageMessage;
-import com.mongodb.BasicDBObject;
 import com.pwned.line.KitchenSinkController;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
