@@ -47,8 +47,21 @@ public class PushThanksgiving extends DefaultJob{
 		usersArrayList = MongoDB.get(new MongoDB(System.getenv("MONGODB_URI")).getCollection("user").find());
 		acceptedUsersArrayList = MongoDB.get(new MongoDB(System.getenv("MONGODB_URI")).getCollection("party").find());
 
+		ArrayList<String> uid = new ArrayList<>();
+		ArrayList<String> acceptedUid = new ArrayList<>();
+		
 		for (int i = 0; i < usersArrayList.size(); i++) {
-				KitchenSinkController.push(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"), new ImageMessage(imageURI, imageURI));
+			uid.add(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"));
+		}
+		for (int i = 0; i < acceptedUsersArrayList.size(); i++) {
+			acceptedUid.add(new JSONObject(acceptedUsersArrayList.get(i).toJson()).getString("uid"));
+		}
+
+
+		for (int i = 0; i < usersArrayList.size(); i++) {
+			if(acceptedUid.contains(uid.get(i).toString()))
+				continue;
+			KitchenSinkController.push(uid.get(i).toString(), new ImageMessage(imageURI, imageURI));
 		}
 	}
 }
