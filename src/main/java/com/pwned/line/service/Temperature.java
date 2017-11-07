@@ -37,7 +37,7 @@ public class Temperature extends DefaultService{
 		String temperatureString = http.get();
 		String temperature = "";
 		if(city == "Hong Kong"){
-            temperature = temperatureString.substring(temperatureString.indexof("Air temperature :") + 16, temperatureString.indexof("Air temperature :") + 18);
+            temperature = temperatureString.substring(temperatureString.indexOf("Air temperature :") + 16, temperatureString.indexOf("Air temperature :") + 18);
             temperature = temperature + "°C";
 		}else if(temperatureString.contains(city)){
 			temperature = temperatureString.substring(temperatureString.indexOf(city) + city.length() + 58, temperatureString.indexOf(city) + city.length() + 60);
