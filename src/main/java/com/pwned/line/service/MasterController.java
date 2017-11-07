@@ -1,5 +1,6 @@
 package com.pwned.line.service;
 
+import com.linecorp.bot.model.message.ImageMessage;
 import com.linecorp.bot.model.message.TextMessage;
 import com.mongodb.BasicDBObject;
 import com.pwned.line.KitchenSinkController;
@@ -8,6 +9,7 @@ import org.bson.Document;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Base64;
 
 /***
  * Master Controller for Service modules.
@@ -89,7 +91,7 @@ public class MasterController extends DefaultService {
 		String[] help = {"help"};
 		String[] event = {"event"};
 
-		KitchenSinkController.push(this.getParam("uid").toString(),new TextMessage("Let me show you the event"));
+		KitchenSinkController.push(this.getParam("uid").toString(),new ImageMessage("https://cdn.frip.in/wp-content/uploads/2013/11/Thanksgiving-Day-Party-Poster.jpg","https://cdn.frip.in/wp-content/uploads/2013/11/Thanksgiving-Day-Party-Poster.jpg"));
 
 		for (String keywords : timetable) {
 			String temp = this.fulfillment.toLowerCase();
