@@ -78,12 +78,12 @@ public class MasterController extends DefaultService {
 		}
 
 		String[] timetable = {"current"};
-		String[] lift = {"classroom", "room", "lift", "where"};
+		String[] lift = {"classroom", "room", "lift", "where", "how to go"};
 		String[] societies = {"societies", "society", "student Club", "club", "interest group"};
 		String[] KMB = {"bus", "arrival", "departure"};
 		String[] weather = {"weather", "degrees", "climate"};
 		String[] temperature = {"temperature"};
-		String[] quota = {"class"};
+		String[] quota = {"class", "quota"};
 		String[] translate = {"translate", "english", "chinese", "korean", "malaysian", "indonesian", "indo"};
 		String[] review = {"review"};
 		String[] help = {"help"};
@@ -157,7 +157,7 @@ public class MasterController extends DefaultService {
 				return this;
 			}
 		}
-		this.fulfillment = "Sorry, we don't understand this. Please call out \"help\"!";
-		return this;
+		//this.fulfillment = "Sorry, we don't understand this. Please call out \"help\"!";
+		return new DialogFlowSmalltalk(this).resolve().get();
 	}
 }
