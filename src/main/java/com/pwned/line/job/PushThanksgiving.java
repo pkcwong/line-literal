@@ -49,7 +49,7 @@ public class PushThanksgiving extends DefaultJob{
 
 		ArrayList<String> uid = new ArrayList<>();
 		ArrayList<String> acceptedUid = new ArrayList<>();
-		
+
 		for (int i = 0; i < usersArrayList.size(); i++) {
 			uid.add(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"));
 		}
