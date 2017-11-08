@@ -153,7 +153,7 @@ public class MasterController extends DefaultService {
 						"3. Lift advisor: where is ... \n" +
 						"4. Course Review: review of the course ... (department + course code)\n" +
 						"5. Weather: weather forecast\n" +
-						"6. Temperature: temperature at a place (e.g. HKUST, Sai Kung, CUHK, Kowloon City)\n";
+						"6. Temperature: temperature at a place (e.g. HKUST, Sai Kung, CUHK, Kowloon City)";
 				return this;
 			}
 		}
