@@ -35,6 +35,7 @@ public class Temperature extends DefaultService{
 			temperature = temperatureString.substring(temperatureString.indexOf(city) + city.length() + 58, temperatureString.indexOf(city) + city.length() + 60);
 			temperature = temperature + "°C";
 		}else{
+			city = "Hong Kong";
 			if(temperatureString.indexOf("degrees Celsius<br/>") - 1 > temperatureString.indexOf("Air temperature : ") + 18){
 				temperature = temperatureString.substring(temperatureString.indexOf("Air temperature : ") + 18, temperatureString.indexOf("degrees Celsius<br/>") - 1);
 				temperature = temperature + "°C";
