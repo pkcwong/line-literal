@@ -37,6 +37,36 @@ public class Thanksgiving extends DefaultService{
 				this.fulfillment = "Already accept the party!";
 			}
 		}
+
+		else if(keyword.contains("bring")){
+			String[] keywordArray = keyword.split(" ");
+			MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
+
+			BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
+			ArrayList<Document> user = MongoDB.get(mongo.getCollection("party").find(SELF));
+
+			if (user.size() == 0) {
+				this.fulfillment = "You haven't accept the party invitation!";
+				return;
+			}
+
+			else
+			{
+
+				for(int i = 0 ; i < keywordArray.length; i++){
+					BasicDBObject FOOD = new BasicDBObject().append("food", keywordArray[i]);
+					ArrayList<Document> food = MongoDB.get(mongo.getCollection("party").find(FOOD));
+					if(food.size() == 0){
+						Document data = new Document();
+						data.append("food", keywordArray[i]);
+						mongo.getCollection("party").insertOne(data);
+					}
+					else
+						this.fulfillment = "Someone is bringing that already, can you pick another one?";
+				}
+				this.fulfillment = "Great, please prepare 5 people portion of that.";
+			}
+		}
 	}
 
 	@Override
