@@ -2,14 +2,6 @@ package com.pwned.line.service;
 
 import com.pwned.line.http.HTTP;
 import org.json.JSONObject;
-import java.io.*;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 /***
  * Service for course information.
@@ -29,7 +21,7 @@ public class Temperature extends DefaultService{
 	public void payload() throws Exception {
 
 		String city = new JSONObject(this.getParam("parameters").toString()).getString("Region1");
-		if(city == ""){
+		if(city == "" || city == " "){
 		    city = "Hong Kong";
 		}
 		String link = "http://rss.weather.gov.hk/rss/CurrentWeather.xml";
