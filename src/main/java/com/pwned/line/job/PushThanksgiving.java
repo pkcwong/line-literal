@@ -11,6 +11,7 @@ import org.quartz.*;
 import java.lang.*;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 
 /***
@@ -67,7 +68,7 @@ public class PushThanksgiving extends DefaultJob{
 		for (int i = 0; i < usersArrayList.size(); i++) {
 			if(acceptedUid.contains(uid.get(i).toString()))
 			{
-				if(today.equals(partyDate)){
+				if(checkSameDate(today,partyDate)){
 					System.out.println("Today is party day!");
 					KitchenSinkController.push(uid.get(i).toString(), new TextMessage("Remember to join the party tonight!"));
 				}
@@ -77,9 +78,14 @@ public class PushThanksgiving extends DefaultJob{
 				KitchenSinkController.push(uid.get(i).toString(), new ImageMessage(imageURI, imageURI));
 		}
 
+	}
 
-
-
+	private static boolean checkSameDate(Calendar cal1, Calendar cal2){
+		if(cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+				cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)){
+			return true;
+		}else
+			return false;
 
 	}
 }
