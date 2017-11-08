@@ -28,9 +28,10 @@ public class Thanksgiving extends DefaultService{
 	public void payload(){
 		if(keyword.contains("accept")){
 			Calendar partyDate = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-			partyDate.setTimeZone(TimeZone.getTimeZone("Asia/Calcutta"));
+			partyDate.setTimeZone(TimeZone.getTimeZone("GMT"));
 			partyDate.set(2017,Calendar.NOVEMBER,27);
 			SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+			format1.setTimeZone(TimeZone.getTimeZone("Asia/Hong_Kong"));
 			String formatted = format1.format(partyDate.getTime());
 
 			String[] arrayKeyword = keyword.split(" ");

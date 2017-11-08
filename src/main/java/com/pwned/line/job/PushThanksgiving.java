@@ -67,8 +67,8 @@ public class PushThanksgiving extends DefaultJob{
 
 		Calendar today = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 		Calendar partyDate = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-		today.setTimeZone(TimeZone.getTimeZone("Asia/Calcutta"));
-		partyDate.setTimeZone(TimeZone.getTimeZone("Asia/Calcutta"));
+		today.setTimeZone(TimeZone.getTimeZone("Asia/Hong_Kong"));
+		partyDate.setTimeZone(TimeZone.getTimeZone("Asia/Hong_Kong"));
 		partyDate.set(2017,Calendar.NOVEMBER,26);
 
 		for (int i = 0; i < usersArrayList.size(); i++) {
