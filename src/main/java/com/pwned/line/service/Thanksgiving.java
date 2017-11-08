@@ -63,7 +63,7 @@ public class Thanksgiving extends DefaultService{
 					}
 					else{
 						this.fulfillment = "Someone is bringing that already, can you pick another one?";
-						return;
+						continue;
 					}
 				}
 				this.fulfillment = "Great, please prepare 5 people portion of that.";
