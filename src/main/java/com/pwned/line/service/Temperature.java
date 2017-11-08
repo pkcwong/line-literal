@@ -24,6 +24,33 @@ public class Temperature extends DefaultService{
 		if(city == "" || city == " " || city == null){
 		    city = "Hong Kong";
 		}
+		if(city == "Hong Kong"){
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");
+			System.out.println("TRUE");v
+		}
 		System.out.println("||| " + city + " |||");
 		System.out.println("||| " + city + " |||");
 		System.out.println("||| " + city + " |||");
@@ -67,7 +94,6 @@ public class Temperature extends DefaultService{
 				temperature = (temperatureString.indexOf("degrees Celsius<br/>") - 1) + " " + (temperatureString.indexOf("Air temperature : ") + 18);
 			}
 		}
-
 		if(temperature == ""){
 			temperature = "not available";
 		}
