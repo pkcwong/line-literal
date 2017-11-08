@@ -12,6 +12,7 @@ import java.lang.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 
 /***
@@ -64,8 +65,10 @@ public class PushThanksgiving extends DefaultJob{
 			acceptedName.append(" ");
 		}
 
-		Calendar today = Calendar.getInstance();
-		Calendar partyDate = Calendar.getInstance();
+		Calendar today = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+		Calendar partyDate = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+		today.setTimeZone(TimeZone.getTimeZone("Asia/Calcutta"));
+		partyDate.setTimeZone(TimeZone.getTimeZone("Asia/Calcutta"));
 		partyDate.set(2017,Calendar.NOVEMBER,26);
 
 		for (int i = 0; i < usersArrayList.size(); i++) {
@@ -86,6 +89,7 @@ public class PushThanksgiving extends DefaultJob{
 				cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)){
 			return true;
 		}else{
+			System.out.println(cal1.get(Calendar.HOUR));
 			return false;
 		}
 

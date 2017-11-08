@@ -4,6 +4,8 @@ import com.mongodb.BasicDBObject;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 /***
  * Accept/Bring food for thanksgiving
@@ -23,6 +25,9 @@ public class Thanksgiving extends DefaultService{
 	@Override
 	public void payload(){
 		if(keyword.contains("accept")){
+			Calendar partyDate = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+			partyDate.setTimeZone(TimeZone.getTimeZone("Asia/Calcutta"));
+			partyDate.set(2017,Calendar.NOVEMBER,27);
 
 			String[] arrayKeyword = keyword.split(" ");
 
@@ -44,9 +49,11 @@ public class Thanksgiving extends DefaultService{
 				else
 					data.append("name", arrayKeyword[1]);
 				mongo.getCollection("party").insertOne(data);
-				this.fulfillment = "Thank you for your join! Have a fun night!";
+				this.fulfillment = "Thank you for your join! Have a fun night! See you on " +
+								partyDate.get(Calendar.DAY_OF_MONTH) + "/" + partyDate.get(Calendar.MONTH);
 			} else {
-				this.fulfillment = "Already accept the party!";
+				this.fulfillment = "Already accept the party. Please be reminded that the party will be held on " +
+								partyDate.get(Calendar.DAY_OF_MONTH) + "/" + partyDate.get(Calendar.MONTH);
 			}
 		}
 
