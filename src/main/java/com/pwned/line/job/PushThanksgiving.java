@@ -66,14 +66,13 @@ public class PushThanksgiving extends DefaultJob{
 
 		Calendar today = Calendar.getInstance();
 		Calendar partyDate = Calendar.getInstance();
-		partyDate.set(2017,Calendar.NOVEMBER,8);
+		partyDate.set(2017,Calendar.NOVEMBER,26);
 
 		for (int i = 0; i < usersArrayList.size(); i++) {
 			if(acceptedUid.contains(uid.get(i).toString()))
 			{
 				if(checkSameDate(today,partyDate)){
 					KitchenSinkController.push(uid.get(i), new TextMessage("Remember to join the party tonight! " + acceptedName.toString() + "will join also!"));
-					System.out.println(acceptedName);
 				}
 			}
 			else
