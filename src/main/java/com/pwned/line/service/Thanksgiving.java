@@ -54,11 +54,11 @@ public class Thanksgiving extends DefaultService{
 			{
 
 				for(int i = 1 ; i < keywordArray.length; i++){
-					BasicDBObject FOOD = new BasicDBObject().append("food", keywordArray[i]);
+					BasicDBObject FOOD = new BasicDBObject().append("food", keywordArray[i].toLowerCase());
 					ArrayList<Document> food = MongoDB.get(mongo.getCollection("party").find(FOOD));
 					if(food.size() == 0){
 						Document data = new Document();
-						data.append("food", keywordArray[i]);
+						data.append("food", keywordArray[i].toLowerCase());
 						mongo.getCollection("party").insertOne(data);
 					}
 					else{
