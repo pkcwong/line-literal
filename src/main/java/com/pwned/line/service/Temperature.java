@@ -21,7 +21,7 @@ public class Temperature extends DefaultService{
 	public void payload() throws Exception {
 
 		String city = new JSONObject(this.getParam("parameters").toString()).getString("Region1");
-		if(city == "" || city == " "){
+		if(city == "" || city == " " || city == null){
 		    city = "Hong Kong";
 		}
 		System.out.println("||| " + city + " |||");
