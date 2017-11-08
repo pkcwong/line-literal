@@ -80,14 +80,13 @@ public class MasterController extends DefaultService {
 		String[] timetable = {"current"};
 		String[] lift = {"classroom", "room", "lift", "where", "how to go"};
 		String[] societies = {"societies", "society", "student Club", "club", "interest group"};
-		String[] KMB = {"bus", "arrival", "departure"};
+		String[] KMB = {"bus", "arrival", "departure", "arrive", "eta"};
 		String[] weather = {"weather", "degrees", "climate"};
 		String[] temperature = {"temperature"};
 		String[] quota = {"class", "quota"};
 		String[] translate = {"translate", "english", "chinese", "korean", "malaysian", "indonesian", "indo"};
 		String[] review = {"review"};
 		String[] help = {"help"};
-		String[] kmb = {"bus", "arrive", "eta"};
 
 		for (String keywords : timetable) {
 			String temp = this.fulfillment.toLowerCase();
@@ -112,7 +111,7 @@ public class MasterController extends DefaultService {
 		for (String keywords : KMB) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
-				//return new DialogFlowTranslate(this).resolve().get();
+				return new DialogFlowKMB(this).resolve().get();
 			}
 		}
 		for (String keywords : weather) {
@@ -143,12 +142,6 @@ public class MasterController extends DefaultService {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
 				return new DialogFlowReview(this).resolve().get();
-			}
-		}
-		for (String keywords : kmb) {
-			String temp = this.fulfillment.toLowerCase();
-			if(temp.contains(keywords)){
-				return new DialogFlowKMB(this).resolve().get();
 			}
 		}
 		for (String keywords : help) {
