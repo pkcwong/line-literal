@@ -24,7 +24,7 @@ public class Thanksgiving extends DefaultService{
 	public void payload(){
 		if(keyword.contains("accept")){
 			if(!keyword.contains("by") || !keyword.contains(" ")){
-				this.fulfillment = "Thank you for your join! But please states who are you! :)\n" +
+				this.fulfillment = "Thank you for your join! But please let us know who are you! :)\n" +
 									"For example, accept by Bear";
 				return;
 			}
@@ -57,7 +57,7 @@ public class Thanksgiving extends DefaultService{
 			ArrayList<Document> user = MongoDB.get(mongo.getCollection("party").find(SELF));
 
 			if (user.size() == 0) {
-				this.fulfillment = "You haven't accept the party invitation!";
+				this.fulfillment = "You haven't accept the party invitation! Please enter Accpet by (your name) to join the party!";
 				return;
 			}
 
