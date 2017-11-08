@@ -53,7 +53,7 @@ public class Thanksgiving extends DefaultService{
 			else
 			{
 
-				for(int i = 0 ; i < keywordArray.length; i++){
+				for(int i = 1 ; i < keywordArray.length; i++){
 					BasicDBObject FOOD = new BasicDBObject().append("food", keywordArray[i]);
 					ArrayList<Document> food = MongoDB.get(mongo.getCollection("party").find(FOOD));
 					if(food.size() == 0){
@@ -61,8 +61,10 @@ public class Thanksgiving extends DefaultService{
 						data.append("food", keywordArray[i]);
 						mongo.getCollection("party").insertOne(data);
 					}
-					else
+					else{
 						this.fulfillment = "Someone is bringing that already, can you pick another one?";
+						return;
+					}
 				}
 				this.fulfillment = "Great, please prepare 5 people portion of that.";
 			}
