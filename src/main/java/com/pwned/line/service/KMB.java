@@ -21,16 +21,13 @@ public class KMB extends DefaultService{
     public void payload() throws Exception {
         String bus = new JSONObject(this.getParam("parameters").toString()).getString("bus");
         String busstop = new JSONObject(this.getParam("parameters").toString()).getString("busstop");
-        String link = "http://www.hko.gov.hk/wxinfo/currwx/flw.htm";
-        HTTP http = new HTTP(link);
-        String weather = http.get();
-        String[] messages = {"Weather forecast", "<br/><br/>Outlook"};
-        weather = weather.substring(weather.indexOf(messages[0]), weather.indexOf(messages[1]));
-        weather = weather.replace("<br/>", "\n");
-        while (weather.contains("<")){
-            weather = weather.substring(0, weather.indexOf("<")) + weather.substring(weather.indexOf(">") + 1);
+        String eta = "Sorry, there is no bus arriving";
+        if(busstop.equals("HKUST South Gate")){
+            String link = "https://citymapper.com/api/1/departures?headways=1&ids=HKStop_HkustSouth_NW_1&region_id=hk-hongkong";
+            HTTP http = new HTTP(link);
+            String info = http.get();
         }
-        this.fulfillment = this.fulfillment.replace("@kmb::eta", weather);
+        this.fulfillment = this.fulfillment.replace("@kmb::eta", eta);
     }
 
 
