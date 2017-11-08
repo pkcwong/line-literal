@@ -88,7 +88,7 @@ public class PushThanksgiving extends DefaultJob{
 				cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)){
 			return true;
 		}else{
-			System.out.printf("The time of Today is %s and the partyDate before is %s\n", cal1.toString(),cal2.toString());
+			System.out.printf("The time of Today is %s and the partyDate before is %s\n", cal1.getTime().toString(),cal2.getTime().toString());
 			return false;
 		}
 
