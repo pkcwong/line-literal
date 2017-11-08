@@ -72,7 +72,7 @@ public class PushThanksgiving extends DefaultJob{
 			{
 				if(checkSameDate(today,partyDate)){
 					KitchenSinkController.push(uid.get(i), new TextMessage("Remember to join the party tonight! " + acceptedName + " will join also!"));
-					System.out.println(acceptedNamegit );
+					System.out.println(acceptedName);
 				}
 			}
 			else
