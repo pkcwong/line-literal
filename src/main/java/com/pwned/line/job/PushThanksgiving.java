@@ -1,14 +1,18 @@
 package com.pwned.line.job;
 
 import com.linecorp.bot.model.message.ImageMessage;
+import com.linecorp.bot.model.message.TextMessage;
 import com.pwned.line.KitchenSinkController;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.quartz.*;
-
+import java.lang.*;
 import java.util.ArrayList;
+import java.util.Calendar;
+
+
 /***
  * Pushing poster
  * Required params: []
@@ -56,11 +60,25 @@ public class PushThanksgiving extends DefaultJob{
 			acceptedUid.add(new JSONObject(acceptedUsersArrayList.get(i).toJson()).getString("uid"));
 		}
 
+		Calendar today = Calendar.getInstance();
+		Calendar partyDate = Calendar.getInstance();
+		partyDate.set(2017,11,8);
 
 		for (int i = 0; i < usersArrayList.size(); i++) {
 			if(acceptedUid.contains(uid.get(i).toString()))
-				continue;
+			{
+				if(today.equals(partyDate)){
+					System.out.println("Today is party day!");
+					KitchenSinkController.push(uid.get(i).toString(), new TextMessage("Remember to join the party tonight!"));
+				}
+				System.out.println("Today is party day!");
+			}
 			KitchenSinkController.push(uid.get(i).toString(), new ImageMessage(imageURI, imageURI));
 		}
+
+
+
+
+
 	}
 }
