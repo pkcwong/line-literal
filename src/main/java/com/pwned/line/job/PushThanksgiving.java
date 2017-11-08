@@ -53,12 +53,14 @@ public class PushThanksgiving extends DefaultJob{
 
 		ArrayList<String> uid = new ArrayList<>();
 		ArrayList<String> acceptedUid = new ArrayList<>();
+		String acceptedName = new String();
 
 		for (int i = 0; i < usersArrayList.size(); i++) {
 			uid.add(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"));
 		}
 		for (int i = 0; i < acceptedUsersArrayList.size(); i++) {
 			acceptedUid.add(new JSONObject(acceptedUsersArrayList.get(i).toJson()).getString("uid"));
+			acceptedName += new JSONObject(acceptedUsersArrayList.get(i).toJson()).getString("name");
 		}
 
 		Calendar today = Calendar.getInstance();
@@ -69,7 +71,8 @@ public class PushThanksgiving extends DefaultJob{
 			if(acceptedUid.contains(uid.get(i).toString()))
 			{
 				if(checkSameDate(today,partyDate)){
-					KitchenSinkController.push(uid.get(i).toString(), new TextMessage("Remember to join the party tonight!"));
+					KitchenSinkController.push(uid.get(i), new TextMessage("Remember to join the party tonight! " + acceptedName + " will join also!"));
+					System.out.println(acceptedNamegit );
 				}
 			}
 			else
