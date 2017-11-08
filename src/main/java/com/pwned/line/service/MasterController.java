@@ -87,6 +87,7 @@ public class MasterController extends DefaultService {
 		String[] translate = {"translate", "english", "chinese", "korean", "malaysian", "indonesian", "indo"};
 		String[] review = {"review"};
 		String[] help = {"help"};
+		String[] kmb = {"bus", "arrive", "eta"};
 
 		for (String keywords : timetable) {
 			String temp = this.fulfillment.toLowerCase();
@@ -142,6 +143,12 @@ public class MasterController extends DefaultService {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
 				return new DialogFlowReview(this).resolve().get();
+			}
+		}
+		for (String keywords : kmb) {
+			String temp = this.fulfillment.toLowerCase();
+			if(temp.contains(keywords)){
+				return new DialogFlowKMB(this).resolve().get();
 			}
 		}
 		for (String keywords : help) {
