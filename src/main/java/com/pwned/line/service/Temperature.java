@@ -21,10 +21,10 @@ public class Temperature extends DefaultService{
 	public void payload() throws Exception {
 
 		String city = new JSONObject(this.getParam("parameters").toString()).getString("Region1");
-		if(city == "" || city == " " || city == null){
+		if(city.equals("")){
 		    city = "Hong Kong";
 		}
-		if(city == "Hong Kong"){
+		if(city.equals("Hong Kong")){
 			System.out.println("TRUE");
 			System.out.println("TRUE");
 			System.out.println("TRUE");
@@ -49,7 +49,7 @@ public class Temperature extends DefaultService{
 			System.out.println("TRUE");
 			System.out.println("TRUE");
 			System.out.println("TRUE");
-			System.out.println("TRUE");v
+			System.out.println("TRUE");
 		}
 		System.out.println("||| " + city + " |||");
 		System.out.println("||| " + city + " |||");
@@ -79,7 +79,7 @@ public class Temperature extends DefaultService{
 		HTTP http = new HTTP(link);
 		String temperatureString = http.get();
 		String temperature = "";
-		if(city == "Hong Kong"){
+		if(city.equals("Hong Kong")){
             temperature = temperatureString.substring(temperatureString.indexOf("Air temperature :") + 16, temperatureString.indexOf("Air temperature :") + 18);
             temperature = temperature + "°C";
 		}else if(temperatureString.contains(city)){
