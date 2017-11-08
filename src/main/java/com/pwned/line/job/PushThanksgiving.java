@@ -28,12 +28,12 @@ public class PushThanksgiving extends DefaultJob{
 			e.printStackTrace();
 		}
 	}
-	public static Trigger buildTrigger(int seconds) {
+	public static Trigger buildTrigger(int hours) {
 		return TriggerBuilder
 				.newTrigger()
 				.withSchedule(
 						SimpleScheduleBuilder.simpleSchedule()
-								.withIntervalInSeconds(seconds).repeatForever())
+								.withIntervalInHours(hours).repeatForever())
 				.build();
 	}
 
