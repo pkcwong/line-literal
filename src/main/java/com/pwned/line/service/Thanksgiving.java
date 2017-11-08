@@ -50,10 +50,10 @@ public class Thanksgiving extends DefaultService{
 					data.append("name", arrayKeyword[1]);
 				mongo.getCollection("party").insertOne(data);
 				this.fulfillment = "Thank you for your join! Have a fun night! See you on " +
-								partyDate.get(Calendar.DAY_OF_MONTH) + "/" + partyDate.get(Calendar.MONTH);
+								partyDate.get(Calendar.DAY_OF_MONTH) + "/" + partyDate.get(Calendar.MONTH)+1;
 			} else {
 				this.fulfillment = "Already accept the party. Please be reminded that the party will be held on " +
-								partyDate.get(Calendar.DAY_OF_MONTH) + "/" + partyDate.get(Calendar.MONTH);
+								partyDate.get(Calendar.DAY_OF_MONTH) + "/" + partyDate.get(Calendar.MONTH)+1;
 			}
 		}
 

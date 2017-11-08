@@ -89,7 +89,9 @@ public class PushThanksgiving extends DefaultJob{
 				cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)){
 			return true;
 		}else{
-			System.out.println(cal1.get(Calendar.HOUR));
+
+			System.out.println("Date of today: " + cal1.get(Calendar.DAY_OF_MONTH)
+							+ "/" + cal1.get(Calendar.MONTH)+1 + " " + cal1.get(Calendar.HOUR) + ":" + cal1.get(Calendar.MINUTE));
 			return false;
 		}
 
