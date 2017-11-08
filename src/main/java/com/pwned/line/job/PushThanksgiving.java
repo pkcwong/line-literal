@@ -63,16 +63,14 @@ public class PushThanksgiving extends DefaultJob{
 
 		Calendar today = Calendar.getInstance();
 		Calendar partyDate = Calendar.getInstance();
-		partyDate.set(2017,11,8);
+		partyDate.set(2017,Calendar.NOVEMBER,8);
 
 		for (int i = 0; i < usersArrayList.size(); i++) {
 			if(acceptedUid.contains(uid.get(i).toString()))
 			{
 				if(checkSameDate(today,partyDate)){
-					System.out.println("Today is party day!");
 					KitchenSinkController.push(uid.get(i).toString(), new TextMessage("Remember to join the party tonight!"));
 				}
-				System.out.println("Today is not party day!");
 			}
 			else
 				KitchenSinkController.push(uid.get(i).toString(), new ImageMessage(imageURI, imageURI));
@@ -83,10 +81,8 @@ public class PushThanksgiving extends DefaultJob{
 	private static boolean checkSameDate(Calendar cal1, Calendar cal2){
 		if(cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
 				cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)){
-
 			return true;
 		}else{
-			System.out.println("Cal 1 day = " + cal1.get(Calendar.DAY_OF_YEAR) + ", Cal 2 day = " + cal2.get(Calendar.DAY_OF_YEAR));
 			return false;
 		}
 
