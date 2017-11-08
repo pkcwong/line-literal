@@ -83,9 +83,13 @@ public class PushThanksgiving extends DefaultJob{
 	private static boolean checkSameDate(Calendar cal1, Calendar cal2){
 		if(cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
 				cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)){
+
 			return true;
-		}else
+		}else{
+			System.out.println("Cal 1 day = " + cal1.get(Calendar.DAY_OF_YEAR) + ", Cal 2 day = " + cal2.get(Calendar.DAY_OF_YEAR));
 			return false;
+		}
+
 
 	}
 }
