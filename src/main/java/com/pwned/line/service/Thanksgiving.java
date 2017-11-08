@@ -62,7 +62,7 @@ public class Thanksgiving extends DefaultService{
 						mongo.getCollection("party").insertOne(data);
 					}
 					else{
-						this.fulfillment = "Someone is bringing " + keywordArray[i].toLowerCase() + " that already, can you pick another one?";
+						this.fulfillment = "Someone is bringing " + keywordArray[i].toLowerCase() + " already, can you pick another one?";
 						return;
 					}
 				}
