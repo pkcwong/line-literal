@@ -27,11 +27,9 @@ public class Thanksgiving extends DefaultService{
 	@Override
 	public void payload(){
 		if(keyword.contains("accept")){
-			Calendar partyDate = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-			partyDate.setTimeZone(TimeZone.getTimeZone("GMT"));
+			Calendar partyDate = Calendar.getInstance();
 			partyDate.set(2017,Calendar.NOVEMBER,27);
 			SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-			format1.setTimeZone(TimeZone.getTimeZone("Asia/Hong_Kong"));
 			String formatted = format1.format(partyDate.getTime());
 
 			String[] arrayKeyword = keyword.split(" ");
@@ -54,9 +52,9 @@ public class Thanksgiving extends DefaultService{
 				else
 					data.append("name", arrayKeyword[1]);
 				mongo.getCollection("party").insertOne(data);
-				this.fulfillment = "Thank you for your join! Have a fun night! See you on " + partyDate.getTime().toString();
+				this.fulfillment = "Thank you for your join! Have a fun night! See you on " + formatted;
 			} else {
-				this.fulfillment = "Already accept the party. Please be reminded that the party will be held on " + partyDate.getTime().toString();
+				this.fulfillment = "Already accept the party. Please be reminded that the party will be held on " + formatted;
 			}
 		}
 

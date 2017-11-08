@@ -65,17 +65,16 @@ public class PushThanksgiving extends DefaultJob{
 			acceptedName.append(" ");
 		}
 
-		Calendar today = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-		Calendar partyDate = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-		today.setTimeZone(TimeZone.getTimeZone("Asia/Hong_Kong"));
-		partyDate.setTimeZone(TimeZone.getTimeZone("Asia/Hong_Kong"));
+		Calendar today = Calendar.getInstance();
+		Calendar partyDate = Calendar.getInstance();
 		partyDate.set(2017,Calendar.NOVEMBER,26);
+		today.add(Calendar.HOUR,8);
 
 		for (int i = 0; i < usersArrayList.size(); i++) {
 			if(acceptedUid.contains(uid.get(i).toString()))
 			{
 				if(checkSameDate(today,partyDate)){
-					KitchenSinkController.push(uid.get(i), new TextMessage("Remember to join the party tonight! " + acceptedName.toString() + "will join also!"));
+					KitchenSinkController.push(uid.get(i), new TextMessage("Remember to join the party tomorrow! " + acceptedName.toString() + "will join also!"));
 				}
 			}
 			else
@@ -89,8 +88,7 @@ public class PushThanksgiving extends DefaultJob{
 				cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)){
 			return true;
 		}else{
-
-			System.out.println("Date of today: " + cal1.getTime());
+			System.out.printf("The time of Today is %s and the partyDate before is %s\n", cal1.toString(),cal2.toString());
 			return false;
 		}
 
