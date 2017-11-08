@@ -80,7 +80,7 @@ public class MasterController extends DefaultService {
 		String[] timetable = {"current"};
 		String[] lift = {"classroom", "room", "lift", "where", "how to go"};
 		String[] societies = {"societies", "society", "student Club", "club", "interest group"};
-		String[] KMB = {"bus", "arrival", "departure", "arrive", "eta"};
+		String[] kmb = {"bus", "arrival", "departure", "arrive", "eta"};
 		String[] weather = {"weather", "degrees", "climate"};
 		String[] temperature = {"temperature"};
 		String[] quota = {"class", "quota"};
@@ -108,7 +108,7 @@ public class MasterController extends DefaultService {
 				}
 			}
 		}
-		for (String keywords : KMB) {
+		for (String keywords : kmb) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
 				return new DialogFlowKMB(this).resolve().get();

@@ -27,7 +27,7 @@ public class DialogFlowKMB extends DefaultService {
 
     @Override
     public Service chain() throws Exception {
-        return new Weather(this).resolve().get();
+        return new KMB(this).resolve().get();
     }
 
 }
