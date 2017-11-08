@@ -24,6 +24,30 @@ public class Temperature extends DefaultService{
 		if(city == "" || city == " "){
 		    city = "Hong Kong";
 		}
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
+		System.out.println("||| " + city + " |||");
 		String link = "http://rss.weather.gov.hk/rss/CurrentWeather.xml";
 		HTTP http = new HTTP(link);
 		String temperatureString = http.get();
