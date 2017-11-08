@@ -71,9 +71,10 @@ public class PushThanksgiving extends DefaultJob{
 					System.out.println("Today is party day!");
 					KitchenSinkController.push(uid.get(i).toString(), new TextMessage("Remember to join the party tonight!"));
 				}
-				System.out.println("Today is party day!");
+				System.out.println("Today is not party day!");
 			}
-			KitchenSinkController.push(uid.get(i).toString(), new ImageMessage(imageURI, imageURI));
+			else
+				KitchenSinkController.push(uid.get(i).toString(), new ImageMessage(imageURI, imageURI));
 		}
 
 
