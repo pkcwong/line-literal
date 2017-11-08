@@ -3,6 +3,8 @@ package com.pwned.line.service;
 import com.mongodb.BasicDBObject;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -28,6 +30,8 @@ public class Thanksgiving extends DefaultService{
 			Calendar partyDate = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 			partyDate.setTimeZone(TimeZone.getTimeZone("Asia/Calcutta"));
 			partyDate.set(2017,Calendar.NOVEMBER,27);
+			SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+			String formatted = format1.format(partyDate.getTime());
 
 			String[] arrayKeyword = keyword.split(" ");
 
@@ -49,11 +53,9 @@ public class Thanksgiving extends DefaultService{
 				else
 					data.append("name", arrayKeyword[1]);
 				mongo.getCollection("party").insertOne(data);
-				this.fulfillment = "Thank you for your join! Have a fun night! See you on " +
-								partyDate.get(Calendar.DAY_OF_MONTH) + "/" + partyDate.get(Calendar.MONTH)+1;
+				this.fulfillment = "Thank you for your join! Have a fun night! See you on " + partyDate.getTime().toString();
 			} else {
-				this.fulfillment = "Already accept the party. Please be reminded that the party will be held on " +
-								partyDate.get(Calendar.DAY_OF_MONTH) + "/" + partyDate.get(Calendar.MONTH)+1;
+				this.fulfillment = "Already accept the party. Please be reminded that the party will be held on " + partyDate.getTime().toString();
 			}
 		}
 

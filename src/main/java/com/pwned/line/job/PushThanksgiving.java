@@ -90,8 +90,7 @@ public class PushThanksgiving extends DefaultJob{
 			return true;
 		}else{
 
-			System.out.println("Date of today: " + cal1.get(Calendar.DAY_OF_MONTH)
-							+ "/" + cal1.get(Calendar.MONTH)+1 + " " + cal1.get(Calendar.HOUR) + ":" + cal1.get(Calendar.MINUTE));
+			System.out.println("Date of today: " + cal1.getTime());
 			return false;
 		}
 
