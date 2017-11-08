@@ -23,11 +23,7 @@ public class Thanksgiving extends DefaultService{
 	@Override
 	public void payload(){
 		if(keyword.contains("accept")){
-			if(!keyword.contains("by") || !keyword.contains(" ")){
-				this.fulfillment = "Thank you for your join! But please let us know who are you! :)\n" +
-									"For example, accept by Bear";
-				return;
-			}
+
 			String[] arrayKeyword = keyword.split(" ");
 
 			MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
@@ -36,6 +32,11 @@ public class Thanksgiving extends DefaultService{
 			ArrayList<Document> user = MongoDB.get(mongo.getCollection("party").find(SELF));
 
 			if (user.size() == 0) {
+				if(!keyword.contains("by") || !keyword.contains(" ")){
+					this.fulfillment = "Thank you for your join! But please let us know who are you! :)\n" +
+							"For example, accept by Bear";
+					return;
+				}
 				Document data = new Document();
 				data.append("uid", this.getParam("uid").toString());
 				if(arrayKeyword[1].equals("by"))
