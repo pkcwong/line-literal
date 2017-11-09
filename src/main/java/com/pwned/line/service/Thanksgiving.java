@@ -1,6 +1,7 @@
 package com.pwned.line.service;
 
 import com.mongodb.BasicDBObject;
+import com.pwned.line.http.HTTP;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 
@@ -19,6 +20,13 @@ import java.util.TimeZone;
 
 public class Thanksgiving extends DefaultService{
 	private String keyword;
+	private String URI = "https://api.line.me/v2/oauth/accessToken";
+	private String userURI = "https://api.line.me/v2/profile";
+	private String refresh_token = "";
+	private String client_id = "1535457737";
+	private String client_secret = "56ce7e4d745a529be93647b1009e295c";
+	private String access_token = "rtVsL+Y9jhge/qrRdsgKK2AbvX/t5z4ESVvV9j+cBYvh27KVB15tek0rfIHB3TrLg2rrjb/4VKa1Eck4RvUfqpIsaCwIV/MJ69s2wfuksvX+9acs/QRjx2a0PHci6ESM8HxdsGo1Zb7T31TsglQbuQdB04t89/1O/w1cDnyilFU=;";
+
 	public Thanksgiving(Service service, String key){
 		super(service);
 		keyword = key;
@@ -27,10 +35,21 @@ public class Thanksgiving extends DefaultService{
 	@Override
 	public void payload(){
 		if(keyword.contains("accept")){
+			// Date of party
 			Calendar partyDate = Calendar.getInstance();
 			partyDate.set(2017,Calendar.NOVEMBER,27);
 			SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 			String formatted = format1.format(partyDate.getTime());
+
+			/*HTTP http = new HTTP(URI);
+			http.setHeaders("Content-Type","application/x-www-form-urlencoded");
+			http.setParams("grant_type", "refresh_token");
+			http.setParams("client_id",client_id);
+			http.setParams("client_secret",client_secret);*/
+			HTTP http = new HTTP(userURI);
+			http.setHeaders("Authorization", "Bearer " + access_token);
+			System.out.println("Result of http get: " + http.get());
+
 
 			String[] arrayKeyword = keyword.split(" ");
 
