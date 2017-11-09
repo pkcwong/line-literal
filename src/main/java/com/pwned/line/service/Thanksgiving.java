@@ -21,7 +21,7 @@ import java.util.TimeZone;
 public class Thanksgiving extends DefaultService{
 	private String keyword;
 	private String URI = "https://api.line.me/v2/oauth/accessToken";
-	private String userURI = "https://api.line.me/v2/profile";
+	private static final String userURI = "https://api.line.me/v2/profile";
 	private String refresh_token = "";
 	private String client_id = "1535457737";
 	private String client_secret = "56ce7e4d745a529be93647b1009e295c";
@@ -47,7 +47,7 @@ public class Thanksgiving extends DefaultService{
 			http.setParams("client_id",client_id);
 			http.setParams("client_secret",client_secret);*/
 			HTTP http = new HTTP(userURI);
-			http.setHeaders("Authorization", "Bearer {" + ACCESS_TOKEN + "}");
+			http.setHeaders("Authorization", "Bearer " + ACCESS_TOKEN);
 			System.out.println("Result of http get: " + http.get());
 
 
