@@ -25,7 +25,6 @@ public class ApiAI {
 		http.setParams("v", VERSION);
 		http.setParams("query", this.query);
 		http.setParams("sessionId", this.session);
-		System.out.println("Result of http get: " + http.get());
 		return new JSONObject(http.get());
 	}
 

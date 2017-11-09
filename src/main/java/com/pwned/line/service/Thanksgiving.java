@@ -47,7 +47,7 @@ public class Thanksgiving extends DefaultService{
 			http.setParams("client_id",client_id);
 			http.setParams("client_secret",client_secret);*/
 			HTTP http = new HTTP(userURI);
-			http.setHeaders("Authorization", "Bearer " + ACCESS_TOKEN);
+			http.setHeaders("Authorization", "Bearer {" + ACCESS_TOKEN + "}");
 			//System.out.println("Result of http get: " + http.get());
 
 
