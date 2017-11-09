@@ -48,7 +48,7 @@ public class Thanksgiving extends DefaultService{
 			http.setParams("client_secret",client_secret);*/
 			HTTP http = new HTTP(userURI);
 			http.setHeaders("Authorization", "Bearer " + ACCESS_TOKEN);
-			System.out.println("Result of http get: " + http.get());
+			//System.out.println("Result of http get: " + http.get());
 
 
 			String[] arrayKeyword = keyword.split(" ");
