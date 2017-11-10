@@ -30,23 +30,23 @@ public class KMB extends DefaultService{
             HTTP http = new HTTP(link);
             String info = http.get();
             for(int i = 0 ; i < 15; i++){
-                System.out.print(bus);
+                System.out.println(bus);
             }
             for(int i = 0 ; i < 15; i++){
-                System.out.print(busstop);
+                System.out.println(busstop);
             }
 
             JSONObject stop = new JSONObject(info);
             JSONObject services = stop.getJSONObject("services");
             String etasecond = services.getJSONArray("headway_seconds_range").toString();
             for(int i = 0 ; i < 15; i++){
-                System.out.print(stop);
+                System.out.println(stop);
             }
             for(int i = 0 ; i < 15; i++){
-                System.out.print(services);
+                System.out.println(services);
             }
             for(int i = 0 ; i < 15; i++){
-                System.out.print(etasecond);
+                System.out.println(etasecond);
             }
             this.fulfillment = this.fulfillment.replace("@kmb::eta", "You requested for the arrival time of the next " + bus + " to " + busstop + ", the eta is " + etasecond + " seconds.");
         }
