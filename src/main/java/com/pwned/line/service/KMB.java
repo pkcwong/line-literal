@@ -37,7 +37,7 @@ public class KMB extends DefaultService{
             System.out.println(stop);
             System.out.println(stop);
             System.out.println(stop);
-            System.out.println(stop);v
+            System.out.println(stop);
             JSONObject stops = stop.getJSONObject("stops");
             System.out.println(stops);
             System.out.println(stops);
