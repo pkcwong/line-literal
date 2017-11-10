@@ -45,11 +45,7 @@ public class KMB extends DefaultService{
                     }
                 }
             }
-            for(int j = 0; j < 50; j++){
-                System.out.println(stops.length());
-                System.out.println(key);
-            }
-            JSONArray services = stops.getJSONArray(key - 1);
+            JSONObject services = stops.getJSONObject(key - 1);
             System.out.println(services);
             System.out.println(services);
             System.out.println(services);
@@ -59,7 +55,7 @@ public class KMB extends DefaultService{
             System.out.println(services);
             System.out.println(services);
             System.out.println(services);
-            for(int i = 0; i < services.length(); i++){
+            /*for(int i = 0; i < services.length(); i++){
                 String route_id = services.getJSONObject(i).getString("route_id");
                 String live_departures_seconds = services.getJSONObject(i).getString("live_departures_seconds");
                 String headway_seconds_range = services.getJSONObject(i).getString("headway_seconds_range");
@@ -86,7 +82,7 @@ public class KMB extends DefaultService{
                 System.out.println(headway_seconds_range);
                 System.out.println(headway_seconds_range);
                 System.out.println(headway_seconds_range);
-            }
+            }*/
             this.fulfillment = this.fulfillment.replace("@kmb::eta", "You requested for the arrival time of the next " + bus + " to " + busstop + ", the eta is  seconds.");
         }
         this.fulfillment = this.fulfillment.replace("@kmb::eta", eta);
