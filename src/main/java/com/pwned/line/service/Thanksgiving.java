@@ -20,11 +20,7 @@ import java.util.TimeZone;
 
 public class Thanksgiving extends DefaultService{
 	private String keyword;
-	private String URI = "https://api.line.me/v2/oauth/accessToken";
 	private static final String userURI = "https://api.line.me/v2/profile";
-	private String refresh_token = "";
-	private String client_id = "1535457737";
-	private String client_secret = "56ce7e4d745a529be93647b1009e295c";
 	private String ACCESS_TOKEN = System.getenv("LINE_BOT_CHANNEL_TOKEN");
 
 	public Thanksgiving(Service service, String key){
@@ -41,14 +37,9 @@ public class Thanksgiving extends DefaultService{
 			SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 			String formatted = format1.format(partyDate.getTime());
 
-			/*HTTP http = new HTTP(URI);
-			http.setHeaders("Content-Type","application/x-www-form-urlencoded");
-			http.setParams("grant_type", "refresh_token");
-			http.setParams("client_id",client_id);
-			http.setParams("client_secret",client_secret);*/
 			HTTP http = new HTTP(userURI);
 			http.setHeaders("Authorization", "Bearer " + ACCESS_TOKEN);
-			System.out.println("Result of http get: " + ACCESS_TOKEN);
+			System.out.println("Result of http get: " + http.get());
 
 
 			String[] arrayKeyword = keyword.split(" ");
