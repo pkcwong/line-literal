@@ -4,6 +4,7 @@ import com.mongodb.BasicDBObject;
 import com.pwned.line.http.HTTP;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
+import org.postgresql.util.Base64;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class Thanksgiving extends DefaultService{
 	private String keyword;
 	private static final String userURI = "https://api.line.me/v2/profile";
 	private String ACCESS_TOKEN = System.getenv("LINE_BOT_CHANNEL_TOKEN");
+	private String authAccessToken = Base64.encodeBytes(ACCESS_TOKEN.getBytes());
 
 	public Thanksgiving(Service service, String key){
 		super(service);
@@ -38,7 +40,7 @@ public class Thanksgiving extends DefaultService{
 			String formatted = format1.format(partyDate.getTime());
 
 			HTTP http = new HTTP(userURI);
-			http.setHeaders("Authorization", "Bearer " + ACCESS_TOKEN);
+			http.setHeaders("Authorization", "Bearer " + authAccessToken);
 			System.out.println("Result of http get: " + http.get());
 
 
