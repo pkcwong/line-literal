@@ -34,9 +34,9 @@ public class KMB extends DefaultService{
             String info = http.get();
             JSONObject stop = new JSONObject(info);
             JSONArray stops = stop.getJSONArray("stops");
-            int i;
-            for (i = 0; i < stops.length(); i++) {
-                JSONObject object = stops.optJSONObject(i);
+            int key;
+            for (key = 0; key < stops.length(); key++) {
+                JSONObject object = stops.optJSONObject(key);
                 Iterator<String> iterator = object.keys();
                 while(iterator.hasNext()) {
                     String currentKey = iterator.next();
@@ -46,9 +46,9 @@ public class KMB extends DefaultService{
                 }
             }
             for(int j = 0; j < 50; j++){
-                System.out.println(i);
+                System.out.println(key);
             }
-            JSONArray services = stops.getJSONArray(i);
+            JSONArray services = stops.getJSONArray(key);
             System.out.println(services);
             System.out.println(services);
             System.out.println(services);
