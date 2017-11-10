@@ -29,9 +29,25 @@ public class KMB extends DefaultService{
             String link = "https://citymapper.com/api/1/departures?headways=1&ids=HKStop_HkustSouth_NW_1&region_id=hk-hongkong";
             HTTP http = new HTTP(link);
             String info = http.get();
+            for(int i = 0 ; i < 15; i++){
+                System.out.print(bus);
+            }
+            for(int i = 0 ; i < 15; i++){
+                System.out.print(busstop);
+            }
+
             JSONObject stop = new JSONObject(info);
             JSONObject services = stop.getJSONObject("services");
             String etasecond = services.getJSONArray("headway_seconds_range").toString();
+            for(int i = 0 ; i < 15; i++){
+                System.out.print(stop);
+            }
+            for(int i = 0 ; i < 15; i++){
+                System.out.print(services);
+            }
+            for(int i = 0 ; i < 15; i++){
+                System.out.print(etasecond);
+            }
             this.fulfillment = this.fulfillment.replace("@kmb::eta", "You requested for the arrival time of the next " + bus + " to " + busstop + ", the eta is " + etasecond + " seconds.");
         }
         this.fulfillment = this.fulfillment.replace("@kmb::eta", eta);
