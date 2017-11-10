@@ -31,8 +31,10 @@ public class KMB extends DefaultService{
             String info = http.get();
             String range = info.substring(info.indexOf("headway_seconds_range") + 27, info.indexOf("headsign") - 4);
             for(int i = 0 ; i < 15; i++){
-                System.out.println(range);
+                System.out.println(info.indexOf("headway_seconds_range") + 27);
+                System.out.println(info.indexOf("headsign") - 4);
             }
+            System.out.println(range);
             this.fulfillment = this.fulfillment.replace("@kmb::eta", "You requested for the arrival time of the next " + bus + " to " + busstop + ", the eta is " + range + " seconds.");
         }
         this.fulfillment = this.fulfillment.replace("@kmb::eta", eta);
