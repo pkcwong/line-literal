@@ -26,6 +26,7 @@ public class KMB extends DefaultService{
             String link = "https://citymapper.com/api/1/departures?headways=1&ids=HKStop_HkustSouth_NW_1&region_id=hk-hongkong";
             HTTP http = new HTTP(link);
             String info = http.get();
+            this.fulfillment = this.fulfillment.replace("@kmb::eta", "You requested for the arrival time of the next " + bus + " to " + busstop);
         }
         this.fulfillment = this.fulfillment.replace("@kmb::eta", eta);
     }
