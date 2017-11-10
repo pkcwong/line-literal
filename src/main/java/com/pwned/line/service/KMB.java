@@ -1,6 +1,7 @@
 package com.pwned.line.service;
 
 import com.pwned.line.http.HTTP;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /***
@@ -29,13 +30,17 @@ public class KMB extends DefaultService{
             String link = "https://citymapper.com/api/1/departures?headways=1&ids=HKStop_HkustSouth_NW_1&region_id=hk-hongkong";
             HTTP http = new HTTP(link);
             String info = http.get();
-            String range = info.substring(info.indexOf("headway_seconds_range") + 27, info.indexOf("headsign") - 4);
-            for(int i = 0 ; i < 15; i++){
-                System.out.println(info.indexOf("headway_seconds_range") + 27);
-                System.out.println(info.indexOf("headsign") - 4);
+            JSONObject stops = new JSONObject(info);
+            JSONArray services = stops.getJSONArray("services");
+            for(int i = 0; i < services.length(); i++){
+                String route_id = services.getJSONObject(i).getString("route_id");
+                String live_departures_seconds = services.getJSONObject(i).getString("live_departures_seconds");
+                String headway_seconds_range = services.getJSONObject(i).getString("headway_seconds_range");
+                System.out.println(route_id);
+                System.out.println(live_departures_seconds);
+                System.out.println(headway_seconds_range);
             }
-            System.out.println(range);
-            this.fulfillment = this.fulfillment.replace("@kmb::eta", "You requested for the arrival time of the next " + bus + " to " + busstop + ", the eta is " + range + " seconds.");
+            this.fulfillment = this.fulfillment.replace("@kmb::eta", "You requested for the arrival time of the next " + bus + " to " + busstop + ", the eta is  seconds.");
         }
         this.fulfillment = this.fulfillment.replace("@kmb::eta", eta);
     }
