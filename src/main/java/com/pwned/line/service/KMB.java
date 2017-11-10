@@ -24,7 +24,7 @@ public class KMB extends DefaultService{
         String bus = new JSONObject(this.getParam("parameters").toString()).getString("bus");
         String busstop = new JSONObject(this.getParam("parameters").toString()).getString("busstop");
         String eta = "Sorry, there is no bus arriving";
-        int etaminutes = 20;
+        int etaminutes = 200;
         if(bus.equals("")||busstop.equals("")){
             eta = "Please enter a valid bus route or bus stop";
         }
@@ -45,6 +45,8 @@ public class KMB extends DefaultService{
                     for(int k = 0; k < 50; k++)
                     System.out.println(etasecond[i] + "live");
                     etasecond[i] = etasecond[i].substring(1, etasecond[i].length() - 1);
+                    for(int k = 0; k < 50; k++)
+                        System.out.println(etasecond[i] + "remove[]");
                 }else if(services.getJSONObject(i).has("headway_seconds_range")){
                     etasecond[i] = "1200";
                     for(int k = 0; k < 50; k++)
@@ -54,13 +56,21 @@ public class KMB extends DefaultService{
             if(bus.equals(route[0])){
                 for(int i = 0; i < services.length(); i++){
                     if(route[i].equals("KMBBus91M")){
+                        for(int k = 0; k < 50; k++)
+                            System.out.println(etaminutes + "before");
                         etaminutes = Integer.parseInt(etasecond[i]) / 60;
+                        for(int k = 0; k < 50; k++)
+                            System.out.println(etaminutes + "after");
                     }
                 }
             }else if(bus.equals(route[1])){
                 for(int i = 0; i < services.length(); i++){
                     if(route[i].equals("KMBBus91")){
+                        for(int k = 0; k < 50; k++)
+                            System.out.println(etaminutes + "before");
                         etaminutes = Integer.parseInt(etasecond[i]) / 60;
+                        for(int k = 0; k < 50; k++)
+                            System.out.println(etaminutes + "after");
                     }
                 }
             }
