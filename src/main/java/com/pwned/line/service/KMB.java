@@ -33,7 +33,7 @@ public class KMB extends DefaultService{
             for(int i = 0 ; i < 15; i++){
                 System.out.println(range);
             }
-            this.fulfillment = this.fulfillment.replace("@kmb::eta", "You requested for the arrival time of the next " + bus + " to " + busstop + ", the eta is " + etasecond + " seconds.");
+            this.fulfillment = this.fulfillment.replace("@kmb::eta", "You requested for the arrival time of the next " + bus + " to " + busstop + ", the eta is " + range + " seconds.");
         }
         this.fulfillment = this.fulfillment.replace("@kmb::eta", eta);
     }
