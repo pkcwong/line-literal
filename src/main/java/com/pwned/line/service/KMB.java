@@ -46,6 +46,7 @@ public class KMB extends DefaultService{
                 }
             }
             for(int j = 0; j < 50; j++){
+                System.out.println(stops.length());
                 System.out.println(key);
             }
             JSONArray services = stops.getJSONArray(key);
