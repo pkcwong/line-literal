@@ -42,9 +42,13 @@ public class KMB extends DefaultService{
                 route_id[i] = services.getJSONObject(i).getString("route_id");
                 if(services.getJSONObject(i).has("live_departures_seconds")){
                     etasecond[i] = services.getJSONObject(i).getString("live_departures_seconds");
+                    for(int k = 0; k < 50; k++)
+                    System.out.println(etasecond[i] + "live");
                     etasecond[i] = etasecond[i].substring(1, etasecond[i].length() - 1);
                 }else if(services.getJSONObject(i).has("headway_seconds_range")){
                     etasecond[i] = "1200";
+                    for(int k = 0; k < 50; k++)
+                        System.out.println(etasecond[i]);
                 }
             }
             if(bus.equals(route[0])){
