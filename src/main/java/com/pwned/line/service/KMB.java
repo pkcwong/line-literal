@@ -54,21 +54,13 @@ public class KMB extends DefaultService{
             if(bus.equals(route[0])){
                 for(int i = 0; i < services.length(); i++){
                     if(route_id[i].equals("KMBBus91M")){
-                        for(int k = 0; k < 50; k++)
-                            System.out.println(etaminutes + "before");
                         etaminutes = Integer.parseInt(etasecond[i]) / 60;
-                        for(int k = 0; k < 50; k++)
-                            System.out.println(etaminutes + "after");
                     }
                 }
             }else if(bus.equals(route[1])){
                 for(int i = 0; i < services.length(); i++){
                     if(route_id[i].equals("KMBBus91")){
-                        for(int k = 0; k < 50; k++)
-                            System.out.println(etaminutes + "before");
                         etaminutes = Integer.parseInt(etasecond[i]) / 60;
-                        for(int k = 0; k < 50; k++)
-                            System.out.println(etaminutes + "after");
                     }
                 }
             }
