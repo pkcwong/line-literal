@@ -47,9 +47,8 @@ public class KMB extends DefaultService{
                     etasecond[i] = "1200";
                 }
             }
-            for(int k = 0; k < 50; k++) {
+            for(int k = 0; k < 20; k++) {
                 System.out.println(bus);
-                System.out.println(route[0]);
                 System.out.println(route[1]);
             }
             if(bus.equals(route[0])){
