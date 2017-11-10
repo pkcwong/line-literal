@@ -35,7 +35,9 @@ public class KMB extends DefaultService{
             for(int i = 0 ; i < 15; i++){
                 System.out.println(busstop);
             }
-
+            for(int i = 0 ; i < 15; i++){
+                System.out.println(info);
+            }
             JSONObject stop = new JSONObject(info);
             JSONObject services = stop.getJSONObject("services");
             String etasecond = services.getJSONArray("headway_seconds_range").toString();
