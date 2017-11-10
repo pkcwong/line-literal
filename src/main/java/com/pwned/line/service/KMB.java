@@ -45,8 +45,6 @@ public class KMB extends DefaultService{
             System.out.println(services);
             for(int i = 0; i < services.length(); i++){
                 String route_id = services.getJSONObject(i).getString("route_id");
-                String live_departures_seconds = services.getJSONObject(i).getString("live_departures_seconds");
-                String headway_seconds_range = services.getJSONObject(i).getString("headway_seconds_range");
                 System.out.println(route_id);
                 System.out.println(route_id);
                 System.out.println(route_id);
@@ -55,21 +53,26 @@ public class KMB extends DefaultService{
                 System.out.println(route_id);
                 System.out.println(route_id);
                 System.out.println(route_id);
-                System.out.println(live_departures_seconds);
-                System.out.println(live_departures_seconds);
-                System.out.println(live_departures_seconds);
-                System.out.println(live_departures_seconds);
-                System.out.println(live_departures_seconds);
-                System.out.println(live_departures_seconds);
-                System.out.println(live_departures_seconds);
-                System.out.println(live_departures_seconds);
-                System.out.println(live_departures_seconds);
-                System.out.println(live_departures_seconds);
-                System.out.println(live_departures_seconds);
-                System.out.println(live_departures_seconds);
-                System.out.println(headway_seconds_range);
-                System.out.println(headway_seconds_range);
-                System.out.println(headway_seconds_range);
+                if(services.getJSONObject(i).has("live_departures_seconds")){
+                    String live_departures_seconds = services.getJSONObject(i).getString("live_departures_seconds");
+                    System.out.println(live_departures_seconds);
+                    System.out.println(live_departures_seconds);
+                    System.out.println(live_departures_seconds);
+                    System.out.println(live_departures_seconds);
+                    System.out.println(live_departures_seconds);
+                    System.out.println(live_departures_seconds);
+                    System.out.println(live_departures_seconds);
+                    System.out.println(live_departures_seconds);
+                    System.out.println(live_departures_seconds);
+                    System.out.println(live_departures_seconds);
+                    System.out.println(live_departures_seconds);
+                    System.out.println(live_departures_seconds);
+                }else if(services.getJSONObject(i).has("headway_seconds_range")){
+                    String headway_seconds_range = services.getJSONObject(i).getString("headway_seconds_range");
+                    System.out.println(headway_seconds_range);
+                    System.out.println(headway_seconds_range);
+                    System.out.println(headway_seconds_range);
+                }
             }
             this.fulfillment = this.fulfillment.replace("@kmb::eta", "You requested for the arrival time of the next " + bus + " to " + busstop + ", the eta is  seconds.");
         }
