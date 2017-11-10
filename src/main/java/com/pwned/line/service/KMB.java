@@ -31,14 +31,7 @@ public class KMB extends DefaultService{
             HTTP http = new HTTP(link);
             String info = http.get();
             JSONObject stop = new JSONObject(info);
-            System.out.println(stop);
-            System.out.println(stop);
-            System.out.println(stop);
-            System.out.println(stop);
-            System.out.println(stop);
-            System.out.println(stop);
-            System.out.println(stop);
-            JSONObject stops = stop.getJSONObject("stops");
+            JSONArray stops = stop.getJSONArray("stops");
             System.out.println(stops);
             System.out.println(stops);
             System.out.println(stops);
@@ -52,7 +45,7 @@ public class KMB extends DefaultService{
             System.out.println(stops);
             System.out.println(stops);
             System.out.println(stops);
-            JSONArray services = stops.getJSONArray("services");
+            JSONArray services = stops.toJSONObject(null).getJSONArray("services");
             System.out.println(services);
             System.out.println(services);
             System.out.println(services);
