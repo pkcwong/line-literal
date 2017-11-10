@@ -4,6 +4,8 @@ import com.pwned.line.http.HTTP;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.Iterator;
+
 /***
  * Service for course information.
  * Required params: [uid]
@@ -32,15 +34,21 @@ public class KMB extends DefaultService{
             String info = http.get();
             JSONObject stop = new JSONObject(info);
             JSONArray stops = stop.getJSONArray("stops");
-
-            /*for (int i = 0; i < jArray.length(); i++) {
-                JSONObject object = jArray.optJSONObject(i);
+            int i;
+            for (i = 0; i < stops.length(); i++) {
+                JSONObject object = stops.optJSONObject(i);
                 Iterator<String> iterator = object.keys();
                 while(iterator.hasNext()) {
                     String currentKey = iterator.next();
+                    if(currentKey.equals("services")){
+                        break;
+                    }
                 }
-            }*/
-            JSONArray services = stops.toJSONObject(stops).getJSONArray("services");
+            }
+            for(int j = 0; j < 50; j++){
+                System.out.println(i);
+            }
+            JSONArray services = stops.getJSONArray(i);
             System.out.println(services);
             System.out.println(services);
             System.out.println(services);
