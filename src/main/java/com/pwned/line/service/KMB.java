@@ -49,7 +49,7 @@ public class KMB extends DefaultService{
                 System.out.println(stops.length());
                 System.out.println(key);
             }
-            JSONArray services = stops.getJSONArray(key);
+            JSONArray services = stops.getJSONArray(key - 1);
             System.out.println(services);
             System.out.println(services);
             System.out.println(services);
