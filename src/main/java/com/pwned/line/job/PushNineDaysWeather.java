@@ -8,8 +8,6 @@ import com.pwned.line.KitchenSinkController;
 import com.pwned.line.http.HTTP;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.quartz.*;
 
 import java.text.DateFormat;
@@ -26,7 +24,7 @@ public class PushNineDaysWeather extends DefaultJob{
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         System.out.println("PushNineDaysWeather");
-        this.NineDaysWeather();
+        this.NineDaysWeather("hi");
     }
 
 
@@ -43,7 +41,7 @@ public class PushNineDaysWeather extends DefaultJob{
                 .build();
     }
 
-    public static void NineDaysWeather() {
+    public static void NineDaysWeather(String uid) {
         usersArrayList = MongoDB.get(new MongoDB(System.getenv("MONGODB_URI")).getCollection("nine").find());
 
         String link = "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm";
@@ -79,7 +77,7 @@ public class PushNineDaysWeather extends DefaultJob{
         System.out.println("hi");
         CarouselTemplate carouselTemplate = new CarouselTemplate(
                 Arrays.asList(
-                        new CarouselColumn(imageurl[0], date[0], desription[0], Arrays.asList(
+                        new CarouselColumn(link, "Hi", "Hi", Arrays.asList(
                                 new MessageAction("Link",
                                         "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
                         ))
@@ -121,13 +119,6 @@ public class PushNineDaysWeather extends DefaultJob{
 //                        ))
                 ));
         TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
-        for (int i = 0; i < usersArrayList.size(); i++) {
-            try{
-                KitchenSinkController.push(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"), templateMessage);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        }
+        KitchenSinkController.push(uid, templateMessage);
     }
 }
