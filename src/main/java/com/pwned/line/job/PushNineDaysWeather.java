@@ -74,7 +74,7 @@ public class PushNineDaysWeather extends DefaultJob{
         }
         for(int i = 0; i < 20; i++)
         System.out.println("hi");
-        String imageUrl = "https://line.me";
+        String imageUrl = "http://www.weather.gov.hk/images/wxicon/pic62.png";
         for (int url = 0; url < 9; url++){
             System.out.println(imageurl[url]);
         }
