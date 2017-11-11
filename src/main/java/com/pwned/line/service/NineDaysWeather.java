@@ -60,7 +60,7 @@ public class NineDaysWeather extends DefaultService{
 //        CarouselTemplate carouselTemplate = new CarouselTemplate(nineColumns);
 //        this.fulfillment = this.fulfillment.replace("@weather::ninedaysweather", "The following is the weather forecast for next 9 days:");
 //        KitchenSinkController.push(this.getParam("uid").toString(), new TemplateMessage("Nine Days Weather Forecast", carouselTemplate));
-
+        this.fulfillment = this.fulfillment.replace("@weather::ninedaysweather", "The above is the weather forecast for next 9 days:");
         PushNineDaysWeather.NineDaysWeather(this.getParam("uid").toString());
     }
 
