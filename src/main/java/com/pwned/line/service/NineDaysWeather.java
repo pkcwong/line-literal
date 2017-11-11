@@ -61,6 +61,7 @@ public class NineDaysWeather extends DefaultService{
         List<CarouselColumn> nineColumns = new ArrayList<>();
         for(int days = 0; days < 5; days++){
             nineColumns.add(days, new CarouselColumn(imageurl[days], date[days], desription[days], null));
+            System.out.println("||||||" + days + "||||||");
         }
         //confirmTemplate = new ConfirmTemplate("Anonymous Chat System", new PostbackAction("terminate", "anonymous::terminate"), new PostbackAction("cancel", "anonymous::cancel"));
         carouselTemplate = new CarouselTemplate(nineColumns);
