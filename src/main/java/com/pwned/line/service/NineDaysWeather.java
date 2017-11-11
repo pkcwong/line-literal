@@ -57,14 +57,15 @@ public class NineDaysWeather extends DefaultService{
         }
         for(int i = 0; i < 20; i++)
             System.out.println("|||Carousel|||");
-        CarouselTemplate carouselTemplate;
-        List<CarouselColumn> nineColumns = new ArrayList<>();
+        ArrayList<CarouselColumn> nineColumns = new ArrayList<>();
         for(int days = 0; days < 5; days++){
             nineColumns.add(days, new CarouselColumn(imageurl[days], date[days], desription[days], null));
             System.out.println("||||||" + days + "||||||");
         }
+        for(int i = 0; i < 20; i++)
+        System.out.println(nineColumns);
         //confirmTemplate = new ConfirmTemplate("Anonymous Chat System", new PostbackAction("terminate", "anonymous::terminate"), new PostbackAction("cancel", "anonymous::cancel"));
-        carouselTemplate = new CarouselTemplate(nineColumns);
+        CarouselTemplate carouselTemplate = new CarouselTemplate(nineColumns);
         this.fulfillment = this.fulfillment.replace("@weather::ninedaysweather", "The following is the weather forecast for next 9 days:");
         KitchenSinkController.push(this.getParam("uid").toString(), new TemplateMessage("Nine Days Weather Forecast", carouselTemplate));
     }
