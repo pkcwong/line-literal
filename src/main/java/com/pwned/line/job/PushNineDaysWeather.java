@@ -75,45 +75,50 @@ public class PushNineDaysWeather extends DefaultJob{
             desription[weather] = desriptionsstring.substring(text[2].length() + 4, desriptionsstring.indexOf(text[3]));
             desriptionsstring = desriptionsstring.substring(2);
         }
-
+        for(int i = 0; i < 20; i++)
+        System.out.println("hi");
         CarouselTemplate carouselTemplate = new CarouselTemplate(
                 Arrays.asList(
                         new CarouselColumn(imageurl[0], date[0], desription[0], Arrays.asList(
                                 new MessageAction("Link",
                                         "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-                        )),
-                        new CarouselColumn(imageurl[1], date[1], desription[1], Arrays.asList(
-                                new MessageAction("Link",
-                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-                        )),
-                        new CarouselColumn(imageurl[2], date[2], desription[2], Arrays.asList(
-                                new MessageAction("Link",
-                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-                        )),
-                        new CarouselColumn(imageurl[3], date[3], desription[3], Arrays.asList(
-                                new MessageAction("Link",
-                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-                        )),
-                        new CarouselColumn(imageurl[4], date[4], desription[4], Arrays.asList(
-                                new MessageAction("Link",
-                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-                        )),
-                        new CarouselColumn(imageurl[5], date[5], desription[5], Arrays.asList(
-                                new MessageAction("Link",
-                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-                        )),
-                        new CarouselColumn(imageurl[6], date[6], desription[6], Arrays.asList(
-                                new MessageAction("Link",
-                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-                        )),
-                        new CarouselColumn(imageurl[7], date[7], desription[7], Arrays.asList(
-                                new MessageAction("Link",
-                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-                        )),
-                        new CarouselColumn(imageurl[8], date[7], desription[7], Arrays.asList(
-                                new MessageAction("Link",
-                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
                         ))
+//                        new CarouselColumn(imageurl[0], date[0], desription[0], Arrays.asList(
+//                                new MessageAction("Link",
+//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
+//                        )),
+//                        new CarouselColumn(imageurl[1], date[1], desription[1], Arrays.asList(
+//                                new MessageAction("Link",
+//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
+//                        )),
+//                        new CarouselColumn(imageurl[2], date[2], desription[2], Arrays.asList(
+//                                new MessageAction("Link",
+//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
+//                        )),
+//                        new CarouselColumn(imageurl[3], date[3], desription[3], Arrays.asList(
+//                                new MessageAction("Link",
+//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
+//                        )),
+//                        new CarouselColumn(imageurl[4], date[4], desription[4], Arrays.asList(
+//                                new MessageAction("Link",
+//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
+//                        )),
+//                        new CarouselColumn(imageurl[5], date[5], desription[5], Arrays.asList(
+//                                new MessageAction("Link",
+//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
+//                        )),
+//                        new CarouselColumn(imageurl[6], date[6], desription[6], Arrays.asList(
+//                                new MessageAction("Link",
+//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
+//                        )),
+//                        new CarouselColumn(imageurl[7], date[7], desription[7], Arrays.asList(
+//                                new MessageAction("Link",
+//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
+//                        )),
+//                        new CarouselColumn(imageurl[8], date[7], desription[7], Arrays.asList(
+//                                new MessageAction("Link",
+//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
+//                        ))
                 ));
         TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
         for (int i = 0; i < usersArrayList.size(); i++) {
