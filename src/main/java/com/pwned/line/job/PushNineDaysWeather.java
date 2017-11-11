@@ -1,7 +1,6 @@
 package com.pwned.line.job;
 
 import com.linecorp.bot.model.action.DatetimePickerAction;
-import com.linecorp.bot.model.action.MessageAction;
 import com.linecorp.bot.model.action.PostbackAction;
 import com.linecorp.bot.model.action.URIAction;
 import com.linecorp.bot.model.message.TemplateMessage;
@@ -50,21 +49,42 @@ public class PushNineDaysWeather extends DefaultJob{
                 Arrays.asList(
                         new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
                                 new URIAction("Go to line.me",
-                                        "https://line.me"),
-                                new URIAction("Go to line.me",
-                                        "https://line.me"),
-                                new PostbackAction("Say hello1",
-                                        "hello こんにちは")
+                                        "https://line.me")
                         )),
                         new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
                                 new PostbackAction("言 hello2",
                                         "hello こんにちは",
-                                        "hello こんにちは"),
-                                new PostbackAction("言 hello2",
+                                        "hello こんにちは")
+                        )),
+                        new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
+                                new PostbackAction("言 hello3",
                                         "hello こんにちは",
-                                        "hello こんにちは"),
-                                new MessageAction("Say message",
-                                        "Rice=米")
+                                        "hello こんにちは")
+                        )),
+                        new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
+                                new PostbackAction("言 hello4",
+                                        "hello こんにちは",
+                                        "hello こんにちは")
+                        )),
+                        new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
+                                new PostbackAction("言 hello5",
+                                        "hello こんにちは",
+                                        "hello こんにちは")
+                        )),
+                        new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
+                                new PostbackAction("言 hello6",
+                                        "hello こんにちは",
+                                        "hello こんにちは")
+                        )),
+                        new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
+                                new PostbackAction("言 hello7",
+                                        "hello こんにちは",
+                                        "hello こんにちは")
+                        )),
+                        new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
+                                new PostbackAction("言 hello8",
+                                        "hello こんにちは",
+                                        "hello こんにちは")
                         )),
                         new CarouselColumn(imageUrl, "Datetime Picker", "Please select a date, time or datetime", Arrays.asList(
                                 new DatetimePickerAction("Datetime",
@@ -72,19 +92,7 @@ public class PushNineDaysWeather extends DefaultJob{
                                         "datetime",
                                         "2017-06-18T06:15",
                                         "2100-12-31T23:59",
-                                        "1900-01-01T00:00"),
-                                new DatetimePickerAction("Date",
-                                        "action=sel&only=date",
-                                        "date",
-                                        "2017-06-18",
-                                        "2100-12-31",
-                                        "1900-01-01"),
-                                new DatetimePickerAction("Time",
-                                        "action=sel&only=time",
-                                        "time",
-                                        "06:15",
-                                        "23:59",
-                                        "00:00")
+                                        "1900-01-01T00:00")
                         ))
                 ));
         TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
