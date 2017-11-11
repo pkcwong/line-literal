@@ -1,17 +1,13 @@
 package com.pwned.line.service;
 
-import com.linecorp.bot.model.action.Action;
-import com.linecorp.bot.model.action.MessageAction;
-import com.linecorp.bot.model.action.PostbackAction;
+import com.linecorp.bot.model.action.URIAction;
 import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.template.CarouselColumn;
 import com.linecorp.bot.model.message.template.CarouselTemplate;
-import com.linecorp.bot.model.message.template.ConfirmTemplate;
 import com.pwned.line.KitchenSinkController;
 import com.pwned.line.http.HTTP;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 /***
  * Service for course information.
@@ -29,17 +25,11 @@ public class Weather extends DefaultService{
 	}
 	@Override
 	public void payload() throws Exception {
-		ConfirmTemplate confirmTemplate;
-		confirmTemplate = new ConfirmTemplate("Anonymous Chat System", new PostbackAction("connect", "anonymous::connect"), new PostbackAction("cancel", "anonymous::cancel"));
-		KitchenSinkController.push(this.getParam("uid").toString(), new TemplateMessage("Anonymous Chat System", confirmTemplate));
 		String url = "http://www.weather.gov.hk/images/wxicon/pic62.png";
-		ArrayList<CarouselColumn> nineColumns = new ArrayList<>();
-		List<Action> actions = new ArrayList<>();
-		actions.add(new MessageAction("hi", "hi"));
-		nineColumns.add(new CarouselColumn(url, "title", "Testing", actions));
+		CarouselTemplate carouselTemplate = new CarouselTemplate(Arrays.asList(new CarouselColumn(url, "Title", "Text", Arrays.asList(new URIAction("Go to line.me", "https://line.me")))));
 		for(int i = 0; i < 20; i++)
 		System.out.println("Before push");
-		KitchenSinkController.push(this.getParam("uid").toString(), new TemplateMessage("Carousel Template", new CarouselTemplate(nineColumns)));
+		KitchenSinkController.push(this.getParam("uid").toString(), new TemplateMessage("Carousel Template", carouselTemplate));
 		for(int i = 0; i < 20; i++)
 		System.out.println("After push");
 
