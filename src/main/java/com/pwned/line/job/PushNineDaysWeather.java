@@ -74,7 +74,7 @@ public class PushNineDaysWeather extends DefaultJob{
         }
         for(int i = 0; i < 20; i++)
         System.out.println("hi");
-        String imageUrl = "https://line.me";
+        String imageUrl = "https://i.pinimg.com/originals/f1/60/60/f1606043ba4fd7f87a9951250541e6f4.jpg";
         for (int url = 0; url < 9; url++){
             System.out.println(imageurl[url]);
         }
@@ -82,7 +82,7 @@ public class PushNineDaysWeather extends DefaultJob{
                 Arrays.asList(
                         new CarouselColumn(imageUrl, date[0], desription[0], Arrays.asList(
                                 new URIAction("Go to line.me",
-                                "https://line.me")
+                                imageurl[0])
                         ))
 //                        new CarouselColumn(imageurl[0], date[0], desription[0], Arrays.asList(
 //                                new MessageAction("Link",
