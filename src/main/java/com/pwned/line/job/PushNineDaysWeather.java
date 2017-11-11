@@ -74,13 +74,13 @@ public class PushNineDaysWeather extends DefaultJob{
         }
         for(int i = 0; i < 20; i++)
         System.out.println("hi");
-        String imageUrl = "http://www.weather.gov.hk/images/wxicon/pic62.png";
+        String imageUrl = "https://line.me";
         for (int url = 0; url < 9; url++){
             System.out.println(imageurl[url]);
         }
         CarouselTemplate carouselTemplate = new CarouselTemplate(
                 Arrays.asList(
-                        new CarouselColumn(imageUrl, "Hi", "Hi", Arrays.asList(
+                        new CarouselColumn(imageUrl, date[0], "Hi", Arrays.asList(
                                 new URIAction("Go to line.me",
                                 "https://line.me")
                         ))
