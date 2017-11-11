@@ -32,7 +32,11 @@ public class Weather extends DefaultService{
 		KitchenSinkController.push(this.getParam("uid").toString(), new TemplateMessage("Carousel Template", carouselTemplate));
 		for(int i = 0; i < 20; i++)
 		System.out.println("After push");
-
+		TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);for(int i = 0; i < 20; i++)
+			System.out.println("Before reply");
+		KitchenSinkController.reply(this.getParam("replyToken").toString(), templateMessage);
+		for(int i = 0; i < 20; i++)
+			System.out.println("After reply");
 
 		String link = "http://www.hko.gov.hk/wxinfo/currwx/flw.htm";
 		HTTP http = new HTTP(link);
