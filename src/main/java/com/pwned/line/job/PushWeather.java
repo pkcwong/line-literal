@@ -112,6 +112,15 @@ public class PushWeather extends DefaultJob{
                 dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Hong_Kong"));
                 Date date = new Date();
                 KitchenSinkController.push(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"), new TextMessage(weatherForecast + "\n" + dateFormat.format(date)));
+                if(weatherForecast.contains("rain")){
+                    KitchenSinkController.push(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"), new TextMessage("It will be raining. Please remember to bring an umbrella."));
+                }
+                if(weatherForecast.contains("range between 1") || weatherForecast.contains("will be about 1")){
+                    KitchenSinkController.push(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"), new TextMessage("It will be cold. Please remember to put on enough clothes."));
+                }
+                if(weatherForecast.contains("strong offshore")){
+                    KitchenSinkController.push(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"), new TextMessage("It will be windy. Please remember to bring a jacket."));
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
