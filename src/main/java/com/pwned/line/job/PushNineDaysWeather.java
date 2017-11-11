@@ -14,7 +14,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Calendar;
-
 public class PushNineDaysWeather extends DefaultJob{
     public static ArrayList<Document> usersArrayList;
     public PushNineDaysWeather() {
@@ -75,9 +74,10 @@ public class PushNineDaysWeather extends DefaultJob{
         }
         for(int i = 0; i < 20; i++)
         System.out.println("hi");
+        String imageUrl = "/static/buttons/1040.jpg";
         CarouselTemplate carouselTemplate = new CarouselTemplate(
                 Arrays.asList(
-                        new CarouselColumn(link, "Hi", "Hi", Arrays.asList(
+                        new CarouselColumn(imageUrl, "Hi", "Hi", Arrays.asList(
                                 new MessageAction("Link",
                                         "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
                         ))
