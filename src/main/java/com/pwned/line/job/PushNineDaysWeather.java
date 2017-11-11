@@ -43,7 +43,7 @@ public class PushNineDaysWeather extends DefaultJob{
     }
 
     public static void NineDaysWeather() {
-        usersArrayList = MongoDB.get(new MongoDB(System.getenv("MONGODB_URI")).getCollection("user").find());
+        usersArrayList = MongoDB.get(new MongoDB(System.getenv("MONGODB_URI")).getCollection("nine").find());
         String imageUrl = "https://line.me";
         CarouselTemplate carouselTemplate = new CarouselTemplate(
                 Arrays.asList(
