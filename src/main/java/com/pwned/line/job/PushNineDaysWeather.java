@@ -74,7 +74,7 @@ public class PushNineDaysWeather extends DefaultJob{
         }
         for(int i = 0; i < 20; i++)
         System.out.println("hi");
-        String imageUrl = "/static/buttons/1040.jpg";
+        String imageUrl = "https://line.me";
         CarouselTemplate carouselTemplate = new CarouselTemplate(
                 Arrays.asList(
                         new CarouselColumn(imageUrl, "Hi", "Hi", Arrays.asList(
