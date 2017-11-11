@@ -118,6 +118,9 @@ public class PushWeather extends DefaultJob{
                 if(weatherForecast.contains("range between 1") || weatherForecast.contains("will be about 1")){
                     KitchenSinkController.push(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"), new TextMessage("It will be cold. Please remember to put on enough clothes."));
                 }
+                if(weatherForecast.contains("range between 3") || weatherForecast.contains("will be about 3")){
+                    KitchenSinkController.push(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"), new TextMessage("It will be hot. Please remember to drink more water and put on appropriate clothes."));
+                }
                 if(weatherForecast.contains("strong offshore")){
                     KitchenSinkController.push(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"), new TextMessage("It will be windy. Please remember to bring a jacket."));
                 }
