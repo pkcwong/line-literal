@@ -2,9 +2,11 @@ package com.pwned.line.service;
 
 import com.linecorp.bot.model.action.Action;
 import com.linecorp.bot.model.action.MessageAction;
+import com.linecorp.bot.model.action.PostbackAction;
 import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.template.CarouselColumn;
 import com.linecorp.bot.model.message.template.CarouselTemplate;
+import com.linecorp.bot.model.message.template.ConfirmTemplate;
 import com.pwned.line.KitchenSinkController;
 import com.pwned.line.http.HTTP;
 
@@ -27,6 +29,9 @@ public class Weather extends DefaultService{
 	}
 	@Override
 	public void payload() throws Exception {
+		ConfirmTemplate confirmTemplate;
+		confirmTemplate = new ConfirmTemplate("Anonymous Chat System", new PostbackAction("connect", "anonymous::connect"), new PostbackAction("cancel", "anonymous::cancel"));
+		KitchenSinkController.push(this.getParam("uid").toString(), new TemplateMessage("Anonymous Chat System", confirmTemplate));
 		String url = "http://www.weather.gov.hk/images/wxicon/pic62.png";
 		ArrayList<CarouselColumn> nineColumns = new ArrayList<>();
 		List<Action> actions = new ArrayList<>();
@@ -37,6 +42,8 @@ public class Weather extends DefaultService{
 		KitchenSinkController.push(this.getParam("uid").toString(), new TemplateMessage("Carousel Template", new CarouselTemplate(nineColumns)));
 		for(int i = 0; i < 20; i++)
 		System.out.println("After push");
+
+
 		String link = "http://www.hko.gov.hk/wxinfo/currwx/flw.htm";
 		HTTP http = new HTTP(link);
 		String weather = http.get();
