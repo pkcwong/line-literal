@@ -30,8 +30,6 @@ public class NineDaysWeather extends DefaultService{
         String[] text = {"http://www.weather.gov.hk/", "<img border=\"0\" src=\"", "<div style=\"text-align:left;padding: 0px;font-size:100%;\">\n", "</div>"};
         HTTP http = new HTTP(link);
         String ninedaysweather = http.get();
-        for(int i = 0; i < 20; i++)
-            System.out.println("|||Date|||");
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd E");
         dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Hong_Kong"));
         Date today = new Date();
@@ -42,14 +40,10 @@ public class NineDaysWeather extends DefaultService{
             c.add(Calendar.DATE, 1);
             Date nextday = c.getTime();
             date[dd] = dateFormat.format(nextday);
-            System.out.println(date[dd]);
-            System.out.println(date[dd]);
         }
         for(int i = 0; i < 20; i++)
         System.out.println("|||ImageURL|||");
         String imageurlstring = ninedaysweather;
-        for(int i = 0; i < 5; i++)
-            System.out.println(imageurlstring);
         String[] imageurl = new String[9];
         for (int url = 0; url < 9; url++){
             imageurlstring = imageurlstring.substring(imageurlstring.indexOf(text[1]));
@@ -60,8 +54,6 @@ public class NineDaysWeather extends DefaultService{
         for(int i = 0; i < 20; i++)
             System.out.println("|||Desription|||");
         String desriptionsstring = ninedaysweather;
-        for(int i = 0; i < 5; i++)
-            System.out.println(desriptionsstring);
         String[] desription = new String[9];
         for(int weather = 0; weather < 9; weather++){
             desriptionsstring = desriptionsstring.substring(desriptionsstring.indexOf(text[2]));
