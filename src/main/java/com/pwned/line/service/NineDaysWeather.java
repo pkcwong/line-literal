@@ -47,7 +47,7 @@ public class NineDaysWeather extends DefaultService{
         String[] imageurl = new String[9];
         for (int url = 0; url < 9; url++){
             imageurlstring = imageurlstring.substring(imageurlstring.indexOf(text[1]));
-            imageurl[url] = text[0] + imageurlstring.substring(imageurlstring.indexOf("/"), imageurlstring.indexOf("/") + 25);
+            imageurl[url] = text[0] + imageurlstring.substring(imageurlstring.indexOf("/"), imageurlstring.indexOf("/") + 24);
             imageurlstring = imageurlstring.substring(2);
             System.out.println(imageurl[url]);
         }
@@ -57,16 +57,16 @@ public class NineDaysWeather extends DefaultService{
         String[] desription = new String[9];
         for(int weather = 0; weather < 9; weather++){
             desriptionsstring = desriptionsstring.substring(desriptionsstring.indexOf(text[2]));
-            desription[weather] = desriptionsstring.substring(text[2].length() + 3, desriptionsstring.indexOf(text[3]));
+            desription[weather] = desriptionsstring.substring(text[2].length() + 4, desriptionsstring.indexOf(text[3]));
             System.out.println(desription[weather]);
-            System.out.println(desription[weather]);
+            desriptionsstring = desriptionsstring.substring(2);
         }
         for(int i = 0; i < 20; i++)
             System.out.println("|||Carousel|||");
         CarouselTemplate ninedays;
-        List<CarouselColumn> nineColumns = new ArrayList<CarouselColumn>();
+        List<CarouselColumn> nineColumns = new ArrayList<>();
         for(int days = 0; days < 9; days++){
-            nineColumns.set(days, new CarouselColumn(imageurl[days], date[days], desription[days], null));
+            nineColumns.add(days, new CarouselColumn(imageurl[days], date[days], desription[days], null));
         }
         ninedays = new CarouselTemplate(nineColumns);
         this.fulfillment = this.fulfillment.replace("@weather::ninedaysweather", "The following is the weather forecast for next 9 days:");
