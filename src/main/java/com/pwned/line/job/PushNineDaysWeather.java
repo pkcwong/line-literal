@@ -1,6 +1,6 @@
 package com.pwned.line.job;
 
-import com.linecorp.bot.model.action.MessageAction;
+import com.linecorp.bot.model.action.URIAction;
 import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.template.CarouselColumn;
 import com.linecorp.bot.model.message.template.CarouselTemplate;
@@ -75,11 +75,14 @@ public class PushNineDaysWeather extends DefaultJob{
         for(int i = 0; i < 20; i++)
         System.out.println("hi");
         String imageUrl = "https://line.me";
+        for (int url = 0; url < 9; url++){
+            System.out.println(imageurl[url]);
+        }
         CarouselTemplate carouselTemplate = new CarouselTemplate(
                 Arrays.asList(
                         new CarouselColumn(imageUrl, "Hi", "Hi", Arrays.asList(
-                                new MessageAction("Link",
-                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
+                                new URIAction("Go to line.me",
+                                "https://line.me")
                         ))
 //                        new CarouselColumn(imageurl[0], date[0], desription[0], Arrays.asList(
 //                                new MessageAction("Link",
