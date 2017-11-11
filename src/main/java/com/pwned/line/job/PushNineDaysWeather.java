@@ -1,20 +1,21 @@
 package com.pwned.line.job;
 
-import com.linecorp.bot.model.action.DatetimePickerAction;
-import com.linecorp.bot.model.action.PostbackAction;
-import com.linecorp.bot.model.action.URIAction;
+import com.linecorp.bot.model.action.MessageAction;
 import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.template.CarouselColumn;
 import com.linecorp.bot.model.message.template.CarouselTemplate;
 import com.pwned.line.KitchenSinkController;
+import com.pwned.line.http.HTTP;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.quartz.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Calendar;
 
 public class PushNineDaysWeather extends DefaultJob{
     public static ArrayList<Document> usersArrayList;
@@ -44,55 +45,74 @@ public class PushNineDaysWeather extends DefaultJob{
 
     public static void NineDaysWeather() {
         usersArrayList = MongoDB.get(new MongoDB(System.getenv("MONGODB_URI")).getCollection("nine").find());
-        String imageUrl = "https://line.me";
+
+        String link = "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm";
+        String[] text = {"http://www.weather.gov.hk", "<img border=\"0\" src=\"", "text-align:left;padding: 0px;font-size:100%;", "</div>"};
+        HTTP http = new HTTP(link);
+        String ninedaysweather = http.get();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd E");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Hong_Kong"));
+        Date today = new Date();
+        String[] date = new String[9];
+        java.util.Calendar c = java.util.Calendar.getInstance();
+        c.setTime(today);
+        for(int dd = 0; dd < 9; dd++){
+            c.add(Calendar.DATE, 1);
+            Date nextday = c.getTime();
+            date[dd] = dateFormat.format(nextday);
+        }
+        String imageurlstring = ninedaysweather;
+        String[] imageurl = new String[9];
+        for (int url = 0; url < 9; url++){
+            imageurlstring = imageurlstring.substring(imageurlstring.indexOf(text[1]));
+            imageurl[url] = text[0] + imageurlstring.substring(imageurlstring.indexOf("/"), imageurlstring.indexOf("/") + 24);
+            imageurlstring = imageurlstring.substring(2);
+        }
+        String desriptionsstring = ninedaysweather;
+        String[] desription = new String[9];
+        for(int weather = 0; weather < 9; weather++){
+            desriptionsstring = desriptionsstring.substring(desriptionsstring.indexOf(text[2]));
+            desription[weather] = desriptionsstring.substring(text[2].length() + 4, desriptionsstring.indexOf(text[3]));
+            desriptionsstring = desriptionsstring.substring(2);
+        }
+
         CarouselTemplate carouselTemplate = new CarouselTemplate(
                 Arrays.asList(
-                        new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
-                                new URIAction("Go to line.me",
-                                        "https://line.me")
+                        new CarouselColumn(imageurl[0], date[0], desription[0], Arrays.asList(
+                                new MessageAction("Link",
+                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
                         )),
-                        new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
-                                new PostbackAction("言 hello2",
-                                        "hello こんにちは",
-                                        "hello こんにちは")
+                        new CarouselColumn(imageurl[1], date[1], desription[1], Arrays.asList(
+                                new MessageAction("Link",
+                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
                         )),
-                        new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
-                                new PostbackAction("言 hello3",
-                                        "hello こんにちは",
-                                        "hello こんにちは")
+                        new CarouselColumn(imageurl[2], date[2], desription[2], Arrays.asList(
+                                new MessageAction("Link",
+                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
                         )),
-                        new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
-                                new PostbackAction("言 hello4",
-                                        "hello こんにちは",
-                                        "hello こんにちは")
+                        new CarouselColumn(imageurl[3], date[3], desription[3], Arrays.asList(
+                                new MessageAction("Link",
+                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
                         )),
-                        new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
-                                new PostbackAction("言 hello5",
-                                        "hello こんにちは",
-                                        "hello こんにちは")
+                        new CarouselColumn(imageurl[4], date[4], desription[4], Arrays.asList(
+                                new MessageAction("Link",
+                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
                         )),
-                        new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
-                                new PostbackAction("言 hello6",
-                                        "hello こんにちは",
-                                        "hello こんにちは")
+                        new CarouselColumn(imageurl[5], date[5], desription[5], Arrays.asList(
+                                new MessageAction("Link",
+                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
                         )),
-                        new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
-                                new PostbackAction("言 hello7",
-                                        "hello こんにちは",
-                                        "hello こんにちは")
+                        new CarouselColumn(imageurl[6], date[6], desription[6], Arrays.asList(
+                                new MessageAction("Link",
+                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
                         )),
-                        new CarouselColumn(imageUrl, "hoge", "fuga", Arrays.asList(
-                                new PostbackAction("言 hello8",
-                                        "hello こんにちは",
-                                        "hello こんにちは")
+                        new CarouselColumn(imageurl[7], date[7], desription[7], Arrays.asList(
+                                new MessageAction("Link",
+                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
                         )),
-                        new CarouselColumn(imageUrl, "Datetime Picker", "Please select a date, time or datetime", Arrays.asList(
-                                new DatetimePickerAction("Datetime",
-                                        "action=sel",
-                                        "datetime",
-                                        "2017-06-18T06:15",
-                                        "2100-12-31T23:59",
-                                        "1900-01-01T00:00")
+                        new CarouselColumn(imageurl[8], date[7], desription[7], Arrays.asList(
+                                new MessageAction("Link",
+                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
                         ))
                 ));
         TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
