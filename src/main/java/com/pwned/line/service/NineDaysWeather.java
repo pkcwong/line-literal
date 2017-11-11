@@ -27,7 +27,7 @@ public class NineDaysWeather extends DefaultService{
     @Override
     public void payload() throws Exception {
         String link = "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm";
-        String[] text = {"http://www.weather.gov.hk/", "<img border=\"0\" src=\"", "<div style=\"text-align:left;padding: 0px;font-size:100%;\">\n", "</div>"};
+        String[] text = {"http://www.weather.gov.hk", "<img border=\"0\" src=\"", "text-align:left;padding: 0px;font-size:100%;", "</div>"};
         HTTP http = new HTTP(link);
         String ninedaysweather = http.get();
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd E");
@@ -48,7 +48,7 @@ public class NineDaysWeather extends DefaultService{
         for (int url = 0; url < 9; url++){
             imageurlstring = imageurlstring.substring(imageurlstring.indexOf(text[1]));
             imageurl[url] = text[0] + imageurlstring.substring(imageurlstring.indexOf("/"), imageurlstring.indexOf("/") + 25);
-            System.out.println(imageurl[url]);
+            imageurlstring = imageurlstring.substring(2);
             System.out.println(imageurl[url]);
         }
         for(int i = 0; i < 20; i++)
@@ -57,7 +57,7 @@ public class NineDaysWeather extends DefaultService{
         String[] desription = new String[9];
         for(int weather = 0; weather < 9; weather++){
             desriptionsstring = desriptionsstring.substring(desriptionsstring.indexOf(text[2]));
-            desription[weather] = desriptionsstring.substring(text[2].length(), desriptionsstring.indexOf(text[3]));
+            desription[weather] = desriptionsstring.substring(text[2].length() + 3, desriptionsstring.indexOf(text[3]));
             System.out.println(desription[weather]);
             System.out.println(desription[weather]);
         }
