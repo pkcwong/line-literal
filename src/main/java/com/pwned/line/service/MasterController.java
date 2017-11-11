@@ -82,7 +82,7 @@ public class MasterController extends DefaultService {
 		String[] societies = {"societies", "society", "student Club", "club", "interest group"};
 		String[] kmb = {"bus", "arrival", "departure", "arrive", "eta"};
 		String[] weather = {"weather", "degrees", "climate"};
-		String[] nine = {"9 days weather", "week weather"};
+		String[] nine = {"9 days weather", "week weather", "next nine days", "next week", "next few days"};
 		String[] temperature = {"temperature"};
 		String[] quota = {"class", "quota"};
 		String[] translate = {"translate", "english", "chinese", "korean", "malaysian", "indonesian", "indo"};
@@ -159,7 +159,7 @@ public class MasterController extends DefaultService {
 						"2. Translate: e.g. translate ... to (specific language)\n" +
 						"3. Lift advisor: where is ... \n" +
 						"4. Course Review: review of the course ... (department + course code)\n" +
-						"5. Weather: weather forecast\n" +
+						"5. Weather Forecast: weather forecast\n" +
 						"6. Temperature: temperature at a place (e.g. HKUST, Sai Kung, CUHK, Kowloon City)\n" +
 						"7. Bus Arrival Time: Estimated time of arrival of next bus at busstop(e.g. South Gate)";
 				return this;

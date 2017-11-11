@@ -6,8 +6,9 @@ import com.linecorp.bot.model.message.template.CarouselTemplate;
 import com.pwned.line.KitchenSinkController;
 import com.pwned.line.http.HTTP;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /***
  * Service for course information.
@@ -26,23 +27,56 @@ public class NineDaysWeather extends DefaultService{
     @Override
     public void payload() throws Exception {
         String link = "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm";
-        String[] text = {"<td style=\"width: 65px; padding: 2px;\" class=\"evenCol\">"};
+        String[] text = {"http://www.weather.gov.hk/", "<img border=\"0\" src=\"", "<div style=\"text-align:left;padding: 0px;font-size:100%;\">\n", "</div>"};
         HTTP http = new HTTP(link);
         String ninedaysweather = http.get();
+        for(int i = 0; i < 20; i++)
+            System.out.println("|||Date|||");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd E");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Hong_Kong"));
+        Date today = new Date();
         String[] date = new String[9];
-        date[0] = ninedaysweather.substring(ninedaysweather.indexOf(text[0]));
+        Calendar c = Calendar.getInstance();
+        c.setTime(today);
+        for(int dd = 0; dd < 9; dd++){
+            c.add(Calendar.DATE, 1);
+            Date nextday = c.getTime();
+            date[dd] = dateFormat.format(nextday);
+            System.out.println(date[dd]);
+            System.out.println(date[dd]);
+        }
+        for(int i = 0; i < 20; i++)
+        System.out.println("|||ImageURL|||");
+        String imageurlstring = ninedaysweather;
+        for(int i = 0; i < 5; i++)
+            System.out.println(imageurlstring);
+        String[] imageurl = new String[9];
+        for (int url = 0; url < 9; url++){
+            imageurlstring = imageurlstring.substring(imageurlstring.indexOf(text[1]));
+            imageurl[url] = text[0] + imageurlstring.substring(imageurlstring.indexOf("/"), imageurlstring.indexOf("/") + 25);
+            System.out.println(imageurl[url]);
+            System.out.println(imageurl[url]);
+        }
+        for(int i = 0; i < 20; i++)
+            System.out.println("|||Desription|||");
+        String desriptionsstring = ninedaysweather;
+        for(int i = 0; i < 5; i++)
+            System.out.println(desriptionsstring);
+        String[] desription = new String[9];
+        for(int weather = 0; weather < 9; weather++){
+            desriptionsstring = desriptionsstring.substring(desriptionsstring.indexOf(text[2]));
+            desription[weather] = desriptionsstring.substring(text[2].length(), desriptionsstring.indexOf(text[3]));
+            System.out.println(desription[weather]);
+            System.out.println(desription[weather]);
+        }
+        for(int i = 0; i < 20; i++)
+            System.out.println("|||Carousel|||");
         CarouselTemplate ninedays;
         List<CarouselColumn> nineColumns = new ArrayList<CarouselColumn>();
         for(int days = 0; days < 9; days++){
-            nineColumns.set(days, new CarouselColumn("", "", "", null));
+            nineColumns.set(days, new CarouselColumn(imageurl[days], date[days], desription[days], null));
         }
         ninedays = new CarouselTemplate(nineColumns);
-//        String[] messages = {"Weather forecast", "<br/><br/>Outlook"};
-//        weather = weather.substring(weather.indexOf(messages[0]), weather.indexOf(messages[1]));
-//        weather = weather.replace("<br/>", "\n");
-//        while (weather.contains("<")){
-//            weather = weather.substring(0, weather.indexOf("<")) + weather.substring(weather.indexOf(">") + 1);
-//        }
         this.fulfillment = this.fulfillment.replace("@weather::ninedaysweather", "The following is the weather forecast for next 9 days:");
         KitchenSinkController.push(this.getParam("uid").toString(), new TemplateMessage("Nine Days Weather Forecast", ninedays));
     }
