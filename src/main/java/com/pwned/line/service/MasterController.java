@@ -115,16 +115,16 @@ public class MasterController extends DefaultService {
 				return new DialogFlowKMB(this).resolve().get();
 			}
 		}
-		for (String keywords : weather) {
-			String temp = this.fulfillment.toLowerCase();
-			if(temp.contains(keywords)){
-				return new DialogFlowWeather(this).resolve().get();
-			}
-		}
 		for (String keywords : nine) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
 				return new DialogFlowNineDaysWeather(this).resolve().get();
+			}
+		}
+		for (String keywords : weather) {
+			String temp = this.fulfillment.toLowerCase();
+			if(temp.contains(keywords)){
+				return new DialogFlowWeather(this).resolve().get();
 			}
 		}
 		for (String keywords : temperature) {
