@@ -1,6 +1,6 @@
 package com.pwned.line.job;
 
-import com.linecorp.bot.model.action.URIAction;
+import com.linecorp.bot.model.action.MessageAction;
 import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.template.CarouselColumn;
 import com.linecorp.bot.model.message.template.CarouselTemplate;
@@ -90,9 +90,9 @@ public class PushNineDaysWeather extends DefaultJob{
 //                                new URIAction("Detail Weather",
 //                                "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
 //                        )),
-                        new CarouselColumn(imageUrl, date[1], desription[0], Arrays.asList(
-                                new URIAction("Detail Weather",
-                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
+                        new CarouselColumn(imageUrl, date[1], desription[1], Arrays.asList(
+                                new MessageAction("Detail Weather",
+                                        "Details")
                         ))
 //                        new CarouselColumn(imageUrl, date[2], desription[2], Arrays.asList(
 //                                new URIAction("Detail Weather",
