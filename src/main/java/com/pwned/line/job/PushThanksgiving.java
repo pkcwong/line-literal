@@ -67,7 +67,7 @@ public class PushThanksgiving extends DefaultJob{
 
 		Calendar today = Calendar.getInstance();
 		Calendar partyDate = Calendar.getInstance();
-		partyDate.set(2017,Calendar.NOVEMBER,26);
+		partyDate.set(2017,Calendar.NOVEMBER,12);
 		today.add(Calendar.HOUR,8);
 		partyDate.add(Calendar.HOUR,8);
 

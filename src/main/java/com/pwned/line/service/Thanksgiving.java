@@ -35,7 +35,7 @@ public class Thanksgiving extends DefaultService{
 		if(keyword.contains("accept")){
 			// Date of party
 			Calendar partyDate = Calendar.getInstance();
-			partyDate.set(2017,Calendar.NOVEMBER,27);
+			partyDate.set(2017,Calendar.NOVEMBER,23);
 			SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 			String formatted = format1.format(partyDate.getTime());
 
