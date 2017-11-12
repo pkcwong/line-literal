@@ -4,12 +4,11 @@ import com.mongodb.BasicDBObject;
 import com.pwned.line.http.HTTP;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
-import org.postgresql.util.Base64;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.TimeZone;
+
 
 /***
  * Accept/Bring food for thanksgiving
@@ -21,9 +20,8 @@ import java.util.TimeZone;
 
 public class Thanksgiving extends DefaultService{
 	private String keyword;
-	private static final String userURI = "https://api.line.me/v2/profile";
+	private static String userURI = "https://api.line.me/v2/bot/profile/";
 	private String ACCESS_TOKEN = System.getenv("LINE_BOT_CHANNEL_TOKEN");
-	private String authAccessToken = Base64.encodeBytes(ACCESS_TOKEN.getBytes());
 
 	public Thanksgiving(Service service, String key){
 		super(service);
@@ -39,9 +37,7 @@ public class Thanksgiving extends DefaultService{
 			SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 			String formatted = format1.format(partyDate.getTime());
 
-			HTTP http = new HTTP(userURI);
-			http.setHeaders("Authorization", "Bearer " + authAccessToken);
-			System.out.println("Result of http get: " + http.get());
+
 
 
 			String[] arrayKeyword = keyword.split(" ");
@@ -50,6 +46,11 @@ public class Thanksgiving extends DefaultService{
 
 			BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
 			ArrayList<Document> user = MongoDB.get(mongo.getCollection("party").find(SELF));
+
+			HTTP http = new HTTP(userURI + this.getParam("uid").toString());
+			http.setHeaders("Authorization", "Bearer " + ACCESS_TOKEN);
+			System.out.println("Result of http get: " + http.get());
+
 
 			if (user.size() == 0) {
 				if(!keyword.contains("by") || !keyword.contains(" ")){
