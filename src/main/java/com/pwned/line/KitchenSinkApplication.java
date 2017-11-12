@@ -13,7 +13,7 @@ import java.nio.file.Path;
 public class KitchenSinkApplication {
 
 	public static Path downloadedContentDir;
-	public static int builtVersion = 183;
+	public static int builtVersion = 184;
 	public static String version = "0.2.1";
 
 	public static void main(String[] args) throws Exception {

@@ -91,8 +91,7 @@ public class PushNineDaysWeather extends DefaultJob{
 //                                "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
 //                        )),
                         new CarouselColumn(imageUrl, date[1], desription[1], Arrays.asList(
-                                new PostbackAction("Detail Weather",
-                                        fulldesription[1])
+                                new PostbackAction("Detail Weather", "weather", fulldesription[1])
                         ))
 //                        new CarouselColumn(imageUrl, date[2], desription[2], Arrays.asList(
 //                                new URIAction("Detail Weather",
