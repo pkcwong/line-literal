@@ -54,7 +54,7 @@ public class Thanksgiving extends DefaultService{
 				String response = http.get();
 				System.out.println("Result of http get(): " + response);
 				//"displayName": "Calvin Ku",
-				Pattern regex = Pattern.compile("\"displayName\":\\s\"(.+?)\",");
+				Pattern regex = Pattern.compile("\"displayName\":\"(.+?)\"");
 				Matcher matcher = regex.matcher(response);
 				String name = "";
 				while (matcher.find()) {
