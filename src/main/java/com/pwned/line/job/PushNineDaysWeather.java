@@ -86,7 +86,7 @@ public class PushNineDaysWeather extends DefaultJob{
         }
         CarouselTemplate carouselTemplate = new CarouselTemplate(
                 Arrays.asList(
-                        new CarouselColumn(imageurl[0], date[0], desription[0], Arrays.asList(
+                        new CarouselColumn(link, date[0], desription[0], Arrays.asList(
                                 new URIAction("Detail Weather", link)
                         )),
                         new CarouselColumn(imageUrl, date[1], desription[1], Arrays.asList(
