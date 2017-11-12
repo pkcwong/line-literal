@@ -8,6 +8,8 @@ import org.bson.Document;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /***
@@ -39,9 +41,6 @@ public class Thanksgiving extends DefaultService{
 
 
 
-
-			String[] arrayKeyword = keyword.split(" ");
-
 			MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
 
 			BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
@@ -49,23 +48,22 @@ public class Thanksgiving extends DefaultService{
 
 			HTTP http = new HTTP(userURI + this.getParam("uid").toString());
 			http.setHeaders("Authorization", "Bearer " + ACCESS_TOKEN);
-			System.out.println("Result of http get: " + http.get());
 
 
 			if (user.size() == 0) {
-				if(!keyword.contains("by") || !keyword.contains(" ")){
-					this.fulfillment = "Thank you for your join! But please let us know who are you! :)\n" +
-							"For example, accept by Bear";
-					return;
+				String response = http.get();
+				//"displayName": "Calvin Ku",
+				Pattern regex = Pattern.compile("displayName\":\\s\"(.+?)\",");
+				Matcher matcher = regex.matcher(response);
+				while (matcher.find()) {
+					response = matcher.group(1);
 				}
 				Document data = new Document();
 				data.append("uid", this.getParam("uid").toString());
-				if(arrayKeyword[1].equals("by"))
-					data.append("name", arrayKeyword[2]);
-				else
-					data.append("name", arrayKeyword[1]);
+				data.append("name", response);
+
 				mongo.getCollection("party").insertOne(data);
-				this.fulfillment = "Thank you for your join! Have a fun night! See you on " + formatted;
+				this.fulfillment = "Thank you for your join, " + response +"! Have a fun night! See you on " + formatted;
 			} else {
 				this.fulfillment = "Already accept the party. Please be reminded that the party will be held on " + formatted;
 			}
