@@ -88,34 +88,34 @@ public class PushNineDaysWeather extends DefaultJob{
                                 new URIAction("Detail Weather",
                                         "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
                         )),
-                        new CarouselColumn(imageUrl, date[2], desription[2], Arrays.asList(
-                                new URIAction("Detail Weather",
-                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-                        )),
-                        new CarouselColumn(imageUrl, date[3], desription[3], Arrays.asList(
-                                new URIAction("Detail Weather",
-                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-                        )),
-                        new CarouselColumn(imageUrl, date[4], desription[4], Arrays.asList(
-                                new URIAction("Detail Weather",
-                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-                        )),
-                        new CarouselColumn(imageUrl, date[5], desription[5], Arrays.asList(
-                                new URIAction("Detail Weather",
-                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-                        )),
-                        new CarouselColumn(imageUrl, date[6], desription[6], Arrays.asList(
-                                new URIAction("Detail Weather",
-                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-                        )),
-                        new CarouselColumn(imageUrl, date[7], desription[7], Arrays.asList(
-                                new URIAction("Detail Weather",
-                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-                        )),
-                        new CarouselColumn(imageUrl, date[8], desription[8], Arrays.asList(
-                                new URIAction("Detail Weather",
-                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-                        ))
+//                        new CarouselColumn(imageUrl, date[2], desription[2], Arrays.asList(
+//                                new URIAction("Detail Weather",
+//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
+//                        )),
+//                        new CarouselColumn(imageUrl, date[3], desription[3], Arrays.asList(
+//                                new URIAction("Detail Weather",
+//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
+//                        )),
+//                        new CarouselColumn(imageUrl, date[4], desription[4], Arrays.asList(
+//                                new URIAction("Detail Weather",
+//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
+//                        )),
+//                        new CarouselColumn(imageUrl, date[5], desription[5], Arrays.asList(
+//                                new URIAction("Detail Weather",
+//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
+//                        )),
+//                        new CarouselColumn(imageUrl, date[6], desription[6], Arrays.asList(
+//                                new URIAction("Detail Weather",
+//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
+//                        )),
+//                        new CarouselColumn(imageUrl, date[7], desription[7], Arrays.asList(
+//                                new URIAction("Detail Weather",
+//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
+//                        )),
+//                        new CarouselColumn(imageUrl, date[8], desription[8], Arrays.asList(
+//                                new URIAction("Detail Weather",
+//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
+//                        ))
                 ));
         TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
         KitchenSinkController.push(uid, templateMessage);
