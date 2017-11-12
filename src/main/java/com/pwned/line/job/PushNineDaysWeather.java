@@ -45,6 +45,19 @@ public class PushNineDaysWeather extends DefaultJob{
 
         String link = "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm";
         String[] text = {"http://www.weather.gov.hk", "<img border=\"0\" src=\"", "text-align:left;padding: 0px;font-size:100%;", "</div>"};
+        String[] emoji = {
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/sun-with-face_1f31e.png",
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/white-sun-with-small-cloud_1f324.png",
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/white-sun-behind-cloud_1f325.png",
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/white-sun-behind-cloud-with-rain_1f326.png",
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/white-sun-behind-cloud-with-rain_1f326.png",
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/cloud_2601.png",
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/cloud_2601.png",
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/cloud-with-rain_1f327.png",
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/cloud-with-rain_1f327.png",
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/cloud-with-rain_1f327.png",
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/thunder-cloud-and-rain_26c8.png"
+        };
         HTTP http = new HTTP(link);
         String ninedaysweather = http.get();
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd E");
@@ -64,6 +77,29 @@ public class PushNineDaysWeather extends DefaultJob{
             imageurlstring = imageurlstring.substring(imageurlstring.indexOf(text[1]));
             imageurl[url] = text[0] + imageurlstring.substring(imageurlstring.indexOf("/"), imageurlstring.indexOf("/") + 24);
             imageurlstring = imageurlstring.substring(2);
+            if(imageurl[url].contains("50")){
+                imageurl[url] = emoji[0];
+            }else if(imageurl[url].contains("51")){
+                imageurl[url] = emoji[1];
+            }else if(imageurl[url].contains("52")){
+                imageurl[url] = emoji[2];
+            }else if(imageurl[url].contains("53")){
+                imageurl[url] = emoji[3];
+            }else if(imageurl[url].contains("54")){
+                imageurl[url] = emoji[4];
+            }else if(imageurl[url].contains("60")){
+                imageurl[url] = emoji[5];
+            }else if(imageurl[url].contains("61")){
+                imageurl[url] = emoji[6];
+            }else if(imageurl[url].contains("62")){
+                imageurl[url] = emoji[7];
+            }else if(imageurl[url].contains("63")){
+                imageurl[url] = emoji[8];
+            }else if(imageurl[url].contains("64")){
+                imageurl[url] = emoji[9];
+            }else if(imageurl[url].contains("65")){
+                imageurl[url] = emoji[10];
+            }
         }
         String desriptionsstring = ninedaysweather;
         String[] desription = new String[9];
@@ -86,31 +122,31 @@ public class PushNineDaysWeather extends DefaultJob{
         }
         CarouselTemplate carouselTemplate = new CarouselTemplate(
                 Arrays.asList(
-                        new CarouselColumn(link, date[0], desription[0], Arrays.asList(
+                        new CarouselColumn(imageurl[0], date[0], desription[0], Arrays.asList(
                                 new URIAction("Detail Weather", link)
                         )),
-                        new CarouselColumn(imageUrl, date[1], desription[1], Arrays.asList(
+                        new CarouselColumn(imageurl[1], date[1], desription[1], Arrays.asList(
                                 new URIAction("Detail Weather", link)
                         )),
-                        new CarouselColumn(imageUrl, date[2], desription[2], Arrays.asList(
+                        new CarouselColumn(imageurl[2], date[2], desription[2], Arrays.asList(
                                 new URIAction("Detail Weather", link)
                         )),
-                        new CarouselColumn(imageUrl, date[3], desription[3], Arrays.asList(
+                        new CarouselColumn(imageurl[3], date[3], desription[3], Arrays.asList(
                                 new URIAction("Detail Weather", link)
                         )),
-                        new CarouselColumn(imageUrl, date[4], desription[4], Arrays.asList(
+                        new CarouselColumn(imageurl[4], date[4], desription[4], Arrays.asList(
                                 new URIAction("Detail Weather", link)
                         )),
-                        new CarouselColumn(imageUrl, date[5], desription[5], Arrays.asList(
+                        new CarouselColumn(imageurl[5], date[5], desription[5], Arrays.asList(
                                 new URIAction("Detail Weather", link)
                         )),
-                        new CarouselColumn(imageUrl, date[6], desription[6], Arrays.asList(
+                        new CarouselColumn(imageurl[6], date[6], desription[6], Arrays.asList(
                                 new URIAction("Detail Weather", link)
                         )),
-                        new CarouselColumn(imageUrl, date[7], desription[7], Arrays.asList(
+                        new CarouselColumn(imageurl[7], date[7], desription[7], Arrays.asList(
                                 new URIAction("Detail Weather", link)
                         )),
-                        new CarouselColumn(imageUrl, date[8], desription[8], Arrays.asList(
+                        new CarouselColumn(imageurl[8], date[8], desription[8], Arrays.asList(
                                 new URIAction("Detail Weather", link)
                         ))
                 ));
