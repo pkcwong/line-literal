@@ -1,6 +1,6 @@
 package com.pwned.line.job;
 
-import com.linecorp.bot.model.action.PostbackAction;
+import com.linecorp.bot.model.action.URIAction;
 import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.template.CarouselColumn;
 import com.linecorp.bot.model.message.template.CarouselTemplate;
@@ -86,41 +86,33 @@ public class PushNineDaysWeather extends DefaultJob{
         }
         CarouselTemplate carouselTemplate = new CarouselTemplate(
                 Arrays.asList(
-//                        new CarouselColumn(imageUrl, date[0], desription[0], Arrays.asList(
-//                                new URIAction("Detail Weather",
-//                                "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-//                        )),
+                        new CarouselColumn(imageUrl, date[0], desription[0], Arrays.asList(
+                                new URIAction("Detail Weather", link)
+                        )),
                         new CarouselColumn(imageUrl, date[1], desription[1], Arrays.asList(
-                                new PostbackAction("Detail Weather", "weather", fulldesription[1])
+                                new URIAction("Detail Weather", link)
+                        )),
+                        new CarouselColumn(imageUrl, date[2], desription[2], Arrays.asList(
+                                new URIAction("Detail Weather", link)
+                        )),
+                        new CarouselColumn(imageUrl, date[3], desription[3], Arrays.asList(
+                                new URIAction("Detail Weather", link)
+                        )),
+                        new CarouselColumn(imageUrl, date[4], desription[4], Arrays.asList(
+                                new URIAction("Detail Weather", link)
+                        )),
+                        new CarouselColumn(imageUrl, date[5], desription[5], Arrays.asList(
+                                new URIAction("Detail Weather", link)
+                        )),
+                        new CarouselColumn(imageUrl, date[6], desription[6], Arrays.asList(
+                                new URIAction("Detail Weather", link)
+                        )),
+                        new CarouselColumn(imageUrl, date[7], desription[7], Arrays.asList(
+                                new URIAction("Detail Weather", link)
+                        )),
+                        new CarouselColumn(imageUrl, date[8], desription[8], Arrays.asList(
+                                new URIAction("Detail Weather", link)
                         ))
-//                        new CarouselColumn(imageUrl, date[2], desription[2], Arrays.asList(
-//                                new URIAction("Detail Weather",
-//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-//                        )),
-//                        new CarouselColumn(imageUrl, date[3], desription[3], Arrays.asList(
-//                                new URIAction("Detail Weather",
-//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-//                        )),
-//                        new CarouselColumn(imageUrl, date[4], desription[4], Arrays.asList(
-//                                new URIAction("Detail Weather",
-//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-//                        )),
-//                        new CarouselColumn(imageUrl, date[5], desription[5], Arrays.asList(
-//                                new URIAction("Detail Weather",
-//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-//                        )),
-//                        new CarouselColumn(imageUrl, date[6], desription[6], Arrays.asList(
-//                                new URIAction("Detail Weather",
-//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-//                        )),
-//                        new CarouselColumn(imageUrl, date[7], desription[7], Arrays.asList(
-//                                new URIAction("Detail Weather",
-//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-//                        )),
-//                        new CarouselColumn(imageUrl, date[8], desription[8], Arrays.asList(
-//                                new URIAction("Detail Weather",
-//                                        "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-//                        ))
                 ));
         TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
         KitchenSinkController.push(uid, templateMessage);
