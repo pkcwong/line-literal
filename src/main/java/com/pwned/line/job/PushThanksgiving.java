@@ -48,7 +48,7 @@ public class PushThanksgiving extends DefaultJob{
 	}
 
 	public static void pushThanksgiving() throws JSONException {
-		String imageURI = "https://cdn.frip.in/wp-content/uploads/2013/11/Thanksgiving-Day-Party-Poster.jpg";
+		String imageURI = "https://i.pinimg.com/736x/bc/bb/40/bcbb405562b44357e48c84eeadcd6d9b--thanksgiving--thanksgiving-decorations.jpg";
 		usersArrayList = MongoDB.get(new MongoDB(System.getenv("MONGODB_URI")).getCollection("user").find());
 		acceptedUsersArrayList = MongoDB.get(new MongoDB(System.getenv("MONGODB_URI")).getCollection("party").find());
 
@@ -62,7 +62,8 @@ public class PushThanksgiving extends DefaultJob{
 		for (int i = 0; i < acceptedUsersArrayList.size(); i++) {
 			acceptedUid.add(new JSONObject(acceptedUsersArrayList.get(i).toJson()).getString("uid"));
 			acceptedName.append((new JSONObject(acceptedUsersArrayList.get(i).toJson()).getString("name")).toUpperCase());
-			acceptedName.append(" ");
+			if(i != acceptedUsersArrayList.size()-1)
+				acceptedName.append(", ");
 		}
 
 		Calendar today = Calendar.getInstance();
