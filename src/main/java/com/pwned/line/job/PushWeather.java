@@ -113,7 +113,7 @@ public class PushWeather extends DefaultJob{
                 Date date = new Date();
                 KitchenSinkController.push(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"), new TextMessage(weatherForecast + "\n" + dateFormat.format(date)));
                 if(weatherForecast.contains("rain")){
-                    KitchenSinkController.push(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"), new TextMessage("It will be raining. Please remember to bring an umbrella."));
+                    KitchenSinkController.push(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"), new TextMessage("Dear TA, don't panic if you receive this message. I just want to thank you for marking our chatbot, and I wish to remind you that it will be raining. Please remember to bring an umbrella."));
                 }
                 if(weatherForecast.contains("range between 1") || weatherForecast.contains("will be about 1")){
                     KitchenSinkController.push(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"), new TextMessage("It will be cold. Please remember to put on enough clothes."));

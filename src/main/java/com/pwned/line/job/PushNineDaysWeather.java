@@ -67,9 +67,12 @@ public class PushNineDaysWeather extends DefaultJob{
         }
         String desriptionsstring = ninedaysweather;
         String[] desription = new String[9];
+        String[] fulldesription = new String[9];
         for(int weather = 0; weather < 9; weather++){
             desriptionsstring = desriptionsstring.substring(desriptionsstring.indexOf(text[2]));
-            desription[weather] = desriptionsstring.substring(text[2].length() + 4, desriptionsstring.indexOf(text[3]));
+            fulldesription[weather] = desriptionsstring.substring(text[2].length() + 4, desriptionsstring.indexOf(text[3]));
+            desription[weather] = fulldesription[weather].substring(0, fulldesription[weather].indexOf("."));
+            System.out.println(fulldesription[weather].length());
             desriptionsstring = desriptionsstring.substring(2);
         }
         for(int i = 0; i < 20; i++)
