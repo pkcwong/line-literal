@@ -53,17 +53,18 @@ public class Thanksgiving extends DefaultService{
 			if (user.size() == 0) {
 				String response = http.get();
 				//"displayName": "Calvin Ku",
-				Pattern regex = Pattern.compile("displayName\":\\s\"(.+?)\",");
+				Pattern regex = Pattern.compile("displayName\":\"(.+?)\",");
 				Matcher matcher = regex.matcher(response);
+				String name = "";
 				while (matcher.find()) {
-					response = matcher.group(1);
+					name = matcher.group(1);
 				}
 				Document data = new Document();
 				data.append("uid", this.getParam("uid").toString());
-				data.append("name", response);
+				data.append("name", name);
 
 				mongo.getCollection("party").insertOne(data);
-				this.fulfillment = "Thank you for your join, " + response +"! Have a fun night! See you on " + formatted;
+				this.fulfillment = "Thank you for your join, " + name + "! Have a fun night! See you on " + formatted;
 			} else {
 				this.fulfillment = "Already accept the party. Please be reminded that the party will be held on " + formatted;
 			}
