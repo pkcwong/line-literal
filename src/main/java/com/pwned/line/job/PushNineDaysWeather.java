@@ -80,10 +80,10 @@ public class PushNineDaysWeather extends DefaultJob{
         }
         CarouselTemplate carouselTemplate = new CarouselTemplate(
                 Arrays.asList(
-                        new CarouselColumn(imageUrl, date[0], desription[0], Arrays.asList(
-                                new URIAction("Detail Weather",
-                                "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
-                        )),
+//                        new CarouselColumn(imageUrl, date[0], desription[0], Arrays.asList(
+//                                new URIAction("Detail Weather",
+//                                "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
+//                        )),
                         new CarouselColumn(imageUrl, date[1], desription[1], Arrays.asList(
                                 new URIAction("Detail Weather",
                                         "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm")
