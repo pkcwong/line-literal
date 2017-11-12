@@ -78,6 +78,9 @@ public class PushNineDaysWeather extends DefaultJob{
         for (int url = 0; url < 9; url++){
             System.out.println(imageurl[url]);
         }
+        for (int url = 0; url < 9; url++){
+            System.out.println(desription[url]);
+        }
         CarouselTemplate carouselTemplate = new CarouselTemplate(
                 Arrays.asList(
 //                        new CarouselColumn(imageUrl, date[0], desription[0], Arrays.asList(
