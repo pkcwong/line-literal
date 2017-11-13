@@ -24,6 +24,7 @@ public class EventMaker extends DefaultService{
 		URI.replace("{userId}",this.getParam("uid").toString());
 		HTTP http = new HTTP(URI);
 		http.setHeaders("Authorization", "Bearer " + ACCESS_TOKEN);
+		System.out.printf("GroupID = %s, UserId = %s\n",JoinHandler.getGroupId(),this.getParam("uid").toString());
 		System.out.println("URI = " + URI);
 		System.out.println("Result of http get = " + http.get());
 

@@ -32,6 +32,7 @@ public class MasterController extends DefaultService {
 		if (user.size() == 0) {
 			Document data = new Document();
 			data.append("uid", this.getParam("uid").toString());
+			data.append("groupId", this.getParam("groupId").toString());
 			data.append("bind", this.getParam("uid").toString());
 			data.append("buff", new BasicDBObject("cmd", "master"));
 			mongo.getCollection("user").insertOne(data);
@@ -46,7 +47,9 @@ public class MasterController extends DefaultService {
 		event.append("timestamp", this.getParam("timestamp").toString());
 		event.append("replyToken", this.getParam("replyToken").toString());
 		event.append("text", this.fulfillment);
+
 		data.append("msg", event);
+
 
 		mongo.getCollection("user").findOneAndUpdate(SELF, new BasicDBObject("$addToSet", data));
 	}
