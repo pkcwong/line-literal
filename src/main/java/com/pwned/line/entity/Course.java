@@ -38,6 +38,7 @@ public class Course {
 		Pattern regex_course = Pattern.compile(this.builder());
 		Matcher matcher_course = regex_course.matcher(response);
 		while (matcher_course.find()) {
+			System.out.println("1");
 			this.introduction = matcher_course.group(1);
 			this.title = matcher_course.group(4);
 			this.credit = matcher_course.group(5);
@@ -45,12 +46,14 @@ public class Course {
 			Pattern regex_section_info = Pattern.compile(REGEX_GET_CLASS);
 			Matcher matcher_section = regex_section_info.matcher(class_block);
 			while(matcher_section.find()){
+				System.out.println("2");
 				String sectionString = matcher_section.group();
 				Pattern regex_section_name_code = Pattern.compile(REGEX_SECTION_NAME_CODE);
 				Matcher matcher_section_name_code = regex_section_name_code.matcher(sectionString);
 				String name = "";
 				String code = "";
 				while(matcher_section_name_code.find()) {
+					System.out.println("3");
 					name= matcher_section_name_code.group(1);
 					code = matcher_section_name_code.group(2);
 				}
@@ -60,6 +63,7 @@ public class Course {
 				ArrayList<String> rooms = new ArrayList<>();
 				ArrayList<String> instructors = new ArrayList<>();
 				while(matcher_section_data.find()){
+					System.out.println("4");
 					String day = matcher_section_data.group(1);
 					String startTime = matcher_section_data.group(2);
 					String endTime = matcher_section_data.group(3);
@@ -75,6 +79,7 @@ public class Course {
 				String avail = "";
 				String wait = "";
 				while(matcher_section_quota_info.find()){
+					System.out.println("5");
 					quota = matcher_section_quota_info.group(1);
 					enrol = matcher_section_quota_info.group(2);
 					avail = matcher_section_quota_info.group(3);
