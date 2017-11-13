@@ -40,7 +40,7 @@ public class Course {
 		Pattern regex_course = Pattern.compile(this.builder());
 		Matcher matcher_course = regex_course.matcher(response);
 		System.out.println(this.builder());
-		while (matcher_course.find()){
+		if (matcher_course.find()){
 			System.out.println("0.0");
 			this.introduction = matcher_course.group(1);
 			this.title = matcher_course.group(4);
