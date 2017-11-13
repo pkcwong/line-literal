@@ -10,7 +10,7 @@ public class CourseQuota extends DefaultService{
 
 	@Override
 	public void payload() throws Exception {
-		Course course = new Course("COMP", "2012");
+		Course course = new Course("ACCT", "1010");
 		course.query();
 		System.out.println("Department: " + course.department + "\nCode: " + course.code  + "\nTitle: " + course.title +
 		"\nCredit: " + course.credit);
