@@ -18,7 +18,7 @@ public class CourseQuota extends DefaultService{
 		JSONObject apiParam = new JSONObject(this.getParam("parameters").toString());
 		String department = apiParam.getString("department");
 		String code = apiParam.getString("code");
-		Course course = new Course("department", "code");
+		Course course = new Course(department, code);
 		course.query();
 		this.fulfillment = "Department: " + course.department + "\nCode: " + course.code  + "\nTitle: " + course.title +
 				"\nCredit: " + course.credit + "\n\n";
