@@ -43,9 +43,9 @@ public class Course {
 		System.out.println(REGEX_COURSE);
 		while (matcher_course.find()){
 			//this.introduction = matcher_course.group(1);
-			this.title = matcher_course.group(1);
-			this.credit = matcher_course.group(2);
-			section_block = matcher_course.group(3);
+			this.title = matcher_course.group(3);
+			this.credit = matcher_course.group(4);
+			section_block = matcher_course.group(5);
 		}
 		System.out.println(this.title);
 		System.out.println(this.credit);
