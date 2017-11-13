@@ -65,9 +65,12 @@ public class Course {
 			String name = null;
 			String code = null;
 			while(matcher_section_name_code.find()) {
+				System.out.println("debug");
 				name = matcher_section_name_code.group(1);
 				code = matcher_section_name_code.group(2);
 			}
+			System.out.println(name);
+			System.out.println(code);
 			System.out.println("3");
 			Pattern regex_section_data = Pattern.compile(REGEX_GET_ALL_DATE_TIME_ROOM_PROF);
 			Matcher matcher_section_data = regex_section_data.matcher(section_info.get(i));
