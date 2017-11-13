@@ -36,7 +36,8 @@ public class Course {
 		HTTP http = new HTTP(BASE_URL + this.department);
 		String response = http.get();
 		//System.out.println(response);
-		Pattern regex_course = Pattern.compile(this.builder());
+		Pattern regex_course = Pattern.compile(REGEX_COURSE);
+		//Pattern regex_course = Pattern.compile(this.builder());
 		Matcher matcher_course = regex_course.matcher(response);
 		System.out.println("0");
 		while (matcher_course.find()){
