@@ -40,12 +40,17 @@ public class Course {
 		Pattern regex_course = Pattern.compile(this.builder());
 		Matcher matcher_course = regex_course.matcher(response);
 		System.out.println(this.builder());
-		if (matcher_course.find()){
-			System.out.println("0.0");
-			this.introduction = matcher_course.group(1);
-			this.title = matcher_course.group(4);
-			this.credit = matcher_course.group(5);
-			section_block = matcher_course.group(6);
+		try{
+			if (matcher_course.find()){
+				System.out.println("0.0");
+				this.introduction = matcher_course.group(1);
+				this.title = matcher_course.group(4);
+				this.credit = matcher_course.group(5);
+				section_block = matcher_course.group(6);
+			}
+		}
+		catch (Exception e){
+			e.printStackTrace();
 		}
 		System.out.println("1");
 		Pattern regex_section_info = Pattern.compile(REGEX_GET_SECTION);
