@@ -19,7 +19,7 @@ public class EventMaker extends DefaultService{
 
 	@Override
 	public void payload() throws Exception{
-		URI.replace("{groupId}",JoinHandler.getGroupId());
+		URI.replace("{groupId}", JoinHandler.getGroupId());
 		URI.replace("{userId}",this.getParam("uid").toString());
 		HTTP http = new HTTP(URI);
 		System.out.println("Result of http get" + http.get());

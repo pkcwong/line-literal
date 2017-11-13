@@ -21,7 +21,7 @@ public class JoinHandler {
 	private static String GroupId;
 
 	public static void handle(JoinEvent event) throws URISyntaxException {
-		GroupId = event.getSource().getUserId();
+		GroupId = event.getSource().getSenderId();
 	}
 
 	public static String getGroupId(){
