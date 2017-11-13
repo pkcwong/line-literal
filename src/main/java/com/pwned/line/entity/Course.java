@@ -60,11 +60,11 @@ public class Course {
 			this.title = matcher_course.group(4);
 			this.credit = matcher_course.group(5);
 			section_block = matcher_course.group(6);
-			System.out.println(this.introduction);
-			System.out.println(this.title);
-			System.out.println(this.credit);
-			System.out.print(section_block);
 		}
+		System.out.println(this.introduction);
+		System.out.println(this.title);
+		System.out.println(this.credit);
+		System.out.print(section_block);
 		System.out.println("1");
 		Pattern regex_section_info = Pattern.compile(REGEX_GET_SECTION);
 		Matcher matcher_section = regex_section_info.matcher(section_block);
