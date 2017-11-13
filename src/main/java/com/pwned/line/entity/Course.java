@@ -15,7 +15,7 @@ public class Course {
 	private static final String BASE_URL = "https://w5.ab.ust.hk/wcq/cgi-bin/1710/subject/";
 	//public static final String REGEX_COURSE = "<div class=\\\"course\\\">[\\s\\S]+?<tr><th>DESCRIPTION<\\/th><td>(.+?)<\\/td><\\/tr>[\\s\\S]+?<h2>(....)\\s(....)\\s-\\s(.+?)\\s\\((\\d)\\sunits\\)<\\/h2>\\s<table class=\\\"sections\\\" width=\\\"1012\\\">\\s([\\s\\S]+?)<\\/td><\\/tr><\\/table>\\s<\\/div>";
 	//public static final String REGEX_COURSE = "<h2>COMP 2012 -\\s(.+?)\\s\\((\\d)\\sunits\\)<\\/h2>\\s<table class=\\\"sections\\\" width=\\\"1012\\\">\\s([\\s\\S]+?)<\\/td><\\/tr><\\/table>\\s<\\/div>";
-	public static final String REGEX_COURSE = "<h2>(....)\\s(....)\\s- (.+?)\\s\\((\\d)\\sunits\\)<\\/h2>.+?1012\">(.+?(?=&nbsp))/h2>.+?1012\">.+?(?=&nbsp)";
+	public static final String REGEX_COURSE = "<h2>(....)\\s(....)\\s- (.+?)\\s\\((\\d)\\sunits\\)<\\/h2>.+?1012\">([\\s\\S]+?)<\\/td><\\/tr><\\/table>";
 	public static final String REGEX_GET_SECTION= "<td align=\"center\".+?\\s?<td>(?:.*) class=(?:.*)>";
 	public static final String REGEX_SECTION_NAME_CODE = ".+?>(\\w{1,3}) \\((\\w{1,4})";
 	public static final String REGEX_GET_ALL_DATE_TIME_ROOM_PROF = "(Mo|Tu|We|Th|Fr|MoTu|MoWe|MoTh|MoFr|TuWe|TuTh|TuFr|WeTh|WeFr|ThFr|MoTuWe|MoTuTh|MoTuFr|MoWeTh|MoWeFr|MoThFr|TuWeTh|TuWeFr|WeThFr) ([^ ]*) - ([^<]*)<\\/td><td>([^<]*).+?instructor\\/([^\"]*)";
