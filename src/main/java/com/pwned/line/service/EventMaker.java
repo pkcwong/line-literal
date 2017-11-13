@@ -13,6 +13,7 @@ import com.pwned.line.http.HTTP;
 
 public class EventMaker extends DefaultService{
 	private String URI = "https://api.line.me/v2/bot/group/{groupId}/member/{userId}";
+	private static final String ACCESS_TOKEN = System.getenv("LINE_BOT_CHANNEL_TOKEN");
 	public EventMaker(Service service){
 		super(service);
 	}
@@ -22,6 +23,7 @@ public class EventMaker extends DefaultService{
 		URI.replace("{groupId}", JoinHandler.getGroupId());
 		URI.replace("{userId}",this.getParam("uid").toString());
 		HTTP http = new HTTP(URI);
+		http.setHeaders("Authorization", "Bearer " + ACCESS_TOKEN);
 		System.out.println("Result of http get" + http.get());
 
 
