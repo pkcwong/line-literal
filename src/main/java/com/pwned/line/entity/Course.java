@@ -39,36 +39,35 @@ public class Course {
 		Pattern regex_course = Pattern.compile(this.builder());
 		Matcher matcher_course = regex_course.matcher(response);
 		while (matcher_course.find()){
-			System.out.println("1");
 			this.introduction = matcher_course.group(1);
 			this.title = matcher_course.group(4);
 			this.credit = matcher_course.group(5);
 			section_block = matcher_course.group(6);
 		}
+		System.out.println(1);
 		Pattern regex_section_info = Pattern.compile(REGEX_GET_SECTION);
 		Matcher matcher_section = regex_section_info.matcher(section_block);
 		ArrayList<String> section_info = new ArrayList<>();
 		while(matcher_section.find()){
-			System.out.println("2");
 			section_info.add(matcher_section.group());
 		}
+		System.out.println("2");
 		for(int i = 0; i <section_info.size(); i++){
 			Pattern regex_section_name_code = Pattern.compile(REGEX_SECTION_NAME_CODE);
 			Matcher matcher_section_name_code = regex_section_name_code.matcher(section_info.get(i));
 			String name = null;
 			String code = null;
 			while(matcher_section_name_code.find()) {
-				System.out.println("3");
 				name = matcher_section_name_code.group(1);
 				code = matcher_section_name_code.group(2);
 			}
+			System.out.println("3");
 			Pattern regex_section_data = Pattern.compile(REGEX_GET_ALL_DATE_TIME_ROOM_PROF);
 			Matcher matcher_section_data = regex_section_data.matcher(section_info.get(i));
 			ArrayList<DateAndTime> dateAndTimes = new ArrayList<>();
 			ArrayList<String> rooms = new ArrayList<>();
 			ArrayList<String> instructors = new ArrayList<>();
 			while(matcher_section_data.find()){
-				System.out.println("4");
 				String day = matcher_section_data.group(1);
 				String startTime = matcher_section_data.group(2);
 				String endTime = matcher_section_data.group(3);
@@ -77,6 +76,7 @@ public class Course {
 				rooms.add(matcher_section_data.group(4));
 				instructors.add(matcher_section_data.group(5));
 			}
+			System.out.println("4");
 			Pattern regex_section_quota_info = Pattern.compile(REGEX_GET_QUOTA_INFO);
 			Matcher matcher_section_quota_info = regex_section_quota_info.matcher(section_info.get(i));
 			String quota = null;
@@ -84,12 +84,12 @@ public class Course {
 			String avail = null;
 			String wait = null;
 			while(matcher_section_quota_info.find()){
-				System.out.println("5");
 				quota = matcher_section_quota_info.group(1);
 				enrol = matcher_section_quota_info.group(2);
 				avail = matcher_section_quota_info.group(3);
 				wait = matcher_section_quota_info.group(4);
 			}
+			System.out.println("5");
 			Section section = new Section(name, code, dateAndTimes, rooms, instructors, quota, enrol, avail, wait);
 			sections.add(section);
 		}
