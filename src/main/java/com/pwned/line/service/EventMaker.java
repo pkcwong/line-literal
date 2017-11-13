@@ -1,7 +1,12 @@
 package com.pwned.line.service;
 
+import com.mongodb.BasicDBObject;
 import com.pwned.line.handler.JoinHandler;
 import com.pwned.line.http.HTTP;
+import com.pwned.line.web.MongoDB;
+import org.bson.Document;
+
+import java.util.ArrayList;
 
 /***
  * Service for event maker.
@@ -20,12 +25,29 @@ public class EventMaker extends DefaultService{
 
 	@Override
 	public void payload() throws Exception{
-		URI = URI.replace("{groupId}", JoinHandler.getGroupId());
-		URI = URI.replace("{userId}",this.getParam("uid").toString());
+		String groupId = this.getParam("groupId").toString();
+		String uid = this.getParam("uid").toString();
+		if(uid.equals(groupId)){
+			this.fulfillment = "Sorry, you can only use this function in a group chat";
+			return;
+		}
+		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
+
+		BasicDBObject SELF = new BasicDBObject().append("groupId", groupId);
+		ArrayList<Document> group = MongoDB.get(mongo.getCollection("Event").find(SELF));
+		if(group.size() == 0){
+			Document data = new Document();
+			data.append("groupId", groupId);
+			data.append("uid", uid);
+			mongo.getCollection("Event").insertOne(data);
+		}
+
+		URI = URI.replace("{groupId}", groupId);
+		URI = URI.replace("{userId}", uid);
 		HTTP http = new HTTP(URI);
 		http.setHeaders("Authorization", "Bearer " + ACCESS_TOKEN);
 		System.out.printf("Result of groupId = %s\n", this.getParam("groupId").toString());
-
+		this.fulfillment = "Please create your event with {Event Name}@date";
 	}
 
 
