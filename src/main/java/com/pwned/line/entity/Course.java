@@ -55,7 +55,6 @@ public class Course {
 				"</div>");
 		System.out.println(this.builder());
 		while (matcher_course.find()){
-			System.out.println("0.0");
 			this.introduction = matcher_course.group(1);
 			this.title = matcher_course.group(4);
 			this.credit = matcher_course.group(5);
