@@ -18,7 +18,8 @@ public class Course {
 	public static final String REGEX_COURSE = "<h2>(@department)\\s(@code)\\s- (.+?)\\s\\((\\d)\\sunits\\)<\\/h2>.+?1012\">([\\s\\S]+?)<\\/td><\\/tr><\\/table>";
 	//public static final String REGEX_GET_SECTION= "<td align=\"center\".+?\\s?<td>(?:.*) class=(?:.*)>";
 	public static final String REGEX_GET_SECTION = "\\w{1,2}\\d{1,2} \\(\\d{4}\\).+?\\s{0,1}.+?(?=se).+?\">.+?\">";
-	public static final String REGEX_SECTION_NAME_CODE = ".+?>(\\w{1,3}) \\((\\w{1,4})";
+	//public static final String REGEX_SECTION_NAME_CODE = ".+?>(\\w{1,3}) \\((\\w{1,4})";
+	public static final String REGEX_SECTION_NAME_CODE = "(\\w{1,2}\\d{1,2}) \\((\\d{4})\\)";
 	public static final String REGEX_GET_ALL_DATE_TIME_ROOM_PROF = "(Mo|Tu|We|Th|Fr|MoTu|MoWe|MoTh|MoFr|TuWe|TuTh|TuFr|WeTh|WeFr|ThFr|MoTuWe|MoTuTh|MoTuFr|MoWeTh|MoWeFr|MoThFr|TuWeTh|TuWeFr|WeThFr) ([^ ]*) - ([^<]*)<\\/td><td>([^<]*).+?instructor\\/([^\"]*)";
 	public static final String REGEX_GET_QUOTA_INFO = "<\\/a>.+?\".+?>(\\d{1,3}).+?\">(\\d{1,3}).+?(\\d{1,3}).+?\">(\\w{1,3})";
 
@@ -65,7 +66,6 @@ public class Course {
 			String name = null;
 			String code = null;
 			while(matcher_section_name_code.find()) {
-				System.out.println("debug");
 				name = matcher_section_name_code.group(1);
 				code = matcher_section_name_code.group(2);
 			}
