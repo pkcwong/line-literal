@@ -29,11 +29,6 @@ public class KitchenSinkController {
 		PostbackHandler.handle(event);
 	}
 
-	@EventMapping
-	public void handleJoinEvent(JoinEvent event) throws URISyntaxException {
-		JoinHandler.handle(event);
-	}
-
 		/***
 		 * Respond to events from users, groups, and rooms.
 		 * @param replyToken replyToken received via webhook
