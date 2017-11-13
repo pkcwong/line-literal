@@ -25,7 +25,7 @@ public class Course {
 	public String code;
 	public String title;
 	public String credit;
-	public ArrayList<Section> sections;
+	public ArrayList<Section> sections = new ArrayList<>();
 
 	public Course(String department, String code) {
 		this.department = department.toUpperCase();
@@ -61,7 +61,6 @@ public class Course {
 			this.credit = matcher_course.group(2);
 			section_block = matcher_course.group(3);
 		}
-		System.out.println(this.introduction);
 		System.out.println(this.title);
 		System.out.println(this.credit);
 		System.out.print(section_block);
