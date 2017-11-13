@@ -22,7 +22,7 @@ public class JoinHandler {
 
 	public static void handle(JoinEvent event) throws URISyntaxException {
 		//String replyToken = event.getReplyToken();
-		System.out.println("Inside event handler" + event.getSource());
+		System.out.println("Inside event handler" + event.getSource().getUserId());
 	}
 
 }
