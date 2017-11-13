@@ -10,7 +10,6 @@ import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
-import com.pwned.line.handler.JoinHandler;
 import com.pwned.line.handler.PostbackHandler;
 import com.pwned.line.handler.TextHandler;
 

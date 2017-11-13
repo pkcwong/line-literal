@@ -1,7 +1,6 @@
 package com.pwned.line.service;
 
 import com.mongodb.BasicDBObject;
-import com.pwned.line.handler.JoinHandler;
 import com.pwned.line.http.HTTP;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
@@ -32,7 +31,6 @@ public class EventMaker extends DefaultService{
 			return;
 		}
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
-
 		BasicDBObject SELF = new BasicDBObject().append("groupId", groupId);
 		ArrayList<Document> group = MongoDB.get(mongo.getCollection("Event").find(SELF));
 		if(group.size() == 0){
