@@ -1,5 +1,7 @@
 package com.pwned.line.handler;
 
+import com.linecorp.bot.model.event.Event;
+import com.linecorp.bot.model.event.JoinEvent;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
 import com.linecorp.bot.model.message.TextMessage;
@@ -41,6 +43,9 @@ public class TextHandler {
 			KitchenSinkController.reply(event.getReplyToken(), new TextMessage(service.getFulfillment()));
 			return null;
 		});
+	}
+	public static void handle(JoinEvent event) {
+		event.getSource().getUserId();
 	}
 
 }
