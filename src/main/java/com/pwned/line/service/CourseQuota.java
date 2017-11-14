@@ -27,8 +27,9 @@ public class CourseQuota extends DefaultService{
 			"\nEnrol: " + course.sections.get(i).enrol +"\nAvail: " + course.sections.get(i).avail + "\nWait: " + course.sections.get(i).wait + "\n";
 			for(int j = 0; j < course.sections.get(i).dateAndTimes.size(); j++) {
 				this.fulfillment += "Day: " + course.sections.get(i).dateAndTimes.get(j).day + "\nStart Time: " + course.sections.get(i).dateAndTimes.get(j).startTime +
-				"\nEnd Time: " + course.sections.get(i).dateAndTimes.get(j).endTime + "\n\n";
+				"\nEnd Time: " + course.sections.get(i).dateAndTimes.get(j).endTime + "\n";
 			}
+			this.fulfillment +="\n";
 		}
 		//System.out.println("Department: " + course.department + "\nCode: " + course.code  + "\nTitle: " + course.title +
 		//"\nCredit: " + course.credit);
