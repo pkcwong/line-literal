@@ -87,6 +87,17 @@ public class MasterController extends DefaultService {
 		String[] translate = {"translate", "english", "chinese", "korean", "malaysian", "indonesian", "indo"};
 		String[] review = {"review"};
 		String[] help = {"help"};
+		String[] event = {"event"};
+		String[] thanksgiving = {"accept","bring"};
+
+
+
+		for (String keywords : thanksgiving) {
+			String temp = this.fulfillment.toLowerCase();
+			if(temp.contains(keywords)){
+				return new Thanksgiving(this, temp).resolve().get();
+			}
+		}
 
 		for (String keywords : timetable) {
 			String temp = this.fulfillment.toLowerCase();
@@ -129,7 +140,7 @@ public class MasterController extends DefaultService {
 		for (String keywords : quota) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
-				return new CourseName(this).resolve().get();
+				return new CourseQuota(this).resolve().get();
 			}
 		}
 		for (String keywords : translate) {
@@ -144,6 +155,12 @@ public class MasterController extends DefaultService {
 				return new DialogFlowReview(this).resolve().get();
 			}
 		}
+		for (String keywords : event) {
+			String temp = this.fulfillment.toLowerCase();
+			if(temp.contains(keywords)){
+				//return new DialogFlowEventMaker(this).resolve().get();
+			}
+		}
 		for (String keywords : help) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
@@ -153,7 +170,10 @@ public class MasterController extends DefaultService {
 						"3. Lift advisor: where is ... \n" +
 						"4. Course Review: review of the course ... (department + course code)\n" +
 						"5. Weather: weather forecast\n" +
-						"6. Temperature: temperature at a place (e.g. HKUST, Sai Kung, CUHK, Kowloon City)";
+						"6. Temperature: temperature at a place (e.g. HKUST, Sai Kung, CUHK, Kowloon City)\n" +
+						"7. Society information: Socety ... (e.g. Hall 1)\n" +
+						"8. Bring food for party: Bring ...\n" +
+						"9. Join Thanksgiving party: accept by (Your name)\n";
 				return this;
 			}
 		}
