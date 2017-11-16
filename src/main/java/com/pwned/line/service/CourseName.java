@@ -53,7 +53,6 @@ public class CourseName extends DefaultService {
 		Matcher courseMatcher = departmentPattern.matcher(httpResponse);
 		System.out.println(courseMatcher);
 		while (courseMatcher.find()) {
-			System.out.println("found");
 			courseName = courseMatcher.group(1);
 		}
 		return this.fulfillment.replace("@course::title", courseName);
