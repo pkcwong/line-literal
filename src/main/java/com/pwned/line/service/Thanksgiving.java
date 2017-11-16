@@ -52,8 +52,6 @@ public class Thanksgiving extends DefaultService{
 
 			if (user.size() == 0) {
 				String response = http.get();
-				System.out.println("Result of http get(): " + response);
-				//"displayName": "Calvin Ku",
 				Pattern regex = Pattern.compile("\"displayName\":\"(.+?)\"");
 				Matcher matcher = regex.matcher(response);
 				String name = "";
@@ -79,7 +77,7 @@ public class Thanksgiving extends DefaultService{
 			ArrayList<Document> user = MongoDB.get(mongo.getCollection("party").find(SELF));
 
 			if (user.size() == 0) {
-				this.fulfillment = "You haven't accept the party invitation! Please enter Accpet by (your name) to join the party!";
+				this.fulfillment = "You haven't accept the party invitation! Please enter Accpet to join the party!";
 				return;
 			}
 
@@ -103,6 +101,8 @@ public class Thanksgiving extends DefaultService{
 			}
 		}
 	}
+
+
 
 	@Override
 	public Service chain(){

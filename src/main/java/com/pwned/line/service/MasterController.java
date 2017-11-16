@@ -173,7 +173,7 @@ public class MasterController extends DefaultService {
 						"6. Temperature: temperature at a place (e.g. HKUST, Sai Kung, CUHK, Kowloon City)\n" +
 						"7. Society information: Socety ... (e.g. Hall 1)\n" +
 						"8. Bring food for party: Bring ...\n" +
-						"9. Join Thanksgiving party: accept by (Your name)\n";
+						"9. Join Thanksgiving party: accept\n";
 				return this;
 			}
 		}
