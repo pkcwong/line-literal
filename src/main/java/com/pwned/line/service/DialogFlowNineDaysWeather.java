@@ -4,18 +4,17 @@ import com.pwned.line.web.ApiAI;
 import org.json.JSONObject;
 
 /***
-
- * Service module for DialogFlow KMB
+ * Service module for DialogFlow Nine Days Weather
  * Required params: [uid]
  * Reserved tokens: []
  * Resolved params: [parameters]
  * @author Timothy Pak
  */
-public class DialogFlowKMB extends DefaultService {
+public class DialogFlowNineDaysWeather extends DefaultService {
 
-    private static String API_AI_ACCESS_TOKEN = "ebfd089f4d4b4dcdb0bc88acdb3b0e81";
+    private static String API_AI_ACCESS_TOKEN = "1918af645bed436db988189c2f77f832";
 
-    public DialogFlowKMB(Service service) {
+    public DialogFlowNineDaysWeather(Service service) {
         super(service);
     }
 
@@ -28,7 +27,7 @@ public class DialogFlowKMB extends DefaultService {
 
     @Override
     public Service chain() throws Exception {
-        return new KMB(this).resolve().get();
+        return new NineDaysWeather(this).resolve().get();
     }
 
 }

@@ -4,7 +4,7 @@ import com.pwned.line.web.ApiAI;
 import org.json.JSONObject;
 
 /***
- * Service module for DialogFlow weather
+ * Service module for DialogFlow Weather
  * Required params: [uid]
  * Reserved tokens: []
  * Resolved params: [parameters]

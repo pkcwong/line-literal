@@ -1,15 +1,6 @@
 package com.pwned.line.service;
 
 import com.pwned.line.http.HTTP;
-import org.json.JSONObject;
-import java.io.*;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 /***
  * Service for course information.
