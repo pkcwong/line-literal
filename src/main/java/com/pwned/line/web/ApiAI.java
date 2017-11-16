@@ -23,6 +23,7 @@ public class ApiAI {
 		http.setHeaders("Authorization", "Bearer " + ACCESS_TOKEN);
 		http.setHeaders("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
 		http.setParams("v", VERSION);
+		http.setParams("lang", "en");
 		http.setParams("query", this.query);
 		http.setParams("sessionId", this.session);
 		return new JSONObject(http.get());
