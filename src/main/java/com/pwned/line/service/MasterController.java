@@ -83,8 +83,9 @@ public class MasterController extends DefaultService {
 		String[] timetable = {"current"};
 		String[] lift = {"classroom", "room", "lift", "where", "how to go"};
 		String[] societies = {"societies", "society", "student Club", "club", "interest group"};
-		String[] KMB = {"bus", "arrival", "departure"};
+		String[] kmb = {"bus", "arrival", "departure", "arrive", "eta"};
 		String[] weather = {"weather", "degrees", "climate"};
+		String[] nine = {"9 days weather", "week weather", "next nine days", "next week", "next few days"};
 		String[] temperature = {"temperature"};
 		String[] quota = {"class", "quota"};
 		String[] translate = {"translate", "english", "chinese", "korean", "malaysian", "indonesian", "indo"};
@@ -122,10 +123,16 @@ public class MasterController extends DefaultService {
 				}
 			}
 		}
-		for (String keywords : KMB) {
+		for (String keywords : kmb) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
-				//return new DialogFlowTranslate(this).resolve().get();
+				return new DialogFlowKMB(this).resolve().get();
+			}
+		}
+		for (String keywords : nine) {
+			String temp = this.fulfillment.toLowerCase();
+			if(temp.contains(keywords)){
+				return new DialogFlowNineDaysWeather(this).resolve().get();
 			}
 		}
 		for (String keywords : weather) {
@@ -167,16 +174,17 @@ public class MasterController extends DefaultService {
 		for (String keywords : help) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
-				this.fulfillment= "Our current service only provides the following:\n" +
+				this.fulfillment= "Our current service provides the following:\n" +
 						"1. Anonymous chat: type \"anonymous\"\n" +
 						"2. Translate: e.g. translate ... to (specific language)\n" +
 						"3. Lift advisor: where is ... \n" +
 						"4. Course Review: review of the course ... (department + course code)\n" +
-						"5. Weather: weather forecast\n" +
+						"5. Weather Forecast: weather forecast\n" +
 						"6. Temperature: temperature at a place (e.g. HKUST, Sai Kung, CUHK, Kowloon City)\n" +
-						"7. Society information: Socety ... (e.g. Hall 1)\n" +
-						"8. Bring food for party: Bring ...\n" +
-						"9. Join Thanksgiving party: accept by (Your name)\n";
+						"7. Bus Arrival Time: Estimated time of arrival of next bus at busstop(e.g. South Gate)\n" +
+						"8. Society information: Socety ... (e.g. Hall 1)\n" +
+						"9. Bring food for party: Bring ...\n" +
+						"10. Join Thanksgiving party: accept by (Your name)\n";
 				return this;
 			}
 		}

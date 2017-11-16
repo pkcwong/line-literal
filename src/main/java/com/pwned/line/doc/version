@@ -1,0 +1,21 @@
+Current version: 0.2.2
+Heroku Built Version: v189
+Current Features:
+    1. Anonymous chat
+	2. Translate
+	3. Lift advisor
+	4. Course Review
+	5.1  Weather Forecast
+	 .2  Weather Push Notification
+     .3  Nine Days Weather Forecast
+	6. Temperature
+	7. Bus Arrival Time
+Planned Features:
+    Bus Arrival Push Notification
+    Thanksgiving Party
+    Weather Warnings and Signals
+    Course Quota
+    Course Timetable
+    Event Maker
+    Student Association
+    New Features Notification
