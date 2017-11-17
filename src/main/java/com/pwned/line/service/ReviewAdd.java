@@ -52,6 +52,7 @@ public class ReviewAdd extends DefaultService {
 		data.append("bind", this.getParam("uid").toString());
 		data.append("buff", new BasicDBObject("cmd", "master"));
 		mongo.getCollection("user").findOneAndUpdate(SELF, new BasicDBObject("$set", data));
+		System.out.println("debugging message 1");
 		this.fulfillment = "Your course review had been added";
 	}
 
