@@ -55,7 +55,7 @@ public class EventMaker extends DefaultService{
 			mongo.getCollection("Event").insertOne(data);
 		}
 
-		BasicDBObject eventName = new BasicDBObject().append("eventName", keywordArray[1]);
+		BasicDBObject eventName = new BasicDBObject().append("Name", keywordArray[1]);
 		ArrayList<Document> events = MongoDB.get(mongo.getCollection("Event").find(eventName));
 		if(events.size() == 0){
 			callEventAdd(uid, groupId, new BasicDBObject().append("uid", uid), mongo);
