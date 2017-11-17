@@ -25,16 +25,16 @@ public class TimeTableAdd extends DefaultService {
     @Override
     public void payload() throws Exception {
         System.out.println("getting timetable");
-        MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
-        BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
-        ArrayList<Document> user = MongoDB.get(mongo.getCollection("user").find(SELF));
-        JSONObject USER = new JSONObject(user.get(0).toJson());
-        String department = USER.getJSONObject("timetablebuff").getJSONObject("data").getString("department");
-        String code = USER.getJSONObject("timetablebuff").getJSONObject("data").getString("code");
+        //MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
+        //BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
+        //ArrayList<Document> user = MongoDB.get(mongo.getCollection("user").find(SELF));
+        //JSONObject USER = new JSONObject(user.get(0).toJson());
+        //String timetable = USER.getJSONObject("timetablebuff").getJSONObject("data").toString();
+        String timetable = this.fulfillment;
         System.out.println();
         String[] key = {"Lecture", "Laboratory", "Tutorial", "Others"};
 
-        String[] arr = code.split("\n");
+        String[] arr = timetable.split("\n");
         ArrayList<String> timetableArr = new ArrayList<>();
         for(String s: arr){
             String[] temp = s.split("\t");
