@@ -69,7 +69,7 @@ public class EventAdd extends DefaultService {
 		doc.append("uid", this.getParam("uid").toString());
 		doc.append("bind", this.getParam("uid").toString());
 		doc.append("buff", new BasicDBObject("cmd", "master"));
-		mongo.getCollection("user").findOneAndUpdate(SELF, new BasicDBObject("$set", data));
+		mongo.getCollection("user").findOneAndUpdate(SELF, new BasicDBObject("$set", doc));
 		this.fulfillment = "Your event had been added";
 	}
 
