@@ -4,6 +4,7 @@ import com.mongodb.BasicDBObject;
 import com.pwned.line.http.HTTP;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -55,16 +56,16 @@ public class EventMaker extends DefaultService{
 			mongo.getCollection("Event").insertOne(data);
 		}
 
-		BasicDBObject eventName = new BasicDBObject().append("events.EventName", keywordArray[0]);
-		ArrayList<Document> events = MongoDB.get(mongo.getCollection("Event").find(eventName));
-		if(events.size() == 0){
+		JSONObject events = new JSONObject(group.get(0).toJson());
+
+
+		if(!checkEventExist(events, keywordArray[0])){
 			callEventAdd(uid, groupId, new BasicDBObject().append("uid", uid), mongo);
 			this.fulfillment = "You have not create event yet, please create your event with {Event Name}@yyyy/mm/dd:";
 			return;
 
 		}else{
-			JSONObject event = new JSONObject(events.get(0).toJson());
-			this.fulfillment = event.toString();
+			this.fulfillment = events.toString();
 			return;
 		}
 
@@ -80,6 +81,15 @@ public class EventMaker extends DefaultService{
 				new BasicDBObject("$set",
 						new BasicDBObject("buff",
 								new BasicDBObject().append("cmd", "event::add").append("data", new BasicDBObject().append("groupId", gid)))));
+	}
+
+	private boolean checkEventExist(JSONObject events, String eventName) throws JSONException {
+		for(int i = 0; i < events.getJSONArray("events").length(); i++){
+			if(events.getJSONArray("Date").get(i).toString().contains(eventName)){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
