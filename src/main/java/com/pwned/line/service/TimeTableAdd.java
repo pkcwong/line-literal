@@ -1,10 +1,10 @@
 package com.pwned.line.service;
 
-//import com.pwned.line.web.MongoDB;
 
-import org.json.JSONArray;
+import com.mongodb.BasicDBObject;
+import com.pwned.line.web.MongoDB;
+import org.bson.Document;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 
@@ -25,8 +25,13 @@ public class TimeTableAdd extends DefaultService {
     @Override
     public void payload() throws Exception {
         System.out.println("getting timetable");
-        String ar = this.getParam("text").toString();
-        System.out.println(ar);
+        MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
+        BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
+        ArrayList<Document> user = MongoDB.get(mongo.getCollection("user").find(SELF));
+        JSONObject USER = new JSONObject(user.get(0).toJson());
+        String department = USER.getJSONObject("timetablebuff").getJSONObject("data").getString("department");
+        String code = USER.getJSONObject("timetablebuff").getJSONObject("data").getString("code");
+        System.out.println();
         String[] key = {"Lecture", "Laboratory", "Tutorial", "Others"};
         String[] arr = ar.split("\n");
         ArrayList<String> timetableArr = new ArrayList<>();
