@@ -59,7 +59,10 @@ public class PushThanksgiving extends DefaultJob{
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
 
 		usersArrayList = MongoDB.get(mongo.getCollection("user").find());
-		acceptedUsersArrayList = MongoDB.get(new MongoDB(System.getenv("MONGODB_URI")).getCollection("party").find());
+		for(int i = 0 ; i < usersArrayList.size(); i++){
+			if(usersArrayList.get(i).getString("Accept").equals("Y"))
+				acceptedUsersArrayList.add(usersArrayList.get(i));
+		}
 
 		ArrayList<String> uid = new ArrayList<>();
 		ArrayList<String> acceptedUid = new ArrayList<>();
@@ -80,7 +83,7 @@ public class PushThanksgiving extends DefaultJob{
 		Calendar today = Calendar.getInstance();
 		Calendar partyDate = Calendar.getInstance();
 		partyDate.set(2017,Calendar.NOVEMBER,22);
-		//today.set(2017,Calendar.NOVEMBER,19);
+		today.set(2017,Calendar.NOVEMBER,19);
 		today.add(Calendar.HOUR,8);
 		partyDate.add(Calendar.HOUR,8);
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
