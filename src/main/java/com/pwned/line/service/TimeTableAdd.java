@@ -24,9 +24,9 @@ public class TimeTableAdd extends DefaultService {
 
     @Override
     public void payload() throws Exception {
-        String timetable = new JSONObject(this.getParam("parameters").toString()).toString();
+        String[] arr = new JSONObject(this.getParam("parameters").toString()).toString().split("\n");
         String[] key = {"Lecture", "Laboratory", "Tutorial", "Others"};
-        String[] arr = timetable.split("\n");
+        //String[] arr = timetable.split("\n");
         ArrayList<String> timetableArr = new ArrayList<>();
         for(String s: arr){
             String[] temp = s.split("\t");
