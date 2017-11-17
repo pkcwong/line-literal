@@ -45,6 +45,13 @@ public class AnonymousChatTest {
 		}
 		{
 			Service service = new AnonymousChat(new DefaultService("anonymous::connect"));
+			service.setParam("uid", "junit0");
+			service.setParam("replyToken", "junit0");
+			service.setParam("timestamp", "junit0");
+			service.resolve().get();
+		}
+		{
+			Service service = new AnonymousChat(new DefaultService("anonymous::connect"));
 			service.setParam("uid", "junit1");
 			service.setParam("replyToken", "junit1");
 			service.setParam("timestamp", "junit1");
@@ -59,6 +66,13 @@ public class AnonymousChatTest {
 		service.setParam("timestamp", "junit0");
 		service.resolve().get();
 		assertEquals("junit1", service.getParam("bind").toString());
+		{
+			Service _service = new MasterController(new DefaultService("anonymous"));
+			_service.setParam("uid", "junit0");
+			_service.setParam("replyToken", "junit0");
+			_service.setParam("timestamp", "junit0");
+			_service.resolve().get();
+		}
 	}
 
 	@Test
