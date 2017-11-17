@@ -33,7 +33,7 @@ public class TimeTableAdd extends DefaultService {
         String code = USER.getJSONObject("timetablebuff").getJSONObject("data").getString("code");
         System.out.println();
         String[] key = {"Lecture", "Laboratory", "Tutorial", "Others"};
-        String[] arr = ar.split("\n");
+        //String[] arr = ar.split("\n");
         ArrayList<String> timetableArr = new ArrayList<>();
         for(String s: arr){
             String[] temp = s.split("\t");
