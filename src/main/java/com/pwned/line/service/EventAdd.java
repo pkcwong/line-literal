@@ -45,7 +45,7 @@ public class EventAdd extends DefaultService {
 			this.fulfillment = "Invalid day";
 			return;
 		}
-		
+
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
 
 		//fetch buff -> data from MongoDB
@@ -53,17 +53,24 @@ public class EventAdd extends DefaultService {
 		ArrayList<Document> user = MongoDB.get(mongo.getCollection("user").find(SELF));
 		JSONObject USER = new JSONObject(user.get(0).toJson());
 		String groupId = USER.getJSONObject("buff").getJSONObject("data").getString("groupId");
+		BasicDBObject groupSELF= new BasicDBObject().append("groupId", groupId);
+
+		BasicDBObject data = new BasicDBObject();
+		BasicDBObject event = new BasicDBObject();
+		event.append("Event Name", keywordArray[0]);
+		event.append("Date", keywordArray[0]);
+		event.append("Start Time", "");
+		event.append("End Time", "");
+
+		data.append("events", event);
 
 
-		mongo.getCollection("Event").findOneAndUpdate(new BasicDBObject().append("groupId", groupId),
-				new BasicDBObject("$set",
-						new BasicDBObject("event",
-								new BasicDBObject().append("Name", keywordArray[0]).append("Date", keywordArray[1]))));
+		mongo.getCollection("event").findOneAndUpdate(groupSELF, new BasicDBObject("$addToSet", data));
 
-		Document data = new Document();
-		data.append("uid", this.getParam("uid").toString());
-		data.append("bind", this.getParam("uid").toString());
-		data.append("buff", new BasicDBObject("cmd", "master"));
+		Document doc = new Document();
+		doc.append("uid", this.getParam("uid").toString());
+		doc.append("bind", this.getParam("uid").toString());
+		doc.append("buff", new BasicDBObject("cmd", "master"));
 		mongo.getCollection("user").findOneAndUpdate(SELF, new BasicDBObject("$set", data));
 		this.fulfillment = "Your event had been added";
 	}
