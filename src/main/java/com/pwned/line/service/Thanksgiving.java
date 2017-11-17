@@ -48,6 +48,7 @@ public class Thanksgiving extends DefaultService{
 			ArrayList<Document> user = MongoDB.get(mongo.getCollection("party").find(SELF));
 			if(user.size() == 0){
 				PushThanksgiving.addUserToParty(mongo);
+				user = MongoDB.get(mongo.getCollection("party").find(SELF));
 			}
 
 			if (user.get(0).getString("Accept").equals("N")) {
