@@ -58,7 +58,8 @@ public class PushThanksgiving extends DefaultJob{
 
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
 
-		usersArrayList = MongoDB.get(mongo.getCollection("user").find());
+		addUserToParty(mongo);
+		usersArrayList = MongoDB.get(mongo.getCollection("party").find());
 		for(int i = 0 ; i < usersArrayList.size(); i++){
 			if(usersArrayList.get(i).getString("Accept").equals("Y"))
 				acceptedUsersArrayList.add(usersArrayList.get(i));
@@ -141,5 +142,21 @@ public class PushThanksgiving extends DefaultJob{
 				return false;
 		}
 		return false;
+	}
+
+	private static void addUserToParty(MongoDB mongo){
+		usersArrayList = MongoDB.get(mongo.getCollection("user").find());
+		for(int i = 0 ; i < usersArrayList.size(); i++){
+			String uid = usersArrayList.get(i).getString("uid");
+			BasicDBObject SELF = new BasicDBObject().append("uid", uid);
+			ArrayList<Document> user = MongoDB.get(mongo.getCollection("party").find(SELF));
+			if(user.size() == 0){
+				Document data = new Document();
+				data.append("uid", uid);
+				data.append("name", Thanksgiving.getName(uid));
+				data.append("Accept", "N");
+				mongo.getCollection("party").insertOne(data);
+			}
+		}
 	}
 }
