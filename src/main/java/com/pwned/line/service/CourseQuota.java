@@ -22,6 +22,15 @@ public class CourseQuota extends DefaultService{
 		String code = apiParam.getString("number");
 		Course course = new Course(department, code);
 		course.query();
+		pushCourseMsg(course, department, code);
+	}
+
+	@Override
+	public Service chain() throws Exception {
+		return this;
+	}
+
+	public void pushCourseMsg(Course course, String department, String code){
 		KitchenSinkController.push(this.getParam("uid").toString(), new TextMessage("Department: " + course.department + "\nCode: " + course.code  + "\nTitle: " + course.title +
 				"\nCredit: " + course.credit));
 		for(int i = 0; i < course.sections.size(); i++){
@@ -32,10 +41,5 @@ public class CourseQuota extends DefaultService{
 		if(course.department == null){
 			this.fulfillment = "Sorry " + department + code + " could not be found in Course Quota Page";
 		}
-	}
-
-	@Override
-	public Service chain() throws Exception {
-		return this;
 	}
 }
