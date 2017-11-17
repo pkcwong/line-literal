@@ -80,7 +80,8 @@ public class PushThanksgiving extends DefaultJob{
 		Calendar today = Calendar.getInstance();
 		Calendar partyDate = Calendar.getInstance();
 		partyDate.set(2017,Calendar.NOVEMBER,22);
-		today.add(Calendar.HOUR,8);
+		today.set(2017,Calendar.NOVEMBER,19);
+		//today.add(Calendar.HOUR,8);
 		partyDate.add(Calendar.HOUR,8);
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		String formatted = format1.format(today.getTime());
