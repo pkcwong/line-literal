@@ -14,13 +14,9 @@ public class Course {
 
 	private static final String BASE_URL = "https://w5.ab.ust.hk/wcq/cgi-bin/1710/subject/";
 	public static final String REGEX_COURSE = "<h2>(@department)\\s(@code)\\s- (.+?)\\s\\((\\d)\\sunits\\)<\\/h2>.+?1012\">([\\s\\S]+?)<\\/td><\\/tr><\\/table>";
-	//public static final String REGEX_COURSE = "<div class=\\\"course\\\">[\\s\\S]+?<tr><th>DESCRIPTION<\\/th><td>(.+?)<\\/td><\\/tr>[\\s\\S]+?<h2>(\\w{4})\\s(\\d{4}\\w{0,1})\\s-\\s(.+?)\\s\\((\\d)\\sunits\\)<\\/h2>\\s<table class=\\\"sections\\\" width=\\\"1012\\\">\\s([\\s\\S]+?)<\\/td><\\/tr><\\/table>\\s<\\/div>";
-	//public static final String REGEX_GET_SECTION = "\\w{1,2}\\d{1,2} \\(\\d{4}\\).+?\\s{0,1}.+?(?=se).+?\">.+?\">";
-	//public static final String REGEX_GET_SECTION = "\\w{1,2}\\d{1,2} \\(\\d{4}\\).+?\\s{0,1}(?=se).+?\">.+?\">";
 	public static final String REGEX_GET_SECTION = "\\w{1,2}\\d{1,2} \\(\\d{4}\\).+?(?=&nbsp)";
 	public static final String REGEX_SECTION_NAME_CODE = "(\\w{1,2}\\d{1,2}) \\((\\d{4})\\)";
 	public static final String REGEX_GET_ALL_DATE_TIME_ROOM_PROF = "(Mo|Tu|We|Th|Fr|MoTu|MoWe|MoTh|MoFr|TuWe|TuTh|TuFr|WeTh|WeFr|ThFr|MoTuWe|MoTuTh|MoTuFr|MoWeTh|MoWeFr|MoThFr|TuWeTh|TuWeFr|WeThFr) ([^ ]*) - ([^<]*)<\\/td><td>([^<]*).+?instructor\\/([^\"]*)";
-	//public static final String REGEX_GET_QUOTA_INFO = "<\\/a>.+?\".+?>(\\d{1,3}).+?\">(\\d{1,3}).+?(\\d{1,3}).+?\">(\\w{1,3})";
 	public static final String REGEX_GET_QUOTA_INFO = "(<td>TBA<\\/td><td align=\"center\">|<\\/a>.+?\".+?>)(\\w{1,3}).+?\">(\\w{1,3}).+?(\\d{1,3}).+?\">(\\w{1,3})";
 
 	public String department;
@@ -45,8 +41,6 @@ public class Course {
 			this.credit = matcher_course.group(4);
 			section_block = matcher_course.group(5);
 		}
-		System.out.println("Section Block: ");
-		System.out.println(section_block);
 		Pattern regex_section_info = Pattern.compile(REGEX_GET_SECTION);
 		Matcher matcher_section = regex_section_info.matcher(section_block);
 		ArrayList<String> section_info = new ArrayList<>();
