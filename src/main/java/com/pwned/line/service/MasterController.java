@@ -77,7 +77,7 @@ public class MasterController extends DefaultService {
 			return this;
 		}
 
-		String[] timetable = {"current"};
+		String[] timetable = {"current", "timetable"};
 		String[] lift = {"classroom", "room", "lift", "where", "how to go"};
 		String[] societies = {"societies", "society", "student Club", "club", "interest group"};
 		String[] kmb = {"bus", "arrival", "departure", "arrive", "eta"};
@@ -103,7 +103,7 @@ public class MasterController extends DefaultService {
 		for (String keywords : timetable) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
-				//return new DialogFlowTranslate(this).resolve().get();
+				return new TimeTableAdd(this).resolve().get();
 			}
 		}
 		for (String keywords : lift) {
