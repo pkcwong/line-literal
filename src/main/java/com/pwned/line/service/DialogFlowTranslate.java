@@ -6,7 +6,7 @@ import org.json.JSONObject;
 /***
  * Service module for DialogFlow translation
  * Required params: [uid]
- * Reserved tokens: []
+ * Reserved tokens: [@translate]
  * Resolved params: [parameters]
  * @author Christopher Wong, Calvin Ku
  */
