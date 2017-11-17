@@ -127,8 +127,6 @@ public class PushThanksgiving extends DefaultJob{
 			}else
 				return false;
 		}
-
-
-
+		return false;
 	}
 }
