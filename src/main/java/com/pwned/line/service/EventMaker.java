@@ -65,14 +65,14 @@ public class EventMaker extends DefaultService{
 		}else{
 			JSONObject event = new JSONObject(events.get(0).toJson());
 			this.fulfillment = event.toString();
+			return;
 		}
 
-		URI = URI.replace("{groupId}", groupId);
+		/*URI = URI.replace("{groupId}", groupId);
 		URI = URI.replace("{userId}", uid);
 		HTTP http = new HTTP(URI);
-		http.setHeaders("Authorization", "Bearer " + ACCESS_TOKEN);
-		System.out.printf("Result of groupId = %s\n", this.getParam("groupId").toString());
-		this.fulfillment = "Please create your event with {Event Name}@yyyy/mm/dd";
+		http.setHeaders("Authorization", "Bearer " + ACCESS_TOKEN);*/
+
 	}
 
 	private void callEventAdd(String uid, String gid, BasicDBObject SELF, MongoDB mongo){

@@ -27,10 +27,25 @@ public class EventAdd extends DefaultService {
 	@Override
 	public void payload() throws Exception {
 		String[] keywordArray = keyword.split("@");
+		String[] date = keywordArray[1].split("/");
+		int year = Integer.parseInt(date[0]);
+		int month = Integer.parseInt(date[1]);
+		int day = Integer.parseInt(date[2]);
+
 		if(keywordArray.length !=2){
 			this.fulfillment = "Please follow that format {EventName}@yyyy/mm/dd";
 			return;
+		}else if (year > 2018 || year < 2017){
+			this.fulfillment = "Invalid year";
+			return;
+		}else if(month < 1 || month > 12){
+			this.fulfillment = "Invalid month";
+			return;
+		}else if (day < 1 || day > 30){
+			this.fulfillment = "Invalid day";
+			return;
 		}
+		
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
 
 		//fetch buff -> data from MongoDB
@@ -43,7 +58,7 @@ public class EventAdd extends DefaultService {
 		mongo.getCollection("Event").findOneAndUpdate(new BasicDBObject().append("groupId", groupId),
 				new BasicDBObject("$set",
 						new BasicDBObject("event",
-								new BasicDBObject().append("Name", keywordArray[0]).append("Date", keywordArray[2]))));
+								new BasicDBObject().append("Name", keywordArray[0]).append("Date", keywordArray[1]))));
 
 		Document data = new Document();
 		data.append("uid", this.getParam("uid").toString());
