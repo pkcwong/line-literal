@@ -37,11 +37,12 @@ public class Course {
 		Pattern regex_course = Pattern.compile(this.builder());
 		Matcher matcher_course = regex_course.matcher(response);
 		while (matcher_course.find()){
+			System.out.println(matcher_course);
 			this.title = matcher_course.group(3);
 			this.credit = matcher_course.group(4);
 			section_block = matcher_course.group(5);
 		}
-		System.out.println(section_block);
+		//System.out.println(section_block);
 		Pattern regex_section_info = Pattern.compile(REGEX_GET_SECTION);
 		Matcher matcher_section = regex_section_info.matcher(section_block);
 		ArrayList<String> section_info = new ArrayList<>();
