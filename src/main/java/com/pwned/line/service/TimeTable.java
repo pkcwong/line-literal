@@ -35,18 +35,24 @@ public class TimeTable extends DefaultService {
      */
     @Override
     public void payload() throws Exception {
-        /*
-        if(this.fulfillment.equals("timetable"){
-
-            MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
-
-            //fetch buff -> data from MongoDB
-            BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
-            ArrayList<Document> user = MongoDB.get(mongo.getCollection("user").find(SELF));
-            JSONObject USER = new JSONObject(user.get(0).toJson());
+        MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
+        JSONObject apiParam = new JSONObject(this.getParam("parameters").toString());
+        String add = apiParam.getString("ReviewAdd");
+        //find
+        if(!add.equals("add")){
+            this.fulfillment = "";
+            ArrayList<Document> courseReview = MongoDB.get(mongo.getCollection("courseReview").find());
+            if (this.fulfillment.equals("")) {
+                this.fulfillment = "Sorry, no timetable yet. Please login your Student Center, and then go to class schedule " +
+                        "to copy your timetable! :)";
+            }
+        }
+        else{
+            BasicDBObject SELF = new BasicDBObject("uid", this.getParam("uid").toString());
+            mongo.getCollection("user").updateOne(SELF, new BasicDBObject("$set", new BasicDBObject("timetablebuff", new BasicDBObject().append("cmd", "timetable::add"))));
+            this.fulfillment = "You can copy your timetable here: ";
 
         }
-        */
 
     }
 

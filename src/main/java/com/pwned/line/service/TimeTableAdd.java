@@ -2,9 +2,11 @@ package com.pwned.line.service;
 
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 import org.json.JSONObject;
+import com.pwned.line.entity.Course;
 import java.util.ArrayList;
 
 
@@ -25,15 +27,17 @@ public class TimeTableAdd extends DefaultService {
     @Override
     public void payload() throws Exception {
         System.out.println("getting timetable");
-        //MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
-        //BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
-        //ArrayList<Document> user = MongoDB.get(mongo.getCollection("user").find(SELF));
-        //JSONObject USER = new JSONObject(user.get(0).toJson());
+        MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
+        BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
+        ArrayList<Document> user = MongoDB.get(mongo.getCollection("user").find(SELF));
+        JSONObject USER = new JSONObject(user.get(0).toJson());
+        Document userid = new Document();
+        userid.append("uid", this.getParam("uid").toString());
+        mongo.getCollection("Timetable").insertOne(userid);
         //String timetable = USER.getJSONObject("timetablebuff").getJSONObject("data").toString();
-        String timetable = this.fulfillment;
-        System.out.println();
-        String[] key = {"Lecture", "Laboratory", "Tutorial", "Others"};
 
+        String timetable = this.fulfillment;
+        String[] key = {"Lecture", "Laboratory", "Tutorial", "Others"};
         String[] arr = timetable.split("\n");
         ArrayList<String> timetableArr = new ArrayList<>();
         for(String s: arr){
@@ -42,57 +46,63 @@ public class TimeTableAdd extends DefaultService {
                 timetableArr.add(str);
             }
         }
-
         ArrayList<String> classID = new ArrayList<>();
+        ArrayList<Course> Courses = new ArrayList<>();
         for(int i = 0;i<timetableArr.size();i++){
-            System.out.println("i="+i+" "+timetableArr.get(i));
+            if(timetableArr.get(i).equals("Status")){
+                String[] courseName= timetableArr.get(i-1).split(" ");
+                String department = courseName[0];
+                String code = courseName[1];
+                String courseCode = department+" "+code;
+                Course course = new Course(department, code);
+                course.query();
+                Courses.add(course);
+
+            }
             for(String s:key){
                 if(timetableArr.get(i).equals(s)){
-                    System.out.println("match"+s);
                     classID.add(timetableArr.get(i-2));
                 }
             }
         }
-        this.fulfillment="the Class ID:";
-        System.out.println("after extraction:");
-        for(String s:classID){
-            System.out.println(s);
-            this.fulfillment=this.fulfillment+" "+s;
+        Document CourseList = new Document();
+        for(Course c:Courses){
+            Document Course = new Document();
+            Course.put("department", c.department);
+            Course.put("code", c.code);
+            Course.put("title", c.title);
+            for(int i=0;i<c.sections.size();i++){
+                for(int j=0;j<classID.size();j++){
+                    if(c.sections.get(i).code.equals(classID.get(j))){
+                        System.out.println("Found match sections of"+c.department+c.code);
+                         Document DateAndTime = new Document();
+                        for(int k=0;k<c.sections.get(i).dateAndTimes.size();k++){
+                            System.out.println("getting sections of"+c.department+c.code);
+                            Document timeslot = new Document();
+                            timeslot.put("day",c.sections.get(i).dateAndTimes.get(k).day);
+                            timeslot.put("start time",c.sections.get(i).dateAndTimes.get(k).startTime);
+                            timeslot.put("end time",c.sections.get(i).dateAndTimes.get(k).endTime);
+                            timeslot.put("venue", c.sections.get(i).rooms.get(k));
+                            DateAndTime.put("timeslot", timeslot);
+                        }
+                        Document Section = new Document();
+                        Section.put("class code", c.sections.get(i).code);
+                        Section.put("date and time", DateAndTime);
+                        Course.put("section", Section);
+                    }
+                }
+            }
+            CourseList.put("Course List", Course);
         }
-
-        //MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
-
-        //fetch buff -> data from MongoDB
-        /**BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
-        ArrayList<Document> user = MongoDB.get(mongo.getCollection("user").find(SELF));
-        JSONObject USER = new JSONObject(user.get(0).toJson());
-        String department = USER.getJSONObject("buff").getJSONObject("data").getString("department");
-        String code = USER.getJSONObject("buff").getJSONObject("data").getString("code");
-        String classID = USER.getJSONObject("buff").getJSONObject("data").getString("classID");
-
-        // find self, save to arraylist
-        BasicDBObject timetable = new BasicDBObject().append("department", department).append("code", code).append("classID", classID);
-        ArrayList<Document> timetableuser = MongoDB.get(mongo.getCollection("tablename").find(timetable));
-        // if arraylist.size is 0, create new timetable doc, else do nothing
-        if(timetableuser.size() == 0){
-            Document data = new Document();
-            data.append("uid", this.getParam("uid").toString());
-            data.append("department", department);
-            data.append("code", code);
-            data.append("classID", classID);
-            mongo.getCollection("").insertOne(data);
-
-        // add review
-
-        mongo.getCollection("tablename").findOneAndUpdate(new BasicDBObject().append("department", department).append("code", code), new BasicDBObject("$addToSet", new BasicDBObject("reviews", this.fulfillment)), new FindOneAndUpdateOptions().upsert(true));
-
+        mongo.getCollection("timetable").insertOne(CourseList);
         Document data = new Document();
         data.append("uid", this.getParam("uid").toString());
         data.append("bind", this.getParam("uid").toString());
         data.append("buff", new BasicDBObject("cmd", "master"));
         mongo.getCollection("user").findOneAndUpdate(SELF, new BasicDBObject("$set", data));
-        this.fulfillment = "Your course review had been added";
-         **/
+        this.fulfillment = "Saved your Timetable";
+
+
     }
 
     @Override
