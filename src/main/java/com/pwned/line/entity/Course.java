@@ -41,6 +41,7 @@ public class Course {
 			this.credit = matcher_course.group(4);
 			section_block = matcher_course.group(5);
 		}
+		System.out.println(section_block);
 		Pattern regex_section_info = Pattern.compile(REGEX_GET_SECTION);
 		Matcher matcher_section = regex_section_info.matcher(section_block);
 		ArrayList<String> section_info = new ArrayList<>();
