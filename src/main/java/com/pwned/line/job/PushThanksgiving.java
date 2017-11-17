@@ -63,6 +63,7 @@ public class PushThanksgiving extends DefaultJob{
 				acceptedUsersArrayList.add(usersArrayList.get(i));
 		}
 
+
 		ArrayList<String> uid = new ArrayList<>();
 		ArrayList<String> acceptedUid = new ArrayList<>();
 		StringBuilder acceptedName = new StringBuilder();
@@ -91,6 +92,7 @@ public class PushThanksgiving extends DefaultJob{
 
 
 		for (int i = 0; i < usersArrayList.size(); i++) {
+			KitchenSinkController.push(uid.get(i), new TextMessage("RDFDWFSDFSDFDSFS"));
 			if (!checkPushed(mongo, uid.get(i), today)) {
 				if (acceptedUid.contains(uid.get(i).toString())) {
 					if (checkSameDate(today, partyDate)) {
