@@ -83,10 +83,10 @@ public class Course {
 			String avail = null;
 			String wait = null;
 			while(matcher_section_quota_info.find()){
-				quota = matcher_section_quota_info.group(1);
-				enrol = matcher_section_quota_info.group(2);
-				avail = matcher_section_quota_info.group(3);
-				wait = matcher_section_quota_info.group(4);
+				quota = matcher_section_quota_info.group(2);
+				enrol = matcher_section_quota_info.group(3);
+				avail = matcher_section_quota_info.group(4);
+				wait = matcher_section_quota_info.group(5);
 			}
 			Section section = new Section(name, code, dateAndTimes, rooms, instructors, quota, enrol, avail, wait);
 			sections.add(section);
