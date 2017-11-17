@@ -31,17 +31,17 @@ public class CourseQuota extends DefaultService{
 //			}
 			this.fulfillment +="\n";
 		}
-		//System.out.println("Department: " + course.department + "\nCode: " + course.code  + "\nTitle: " + course.title +
-		//"\nCredit: " + course.credit);
-//		for(int i = 0; i < course.sections.size(); i++){
-//			System.out.println("Section name: " + course.sections.get(i).name + "\nSection Code: " + course.sections.get(i).code + "\nQuota: " + course.sections.get(i).quota +
-//			"\nEnrol: " + course.sections.get(i).enrol +"\nAvail: " + course.sections.get(i).avail + "\nWait: " + course.sections.get(i).wait);
-//			for(int j = 0; j < course.sections.get(i).dateAndTimes.size(); j++){
-//				System.out.println("Day: " + course.sections.get(i).dateAndTimes.get(j).day + "\nStart Time: " + course.sections.get(i).dateAndTimes.get(j).startTime +
-//				"\nEnd Time: " + course.sections.get(i).dateAndTimes.get(j).endTime);
-//			}
-//			System.out.println();
-//		}
+		System.out.println("Department: " + course.department + "\nCode: " + course.code  + "\nTitle: " + course.title +
+		"\nCredit: " + course.credit);
+		for(int i = 0; i < course.sections.size(); i++){
+			System.out.println("Section name: " + course.sections.get(i).name + "\nSection Code: " + course.sections.get(i).code + "\nQuota: " + course.sections.get(i).quota +
+			"\nEnrol: " + course.sections.get(i).enrol +"\nAvail: " + course.sections.get(i).avail + "\nWait: " + course.sections.get(i).wait);
+			for(int j = 0; j < course.sections.get(i).dateAndTimes.size(); j++){
+				System.out.println("Day: " + course.sections.get(i).dateAndTimes.get(j).day + "\nStart Time: " + course.sections.get(i).dateAndTimes.get(j).startTime +
+				"\nEnd Time: " + course.sections.get(i).dateAndTimes.get(j).endTime);
+			}
+			System.out.println();
+		}
 	}
 
 	@Override
