@@ -25,10 +25,10 @@ public class TimeTableAdd extends DefaultService {
     @Override
     public void payload() throws Exception {
         System.out.println("getting timetable");
-        String[] arr = this.getParam("parameters").toString().split("\n");
-        System.out.println("splitted");
+        String ar = this.getParam("parameters").toString();
+        System.out.println(ar);
         String[] key = {"Lecture", "Laboratory", "Tutorial", "Others"};
-        //String[] arr = timetable.split("\n");
+        String[] arr = ar.split("\n");
         ArrayList<String> timetableArr = new ArrayList<>();
         for(String s: arr){
             String[] temp = s.split("\t");
