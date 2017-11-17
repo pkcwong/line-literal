@@ -24,7 +24,7 @@ public class KitchenSinkApplication {
 		//PushNineDaysWeather.NineDaysWeather();
 		scheduler.start();
 		scheduler.scheduleJob(PushWeather.buildJob(PushWeather.class), PushWeather.buildTrigger(300));
-		scheduler.scheduleJob(PushThanksgiving.buildJob(PushThanksgiving.class), PushThanksgiving.buildTrigger(24));
+		scheduler.scheduleJob(PushThanksgiving.buildJob(PushThanksgiving.class), PushThanksgiving.buildTrigger(1));
 	}
 
 }

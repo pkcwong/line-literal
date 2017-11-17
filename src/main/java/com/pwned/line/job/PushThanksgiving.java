@@ -80,20 +80,22 @@ public class PushThanksgiving extends DefaultJob{
 		}
 
 
-
+		System.out.println("\n\n\nMaking calender\n\n\n");
 		Calendar today = Calendar.getInstance();
 		Calendar partyDate = Calendar.getInstance();
 		partyDate.set(2017,Calendar.NOVEMBER,22);
-		//oday.set(2017,Calendar.NOVEMBER,22);
+		//Today.set(2017,Calendar.NOVEMBER,22);
 		today.add(Calendar.HOUR,8);
 		partyDate.add(Calendar.HOUR,8);
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		String formatted = format1.format(today.getTime());
+		System.out.println("\n\n\nAfter Making calender\n\n\n");
 
 
 		for (int i = 0; i < usersArrayList.size(); i++) {
-			KitchenSinkController.push(uid.get(i), new TextMessage("RDFDWFSDFSDFDSFS"));
+			System.out.println("\n\n\nChecking pushed\n\n\n");
 			if (!checkPushed(mongo, uid.get(i), today)) {
+				System.out.println("\n\n\nNot pushed\n\n\n");
 				if (acceptedUid.contains(uid.get(i).toString())) {
 					if (checkSameDate(today, partyDate)) {
 						KitchenSinkController.push(uid.get(i), new TextMessage("Remember to join the party tomorrow! " + acceptedName.toString() + " will join also!"));
@@ -101,6 +103,7 @@ public class PushThanksgiving extends DefaultJob{
 				} else{
 					KitchenSinkController.push(uid.get(i).toString(), new ImageMessage(imageURI, imageURI));
 				}
+				System.out.println("\n\n\nAdd the date\n\n\n");
 				Document data = new Document();
 				data.append("Date", formatted);
 				BasicDBObject SELF = new BasicDBObject().append("uid", uid.get(i));
