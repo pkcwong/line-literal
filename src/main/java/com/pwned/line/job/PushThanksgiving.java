@@ -123,6 +123,7 @@ public class PushThanksgiving extends DefaultJob{
 		if(user.size() == 0){
 			Document data = new Document();
 			data.append("uid", uid);
+			mongo.getCollection("party").insertOne(data);
 			return false;
 		}
 		JSONObject date = new JSONObject(user.get(0).toJson());
