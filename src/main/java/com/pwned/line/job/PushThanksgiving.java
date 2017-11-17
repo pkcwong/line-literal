@@ -93,24 +93,22 @@ public class PushThanksgiving extends DefaultJob{
 
 
 		for (int i = 0; i < usersArrayList.size(); i++) {
-			System.out.println("\n\n\nChecking pushed\n\n\n");
 			if (!checkPushed(mongo, uid.get(i), today)) {
-				System.out.println("\n\n\nNot pushed\n\n\n");
 				if (acceptedUid.contains(uid.get(i).toString())) {
 					if (checkSameDate(today, partyDate)) {
 						KitchenSinkController.push(uid.get(i), new TextMessage("Remember to join the party tomorrow! " + acceptedName.toString() + " will join also!"));
 					}
 				} else{
+
 					KitchenSinkController.push(uid.get(i).toString(), new ImageMessage(imageURI, imageURI));
 				}
-				System.out.println("\n\n\nAdd the date\n\n\n");
 				Document data = new Document();
 				data.append("Date", formatted);
 				BasicDBObject SELF = new BasicDBObject().append("uid", uid.get(i));
 				mongo.getCollection("party").findOneAndUpdate(SELF, new BasicDBObject("$addToSet", data));
 
 			}else
-				return;
+				continue;
 		}
 
 	}
