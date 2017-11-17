@@ -2,13 +2,17 @@ package com.pwned.line.job;
 
 import com.linecorp.bot.model.message.ImageMessage;
 import com.linecorp.bot.model.message.TextMessage;
+import com.mongodb.BasicDBObject;
 import com.pwned.line.KitchenSinkController;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.quartz.*;
+
+import javax.print.Doc;
 import java.lang.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,6 +29,7 @@ import java.util.TimeZone;
 public class PushThanksgiving extends DefaultJob{
 	public static ArrayList<Document> usersArrayList;
 	public static ArrayList<Document> acceptedUsersArrayList;
+	private static String imageURI = "https://i.pinimg.com/736x/bc/bb/40/bcbb405562b44357e48c84eeadcd6d9b--thanksgiving--thanksgiving-decorations.jpg";
 
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
@@ -48,8 +53,11 @@ public class PushThanksgiving extends DefaultJob{
 	}
 
 	public static void pushThanksgiving() throws JSONException {
-		String imageURI = "https://i.pinimg.com/736x/bc/bb/40/bcbb405562b44357e48c84eeadcd6d9b--thanksgiving--thanksgiving-decorations.jpg";
-		usersArrayList = MongoDB.get(new MongoDB(System.getenv("MONGODB_URI")).getCollection("user").find());
+
+
+		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
+
+		usersArrayList = MongoDB.get(mongo.getCollection("user").find());
 		acceptedUsersArrayList = MongoDB.get(new MongoDB(System.getenv("MONGODB_URI")).getCollection("party").find());
 
 		ArrayList<String> uid = new ArrayList<>();
@@ -66,21 +74,33 @@ public class PushThanksgiving extends DefaultJob{
 				acceptedName.append(", ");
 		}
 
+
+
 		Calendar today = Calendar.getInstance();
 		Calendar partyDate = Calendar.getInstance();
 		partyDate.set(2017,Calendar.NOVEMBER,22);
 		today.add(Calendar.HOUR,8);
 		partyDate.add(Calendar.HOUR,8);
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+		String formatted = format1.format(today.getTime());
+
 
 		for (int i = 0; i < usersArrayList.size(); i++) {
-			if(acceptedUid.contains(uid.get(i).toString()))
-			{
-				if(checkSameDate(today,partyDate)){
-					KitchenSinkController.push(uid.get(i), new TextMessage("Remember to join the party tomorrow! " + acceptedName.toString() + " will join also!"));
+			if (!checkPushed(mongo, uid.get(i), today)) {
+				if (acceptedUid.contains(uid.get(i).toString())) {
+					if (checkSameDate(today, partyDate)) {
+						KitchenSinkController.push(uid.get(i), new TextMessage("Remember to join the party tomorrow! " + acceptedName.toString() + " will join also!"));
+					}
+				} else{
+					KitchenSinkController.push(uid.get(i).toString(), new ImageMessage(imageURI, imageURI));
 				}
-			}
-			else
-				KitchenSinkController.push(uid.get(i).toString(), new ImageMessage(imageURI, imageURI));
+				Document data = new Document();
+				data.append("Date", formatted);
+				BasicDBObject SELF = new BasicDBObject().append("uid", uid.get(i));
+				mongo.getCollection("party").findOneAndUpdate(SELF, new BasicDBObject("$addToSet", data));
+
+			}else
+				return;
 		}
 
 	}
@@ -92,6 +112,22 @@ public class PushThanksgiving extends DefaultJob{
 		}else{
 			return false;
 		}
+	}
+
+	private static boolean checkPushed(MongoDB mongo, String uid, Calendar today) throws JSONException {
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+		String formatted = format1.format(today.getTime());
+
+		BasicDBObject SELF = new BasicDBObject().append("uid", uid);
+		ArrayList<Document> user = MongoDB.get(mongo.getCollection("party").find(SELF));
+		JSONObject date = new JSONObject(user.get(0).toJson());
+		for(int i = 0; i < date.getJSONArray("Date").length(); i++){
+			if(date.getJSONArray("Date").get(i).toString().equals(formatted)){
+				return true;
+			}else
+				return false;
+		}
+
 
 
 	}
