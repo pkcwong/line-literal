@@ -45,12 +45,11 @@ public class Thanksgiving extends DefaultService{
 			MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
 			String uid = this.getParam("uid").toString();
 			BasicDBObject SELF = new BasicDBObject().append("uid", uid);
-			System.out.println("\n\n\n\n\n\n\n\n\n\n" + uid + "\n\n\n\n\n\n\n\n");
 			ArrayList<Document> user = MongoDB.get(mongo.getCollection("party").find(SELF));
-			System.out.println("\n\n\n\n\n\n\n\n\n\n" + user.toString() + "\n\n\n\n\n\n\n\n");
 
 
-			if (user.get(0).getString("accept").equals("N")) {
+
+			if (user.get(0).getString("Accept").equals("N")) {
 				Document data = new Document();
 				data.append("accept","Y");
 				mongo.getCollection("party").findOneAndReplace(new BasicDBObject().append("uid", uid),data);
