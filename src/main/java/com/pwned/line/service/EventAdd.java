@@ -32,7 +32,7 @@ public class EventAdd extends DefaultService {
 		int month = Integer.parseInt(date[1]);
 		int day = Integer.parseInt(date[2]);
 
-		if(keywordArray.length !=2){
+		if(keywordArray.length !=2 || date.length!=3){
 			this.fulfillment = "Please follow that format {EventName}@yyyy/mm/dd";
 			return;
 		}else if (year > 2018 || year < 2017){
@@ -58,14 +58,12 @@ public class EventAdd extends DefaultService {
 		BasicDBObject data = new BasicDBObject();
 		BasicDBObject event = new BasicDBObject();
 		event.append("Event Name", keywordArray[0]);
-		event.append("Date", keywordArray[0]);
+		event.append("Date", keywordArray[1]);
 		event.append("Start Time", "");
 		event.append("End Time", "");
 
 		data.append("events", event);
-
-
-		mongo.getCollection("event").findOneAndUpdate(groupSELF, new BasicDBObject("$addToSet", data));
+		mongo.getCollection("Event").findOneAndUpdate(groupSELF, new BasicDBObject("$addToSet", data));
 
 		Document doc = new Document();
 		doc.append("uid", this.getParam("uid").toString());
