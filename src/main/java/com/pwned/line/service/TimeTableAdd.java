@@ -25,7 +25,7 @@ public class TimeTableAdd extends DefaultService {
     @Override
     public void payload() throws Exception {
         System.out.println("getting timetable");
-        String ar = this.getParam("parameters").toString();
+        String ar = this.getParam("fulfillment").toString();
         System.out.println(ar);
         String[] key = {"Lecture", "Laboratory", "Tutorial", "Others"};
         String[] arr = ar.split("\n");
