@@ -66,6 +66,11 @@ public class MasterController extends DefaultService {
 		if (USER.getJSONObject("buff").getString("cmd").equals("review::add")) {
 			return new ReviewAdd(this).resolve().get();
 		}
+		if (USER.getJSONObject("buff").getString("cmd").equals("event::add")) {
+			String temp = this.fulfillment.toLowerCase();
+			return new EventAdd(this, temp).resolve().get();
+		}
+
 
 		if (this.fulfillment.equals("anonymous") || this.fulfillment.equals("Anonymous")) {
 			return new AnonymousChat(this).resolve().get();
@@ -165,7 +170,7 @@ public class MasterController extends DefaultService {
 		for (String keywords : event) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
-				//return new DialogFlowEventMaker(this).resolve().get();
+				return new EventMaker(this, temp).resolve().get();
 			}
 		}
 		for (String keywords : help) {
