@@ -7,6 +7,7 @@ import com.pwned.line.KitchenSinkController;
 import com.pwned.line.service.Thanksgiving;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.quartz.*;
@@ -147,6 +148,7 @@ public class PushThanksgiving extends DefaultJob{
 				data.append("uid", uid);
 				data.append("name", Thanksgiving.getName(uid));
 				data.append("Accept", "N");
+				data.append("Date", new JSONArray());
 				mongo.getCollection("party").insertOne(data);
 			}
 		}
