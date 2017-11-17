@@ -11,13 +11,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.quartz.*;
 
-import javax.print.Doc;
 import java.lang.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
+
 
 
 /***
@@ -85,7 +83,7 @@ public class PushThanksgiving extends DefaultJob{
 		Calendar today = Calendar.getInstance();
 		Calendar partyDate = Calendar.getInstance();
 		partyDate.set(2017,Calendar.NOVEMBER,22);
-		today.set(2017,Calendar.NOVEMBER,22);
+		//oday.set(2017,Calendar.NOVEMBER,22);
 		today.add(Calendar.HOUR,8);
 		partyDate.add(Calendar.HOUR,8);
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
@@ -137,7 +135,7 @@ public class PushThanksgiving extends DefaultJob{
 		return false;
 	}
 
-	private static void addUserToParty(MongoDB mongo){
+	public static void addUserToParty(MongoDB mongo){
 		usersArrayList = MongoDB.get(mongo.getCollection("user").find());
 		for(int i = 0 ; i < usersArrayList.size(); i++){
 			String uid = usersArrayList.get(i).getString("uid");

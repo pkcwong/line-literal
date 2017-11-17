@@ -2,10 +2,10 @@ package com.pwned.line.service;
 
 import com.mongodb.BasicDBObject;
 import com.pwned.line.http.HTTP;
+import com.pwned.line.job.PushThanksgiving;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 
-import javax.print.Doc;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,8 +46,9 @@ public class Thanksgiving extends DefaultService{
 			String uid = this.getParam("uid").toString();
 			BasicDBObject SELF = new BasicDBObject().append("uid", uid);
 			ArrayList<Document> user = MongoDB.get(mongo.getCollection("party").find(SELF));
-
-
+			if(user.size() == 0){
+				PushThanksgiving.addUserToParty(mongo);
+			}
 
 			if (user.get(0).getString("Accept").equals("N")) {
 				mongo.getCollection("party").findOneAndUpdate(new BasicDBObject().append("uid", uid),new BasicDBObject("$set", new BasicDBObject().append("Accept", "Y")));
