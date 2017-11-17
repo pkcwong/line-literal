@@ -23,9 +23,13 @@ public class DialogFlowSociety extends DefaultService {
      */
     @Override
     public void payload() throws Exception {
+        System.out.println("dialogflowSociety1");
         JSONObject json = new ApiAI(ACCESS_TOKEN, this.getParam("uid").toString(), this.fulfillment).execute();
+        System.out.println("dialogflowSociety2");
         this.fulfillment = json.getJSONObject("result").getJSONObject("fulfillment").getString("speech");
+        System.out.println("dialogflowSociety3");
         this.setParam("parameters", json.getJSONObject("result").getJSONObject("parameters"));
+        System.out.println("dialogflowSociety4");
     }
 
     @Override
