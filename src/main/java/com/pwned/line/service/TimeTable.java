@@ -49,7 +49,7 @@ public class TimeTable extends DefaultService {
         }
         else{
             BasicDBObject SELF = new BasicDBObject("uid", this.getParam("uid").toString());
-            mongo.getCollection("user").updateOne(SELF, new BasicDBObject("$set", new BasicDBObject("timetablebuff", new BasicDBObject().append("cmd", "timetable::add"))));
+            mongo.getCollection("user").updateOne(SELF, new BasicDBObject("$set", new BasicDBObject("buff", new BasicDBObject().append("cmd", "timetable::add"))));
             this.fulfillment = "You can copy your timetable here: ";
 
         }

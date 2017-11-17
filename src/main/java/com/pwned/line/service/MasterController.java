@@ -66,7 +66,7 @@ public class MasterController extends DefaultService {
 		if (USER.getJSONObject("buff").getString("cmd").equals("review::add")) {
 			return new ReviewAdd(this).resolve().get();
 		}
-		if (USER.getJSONObject("timetablebuff").getString("cmd").equals("timetable::add")) {
+		if (USER.getJSONObject("buff").getString("cmd").equals("timetable::add")) {
 			return new TimeTableAdd(this).resolve().get();
 		}
 		if (this.fulfillment.equals("anonymous") || this.fulfillment.equals("Anonymous")) {
