@@ -55,6 +55,14 @@ public class MongoDB extends MongoClient {
 		return this.getDatabase(this.database).getCollection(collection);
 	}
 
+	/***
+	 * Drops a Mongo Collection
+	 * @param collection collection name
+	 */
+	public void drop(String collection) {
+		super.getDatabase(this.database).getCollection(collection).drop();
+	}
+
 	public String getHost() {
 		return this.host;
 	}

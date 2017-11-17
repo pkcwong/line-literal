@@ -1,5 +1,7 @@
 package com.pwned.line.service;
 
+import com.linecorp.bot.model.message.TextMessage;
+import com.pwned.line.KitchenSinkController;
 import com.pwned.line.entity.Course;
 import com.pwned.line.web.ApiAI;
 import org.json.JSONObject;
@@ -20,28 +22,16 @@ public class CourseQuota extends DefaultService{
 		String code = apiParam.getString("number");
 		Course course = new Course(department, code);
 		course.query();
-		this.fulfillment = "Department: " + course.department + "\nCode: " + course.code  + "\nTitle: " + course.title +
-				"\nCredit: " + course.credit + "\n\n";
+		KitchenSinkController.push(this.getParam("uid").toString(), new TextMessage("Department: " + course.department + "\nCode: " + course.code  + "\nTitle: " + course.title +
+				"\nCredit: " + course.credit));
 		for(int i = 0; i < course.sections.size(); i++){
-			this.fulfillment += "Section name: " + course.sections.get(i).name + "\nSection Code: " + course.sections.get(i).code + "\nQuota: " + course.sections.get(i).quota +
-			"\nEnrol: " + course.sections.get(i).enrol +"\nAvail: " + course.sections.get(i).avail + "\nWait: " + course.sections.get(i).wait + "\n";
-//			for(int j = 0; j < course.sections.get(i).dateAndTimes.size(); j++) {
-//				this.fulfillment += "Day: " + course.sections.get(i).dateAndTimes.get(j).day + "\nStart Time: " + course.sections.get(i).dateAndTimes.get(j).startTime +
-//				"\nEnd Time: " + course.sections.get(i).dateAndTimes.get(j).endTime + "\n";
-//			}
-			this.fulfillment +="\n";
+			KitchenSinkController.push(this.getParam("uid").toString(), new TextMessage("Section name: " + course.sections.get(i).name + "\nSection Code: " + course.sections.get(i).code + "\nQuota: " + course.sections.get(i).quota +
+					"\nEnrol: " + course.sections.get(i).enrol +"\nAvail: " + course.sections.get(i).avail + "\nWait: " + course.sections.get(i).wait));
 		}
-		//System.out.println("Department: " + course.department + "\nCode: " + course.code  + "\nTitle: " + course.title +
-		//"\nCredit: " + course.credit);
-//		for(int i = 0; i < course.sections.size(); i++){
-//			System.out.println("Section name: " + course.sections.get(i).name + "\nSection Code: " + course.sections.get(i).code + "\nQuota: " + course.sections.get(i).quota +
-//			"\nEnrol: " + course.sections.get(i).enrol +"\nAvail: " + course.sections.get(i).avail + "\nWait: " + course.sections.get(i).wait);
-//			for(int j = 0; j < course.sections.get(i).dateAndTimes.size(); j++){
-//				System.out.println("Day: " + course.sections.get(i).dateAndTimes.get(j).day + "\nStart Time: " + course.sections.get(i).dateAndTimes.get(j).startTime +
-//				"\nEnd Time: " + course.sections.get(i).dateAndTimes.get(j).endTime);
-//			}
-//			System.out.println();
-//		}
+		this.fulfillment = "";
+		if(course.department == null){
+			this.fulfillment = "Sorry " + department + code + " could not be found in Course Quota Page";
+		}
 	}
 
 	@Override

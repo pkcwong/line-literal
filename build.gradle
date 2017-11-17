@@ -28,7 +28,9 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'junit', name: 'junit', version: '4.4'
+    compile group: 'org.ajoberstar', name: 'gradle-jacoco', version: '0.3.0'
+    compile group: 'org.jacoco', name: 'jacoco-maven-plugin', version: '0.7.8'
     compile 'com.linecorp.bot:line-bot-spring-boot:1.10.0'
     compile group: 'postgresql', name: 'postgresql', version: '9.0-801.jdbc4'
     compile group: 'org.json', name: 'json', version: '20090211'
@@ -38,3 +40,19 @@ dependencies {
 }
 
 apply plugin: 'org.springframework.boot'
+
+test {
+    environment "LINE_BOT_CHANNEL_SECRET", "LINE_BOT_CHANNEL_SECRET"
+    environment "LINE_BOT_CHANNEL_TOKEN", "LINE_BOT_CHANNEL_TOKEN"
+    environment "MONGODB_URI", "mongodb://user:password@ds113046.mlab.com:13046/line-literal-test"
+}
+
+apply plugin: "jacoco"
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}
