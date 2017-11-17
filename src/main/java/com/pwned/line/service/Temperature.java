@@ -29,13 +29,13 @@ public class Temperature extends DefaultService{
 		String temperatureString = http.get();
 		String temperature = "";
 		if(city.equals("Hong Kong")){
-            temperature = temperatureString.substring(temperatureString.indexOf("Air temperature :") + 18, temperatureString.indexOf("Air temperature :") + 20);
-            temperature = temperature + "°C";
+            		temperature = temperatureString.substring(temperatureString.indexOf("Air temperature :") + 18, temperatureString.indexOf("Air temperature :") + 20);
+           		temperature = temperature + "°C";
 		}else if(temperatureString.contains(city)){
 			temperature = temperatureString.substring(temperatureString.indexOf(city) + city.length() + 58, temperatureString.indexOf(city) + city.length() + 60);
 			temperature = temperature + "°C";
 		}
-		if(temperature == ""){
+		if(temperature.equals("")){
 			temperature = "not available";
 		}
 		temperature = "The temperature at " + city + " is " + temperature + ".";
