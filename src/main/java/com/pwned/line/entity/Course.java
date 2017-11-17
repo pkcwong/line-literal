@@ -67,14 +67,21 @@ public class Course {
 			ArrayList<DateAndTime> dateAndTimes = new ArrayList<>();
 			ArrayList<String> rooms = new ArrayList<>();
 			ArrayList<String> instructors = new ArrayList<>();
+			String day = null;
+			String startTime = null;
+			String endTime = null;
 			while(matcher_section_data.find()){
-				String day = matcher_section_data.group(1);
-				String startTime = matcher_section_data.group(2);
-				String endTime = matcher_section_data.group(3);
+				day = matcher_section_data.group(1);
+				startTime = matcher_section_data.group(2);
+				endTime = matcher_section_data.group(3);
 				DateAndTime dateAndTime = new DateAndTime(day, startTime, endTime);
 				dateAndTimes.add(dateAndTime);
 				rooms.add(matcher_section_data.group(4));
 				instructors.add(matcher_section_data.group(5));
+			}
+			if(day == null && startTime == null && endTime == null){
+				DateAndTime dateAndTime = new DateAndTime("TBA", "TBA", "TBA");
+				dateAndTimes.add(dateAndTime);
 			}
 			Pattern regex_section_quota_info = Pattern.compile(REGEX_GET_QUOTA_INFO);
 			Matcher matcher_section_quota_info = regex_section_quota_info.matcher(section_info.get(i));
