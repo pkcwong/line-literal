@@ -28,8 +28,8 @@ import java.util.TimeZone;
  * @author Bear
  */
 public class PushThanksgiving extends DefaultJob{
-	public static ArrayList<Document> usersArrayList;
-	public static ArrayList<Document> acceptedUsersArrayList;
+	public static ArrayList<Document> usersArrayList = new ArrayList<>();
+	public static ArrayList<Document> acceptedUsersArrayList = new ArrayList<>();
 	private static String imageURI = "https://i.pinimg.com/736x/bc/bb/40/bcbb405562b44357e48c84eeadcd6d9b--thanksgiving--thanksgiving-decorations.jpg";
 
 	@Override
@@ -72,6 +72,7 @@ public class PushThanksgiving extends DefaultJob{
 		for (int i = 0; i < usersArrayList.size(); i++) {
 			uid.add(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"));
 		}
+
 		for (int i = 0; i < acceptedUsersArrayList.size(); i++) {
 			acceptedUid.add(new JSONObject(acceptedUsersArrayList.get(i).toJson()).getString("uid"));
 			acceptedName.append((new JSONObject(acceptedUsersArrayList.get(i).toJson()).getString("name")).toUpperCase());
