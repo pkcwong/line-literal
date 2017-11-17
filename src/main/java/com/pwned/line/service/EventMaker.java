@@ -4,6 +4,7 @@ import com.mongodb.BasicDBObject;
 import com.pwned.line.http.HTTP;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
+import org.json.JSONObject;
 
 
 import java.util.ArrayList;
@@ -27,10 +28,12 @@ public class EventMaker extends DefaultService{
 	public void payload() throws Exception{
 		String groupId = this.getParam("groupId").toString();
 		String uid = this.getParam("uid").toString();
+
 		if(uid.equals(groupId)){
 			this.fulfillment = "Sorry, you can only use this function in a group chat";
 			return;
 		}
+
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
 		BasicDBObject SELF = new BasicDBObject().append("groupId", groupId);
 		ArrayList<Document> group = MongoDB.get(mongo.getCollection("Event").find(SELF));
@@ -40,15 +43,36 @@ public class EventMaker extends DefaultService{
 			data.append("uid", uid);
 			mongo.getCollection("Event").insertOne(data);
 		}
+		BasicDBObject eventName = new BasicDBObject().append("eventName", groupId);
+		ArrayList<Document> events = MongoDB.get(mongo.getCollection("Event").find(eventName));
+		if(events.size() == 0){
+			SELF = new BasicDBObject().append("uid", uid);
+			mongo.getCollection("user").updateOne(SELF,
+					new BasicDBObject("$set",
+							new BasicDBObject("buff",
+									new BasicDBObject().append("cmd", "event::add").append("data", new BasicDBObject().append("groupid", groupId)))));
+			this.fulfillment = "You have not create event yet, please create your event with {Event Name}@yyyy/mm/dd:";
+			return;
+
+		}else{
+			JSONObject event = new JSONObject(events.get(0).toJson());
+			this.fulfillment = event.toString();
+		}
 
 		URI = URI.replace("{groupId}", groupId);
 		URI = URI.replace("{userId}", uid);
 		HTTP http = new HTTP(URI);
 		http.setHeaders("Authorization", "Bearer " + ACCESS_TOKEN);
 		System.out.printf("Result of groupId = %s\n", this.getParam("groupId").toString());
-		this.fulfillment = "Please create your event with {Event Name}@date";
+		this.fulfillment = "Please create your event with {Event Name}@yyyy/mm/dd";
 	}
 
+	private boolean checkGroupChat(String uid, String gid){
+		if(uid.equals(gid)){
+			return false;
+		}else
+			return true;
+	}
 
 	@Override
 	public Service chain() throws Exception {

@@ -66,8 +66,14 @@ public class MasterController extends DefaultService {
 		BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
 		ArrayList<Document> user = MongoDB.get(mongo.getCollection("user").find(SELF));
 		JSONObject USER = new JSONObject(user.get(0).toJson());
+
+
 		if (USER.getJSONObject("buff").getString("cmd").equals("review::add")) {
 			return new ReviewAdd(this).resolve().get();
+		}
+
+		if (USER.getJSONObject("buff").getString("cmd").equals("event::add")) {
+			return new EventAdd(this).resolve().get();
 		}
 
 		if (this.fulfillment.equals("anonymous") || this.fulfillment.equals("Anonymous")) {
