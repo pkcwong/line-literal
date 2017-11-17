@@ -11,11 +11,10 @@ import com.pwned.line.http.HTTP;
  */
 
 public class Weather extends DefaultService{
-
-
 	public Weather(Service service) {
 		super(service);
 	}
+	
 	@Override
 	public void payload() throws Exception {
 		String link = "http://www.hko.gov.hk/wxinfo/currwx/flw.htm";
@@ -29,8 +28,7 @@ public class Weather extends DefaultService{
 		}
 		this.fulfillment = this.fulfillment.replace("@weather::weather", weather);
 	}
-
-
+	
 	@Override
 	public Service chain() throws Exception {
 		return this;
