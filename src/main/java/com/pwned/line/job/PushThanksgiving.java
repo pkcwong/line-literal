@@ -150,7 +150,6 @@ public class PushThanksgiving extends DefaultJob{
 				data.append("Accept", "N");
 				mongo.getCollection("party").insertOne(data);
 				data = new Document();
-				data.append("Date", "");
 				mongo.getCollection("party").findOneAndUpdate(SELF, new BasicDBObject("$addToSet", data));
 
 			}
