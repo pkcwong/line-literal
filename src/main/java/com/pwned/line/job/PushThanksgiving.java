@@ -147,7 +147,6 @@ public class PushThanksgiving extends DefaultJob{
 				data.append("uid", uid);
 				data.append("name", Thanksgiving.getName(uid));
 				data.append("Accept", "N");
-				data.append("Date", "");
 				mongo.getCollection("party").insertOne(data);
 			}
 		}
