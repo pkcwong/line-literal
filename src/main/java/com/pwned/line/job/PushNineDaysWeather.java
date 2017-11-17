@@ -1,5 +1,4 @@
 package com.pwned.line.job;
-
 import com.linecorp.bot.model.action.URIAction;
 import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.template.CarouselColumn;
@@ -9,15 +8,15 @@ import com.pwned.line.http.HTTP;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 import org.quartz.*;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Calendar;
+
 public class PushNineDaysWeather extends DefaultJob{
     public static ArrayList<Document> usersArrayList;
+    
     public PushNineDaysWeather() {
-
     }
 
     @Override
@@ -25,7 +24,6 @@ public class PushNineDaysWeather extends DefaultJob{
         System.out.println("PushNineDaysWeather");
         this.NineDaysWeather("hi");
     }
-
 
     public static JobDetail buildJob(Class <? extends Job> job) {
         return JobBuilder.newJob(PushWeather.class).build();
