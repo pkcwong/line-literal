@@ -44,6 +44,7 @@ public class Course {
 				this.title = matcher_course.group(4);
 				this.credit = matcher_course.group(5);
 				section_block = matcher_course.group(6);
+				break;
 			}
 		}
 		System.out.println(section_block);
