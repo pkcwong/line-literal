@@ -25,7 +25,7 @@ public class TimeTableAdd extends DefaultService {
     @Override
     public void payload() throws Exception {
         System.out.println("getting timetable");
-        String[] arr = new JSONObject(this.getParam("parameters").toString()).toString().split("\n");
+        String[] arr = this.getParam("parameters").toString().split("\n");
         System.out.println("splitted");
         String[] key = {"Lecture", "Laboratory", "Tutorial", "Others"};
         //String[] arr = timetable.split("\n");
