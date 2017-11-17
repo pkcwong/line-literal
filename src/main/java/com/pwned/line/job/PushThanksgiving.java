@@ -127,20 +127,12 @@ public class PushThanksgiving extends DefaultJob{
 
 		BasicDBObject SELF = new BasicDBObject().append("uid", uid);
 		ArrayList<Document> user = MongoDB.get(mongo.getCollection("party").find(SELF));
-		if(user.size() == 0){
-			Document data = new Document();
-			data.append("uid", uid);
-			data.append("name", Thanksgiving.getName(uid));
-			data.append("Accept", "N");
-			mongo.getCollection("party").insertOne(data);
-			return false;
-		}
+
 		JSONObject date = new JSONObject(user.get(0).toJson());
 		for(int i = 0; i < date.getJSONArray("Date").length(); i++){
 			if(date.getJSONArray("Date").get(i).toString().equals(formatted)){
 				return true;
-			}else
-				return false;
+			}
 		}
 		return false;
 	}
