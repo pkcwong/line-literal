@@ -9,7 +9,6 @@ import org.bson.Document;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.quartz.*;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,7 +22,6 @@ public class PushWeather extends DefaultJob{
     public static ArrayList<org.bson.Document> weatherArrayList;
 
     public PushWeather() {
-
     }
 
     @Override
@@ -31,7 +29,6 @@ public class PushWeather extends DefaultJob{
         System.out.println("PushWeather");
         this.updateWeather();
     }
-
 
     public static JobDetail buildJob(Class <? extends Job> job) {
         return JobBuilder.newJob(PushWeather.class).build();
@@ -96,11 +93,12 @@ public class PushWeather extends DefaultJob{
         String link = "http://www.hko.gov.hk/wxinfo/currwx/flw.htm";
         HTTP http = new HTTP(link);
         String weather = http.get();
-        String[] messages = {"Weather forecast", "<br/><br/>Outlook"};
+        String[] messages = {"Weather forecast", "<br/><br/>Outlook", "Bulletin updated at "};
+        String time = weather.substring(weather.indexOf(messages[2] + messages[2].length(), weather.indexOf(messages[2] + messages[2].length() + 21))
         weather = weather.substring(weather.indexOf(messages[0]), weather.indexOf(messages[1]));
         weather = weather.replace("<br/>", "\n");
         while (weather.contains("<")) {
-            weather = weather.substring(0, weather.indexOf("<")) + weather.substring(weather.indexOf(">") + 1);
+            weather = weather.substring(0, weather.indexOf("<")) + weather.substring(weather.indexOf(">") + 1) + "\n" + time;
         }
         return weather;
     }
@@ -108,12 +106,12 @@ public class PushWeather extends DefaultJob{
     public static void pushWeather(String weatherForecast) {
         for (int i = 0; i < usersArrayList.size(); i++) {
             try {
-                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Hong_Kong"));
-                Date date = new Date();
-                KitchenSinkController.push(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"), new TextMessage(weatherForecast + "\n" + dateFormat.format(date)));
+                //DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                //dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Hong_Kong"));
+                //Date date = new Date(); + "\n" + dateFormat.format(date)
+                KitchenSinkController.push(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"), new TextMessage(weatherForecast));
                 if(weatherForecast.contains("rain")){
-                    KitchenSinkController.push(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"), new TextMessage("Dear TA, don't panic if you receive this message. I just want to thank you for marking our chatbot, and I wish to remind you that it will be raining. Please remember to bring an umbrella."));
+                    KitchenSinkController.push(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"), new TextMessage("It will be raining. Please remember to bring an umbrella."));
                 }
                 if(weatherForecast.contains("range between 1") || weatherForecast.contains("will be about 1")){
                     KitchenSinkController.push(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"), new TextMessage("It will be cold. Please remember to put on enough clothes."));
