@@ -50,9 +50,7 @@ public class Thanksgiving extends DefaultService{
 
 
 			if (user.get(0).getString("Accept").equals("N")) {
-				Document data = new Document();
-				data.append("accept","Y");
-				mongo.getCollection("party").findOneAndReplace(new BasicDBObject().append("uid", uid),data);
+				mongo.getCollection("party").findOneAndUpdate(new BasicDBObject().append("uid", uid),new BasicDBObject().append("Accept", "Y"));
 				this.fulfillment = "Thank you for your join, " + getName(uid) + "! Have a fun night! See you on " + formatted;
 			} else {
 				this.fulfillment = "Already accept the party. Please be reminded that the party will be held on " + formatted;
