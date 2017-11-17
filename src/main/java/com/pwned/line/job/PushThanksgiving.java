@@ -80,7 +80,6 @@ public class PushThanksgiving extends DefaultJob{
 		}
 
 
-		System.out.println("\n\n\nMaking calender\n\n\n");
 		Calendar today = Calendar.getInstance();
 		Calendar partyDate = Calendar.getInstance();
 		partyDate.set(2017,Calendar.NOVEMBER,22);
@@ -89,7 +88,6 @@ public class PushThanksgiving extends DefaultJob{
 		partyDate.add(Calendar.HOUR,8);
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		String formatted = format1.format(today.getTime());
-		System.out.println("\n\n\nAfter Making calender\n\n\n");
 
 
 		for (int i = 0; i < usersArrayList.size(); i++) {
@@ -149,6 +147,7 @@ public class PushThanksgiving extends DefaultJob{
 				data.append("uid", uid);
 				data.append("name", Thanksgiving.getName(uid));
 				data.append("Accept", "N");
+				data.append("Date", "");
 				mongo.getCollection("party").insertOne(data);
 			}
 		}
