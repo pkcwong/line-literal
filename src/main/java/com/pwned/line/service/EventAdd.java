@@ -57,10 +57,10 @@ public class EventAdd extends DefaultService {
 
 		BasicDBObject data = new BasicDBObject();
 		BasicDBObject event = new BasicDBObject();
-		event.append("Event Name", keywordArray[0]);
+		event.append("EventName", keywordArray[0]);
 		event.append("Date", keywordArray[1]);
-		event.append("Start Time", "");
-		event.append("End Time", "");
+		event.append("StartTime", "");
+		event.append("EndTime", "");
 
 		data.append("events", event);
 		mongo.getCollection("Event").findOneAndUpdate(groupSELF, new BasicDBObject("$addToSet", data));
