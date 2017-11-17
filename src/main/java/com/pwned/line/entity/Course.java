@@ -13,8 +13,8 @@ import java.util.regex.Pattern;
 public class Course {
 
 	private static final String BASE_URL = "https://w5.ab.ust.hk/wcq/cgi-bin/1710/subject/";
-	//public static final String REGEX_COURSE = "<h2>(@department)\\s(@code)\\s- (.+?)\\s\\((\\d)\\sunits\\)<\\/h2>.+?1012\">([\\s\\S]+?)<\\/td><\\/tr><\\/table>";
-	public static final String REGEX_COURSE = "<div class=\\\"course\\\">[\\s\\S]+?<tr><th>DESCRIPTION<\\/th><td>(.+?)<\\/td><\\/tr>[\\s\\S]+?<h2>(\\w{4})\\s(\\d{4}\\w{0,1})\\s-\\s(.+?)\\s\\((\\d)\\sunits\\)<\\/h2>\\s<table class=\\\"sections\\\" width=\\\"1012\\\">\\s([\\s\\S]+?)<\\/td><\\/tr><\\/table>\\s<\\/div>";
+	public static final String REGEX_COURSE = "<h2>(@department)\\s(@code)\\s- (.+?)\\s\\((\\d)\\sunits\\)<\\/h2>.+?1012\">([\\s\\S]+?)<\\/td><\\/tr><\\/table>";
+	//public static final String REGEX_COURSE = "<div class=\\\"course\\\">[\\s\\S]+?<tr><th>DESCRIPTION<\\/th><td>(.+?)<\\/td><\\/tr>[\\s\\S]+?<h2>(\\w{4})\\s(\\d{4}\\w{0,1})\\s-\\s(.+?)\\s\\((\\d)\\sunits\\)<\\/h2>\\s<table class=\\\"sections\\\" width=\\\"1012\\\">\\s([\\s\\S]+?)<\\/td><\\/tr><\\/table>\\s<\\/div>";
 	//public static final String REGEX_GET_SECTION = "\\w{1,2}\\d{1,2} \\(\\d{4}\\).+?\\s{0,1}.+?(?=se).+?\">.+?\">";
 	public static final String REGEX_GET_SECTION = "\\w{1,2}\\d{1,2} \\(\\d{4}\\).+?\\s{0,1}(?=se).+?\">.+?\">";
 	public static final String REGEX_SECTION_NAME_CODE = "(\\w{1,2}\\d{1,2}) \\((\\d{4})\\)";
@@ -36,17 +36,14 @@ public class Course {
 		String section_block = null;
 		HTTP http = new HTTP(BASE_URL + this.department);
 		String response = http.get();
-		//Pattern regex_course = Pattern.compile(this.builder());
-		Pattern regex_course = Pattern.compile(REGEX_COURSE);
+		Pattern regex_course = Pattern.compile(this.builder());
 		Matcher matcher_course = regex_course.matcher(response);
 		while (matcher_course.find()){
-			if(matcher_course.group(2).equals(this.department) && matcher_course.group(3).equals(this.code)) {
-				this.title = matcher_course.group(4);
-				this.credit = matcher_course.group(5);
-				section_block = matcher_course.group(6);
-				break;
-			}
+			this.title = matcher_course.group(3);
+			this.credit = matcher_course.group(4);
+			section_block = matcher_course.group(5);
 		}
+		System.out.println("Section Block: ");
 		System.out.println(section_block);
 		Pattern regex_section_info = Pattern.compile(REGEX_GET_SECTION);
 		Matcher matcher_section = regex_section_info.matcher(section_block);
