@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 
 /***
  * Accept/Bring food for thanksgiving
- * Required params: []
+ * Required params: [keyword]
  * Reserved tokens: []
  * Resolved params: []
  * @author Bear
@@ -65,7 +65,7 @@ public class Thanksgiving extends DefaultService{
 			BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
 			ArrayList<Document> user = MongoDB.get(mongo.getCollection("party").find(SELF));
 
-			if (user.size() == 0) {
+			if (user.get(0).getString("Accept").equals("N")) {
 				this.fulfillment = "You haven't accept the party invitation! Please enter Accpet to join the party!";
 				return;
 			}
