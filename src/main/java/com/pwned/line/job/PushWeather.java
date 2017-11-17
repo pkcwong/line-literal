@@ -9,11 +9,11 @@ import org.bson.Document;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.quartz.*;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.TimeZone;
 
 public class PushWeather extends DefaultJob{
 
@@ -27,7 +27,12 @@ public class PushWeather extends DefaultJob{
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         System.out.println("PushWeather");
-        this.updateWeather();
+        try {
+            this.updateWeather();
+        }
+        catch (JSONException e){
+            throw new JobExecutionException();
+        }
     }
 
     public static JobDetail buildJob(Class <? extends Job> job) {
@@ -43,7 +48,7 @@ public class PushWeather extends DefaultJob{
                 .build();
     }
 
-    public static void updateWeather() throws Exception {
+    public static void updateWeather() throws JSONException{
         usersArrayList = MongoDB.get(new MongoDB(System.getenv("MONGODB_URI")).getCollection("user").find());
         weatherArrayList = MongoDB.get(new MongoDB(System.getenv("MONGODB_URI")).getCollection("weather").find());
 
@@ -90,7 +95,7 @@ public class PushWeather extends DefaultJob{
         HTTP http = new HTTP(link);
         String weather = http.get();
         String[] messages = {"Weather forecast", "<br/><br/>Outlook", "Bulletin updated at "};
-        String time = weather.substring(weather.indexOf(messages[2] + messages[2].length(), weather.indexOf(messages[2] + messages[2].length() + 21))
+        String time = weather.substring(weather.indexOf(messages[2] + messages[2].length(), weather.indexOf(messages[2] + messages[2].length() + 21)));
         weather = weather.substring(weather.indexOf(messages[0]), weather.indexOf(messages[1]));
         weather = weather.replace("<br/>", "\n");
         while (weather.contains("<")) {
@@ -99,7 +104,7 @@ public class PushWeather extends DefaultJob{
         return weather;
     }
 
-    public static void pushWeather(String weatherForecast) throws Exception {
+    public static void pushWeather(String weatherForecast) throws JSONException {
         for (int i = 0; i < usersArrayList.size(); i++) {            
             //DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             //dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Hong_Kong"));
