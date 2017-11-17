@@ -13,7 +13,7 @@ public interface Service {
 	 * Threading manager for Service modules.
 	 * @return CompletableFuture
 	 */
-	CompletableFuture<Service> resolve();
+	CompletableFuture<Service> resolve() throws Exception;
 
 	/***
 	 * Payload of Service module.
@@ -56,6 +56,6 @@ public interface Service {
 	/***
 	 * Debug messages dump.
 	 */
-	void dump();
+	void dump() throws Exception;
 
 }

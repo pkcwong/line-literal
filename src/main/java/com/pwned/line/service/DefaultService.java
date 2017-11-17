@@ -30,13 +30,9 @@ public class DefaultService implements Service {
 	}
 
 	@Override
-	public final CompletableFuture<Service> resolve() {
+	public final CompletableFuture<Service> resolve() throws Exception {
 		this.dump();
-		try {
-			this.payload();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		this.payload();
 		this.dump();
 		return CompletableFuture.supplyAsync(() -> {
 			try {
@@ -87,17 +83,13 @@ public class DefaultService implements Service {
 	}
 
 	@Override
-	public final void dump() {
-		try {
-			JSONObject dump = new JSONObject();
-			JSONObject mem = new JSONObject(this.getArgs());
-			dump.put("args", mem);
-			dump.put("fulfillment", this.getFulfillment());
-			dump.put("class", this.getClass().getSimpleName());
-			System.out.println(dump.toString());
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+	public final void dump() throws Exception {
+		JSONObject dump = new JSONObject();
+		JSONObject mem = new JSONObject(this.getArgs());
+		dump.put("args", mem);
+		dump.put("fulfillment", this.getFulfillment());
+		dump.put("class", this.getClass().getSimpleName());
+		System.out.println(dump.toString());
 	}
 
 }

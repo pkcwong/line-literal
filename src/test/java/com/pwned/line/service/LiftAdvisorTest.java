@@ -1,14 +1,18 @@
 package com.pwned.line.service;
 
 import org.json.JSONObject;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static junit.framework.Assert.assertEquals;
 
-class LiftAdvisorTest {
+public class LiftAdvisorTest {
+
+	public LiftAdvisorTest() {
+
+	}
 
 	@Test
-	void payload() throws Exception {
+	public void payload() throws Exception {
 		Service service = new DialogFlowLiftAdvisor(new DefaultService("where is room 3211?"));
 		service.setParam("uid", "junit");
 		service.payload();
