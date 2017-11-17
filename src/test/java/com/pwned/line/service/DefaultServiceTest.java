@@ -1,16 +1,44 @@
 package com.pwned.line.service;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.Random;
 
-class DefaultServiceTest {
+import static junit.framework.Assert.assertEquals;
+
+public class DefaultServiceTest {
 
 	@Test
-	void payload() throws Exception {
-		Service service = new DefaultService("Hello World");
+	public final void resolve() throws Exception {
+		byte[] block = new byte[128];
+		new Random().nextBytes(block);
+		Service service = new DefaultService(new String(block));
+		service.resolve().get();
+	}
+
+	@Test
+	public void payload() throws Exception {
+		byte[] block = new byte[128];
+		new Random().nextBytes(block);
+		Service service = new DefaultService(new String(block));
 		service.payload();
-		assertEquals("Hello World", service.getFulfillment());
+		assertEquals(new String(block), service.getFulfillment());
+	}
+
+	@Test
+	public void chain() throws Exception {
+		byte[] block = new byte[128];
+		new Random().nextBytes(block);
+		Service service = new DefaultService(new String(block));
+		assertEquals(service, service.chain());
+	}
+
+	@Test
+	public void dump() throws Exception {
+		byte[] block = new byte[128];
+		new Random().nextBytes(block);
+		Service service = new DefaultService(new String(block));
+		service.dump();
 	}
 
 }
