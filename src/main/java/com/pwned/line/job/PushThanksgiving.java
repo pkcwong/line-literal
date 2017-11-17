@@ -129,6 +129,9 @@ public class PushThanksgiving extends DefaultJob{
 		ArrayList<Document> user = MongoDB.get(mongo.getCollection("party").find(SELF));
 
 		JSONObject date = new JSONObject(user.get(0).toJson());
+		if(!date.toString().contains("Date")){
+			return false;
+		}
 		for(int i = 0; i < date.getJSONArray("Date").length(); i++){
 			if(date.getJSONArray("Date").get(i).toString().equals(formatted)){
 				return true;
@@ -149,9 +152,6 @@ public class PushThanksgiving extends DefaultJob{
 				data.append("name", Thanksgiving.getName(uid));
 				data.append("Accept", "N");
 				mongo.getCollection("party").insertOne(data);
-				data = new Document();
-				mongo.getCollection("party").findOneAndUpdate(SELF, new BasicDBObject("$addToSet", data));
-
 			}
 		}
 	}
