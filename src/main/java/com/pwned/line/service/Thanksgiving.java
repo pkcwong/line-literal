@@ -5,6 +5,7 @@ import com.pwned.line.http.HTTP;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 
+import javax.print.Doc;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,15 +48,10 @@ public class Thanksgiving extends DefaultService{
 			ArrayList<Document> user = MongoDB.get(mongo.getCollection("party").find(SELF));
 
 
-
-
-			if (user.size() == 0) {
-
+			if (user.get(0).getString("accept").equals("N")) {
 				Document data = new Document();
-				data.append("uid", uid);
-				data.append("name", getName(uid));
-
-				mongo.getCollection("party").insertOne(data);
+				data.append("accept","Y");
+				mongo.getCollection("party").findOneAndReplace(new BasicDBObject().append("uid", uid),data);
 				this.fulfillment = "Thank you for your join, " + getName(uid) + "! Have a fun night! See you on " + formatted;
 			} else {
 				this.fulfillment = "Already accept the party. Please be reminded that the party will be held on " + formatted;
