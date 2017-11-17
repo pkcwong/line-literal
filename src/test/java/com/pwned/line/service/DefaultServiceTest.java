@@ -8,62 +8,37 @@ import static junit.framework.Assert.assertEquals;
 
 public class DefaultServiceTest {
 
-	public DefaultServiceTest() {
-
-	}
-
 	@Test
-	public final void resolve() {
+	public final void resolve() throws Exception {
 		byte[] block = new byte[128];
 		new Random().nextBytes(block);
 		Service service = new DefaultService(new String(block));
-		try {
-			service.resolve().get();
-			assert true;
-		} catch (Exception e) {
-			assert false;
-		}
-		assert true;
+		service.resolve().get();
 	}
 
 	@Test
-	public void payload() {
+	public void payload() throws Exception {
 		byte[] block = new byte[128];
 		new Random().nextBytes(block);
 		Service service = new DefaultService(new String(block));
-		try {
-			service.payload();
-			assert true;
-		} catch (Exception e) {
-			assert false;
-		}
+		service.payload();
 		assertEquals(new String(block), service.getFulfillment());
 	}
 
 	@Test
-	public void chain() {
+	public void chain() throws Exception {
 		byte[] block = new byte[128];
 		new Random().nextBytes(block);
 		Service service = new DefaultService(new String(block));
-		try {
-			assertEquals(service, service.chain());
-			assert true;
-		} catch (Exception e) {
-			assert false;
-		}
+		assertEquals(service, service.chain());
 	}
 
 	@Test
-	public void dump() {
+	public void dump() throws Exception {
 		byte[] block = new byte[128];
 		new Random().nextBytes(block);
 		Service service = new DefaultService(new String(block));
-		try {
-			service.dump();
-			assert true;
-		} catch (Exception e) {
-			assert false;
-		}
+		service.dump();
 	}
 
 }

@@ -40,6 +40,13 @@ dependencies {
 }
 
 apply plugin: 'org.springframework.boot'
+
+test {
+    environment "LINE_BOT_CHANNEL_SECRET", "LINE_BOT_CHANNEL_SECRET"
+    environment "LINE_BOT_CHANNEL_TOKEN", "LINE_BOT_CHANNEL_TOKEN"
+    environment "MONGODB_URI", "mongodb://user:password@ds113046.mlab.com:13046/line-literal-test"
+}
+
 apply plugin: "jacoco"
 
 jacocoTestReport {
