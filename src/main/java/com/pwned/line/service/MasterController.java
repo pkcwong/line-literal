@@ -6,7 +6,6 @@ import com.pwned.line.KitchenSinkController;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 import org.json.JSONObject;
-import retrofit2.http.HEAD;
 
 import java.util.ArrayList;
 
@@ -47,9 +46,7 @@ public class MasterController extends DefaultService {
 		event.append("timestamp", this.getParam("timestamp").toString());
 		event.append("replyToken", this.getParam("replyToken").toString());
 		event.append("text", this.fulfillment);
-
 		data.append("msg", event);
-
 
 		mongo.getCollection("user").findOneAndUpdate(SELF, new BasicDBObject("$addToSet", data));
 	}
@@ -66,15 +63,8 @@ public class MasterController extends DefaultService {
 		BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
 		ArrayList<Document> user = MongoDB.get(mongo.getCollection("user").find(SELF));
 		JSONObject USER = new JSONObject(user.get(0).toJson());
-
-
 		if (USER.getJSONObject("buff").getString("cmd").equals("review::add")) {
 			return new ReviewAdd(this).resolve().get();
-		}
-
-		if (USER.getJSONObject("buff").getString("cmd").equals("event::add")) {
-			String temp = this.fulfillment.toLowerCase();
-			return new EventAdd(this, temp).resolve().get();
 		}
 
 		if (this.fulfillment.equals("anonymous") || this.fulfillment.equals("Anonymous")) {
@@ -175,7 +165,7 @@ public class MasterController extends DefaultService {
 		for (String keywords : event) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
-				return new EventMaker(this,temp).resolve().get();
+				//return new DialogFlowEventMaker(this).resolve().get();
 			}
 		}
 		for (String keywords : help) {
@@ -191,8 +181,8 @@ public class MasterController extends DefaultService {
 						"7. Bus Arrival Time: Estimated time of arrival of next bus at busstop(e.g. South Gate)\n" +
 						"8. Society information: Socety ... (e.g. Hall 1)\n" +
 						"9. Bring food for party: Bring ...\n" +
-						"10. Join Thanksgiving party: accept by (Your name)\n" +
-						"11. Event Maker: Event {event name}\n";
+						"10. Join Thanksgiving party: accept\n";
+
 				return this;
 			}
 		}

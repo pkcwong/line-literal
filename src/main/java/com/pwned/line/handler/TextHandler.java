@@ -40,7 +40,11 @@ public class TextHandler {
 			}
 			return null;
 		}).thenApply((Service service) -> {
-			service.dump();
+			try {
+				service.dump();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			KitchenSinkController.reply(event.getReplyToken(), new TextMessage(service.getFulfillment()));
 			return null;
 		});

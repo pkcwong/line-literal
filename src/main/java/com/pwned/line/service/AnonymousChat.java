@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * Required params: []
  * Reserved tokens: []
  * Resolved params: []
- * @author Chrisopher
+ * @author Chrisopher Wong
  */
 
 public class AnonymousChat extends DefaultService {
@@ -26,6 +26,10 @@ public class AnonymousChat extends DefaultService {
 		super(service);
 	}
 
+	/***
+	 * Handles anonymous chat triggers
+	 * @throws Exception Exception
+	 */
 	@Override
 	public void payload() throws Exception {
 		if (this.fulfillment.equals("anonymous")) {
@@ -77,6 +81,10 @@ public class AnonymousChat extends DefaultService {
 		return this;
 	}
 
+	/***
+	 * Pairs two users if bin size greater than 1
+	 * @throws Exception Exception
+	 */
 	public static void run() throws Exception {
 
 		ArrayList<Document> list;
