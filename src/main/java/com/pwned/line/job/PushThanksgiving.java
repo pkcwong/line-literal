@@ -54,7 +54,7 @@ public class PushThanksgiving extends DefaultJob{
 	}
 
 	public static void pushThanksgiving() throws JSONException {
-		
+
 
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
 
