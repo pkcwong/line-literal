@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 public class Thanksgiving extends DefaultService{
 	private String keyword;
 	private static String userURI = "https://api.line.me/v2/bot/profile/";
-	private String ACCESS_TOKEN = System.getenv("LINE_BOT_CHANNEL_TOKEN");
+	private static String ACCESS_TOKEN = System.getenv("LINE_BOT_CHANNEL_TOKEN");
 
 	public Thanksgiving(Service service, String key){
 		super(service);
@@ -42,28 +42,21 @@ public class Thanksgiving extends DefaultService{
 
 
 			MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
-
-			BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
+			String uid = this.getParam("uid").toString();
+			BasicDBObject SELF = new BasicDBObject().append("uid", uid);
 			ArrayList<Document> user = MongoDB.get(mongo.getCollection("party").find(SELF));
 
-			HTTP http = new HTTP(userURI + this.getParam("uid").toString());
-			http.setHeaders("Authorization", "Bearer " + ACCESS_TOKEN);
+
 
 
 			if (user.size() == 0) {
-				String response = http.get();
-				Pattern regex = Pattern.compile("\"displayName\":\"(.+?)\"");
-				Matcher matcher = regex.matcher(response);
-				String name = "";
-				while (matcher.find()) {
-					name = matcher.group(1);
-				}
+
 				Document data = new Document();
-				data.append("uid", this.getParam("uid").toString());
-				data.append("name", name);
+				data.append("uid", uid);
+				data.append("name", getName(uid));
 
 				mongo.getCollection("party").insertOne(data);
-				this.fulfillment = "Thank you for your join, " + name + "! Have a fun night! See you on " + formatted;
+				this.fulfillment = "Thank you for your join, " + getName(uid) + "! Have a fun night! See you on " + formatted;
 			} else {
 				this.fulfillment = "Already accept the party. Please be reminded that the party will be held on " + formatted;
 			}
@@ -100,6 +93,19 @@ public class Thanksgiving extends DefaultService{
 				this.fulfillment = "Great, please prepare 5 people portion of that.";
 			}
 		}
+	}
+
+	public static String getName(String uid){
+		HTTP http = new HTTP(userURI + uid);
+		http.setHeaders("Authorization", "Bearer " + ACCESS_TOKEN);
+		String response = http.get();
+		Pattern regex = Pattern.compile("\"displayName\":\"(.+?)\"");
+		Matcher matcher = regex.matcher(response);
+		String name = "";
+		while (matcher.find()) {
+			name = matcher.group(1);
+		}
+		return name;
 	}
 
 
