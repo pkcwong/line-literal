@@ -18,10 +18,13 @@ import java.util.ArrayList;
  */
 
 public class EventMaker extends DefaultService{
+	private String keyword;
 	private String URI = "https://api.line.me/v2/bot/group/{groupId}/member/{userId}";
 	private static final String ACCESS_TOKEN = System.getenv("LINE_BOT_CHANNEL_TOKEN");
-	public EventMaker(Service service){
+	public EventMaker(Service service, String s){
 		super(service);
+		keyword = s;
+
 	}
 
 	@Override
@@ -34,23 +37,28 @@ public class EventMaker extends DefaultService{
 			return;
 		}
 
+		String[] keywordArray = keyword.split(" ");
+		if(keywordArray.length == 1){
+			this.fulfillment = "Please state the event name, type help if any help is needed";
+			return;
+		}
+
+
+
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
-		BasicDBObject SELF = new BasicDBObject().append("groupId", groupId);
-		ArrayList<Document> group = MongoDB.get(mongo.getCollection("Event").find(SELF));
+		BasicDBObject GID = new BasicDBObject().append("groupId", groupId);
+		ArrayList<Document> group = MongoDB.get(mongo.getCollection("Event").find(GID));
 		if(group.size() == 0){
 			Document data = new Document();
 			data.append("groupId", groupId);
 			data.append("uid", uid);
 			mongo.getCollection("Event").insertOne(data);
 		}
-		BasicDBObject eventName = new BasicDBObject().append("eventName", groupId);
+
+		BasicDBObject eventName = new BasicDBObject().append("eventName", keywordArray[1]);
 		ArrayList<Document> events = MongoDB.get(mongo.getCollection("Event").find(eventName));
 		if(events.size() == 0){
-			SELF = new BasicDBObject().append("uid", uid);
-			mongo.getCollection("user").updateOne(SELF,
-					new BasicDBObject("$set",
-							new BasicDBObject("buff",
-									new BasicDBObject().append("cmd", "event::add").append("data", new BasicDBObject().append("groupid", groupId)))));
+			callEventAdd(uid, groupId, new BasicDBObject().append("uid", uid), mongo);
 			this.fulfillment = "You have not create event yet, please create your event with {Event Name}@yyyy/mm/dd:";
 			return;
 
@@ -67,11 +75,11 @@ public class EventMaker extends DefaultService{
 		this.fulfillment = "Please create your event with {Event Name}@yyyy/mm/dd";
 	}
 
-	private boolean checkGroupChat(String uid, String gid){
-		if(uid.equals(gid)){
-			return false;
-		}else
-			return true;
+	private void callEventAdd(String uid, String gid, BasicDBObject SELF, MongoDB mongo){
+		mongo.getCollection("user").updateOne(SELF,
+				new BasicDBObject("$set",
+						new BasicDBObject("buff",
+								new BasicDBObject().append("cmd", "event::add").append("data", new BasicDBObject().append("groupId", gid)))));
 	}
 
 	@Override

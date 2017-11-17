@@ -73,7 +73,8 @@ public class MasterController extends DefaultService {
 		}
 
 		if (USER.getJSONObject("buff").getString("cmd").equals("event::add")) {
-			return new EventAdd(this).resolve().get();
+			String temp = this.fulfillment.toLowerCase();
+			return new EventAdd(this, temp).resolve().get();
 		}
 
 		if (this.fulfillment.equals("anonymous") || this.fulfillment.equals("Anonymous")) {
@@ -174,7 +175,7 @@ public class MasterController extends DefaultService {
 		for (String keywords : event) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
-				return new EventMaker(this).resolve().get();
+				return new EventMaker(this,temp).resolve().get();
 			}
 		}
 		for (String keywords : help) {
@@ -190,7 +191,8 @@ public class MasterController extends DefaultService {
 						"7. Bus Arrival Time: Estimated time of arrival of next bus at busstop(e.g. South Gate)\n" +
 						"8. Society information: Socety ... (e.g. Hall 1)\n" +
 						"9. Bring food for party: Bring ...\n" +
-						"10. Join Thanksgiving party: accept by (Your name)\n";
+						"10. Join Thanksgiving party: accept by (Your name)\n" +
+						"11. Event Maker: Event {event name}\n";
 				return this;
 			}
 		}
