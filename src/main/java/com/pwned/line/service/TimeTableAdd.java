@@ -75,14 +75,12 @@ public class TimeTableAdd extends DefaultService {
             for(int i=0;i<c.sections.size();i++){
                 for(int j=0;j<classID.size();j++){
                     if(c.sections.get(i).code.equals(classID.get(j))){
-                        System.out.println("Found match sections of"+c.department+c.code);
-
                         if(c.sections.get(i).dateAndTimes.size()==0){}
                         else {
                             for (int k = 0; k < c.sections.get(i).dateAndTimes.size(); k++) {
-                                System.out.println("getting sections of" + c.department + c.code);
                                 Document timeslot = new Document();
-                                timeslot.append("course", c.department+" "+c.code);
+                                timeslot.append("department", c.department);
+                                timeslot.append("code", c.code);
                                 if(c.sections.get(i).dateAndTimes.get(k).day.length()!=2){
                                     String[] day = {c.sections.get(i).dateAndTimes.get(k).day.substring(0, 2), c.sections.get(i).dateAndTimes.get(k).day.substring(2)};
                                     for(String d:day){
@@ -106,12 +104,7 @@ public class TimeTableAdd extends DefaultService {
                     }
                 }
             }
-
-
-
         }
-
-
         Document data = new Document();
         data.append("uid", this.getParam("uid").toString());
         data.append("bind", this.getParam("uid").toString());
