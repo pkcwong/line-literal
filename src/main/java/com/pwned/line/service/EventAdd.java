@@ -35,10 +35,10 @@ public class EventAdd extends DefaultService {
 		if (matcher.find()) {
 			eventName = matcher.group(1);
 			eventDate = matcher.group(2);
-			startHour = matcher.group(1);
-			startMinute = matcher.group(1);
-			endHour = matcher.group(1);
-			endMinute = matcher.group(1);
+			startHour = matcher.group(3);
+			startMinute = matcher.group(4);
+			endHour = matcher.group(5);
+			endMinute = matcher.group(6);
 
 		}else{
 			this.fulfillment = "Please follow that format {EventName}@yyyy/mm/dd@hh:mm-hh:mm\n + " +

@@ -66,7 +66,8 @@ public class EventMaker extends DefaultService{
 
 		if(!checkEventExist(events, eventName)){
 			callEventAdd(uid, groupId, new BasicDBObject().append("uid", uid), mongo);
-			this.fulfillment = "You have not create event yet, please create your event with {Event Name}@yyyy/mm/dd:";
+			this.fulfillment = "Please follow that format {EventName}@yyyy/mm/dd@hh:mm-hh:mm\n + " +
+						"e.g. Milestone 3 submit@2017/11/20@18:00-23:59";
 			return;
 		//Check available timeslot
 		}else{
