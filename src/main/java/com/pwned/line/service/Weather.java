@@ -12,12 +12,16 @@ import com.pwned.line.http.HTTP;
 
 public class Weather extends DefaultService{
 
-
-	public Weather(Service service) {
+	public Weather(Service service){
 		super(service);
 	}
+
 	@Override
-	public void payload() throws Exception {
+	public void payload() throws Exception{
+		this.fulfillment = this.fulfillment.replace("@weather::weather", getWeather());
+	}
+
+	public static String getWeather(){
 		String link = "http://www.hko.gov.hk/wxinfo/currwx/flw.htm";
 		HTTP http = new HTTP(link);
 		String weather = http.get();
@@ -27,9 +31,17 @@ public class Weather extends DefaultService{
 		while (weather.contains("<")){
 			weather = weather.substring(0, weather.indexOf("<")) + weather.substring(weather.indexOf(">") + 1);
 		}
-		this.fulfillment = this.fulfillment.replace("@weather::weather", weather);
+		return weather;
 	}
 
+	public static String getDate(){
+		String link = "http://www.hko.gov.hk/wxinfo/currwx/flw.htm";
+		HTTP http = new HTTP(link);
+		String date = http.get();
+		String messages = "Bulletin updated at ";
+		date = date.substring(date.indexOf(messages) + messages.length(), date.indexOf(messages) + messages.length() + 21);
+		return date;
+	}
 
 	@Override
 	public Service chain() throws Exception {

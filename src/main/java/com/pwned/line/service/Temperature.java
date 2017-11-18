@@ -13,37 +13,37 @@ import org.json.JSONObject;
 
 public class Temperature extends DefaultService{
 
-
-	public Temperature(Service service) {
+	public Temperature(Service service){
 		super(service);
 	}
-	@Override
-	public void payload() throws Exception {
 
+	@Override
+	public void payload() throws Exception{
 		String city = new JSONObject(this.getParam("parameters").toString()).getString("Region1");
-		if(city.equals("")){
-		    city = "Hong Kong";
-		}
+		this.fulfillment = this.fulfillment.replace("@weather::temperature", getTemperature(city));
+	}
+
+	public static String getTemperature(String city){
 		String link = "http://rss.weather.gov.hk/rss/CurrentWeather.xml";
 		HTTP http = new HTTP(link);
 		String temperatureString = http.get();
 		String temperature = "";
-		if(city.equals("Hong Kong")){
-            temperature = temperatureString.substring(temperatureString.indexOf("Air temperature :") + 18, temperatureString.indexOf("Air temperature :") + 20);
-            temperature = temperature + "°C";
+		if(city.equals("") || city.equals("Hong Kong")){
+			city = "Hong Kong";
+			temperature = temperatureString.substring(temperatureString.indexOf("Air temperature :") + 18, temperatureString.indexOf("Air temperature :") + 20);
+			temperature = temperature + "°C";
 		}else if(temperatureString.contains(city)){
 			temperature = temperatureString.substring(temperatureString.indexOf(city) + city.length() + 58, temperatureString.indexOf(city) + city.length() + 60);
 			temperature = temperature + "°C";
-		}
-		if(temperature == ""){
-			temperature = "not available";
+		}else{
+			temperature = " is not available";
 		}
 		temperature = "The temperature at " + city + " is " + temperature + ".";
-		this.fulfillment = this.fulfillment.replace("@weather::temperature", temperature);
+		return temperature;
 	}
 
 	@Override
-	public Service chain() throws Exception {
+	public Service chain() throws Exception{
 		return this;
 	}
 }

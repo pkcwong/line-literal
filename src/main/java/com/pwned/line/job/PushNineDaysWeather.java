@@ -6,32 +6,30 @@ import com.linecorp.bot.model.message.template.CarouselColumn;
 import com.linecorp.bot.model.message.template.CarouselTemplate;
 import com.pwned.line.KitchenSinkController;
 import com.pwned.line.http.HTTP;
-import com.pwned.line.web.MongoDB;
-import org.bson.Document;
 import org.quartz.*;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 public class PushNineDaysWeather extends DefaultJob{
-    public static ArrayList<Document> usersArrayList;
-    public PushNineDaysWeather() {
 
+    public PushNineDaysWeather(){
     }
 
     @Override
-    public void execute(JobExecutionContext context) throws JobExecutionException {
+    public void execute(JobExecutionContext context) throws JobExecutionException{
         System.out.println("PushNineDaysWeather");
-        this.NineDaysWeather("hi");
     }
 
 
-    public static JobDetail buildJob(Class <? extends Job> job) {
+    public static JobDetail buildJob(Class <? extends Job> job){
         return JobBuilder.newJob(PushWeather.class).build();
     }
 
-    public static Trigger buildTrigger(int seconds) {
+    public static Trigger buildTrigger(int seconds){
         return TriggerBuilder
                 .newTrigger()
                 .withSchedule(
@@ -40,9 +38,7 @@ public class PushNineDaysWeather extends DefaultJob{
                 .build();
     }
 
-    public static void NineDaysWeather(String uid) {
-        usersArrayList = MongoDB.get(new MongoDB(System.getenv("MONGODB_URI")).getCollection("nine").find());
-
+    public static void nineDaysWeather(String uid){
         String link = "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm";
         String[] text = {"http://www.weather.gov.hk", "<img border=\"0\" src=\"", "text-align:left;padding: 0px;font-size:100%;", "</div>"};
         String[] emoji = {
@@ -56,7 +52,12 @@ public class PushNineDaysWeather extends DefaultJob{
                 "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/cloud-with-rain_1f327.png",
                 "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/cloud-with-rain_1f327.png",
                 "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/cloud-with-rain_1f327.png",
-                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/thunder-cloud-and-rain_26c8.png"
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/thunder-cloud-and-rain_26c8.png",
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/thermometer_1f321.png",
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/thermometer_1f321.png",
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/snowflake_2744.png",
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/snowflake_2744.png",
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/expressionless-face_1f611.png"
         };
         HTTP http = new HTTP(link);
         String ninedaysweather = http.get();
@@ -64,11 +65,11 @@ public class PushNineDaysWeather extends DefaultJob{
         dateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Hong_Kong"));
         Date today = new Date();
         String[] date = new String[9];
-        java.util.Calendar c = java.util.Calendar.getInstance();
-        c.setTime(today);
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        calendar .setTime(today);
         for(int dd = 0; dd < 9; dd++){
-            c.add(Calendar.DATE, 1);
-            Date nextday = c.getTime();
+            calendar .add(Calendar.DATE, 1);
+            Date nextday = calendar .getTime();
             date[dd] = dateFormat.format(nextday);
         }
         String imageurlstring = ninedaysweather;
@@ -99,6 +100,16 @@ public class PushNineDaysWeather extends DefaultJob{
                 imageurl[url] = emoji[9];
             }else if(imageurl[url].contains("65")){
                 imageurl[url] = emoji[10];
+            }else if(imageurl[url].contains("90")){
+                imageurl[url] = emoji[11];
+            }else if(imageurl[url].contains("91")){
+                imageurl[url] = emoji[12];
+            }else if(imageurl[url].contains("92")){
+                imageurl[url] = emoji[13];
+            }else if(imageurl[url].contains("93")){
+                imageurl[url] = emoji[14];
+            }else{
+                imageurl[url] = emoji[15];
             }
         }
         String desriptionsstring = ninedaysweather;
@@ -108,48 +119,29 @@ public class PushNineDaysWeather extends DefaultJob{
             desriptionsstring = desriptionsstring.substring(desriptionsstring.indexOf(text[2]));
             fulldesription[weather] = desriptionsstring.substring(text[2].length() + 4, desriptionsstring.indexOf(text[3]));
             desription[weather] = fulldesription[weather].substring(0, fulldesription[weather].indexOf("."));
+            if(desription[weather].length() > 60){
+                desription[weather] = desription[weather].substring(0, 59);
+            }
             System.out.println(fulldesription[weather].length());
             desriptionsstring = desriptionsstring.substring(2);
         }
-        for(int i = 0; i < 20; i++)
-        System.out.println("hi");
-        String imageUrl = "https://i.pinimg.com/originals/f1/60/60/f1606043ba4fd7f87a9951250541e6f4.jpg";
-        for (int url = 0; url < 9; url++){
-            System.out.println(imageurl[url]);
-        }
-        for (int url = 0; url < 9; url++){
-            System.out.println(desription[url]);
+        for (int day = 0; day < 9; day++){
+            System.out.println(imageurl[day]);
+            System.out.println(date[day]);
+            System.out.println(desription[day]);
         }
         CarouselTemplate carouselTemplate = new CarouselTemplate(
-                Arrays.asList(
-                        new CarouselColumn(imageurl[0], date[0], desription[0], Arrays.asList(
-                                new URIAction("Detail Weather", link)
-                        )),
-                        new CarouselColumn(imageurl[1], date[1], desription[1], Arrays.asList(
-                                new URIAction("Detail Weather", link)
-                        )),
-                        new CarouselColumn(imageurl[2], date[2], desription[2], Arrays.asList(
-                                new URIAction("Detail Weather", link)
-                        )),
-                        new CarouselColumn(imageurl[3], date[3], desription[3], Arrays.asList(
-                                new URIAction("Detail Weather", link)
-                        )),
-                        new CarouselColumn(imageurl[4], date[4], desription[4], Arrays.asList(
-                                new URIAction("Detail Weather", link)
-                        )),
-                        new CarouselColumn(imageurl[5], date[5], desription[5], Arrays.asList(
-                                new URIAction("Detail Weather", link)
-                        )),
-                        new CarouselColumn(imageurl[6], date[6], desription[6], Arrays.asList(
-                                new URIAction("Detail Weather", link)
-                        )),
-                        new CarouselColumn(imageurl[7], date[7], desription[7], Arrays.asList(
-                                new URIAction("Detail Weather", link)
-                        )),
-                        new CarouselColumn(imageurl[8], date[8], desription[8], Arrays.asList(
-                                new URIAction("Detail Weather", link)
-                        ))
-                ));
+            Arrays.asList(
+                new CarouselColumn(imageurl[0], date[0], desription[0], Arrays.asList(new URIAction("Detail Weather", link))),
+                new CarouselColumn(imageurl[1], date[1], desription[1], Arrays.asList(new URIAction("Detail Weather", link))),
+                new CarouselColumn(imageurl[2], date[2], desription[2], Arrays.asList(new URIAction("Detail Weather", link))),
+                new CarouselColumn(imageurl[3], date[3], desription[3], Arrays.asList(new URIAction("Detail Weather", link))),
+                new CarouselColumn(imageurl[4], date[4], desription[4], Arrays.asList(new URIAction("Detail Weather", link))),
+                new CarouselColumn(imageurl[5], date[5], desription[5], Arrays.asList(new URIAction("Detail Weather", link))),
+                new CarouselColumn(imageurl[6], date[6], desription[6], Arrays.asList(new URIAction("Detail Weather", link))),
+                new CarouselColumn(imageurl[7], date[7], desription[7], Arrays.asList(new URIAction("Detail Weather", link))),
+                new CarouselColumn(imageurl[8], date[8], desription[8], Arrays.asList(new URIAction("Detail Weather", link)))
+            ));
         TemplateMessage templateMessage = new TemplateMessage("Carousel alt text", carouselTemplate);
         KitchenSinkController.push(uid, templateMessage);
     }
