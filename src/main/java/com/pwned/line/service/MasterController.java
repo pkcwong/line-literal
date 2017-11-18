@@ -76,6 +76,11 @@ public class MasterController extends DefaultService {
 			return new TimeTableAdd(this).resolve().get();
 		}
 
+		if (USER.getJSONObject("buff").getString("cmd").equals("timeslot::edit")) {
+			String temp = this.fulfillment.toLowerCase();
+			return new EditTimeSlot(this, temp).resolve().get();
+		}
+
 		if (this.fulfillment.equals("anonymous") || this.fulfillment.equals("Anonymous")) {
 			return new AnonymousChat(this).resolve().get();
 		}
@@ -94,7 +99,7 @@ public class MasterController extends DefaultService {
 		String[] review = {"review"};
 		String[] help = {"help"};
 		String[] event = {"event"};
-		String[] timeslot = {"timeslot"};
+		String[] timeslot = {"timeslot","check","edit"};
 		String[] thanksgiving = {"accept","bring"};
 		String[] kmb = {"bus", "arrival", "departure", "arrive", "eta"};
 		String[] weather = {"weather", "climate", "report"};
@@ -179,7 +184,7 @@ public class MasterController extends DefaultService {
 		for (String keywords : timeslot) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
-				return new EditTimeslot(this.resolve().get());
+				return new TimeSlot(this.resolve().get(), temp);
 			}
 		}
 
@@ -197,7 +202,7 @@ public class MasterController extends DefaultService {
 						"8. Society information: Socety ... (e.g. Hall 1)\n" +
 						"9. TimeTable: timetable\n" +
 						"10. Event Maker: event {Event Name} (e.g. event GroupMeeting)\n" +
-						"11. Create available Timeslot for event making: timeslot\n" +
+						"11. Timeslot for event making: check timeslot/edit timeslot\n" +
 						"12. Join Thanksgiving party: accept\n" +
 						"13. Bring food for party: Bring {food name}\n";
 
