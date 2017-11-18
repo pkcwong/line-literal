@@ -32,8 +32,9 @@ public class TimeTableAdd extends DefaultService {
         ArrayList<Document> user = MongoDB.get(mongo.getCollection("user").find(SELF));
         JSONObject USER = new JSONObject(user.get(0).toJson());
         Document userid = new Document();
-        userid.append("uid", this.getParam("uid").toString());
+        userid.append("userid", this.getParam("uid").toString());
         mongo.getCollection("Timetable").insertOne(userid);
+
         //String timetable = USER.getJSONObject("timetablebuff").getJSONObject("data").toString();
 
         String timetable = this.fulfillment;
@@ -79,20 +80,20 @@ public class TimeTableAdd extends DefaultService {
                         for(int k=0;k<c.sections.get(i).dateAndTimes.size();k++){
                             System.out.println("getting sections of"+c.department+c.code);
                             Document timeslot = new Document();
-                            timeslot.put("day",c.sections.get(i).dateAndTimes.get(k).day);
-                            timeslot.put("start time",c.sections.get(i).dateAndTimes.get(k).startTime);
-                            timeslot.put("end time",c.sections.get(i).dateAndTimes.get(k).endTime);
-                            timeslot.put("venue", c.sections.get(i).rooms.get(k));
-                            DateAndTime.put("timeslot", timeslot);
+                            timeslot.append("day",c.sections.get(i).dateAndTimes.get(k).day);
+                            timeslot.append("start time",c.sections.get(i).dateAndTimes.get(k).startTime);
+                            timeslot.append("end time",c.sections.get(i).dateAndTimes.get(k).endTime);
+                            timeslot.append("venue", c.sections.get(i).rooms.get(k));
+                            DateAndTime.append("timeslot", timeslot);
                         }
                         Document Section = new Document();
-                        Section.put("class code", c.sections.get(i).code);
-                        Section.put("date and time", DateAndTime);
-                        Course.put("section", Section);
+                        Section.append("class code", c.sections.get(i).code);
+                        Section.append("date and time", DateAndTime);
+                        Course.append("section", Section);
                     }
                 }
             }
-            CourseList.put("Course List", Course);
+            CourseList.append("Course List", Course);
         }
         mongo.getCollection("timetable").insertOne(CourseList);
         Document data = new Document();
