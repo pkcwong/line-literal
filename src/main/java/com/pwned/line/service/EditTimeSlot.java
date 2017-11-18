@@ -35,6 +35,7 @@ public class EditTimeSlot extends DefaultService {
 		ArrayList<Document> user = MongoDB.get(mongo.getCollection("Timeslot").find(SELF));
 		if(keyword.equals("cancel")) {
 			finish(mongo, SELF);
+			this.fulfillment = "Timeslot edit is cancelled";
 			return;
 		}
 
@@ -66,13 +67,14 @@ public class EditTimeSlot extends DefaultService {
 	}
 
 	public void createNewTimeSlot(MongoDB mongo, BasicDBObject SELF,String start, String end, String date){
-		BasicDBObject data = new BasicDBObject();
-		BasicDBObject timeslot = new BasicDBObject();
+		Document data = new Document();
+		Document timeslot = new Document();
 		timeslot.append("Date", start);
 		timeslot.append("StartTime", end);
 		timeslot.append("EndTime", date);
 
 		data.append("timeslot", timeslot);
+		mongo.getCollection("TimeSlot").insertOne(timeslot);
 		mongo.getCollection("TimeSlot").findOneAndUpdate(SELF, new BasicDBObject("$addToSet", data));
 		this.fulfillment = "Your available timeslot are successfully added";
 	}
@@ -84,7 +86,6 @@ public class EditTimeSlot extends DefaultService {
 		doc.append("buff", new BasicDBObject("cmd", "master"));
 		mongo.getCollection("user").findOneAndUpdate(SELF, new BasicDBObject("$set", doc));
 
-		this.fulfillment = "Your event had been added";
 	}
 
 
