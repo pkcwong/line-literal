@@ -76,17 +76,17 @@ public class TimeTableAdd extends DefaultService {
                 for(int j=0;j<classID.size();j++){
                     if(c.sections.get(i).code.equals(classID.get(j))){
                         System.out.println("Found match sections of"+c.department+c.code);
-                         BasicDBObject DateAndTime = new BasicDBObject();
+                         Document DateAndTime = new Document();
                         for(int k=0;k<c.sections.get(i).dateAndTimes.size();k++){
                             System.out.println("getting sections of"+c.department+c.code);
-                            BasicDBObject timeslot = new BasicDBObject();
+                            Document timeslot = new Document();
                             timeslot.append("day",c.sections.get(i).dateAndTimes.get(k).day);
                             timeslot.append("start time",c.sections.get(i).dateAndTimes.get(k).startTime);
                             timeslot.append("end time",c.sections.get(i).dateAndTimes.get(k).endTime);
                             timeslot.append("venue", c.sections.get(i).rooms.get(k));
                             DateAndTime.append("timeslot", timeslot);
                         }
-                        BasicDBObject Section = new BasicDBObject();
+                        Document Section = new Document();
                         Section.append("class code", c.sections.get(i).code);
                         Section.append("date and time", DateAndTime);
                         Course.append("section", Section);
@@ -95,7 +95,7 @@ public class TimeTableAdd extends DefaultService {
             }
             CourseList.append("Course List", Course);
         }
-        mongo.getCollection("timetable").insertOne(CourseList);
+        mongo.getCollection("Timetable").insertOne(CourseList);
         Document data = new Document();
         data.append("uid", this.getParam("uid").toString());
         data.append("bind", this.getParam("uid").toString());
