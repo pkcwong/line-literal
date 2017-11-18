@@ -21,13 +21,12 @@ public class KMB extends DefaultService{
 
     @Override
     public void payload() throws Exception{
-        String eta = getETA(new JSONObject(this.getParam("parameters").toString()).getString("busstop"));
+        String eta = getETA(new JSONObject(this.getParam("parameters").toString()).getString("busstop").toString());
         this.fulfillment = this.fulfillment.replace("@kmb::eta", eta);
     }
 
     public static String getETA(String busstop) throws JSONException{
         String eta = "Sorry, there is no bus arriving";
-        int etaminutes = 200;
         if(busstop.equals("")){
             eta = "Please enter a valid bus route or bus stop";
             return eta;
