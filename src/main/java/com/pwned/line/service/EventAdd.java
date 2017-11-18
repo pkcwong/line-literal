@@ -38,6 +38,7 @@ public class EventAdd extends DefaultService {
 			doc.append("buff", new BasicDBObject("cmd", "master"));
 			mongo.getCollection("user").findOneAndUpdate(SELF, new BasicDBObject("$set", doc));
 			this.fulfillment = "Event creation has cancelled";
+			return;
 		}
 		Pattern regex = Pattern.compile("(.+?)@(.+)");
 		Matcher matcher = regex.matcher(keyword);

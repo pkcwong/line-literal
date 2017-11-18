@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,16 +65,18 @@ public class EventMaker extends DefaultService{
 		JSONObject events = new JSONObject(group.get(0).toJson());
 
 
+
 		if(!checkEventExist(events, eventName)){
-			callEventAdd(uid, groupId, new BasicDBObject().append("uid", uid), mongo);
-			this.fulfillment = "Please follow that format {EventName}@yyyy/mm/dd\n + " +
+			callEventAdd(groupId, new BasicDBObject().append("uid", uid), mongo);
+			this.fulfillment = "Event not found. Please create the event by format {EventName}@yyyy/mm/dd\n + " +
 						"e.g. Milestone 3 submit@2017/11/20";
 			return;
 		//Check available timeslot
 		}else{
 			StringBuilder string = new StringBuilder("Event ");
 			string.append(eventName);
-			string.append("has be found, the common timeslot for all of you are TESTING");
+			string.append(" has be found, the common timeslot for all of you are TESTING\n");
+			string.append("Please be reminded that not editing your available timeslot will be considered as available in whole day");
 			this.fulfillment = string.toString();
 			return;
 		}
@@ -85,7 +88,7 @@ public class EventMaker extends DefaultService{
 
 	}
 
-	private void callEventAdd(String uid, String gid, BasicDBObject SELF, MongoDB mongo){
+	private void callEventAdd(String gid, BasicDBObject SELF, MongoDB mongo){
 		mongo.getCollection("user").updateOne(SELF,
 				new BasicDBObject("$set",
 						new BasicDBObject("buff",
