@@ -48,12 +48,19 @@ public class EventAdd extends DefaultService {
 
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
 
+
 		//fetch buff -> data from MongoDB
 		BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
 		ArrayList<Document> user = MongoDB.get(mongo.getCollection("user").find(SELF));
 		JSONObject USER = new JSONObject(user.get(0).toJson());
 		String groupId = USER.getJSONObject("buff").getJSONObject("data").getString("groupId");
 		BasicDBObject groupSELF= new BasicDBObject().append("groupId", groupId);
+		ArrayList<Document> group = MongoDB.get(mongo.getCollection("Event").find(groupSELF));
+		JSONObject events = new JSONObject(group.get(0).toJson());
+		if(EventMaker.checkEventExist(events, keywordArray[0])){
+			this.fulfillment = "The name of event already exist, please retry.";
+			return;
+		}
 
 		BasicDBObject data = new BasicDBObject();
 		BasicDBObject event = new BasicDBObject();

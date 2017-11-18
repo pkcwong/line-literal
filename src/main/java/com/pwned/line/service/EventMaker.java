@@ -83,7 +83,7 @@ public class EventMaker extends DefaultService{
 								new BasicDBObject().append("cmd", "event::add").append("data", new BasicDBObject().append("groupId", gid)))));
 	}
 
-	private boolean checkEventExist(JSONObject events, String eventName) throws JSONException {
+	public static boolean checkEventExist(JSONObject events, String eventName) throws JSONException {
 		if(!events.toString().contains("events")){
 			return false;
 		}
