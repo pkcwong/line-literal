@@ -73,9 +73,38 @@ public class KMB extends DefaultService{
                 etasecond[i] = null;
             }
         }
-
         return eta;
+    }
 
+    public static String getBusETA(String route_id, String busstop) throws JSONException{
+        HTTP http = new HTTP(Link.getBusStopLink(busstop));
+        String info = http.get();
+        JSONObject stop = new JSONObject(info);
+        JSONArray stops = stop.getJSONArray("stops");
+        JSONObject layer = stops.getJSONObject(0);
+        JSONArray services = layer.getJSONArray("services");
+        String etasecond = "";
+        for(int i = 0; i < services.length(); i++){
+            if(route_id.equals(services.getJSONObject(i).getString("route_id"))){
+                if(services.getJSONObject(i).has("live_departures_seconds")){
+                    etasecond = services.getJSONObject(i).getString("live_departures_seconds");
+                    etasecond = etasecond.substring(1, etasecond.length() - 1);
+                    if(etasecond.contains(",")) {
+                        etasecond = etasecond.substring(0, etasecond.indexOf(","));
+                    }
+                }else if(services.getJSONObject(i).has("headway_seconds_range")){
+                    etasecond = services.getJSONObject(i).getString("headway_seconds_range");
+                    etasecond = etasecond.substring(1, etasecond.length() - 1);
+                    if(etasecond.contains(",")) {
+                        etasecond = etasecond.substring(0, etasecond.indexOf(","));
+                    }
+                }else{
+                    etasecond = null;
+                }
+            }
+
+        }
+        return etasecond;
     }
 
     @Override
