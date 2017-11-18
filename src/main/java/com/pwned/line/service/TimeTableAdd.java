@@ -72,7 +72,6 @@ public class TimeTableAdd extends DefaultService {
         }
         Document CourseList = new Document();
         for(Course c:Courses){
-            Document course = new Document();
             for(int i=0;i<c.sections.size();i++){
                 for(int j=0;j<classID.size();j++){
                     if(c.sections.get(i).code.equals(classID.get(j))){
@@ -84,13 +83,24 @@ public class TimeTableAdd extends DefaultService {
                                 System.out.println("getting sections of" + c.department + c.code);
                                 Document timeslot = new Document();
                                 timeslot.append("course", c.department+" "+c.code);
-                                timeslot.append("day", c.sections.get(i).dateAndTimes.get(k).day);
-                                timeslot.append("start time", c.sections.get(i).dateAndTimes.get(k).startTime);
-                                timeslot.append("end time", c.sections.get(i).dateAndTimes.get(k).endTime);
-                                timeslot.append("venue", c.sections.get(i).rooms.get(k));
-                                CourseList.append("timeslot", timeslot);
-                                //CourseList.append("course", course);
-                                mongo.getCollection("Timetable").findOneAndUpdate(new BasicDBObject().append("userid", this.getParam("uid").toString()), new BasicDBObject("$addToSet", CourseList));
+                                if(c.sections.get(i).dateAndTimes.get(k).day.length()!=2){
+                                    String[] day = {c.sections.get(i).dateAndTimes.get(k).day.substring(0, 2), c.sections.get(i).dateAndTimes.get(k).day.substring(2, 3)};
+                                    for(String d:day){
+                                        timeslot.append("day", d);
+                                        timeslot.append("start time", c.sections.get(i).dateAndTimes.get(k).startTime);
+                                        timeslot.append("end time", c.sections.get(i).dateAndTimes.get(k).endTime);
+                                        timeslot.append("venue", c.sections.get(i).rooms.get(k));
+                                        CourseList.append("timeslot", timeslot);
+                                        mongo.getCollection("Timetable").findOneAndUpdate(new BasicDBObject().append("userid", this.getParam("uid").toString()), new BasicDBObject("$addToSet", CourseList));
+                                    }
+                                }else {
+                                    timeslot.append("day", c.sections.get(i).dateAndTimes.get(k).day);
+                                    timeslot.append("start time", c.sections.get(i).dateAndTimes.get(k).startTime);
+                                    timeslot.append("end time", c.sections.get(i).dateAndTimes.get(k).endTime);
+                                    timeslot.append("venue", c.sections.get(i).rooms.get(k));
+                                    CourseList.append("timeslot", timeslot);
+                                    mongo.getCollection("Timetable").findOneAndUpdate(new BasicDBObject().append("userid", this.getParam("uid").toString()), new BasicDBObject("$addToSet", CourseList));
+                                }
                             }
                         }
                     }
