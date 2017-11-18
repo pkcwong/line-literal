@@ -62,9 +62,13 @@ public class TimeTableAdd extends DefaultService {
             }
             for(String s:key){
                 if(timetableArr.get(i).equals(s)){
+
                     classID.add(timetableArr.get(i-2));
                 }
             }
+        }
+        for(int i=0;i<classID.size();i++){
+            System.out.println(classID.get(i));
         }
         Document CourseList = new Document();
         for(Course c:Courses){
