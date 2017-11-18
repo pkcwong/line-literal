@@ -97,8 +97,10 @@ public class TimeTableAdd extends DefaultService {
                 }
             }
             CourseList.append("Course List", Course);
+            mongo.getCollection("Event").findOneAndUpdate(new BasicDBObject().append("userid", this.getParam("uid").toString()), new BasicDBObject("$addToSet", CourseList));
+
         }
-        mongo.getCollection("Timetable").insertOne(CourseList);
+
         Document data = new Document();
         data.append("uid", this.getParam("uid").toString());
         data.append("bind", this.getParam("uid").toString());
