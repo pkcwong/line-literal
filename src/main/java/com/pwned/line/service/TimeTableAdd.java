@@ -76,17 +76,17 @@ public class TimeTableAdd extends DefaultService {
                 for(int j=0;j<classID.size();j++){
                     if(c.sections.get(i).code.equals(classID.get(j))){
                         System.out.println("Found match sections of"+c.department+c.code);
-                         Document DateAndTime = new Document();
+                         BasicDBObject DateAndTime = new BasicDBObject();
                         for(int k=0;k<c.sections.get(i).dateAndTimes.size();k++){
                             System.out.println("getting sections of"+c.department+c.code);
-                            Document timeslot = new Document();
+                            BasicDBObject timeslot = new BasicDBObject();
                             timeslot.append("day",c.sections.get(i).dateAndTimes.get(k).day);
                             timeslot.append("start time",c.sections.get(i).dateAndTimes.get(k).startTime);
                             timeslot.append("end time",c.sections.get(i).dateAndTimes.get(k).endTime);
                             timeslot.append("venue", c.sections.get(i).rooms.get(k));
                             DateAndTime.append("timeslot", timeslot);
                         }
-                        Document Section = new Document();
+                        BasicDBObject Section = new BasicDBObject();
                         Section.append("class code", c.sections.get(i).code);
                         Section.append("date and time", DateAndTime);
                         Course.append("section", Section);
