@@ -73,7 +73,7 @@ public class EditTimeSlot extends DefaultService {
 		timeslot.append("EndTime", date);
 
 		data.append("timeslot", timeslot);
-		mongo.getCollection("TimeSlot").findOneAndUpdate(SELF, new BasicDBObject("$addToSet", timeslot));
+		mongo.getCollection("TimeSlot").findOneAndUpdate(SELF, new BasicDBObject("$addToSet", data));
 		this.fulfillment = "Your available timeslot are successfully added";
 	}
 
