@@ -45,8 +45,9 @@ public class ReviewAdd extends DefaultService {
 		}
 		// add review
 
-		mongo.getCollection("courseReview").findOneAndUpdate(new BasicDBObject().append("department", department).append("code", code), new BasicDBObject("$addToSet", new BasicDBObject("reviews", this.fulfillment)), new FindOneAndUpdateOptions().upsert(true));
-
+		mongo.getCollection("courseReview").findOneAndUpdate(new BasicDBObject().append("department", department).append
+				("code", code), new BasicDBObject("$addToSet", new BasicDBObject("reviews", this.fulfillment)),
+				new FindOneAndUpdateOptions().upsert(true));
 		Document data = new Document();
 		data.append("uid", this.getParam("uid").toString());
 		data.append("bind", this.getParam("uid").toString());
