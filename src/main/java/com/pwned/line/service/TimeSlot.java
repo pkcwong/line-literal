@@ -33,7 +33,7 @@ public class TimeSlot extends DefaultService {
 		ArrayList<Document> user = MongoDB.get(mongo.getCollection("Timeslot").find(SELF));
 		if(keyword.contains("edit")){
 			callEditTimeSlot(uid,SELF,mongo);
-			this.fulfillment = "Please give your command by: \n +" +
+			this.fulfillment = "Please give your command by: \n" +
 								"1. Add new available time for the day by: e.g. add 18:00-19:30@2017/11/27\n" +
 								"2. Drop existing  available time for the day by: e.g. drop 18:00-19:30@2017/11/27\n";
 			return;
