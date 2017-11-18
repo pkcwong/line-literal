@@ -66,12 +66,15 @@ public class EventMaker extends DefaultService{
 
 		if(!checkEventExist(events, eventName)){
 			callEventAdd(uid, groupId, new BasicDBObject().append("uid", uid), mongo);
-			this.fulfillment = "Please follow that format {EventName}@yyyy/mm/dd@hh:mm-hh:mm\n + " +
-						"e.g. Milestone 3 submit@2017/11/20@18:00-23:59";
+			this.fulfillment = "Please follow that format {EventName}@yyyy/mm/dd\n + " +
+						"e.g. Milestone 3 submit@2017/11/20";
 			return;
 		//Check available timeslot
 		}else{
-			this.fulfillment = events.toString();
+			StringBuilder string = new StringBuilder("Event ");
+			string.append(eventName);
+			string.append("has be found, the common timeslot for all of you are TESTING");
+			this.fulfillment = string.toString();
 			return;
 		}
 

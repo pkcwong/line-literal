@@ -94,6 +94,7 @@ public class MasterController extends DefaultService {
 		String[] review = {"review"};
 		String[] help = {"help"};
 		String[] event = {"event"};
+		String[] timeslot = {"timeslot"};
 		String[] thanksgiving = {"accept","bring"};
 		String[] kmb = {"bus", "arrival", "departure", "arrive", "eta"};
 		String[] weather = {"weather", "climate", "report"};
@@ -174,6 +175,14 @@ public class MasterController extends DefaultService {
 				return new EventMaker(this, temp).resolve().get();
 			}
 		}
+
+		for (String keywords : timeslot) {
+			String temp = this.fulfillment.toLowerCase();
+			if(temp.contains(keywords)){
+				return new EditTimeslot(this.resolve().get());
+			}
+		}
+
 		for (String keywords : help) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
@@ -186,8 +195,11 @@ public class MasterController extends DefaultService {
 						"6. Temperature: temperature at a place (e.g. HKUST, Sai Kung, CUHK, Kowloon City)\n" +
 						"7. Bus Arrival Time: Estimated time of arrival of next bus at busstop(e.g. South Gate)\n" +
 						"8. Society information: Socety ... (e.g. Hall 1)\n" +
-						"9. Bring food for party: Bring ...\n" +
-						"10. Join Thanksgiving party: accept\n";
+						"9. TimeTable: timetable\n" +
+						"10. Event Maker: event {Event Name} (e.g. event GroupMeeting)\n" +
+						"11. Create available Timeslot for event making: timeslot\n" +
+						"12. Join Thanksgiving party: accept\n" +
+						"13. Bring food for party: Bring {food name}\n";
 
 				return this;
 			}
