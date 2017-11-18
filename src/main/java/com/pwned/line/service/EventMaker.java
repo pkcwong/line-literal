@@ -59,7 +59,7 @@ public class EventMaker extends DefaultService{
 		JSONObject events = new JSONObject(group.get(0).toJson());
 
 
-		if(!checkEventExist(events, keywordArray[0])){
+		if(!checkEventExist(events, keywordArray[1])){
 			callEventAdd(uid, groupId, new BasicDBObject().append("uid", uid), mongo);
 			this.fulfillment = "You have not create event yet, please create your event with {Event Name}@yyyy/mm/dd:";
 			return;
