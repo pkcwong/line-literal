@@ -68,15 +68,11 @@ public class TimeTableAdd extends DefaultService {
         }
         Document CourseList = new Document();
         for(Course c:Courses){
-            BasicDBObject Course = new BasicDBObject();
-            Course.put("department", c.department);
-            Course.put("code", c.code);
-            Course.put("title", c.title);
             for(int i=0;i<c.sections.size();i++){
                 for(int j=0;j<classID.size();j++){
                     if(c.sections.get(i).code.equals(classID.get(j))){
                         System.out.println("Found match sections of"+c.department+c.code);
-                        BasicDBObject DateAndTime = new BasicDBObject();
+
                         if(c.sections.get(i).dateAndTimes.size()==0){}
                         else {
                             for (int k = 0; k < c.sections.get(i).dateAndTimes.size(); k++) {
@@ -86,17 +82,12 @@ public class TimeTableAdd extends DefaultService {
                                 timeslot.append("start time", c.sections.get(i).dateAndTimes.get(k).startTime);
                                 timeslot.append("end time", c.sections.get(i).dateAndTimes.get(k).endTime);
                                 timeslot.append("venue", c.sections.get(i).rooms.get(k));
-                                DateAndTime.append("timeslot", timeslot);
+                                CourseList.append("timeslot", timeslot);
                             }
                         }
-                        BasicDBObject  Section = new BasicDBObject();
-                        Section.append("class code", c.sections.get(i).code);
-                        Section.append("date and time", DateAndTime);
-                        Course.append("section", Section);
                     }
                 }
             }
-            CourseList.append("Course List", Course);
             mongo.getCollection("Timetable").findOneAndUpdate(new BasicDBObject().append("userid", this.getParam("uid").toString())., new BasicDBObject("$addToSet", CourseList));
 
         }
