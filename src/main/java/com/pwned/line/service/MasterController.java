@@ -178,7 +178,8 @@ public class MasterController extends DefaultService {
 						"7. Bus Arrival Time: Estimated time of arrival of next bus at busstop(e.g. South Gate)\n" +
 						"8. Society information: Socety ... (e.g. Hall 1)\n" +
 						"9. Bring food for party: Bring ...\n" +
-						"10. Join Thanksgiving party: accept by (Your name)\n";
+						"10. Join Thanksgiving party: accept\n";
+
 				return this;
 			}
 		}
