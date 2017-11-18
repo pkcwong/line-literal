@@ -14,14 +14,13 @@ import java.nio.file.Path;
 public class KitchenSinkApplication {
 
 	public static Path downloadedContentDir;
-	public static int builtVersion = 189;
+	public static int builtVersion = 200;
 	public static String version = "0.2.2";
 
 	public static void main(String[] args) throws Exception {
 		KitchenSinkApplication.downloadedContentDir = Files.createTempDirectory("line-bot");
 		SpringApplication.run(KitchenSinkApplication.class, args);
 		Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
-		//PushNineDaysWeather.NineDaysWeather();
 		scheduler.start();
 		scheduler.scheduleJob(PushWeather.buildJob(PushWeather.class), PushWeather.buildTrigger(300));
 		scheduler.scheduleJob(PushThanksgiving.buildJob(PushThanksgiving.class), PushThanksgiving.buildTrigger(24));

@@ -80,18 +80,16 @@ public class MasterController extends DefaultService {
 		String[] timetable = {"current"};
 		String[] lift = {"classroom", "room", "lift", "where", "how to go"};
 		String[] societies = {"societies", "society", "student Club", "club", "interest group"};
-		String[] kmb = {"bus", "arrival", "departure", "arrive", "eta"};
-		String[] weather = {"weather", "degrees", "climate"};
-		String[] nine = {"9 days weather", "week weather", "next nine days", "next week", "next few days"};
-		String[] temperature = {"temperature"};
 		String[] quota = {"class", "quota"};
 		String[] translate = {"translate", "english", "chinese", "korean", "malaysian", "indonesian", "indo"};
 		String[] review = {"review"};
 		String[] help = {"help"};
 		String[] event = {"event"};
 		String[] thanksgiving = {"accept","bring"};
-
-
+		String[] kmb = {"bus", "arrival", "departure", "arrive", "eta"};
+		String[] weather = {"weather", "climate", "report"};
+		String[] nine = {"9 days weather", "week weather", "next nine days", "next week", "next few days"};
+		String[] temperature = {"temperature", "degrees"};
 
 		for (String keywords : thanksgiving) {
 			String temp = this.fulfillment.toLowerCase();
@@ -99,7 +97,6 @@ public class MasterController extends DefaultService {
 				return new Thanksgiving(this, temp).resolve().get();
 			}
 		}
-
 		for (String keywords : timetable) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
