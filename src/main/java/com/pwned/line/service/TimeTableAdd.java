@@ -83,14 +83,16 @@ public class TimeTableAdd extends DefaultService {
                                 timeslot.append("start time", c.sections.get(i).dateAndTimes.get(k).startTime);
                                 timeslot.append("end time", c.sections.get(i).dateAndTimes.get(k).endTime);
                                 timeslot.append("venue", c.sections.get(i).rooms.get(k));
-                                course.append("timeslot", timeslot);
+                                CourseList.append("timeslot", timeslot);
+                                //CourseList.append("course", course);
+                                mongo.getCollection("Timetable").findOneAndUpdate(new BasicDBObject().append("userid", this.getParam("uid").toString()), new BasicDBObject("$addToSet", CourseList));
                             }
                         }
                     }
                 }
             }
-            CourseList.append("course", course);
-            mongo.getCollection("Timetable").findOneAndUpdate(new BasicDBObject().append("userid", this.getParam("uid").toString()), new BasicDBObject("$addToSet", CourseList));
+
+
 
         }
 
