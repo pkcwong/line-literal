@@ -1,5 +1,4 @@
 package com.pwned.line.job;
-
 import com.linecorp.bot.model.action.URIAction;
 import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.template.CarouselColumn;
@@ -9,15 +8,15 @@ import com.pwned.line.http.HTTP;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 import org.quartz.*;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Calendar;
+
 public class PushNineDaysWeather extends DefaultJob{
     public static ArrayList<Document> usersArrayList;
+    
     public PushNineDaysWeather() {
-
     }
 
     @Override
@@ -25,7 +24,6 @@ public class PushNineDaysWeather extends DefaultJob{
         System.out.println("PushNineDaysWeather");
         this.NineDaysWeather("hi");
     }
-
 
     public static JobDetail buildJob(Class <? extends Job> job) {
         return JobBuilder.newJob(PushWeather.class).build();
@@ -56,7 +54,12 @@ public class PushNineDaysWeather extends DefaultJob{
                 "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/cloud-with-rain_1f327.png",
                 "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/cloud-with-rain_1f327.png",
                 "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/cloud-with-rain_1f327.png",
-                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/thunder-cloud-and-rain_26c8.png"
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/thunder-cloud-and-rain_26c8.png",
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/thermometer_1f321.png",
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/thermometer_1f321.png",
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/snowflake_2744.png",
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/snowflake_2744.png",
+                "https://emojipedia-us.s3.amazonaws.com/thumbs/120/apple/114/expressionless-face_1f611.png"
         };
         HTTP http = new HTTP(link);
         String ninedaysweather = http.get();
@@ -99,6 +102,16 @@ public class PushNineDaysWeather extends DefaultJob{
                 imageurl[url] = emoji[9];
             }else if(imageurl[url].contains("65")){
                 imageurl[url] = emoji[10];
+            }else if(imageurl[url].contains("90")){
+                imageurl[url] = emoji[11];
+            }else if(imageurl[url].contains("91")){
+                imageurl[url] = emoji[12];
+            }else if(imageurl[url].contains("92")){
+                imageurl[url] = emoji[13];
+            }else if(imageurl[url].contains("93")){
+                imageurl[url] = emoji[14];
+            }else{
+                imageurl[url] = emoji[15];
             }
         }
         String desriptionsstring = ninedaysweather;
@@ -110,6 +123,9 @@ public class PushNineDaysWeather extends DefaultJob{
             desription[weather] = fulldesription[weather].substring(0, fulldesription[weather].indexOf("."));
             System.out.println(fulldesription[weather].length());
             desriptionsstring = desriptionsstring.substring(2);
+            if(desription[weather].length() > 60){
+                desription[weather] = desription[weather].substring(0, 39);
+            }
         }
         for(int i = 0; i < 20; i++)
         System.out.println("hi");
