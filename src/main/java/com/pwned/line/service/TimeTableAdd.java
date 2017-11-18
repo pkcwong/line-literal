@@ -79,6 +79,7 @@ public class TimeTableAdd extends DefaultService {
                             for (int k = 0; k < c.sections.get(i).dateAndTimes.size(); k++) {
                                 System.out.println("getting sections of" + c.department + c.code);
                                 Document timeslot = new Document();
+                                timeslot.append("course", c.department+" "+c.code);
                                 timeslot.append("day", c.sections.get(i).dateAndTimes.get(k).day);
                                 timeslot.append("start time", c.sections.get(i).dateAndTimes.get(k).startTime);
                                 timeslot.append("end time", c.sections.get(i).dateAndTimes.get(k).endTime);
