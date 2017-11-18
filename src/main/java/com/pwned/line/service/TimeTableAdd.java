@@ -87,11 +87,11 @@ public class TimeTableAdd extends DefaultService {
                                 timeslot.append("end time", c.sections.get(i).dateAndTimes.get(k).endTime);
                                 timeslot.append("venue", c.sections.get(i).rooms.get(k));
                                 DateAndTime.append("timeslot", timeslot);
-                                //mongo.getCollection("Timetable").findOneAndUpdate(new Document().append("userid", this.getParam("uid").toString()).append())
+                               // mongo.getCollection("Timetable").
 
                             }
                         }
-                        BasicDBObject Section = new BasicDBObject();
+                        BasicDBObject  Section = new BasicDBObject();
                         Section.append("class code", c.sections.get(i).code);
                         Section.append("date and time", DateAndTime);
                         Course.append("section", Section);
