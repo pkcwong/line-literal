@@ -9,6 +9,8 @@ import org.json.JSONObject;
 
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /***
  * Service for event maker.
@@ -37,14 +39,17 @@ public class EventMaker extends DefaultService{
 			this.fulfillment = "Sorry, you can only use this function in a group chat";
 			return;
 		}
+		Pattern regex = Pattern.compile("event\\s(.+)");
+		Matcher matcher = regex.matcher(keyword);
+		String eventName = "";
+		while (matcher.find()) {
+			eventName = matcher.group(1);
+		}
 
-		String[] keywordArray = keyword.split(" ");
-		if(keywordArray.length == 1){
+		if(eventName.equals("")){
 			this.fulfillment = "Please state the event name, type help if any help is needed";
 			return;
 		}
-
-
 
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
 		BasicDBObject GID = new BasicDBObject().append("groupId", groupId);
@@ -59,7 +64,7 @@ public class EventMaker extends DefaultService{
 		JSONObject events = new JSONObject(group.get(0).toJson());
 
 
-		if(!checkEventExist(events, keywordArray[1])){
+		if(!checkEventExist(events, eventName)){
 			callEventAdd(uid, groupId, new BasicDBObject().append("uid", uid), mongo);
 			this.fulfillment = "You have not create event yet, please create your event with {Event Name}@yyyy/mm/dd:";
 			return;
