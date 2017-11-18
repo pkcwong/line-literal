@@ -184,7 +184,7 @@ public class MasterController extends DefaultService {
 		for (String keywords : timeslot) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
-				return new TimeSlot(this.resolve().get(), temp);
+				return new TimeSlot(this, temp).resolve().get();
 			}
 		}
 
