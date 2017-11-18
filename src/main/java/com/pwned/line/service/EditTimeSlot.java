@@ -55,6 +55,7 @@ public class EditTimeSlot extends DefaultService {
 				return;
 			}
 			createNewTimeSlot(mongo,SELF,start,end,date);
+			finish(mongo,SELF);
 		}
 
 	}
