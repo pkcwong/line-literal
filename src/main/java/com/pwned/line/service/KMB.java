@@ -32,6 +32,8 @@ public class KMB extends DefaultService{
             eta = "Please enter a valid bus route or bus stop";
             return eta;
         }
+        for(int i = 0; i < 20; i++)
+        System.out.println(busstop);
         if(Link.getBusStopLink(busstop) == null) {
             eta = "The busstop in not in our database.";
             return eta;
