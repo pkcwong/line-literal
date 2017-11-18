@@ -55,7 +55,7 @@ public class EventMaker extends DefaultService{
 			data.append("uid", uid);
 			mongo.getCollection("Event").insertOne(data);
 		}
-
+		group = MongoDB.get(mongo.getCollection("Event").find(GID));
 		JSONObject events = new JSONObject(group.get(0).toJson());
 
 
@@ -63,7 +63,7 @@ public class EventMaker extends DefaultService{
 			callEventAdd(uid, groupId, new BasicDBObject().append("uid", uid), mongo);
 			this.fulfillment = "You have not create event yet, please create your event with {Event Name}@yyyy/mm/dd:";
 			return;
-
+		//Check available timeslot
 		}else{
 			this.fulfillment = events.toString();
 			return;
