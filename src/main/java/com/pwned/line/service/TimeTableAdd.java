@@ -101,6 +101,7 @@ public class TimeTableAdd extends DefaultService {
 
         }
 
+
         Document data = new Document();
         data.append("uid", this.getParam("uid").toString());
         data.append("bind", this.getParam("uid").toString());
