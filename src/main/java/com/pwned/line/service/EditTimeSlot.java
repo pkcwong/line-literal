@@ -33,7 +33,7 @@ public class EditTimeSlot extends DefaultService {
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
 		String uid = this.getParam("uid").toString();
 		BasicDBObject SELF = new BasicDBObject().append("uid", uid);
-		ArrayList<Document> user = MongoDB.get(mongo.getCollection("Timeslot").find(SELF));
+		ArrayList<Document> user = MongoDB.get(mongo.getCollection("TimeSlot").find(SELF));
 		if(keyword.equals("cancel")) {
 			finish(mongo, SELF);
 			this.fulfillment = "Timeslot edit is cancelled";
@@ -80,7 +80,7 @@ public class EditTimeSlot extends DefaultService {
 		timeslot.append("EndTime", end);
 
 		data.append("timeslot", timeslot);
-		mongo.getCollection("Event").findOneAndUpdate(SELF, new BasicDBObject("$addToSet", data),
+		mongo.getCollection("TimeSlot").findOneAndUpdate(SELF, new BasicDBObject("$addToSet", data),
 				new FindOneAndUpdateOptions().upsert(true));
 
 		this.fulfillment = "Your available timeslot are successfully added";
