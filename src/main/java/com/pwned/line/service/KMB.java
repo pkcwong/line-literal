@@ -21,7 +21,8 @@ public class KMB extends DefaultService{
 
     @Override
     public void payload() throws Exception{
-        String eta = getETA(new JSONObject(this.getParam("parameters").toString()).getString("busstop").toString());
+        String busstop = new JSONObject(this.getParam("parameters").toString()).getString("busstop").toString();
+        String eta = getETA(busstop);
         this.fulfillment = this.fulfillment.replace("@kmb::eta", eta);
     }
 
