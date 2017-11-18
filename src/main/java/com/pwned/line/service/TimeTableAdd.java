@@ -68,7 +68,7 @@ public class TimeTableAdd extends DefaultService {
         }
         Document CourseList = new Document();
         for(Course c:Courses){
-            Document Course = new Document();
+            BasicDBObject Course = new BasicDBObject();
             Course.put("department", c.department);
             Course.put("code", c.code);
             Course.put("title", c.title);
@@ -76,7 +76,7 @@ public class TimeTableAdd extends DefaultService {
                 for(int j=0;j<classID.size();j++){
                     if(c.sections.get(i).code.equals(classID.get(j))){
                         System.out.println("Found match sections of"+c.department+c.code);
-                        Document DateAndTime = new Document();
+                        BasicDBObject DateAndTime = new BasicDBObject();
                         if(c.sections.get(i).dateAndTimes.size()==0){}
                         else {
                             for (int k = 0; k < c.sections.get(i).dateAndTimes.size(); k++) {
@@ -89,7 +89,7 @@ public class TimeTableAdd extends DefaultService {
                                 DateAndTime.append("timeslot", timeslot);
                             }
                         }
-                        Document Section = new Document();
+                        BasicDBObject  Section = new BasicDBObject();
                         Section.append("class code", c.sections.get(i).code);
                         Section.append("date and time", DateAndTime);
                         Course.append("section", Section);
@@ -97,7 +97,8 @@ public class TimeTableAdd extends DefaultService {
                 }
             }
             CourseList.append("Course List", Course);
-            mongo.getCollection("Timetable").findOneAndUpdate(new BasicDBObject().append("userid", this.getParam("uid").toString()), new BasicDBObject("$addToSet", CourseList));
+            mongo.getCollection("Timetable").findOneAndUpdate(
+                    new BasicDBObject().append("userid", this.getParam("uid").toString()), new BasicDBObject("$addToSet", CourseList));
 
         }
 
