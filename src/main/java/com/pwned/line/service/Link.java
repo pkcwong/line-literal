@@ -6,6 +6,10 @@ public class Link {
 
 
     public static String getBusStopLink(String busstop){
+        for(int i = 0; i < 20; i++){
+            System.out.println(busstop);
+            System.out.println(busstop.equals("HKUST North Gate"));
+        }
         if(busstop.equals("HKUST South Gate")){
             return HKUST_SOUTH_GATE;
         }else if(busstop.equals("HKUST North Gate")){
