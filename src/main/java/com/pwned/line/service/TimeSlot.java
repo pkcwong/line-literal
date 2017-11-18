@@ -31,10 +31,6 @@ public class TimeSlot extends DefaultService {
 		String uid = this.getParam("uid").toString();
 		BasicDBObject SELF = new BasicDBObject().append("uid", uid);
 		ArrayList<Document> user = MongoDB.get(mongo.getCollection("Timeslot").find(SELF));
-		if(user.size() == 0){
-			this.fulfillment = "You don't have any available timeslot, please create one first by calling edit timeslot.";
-			return;
-		}
 		if(keyword.contains("edit")){
 			callEditTimeSlot(uid,SELF,mongo);
 			this.fulfillment = "Please give your command by: \n +" +
@@ -42,7 +38,10 @@ public class TimeSlot extends DefaultService {
 								"2. Drop existing  available time for the day by: e.g. drop 18:00-19:30@2017/11/27\n";
 			return;
 		}else if (keyword.contains("check")){
-
+			if(user.size() == 0){
+				this.fulfillment = "You don't have any available timeslot, please create one first by calling edit timeslot.";
+				return;
+			}
 
 		}else{
 			this.fulfillment = "Sorry, this function for time slot is not supported";
