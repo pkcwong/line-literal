@@ -84,6 +84,9 @@ public class EventMaker extends DefaultService{
 	}
 
 	private boolean checkEventExist(JSONObject events, String eventName) throws JSONException {
+		if(events.getJSONArray("events").equals(null)){
+			return false;
+		}
 		for(int i = 0; i < events.getJSONArray("events").length(); i++){
 			if(events.getJSONArray("events").get(i).toString().contains(eventName)){
 				return true;
