@@ -6,6 +6,7 @@ import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 import org.json.JSONObject;
 
+import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,6 +39,11 @@ public class EditTimeSlot extends DefaultService {
 			this.fulfillment = "Timeslot edit is cancelled";
 			return;
 		}
+		if(user.size() == 0){
+			Document doc = new Document();
+			doc.append("uid",uid);
+			mongo.getCollection("TimeSlot").insertOne(doc);
+		}
 
 		String start = "";
 		String end = "";
@@ -67,15 +73,15 @@ public class EditTimeSlot extends DefaultService {
 	}
 
 	public void createNewTimeSlot(MongoDB mongo, BasicDBObject SELF,String start, String end, String date){
-		Document data = new Document();
-		Document timeslot = new Document();
+		BasicDBObject data = new BasicDBObject();
+		BasicDBObject timeslot = new BasicDBObject();
 		timeslot.append("Date", start);
 		timeslot.append("StartTime", end);
 		timeslot.append("EndTime", date);
 
 		data.append("timeslot", timeslot);
-		mongo.getCollection("TimeSlot").insertOne(timeslot);
-		mongo.getCollection("TimeSlot").findOneAndUpdate(SELF, new BasicDBObject("$addToSet", data));
+		mongo.getCollection("Event").findOneAndUpdate(SELF, new BasicDBObject("$addToSet", data));
+
 		this.fulfillment = "Your available timeslot are successfully added";
 	}
 
@@ -85,6 +91,8 @@ public class EditTimeSlot extends DefaultService {
 		doc.append("bind", this.getParam("uid").toString());
 		doc.append("buff", new BasicDBObject("cmd", "master"));
 		mongo.getCollection("user").findOneAndUpdate(SELF, new BasicDBObject("$set", doc));
+
+
 
 	}
 
