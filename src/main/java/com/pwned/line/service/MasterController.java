@@ -66,7 +66,9 @@ public class MasterController extends DefaultService {
 		if (USER.getJSONObject("buff").getString("cmd").equals("review::add")) {
 			return new ReviewAdd(this).resolve().get();
 		}
-
+		if (USER.getJSONObject("buff").getString("cmd").equals("timetable::add")) {
+			return new TimeTableAdd(this).resolve().get();
+		}
 		if (this.fulfillment.equals("anonymous") || this.fulfillment.equals("Anonymous")) {
 			return new AnonymousChat(this).resolve().get();
 		}
@@ -77,7 +79,7 @@ public class MasterController extends DefaultService {
 			return this;
 		}
 
-		String[] timetable = {"current"};
+		String[] timetable = {"current", "timetable"};
 		String[] lift = {"classroom", "room", "lift", "where", "how to go"};
 		String[] societies = {"societies", "society", "student Club", "club", "interest group"};
 		String[] quota = {"class", "quota"};
@@ -100,7 +102,7 @@ public class MasterController extends DefaultService {
 		for (String keywords : timetable) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
-				//return new DialogFlowTranslate(this).resolve().get();
+				return new DialogFlowTimetable(this).resolve().get();
 			}
 		}
 		for (String keywords : lift) {
