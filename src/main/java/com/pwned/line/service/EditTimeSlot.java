@@ -75,12 +75,13 @@ public class EditTimeSlot extends DefaultService {
 	public void createNewTimeSlot(MongoDB mongo, BasicDBObject SELF,String start, String end, String date){
 		BasicDBObject data = new BasicDBObject();
 		BasicDBObject timeslot = new BasicDBObject();
-		timeslot.append("Date", start);
-		timeslot.append("StartTime", end);
-		timeslot.append("EndTime", date);
+		timeslot.append("Date", date);
+		timeslot.append("StartTime", start);
+		timeslot.append("EndTime", end);
 
 		data.append("timeslot", timeslot);
-		mongo.getCollection("Event").findOneAndUpdate(SELF, new BasicDBObject("$addToSet", data));
+		mongo.getCollection("Event").findOneAndUpdate(SELF, new BasicDBObject("$addToSet", data),
+				new FindOneAndUpdateOptions().upsert(true));
 
 		this.fulfillment = "Your available timeslot are successfully added";
 	}
