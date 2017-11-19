@@ -210,7 +210,7 @@ public class EventMaker extends DefaultService{
 	}
 
 
-	
+
 
 	public String getTimeSlot(MongoDB mongo, BasicDBObject SELF, String date) throws JSONException {
 		ArrayList<Document> user = MongoDB.get(mongo.getCollection("TimeSlot").find(SELF));

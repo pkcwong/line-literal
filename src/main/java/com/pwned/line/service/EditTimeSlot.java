@@ -64,6 +64,9 @@ public class EditTimeSlot extends DefaultService {
 			createNewTimeSlot(mongo,SELF,start,end,date);
 			finish(mongo,SELF);
 		}
+		else if (keyword.contains("add")){
+			return;
+		}
 
 	}
 

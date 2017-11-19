@@ -71,9 +71,9 @@ public class TimeSlot extends DefaultService {
 					result.append("\n");
 
 				}
-
 			}
 
+			this.fulfillment = "Your timeslot:\n" + result.toString();
 		}else{
 			this.fulfillment = "Sorry, this function for time slot is not supported";
 			return;
