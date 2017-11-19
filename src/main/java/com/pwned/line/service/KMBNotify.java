@@ -23,12 +23,14 @@ public class KMBNotify extends DefaultService{
         MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
         BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
         ArrayList<Document> kmb = MongoDB.get(mongo.getCollection("kmb").find(SELF));
+	    this.fulfillment = this.fulfillment.replace("@kmb::notify", "You are already in our list of notification.");
         if(kmb.size() == 0){
             Document data = new Document();
             data.append("uid", this.getParam("uid").toString());
             mongo.getCollection("user").insertOne(data);
+	        this.fulfillment = this.fulfillment.replace("@kmb::notify", "We will start notifying you about the arrvial time. Please tell us to stop if you no longer need this service.");
         }
-	    this.fulfillment = this.fulfillment.replace("@kmb::notify", "We will start notifying you about the arrvial time. Please tell us to stop if you no longer need this service.");
+
     }
 
     @Override
