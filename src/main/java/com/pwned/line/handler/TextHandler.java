@@ -34,6 +34,7 @@ public class TextHandler {
 				return new MasterController(module).resolve().get();
 			} catch (Exception e) {
 				e.printStackTrace();
+				KitchenSinkController.push(event.getSource().getUserId(), new TextMessage(e.getMessage()));
 			}
 			return null;
 		}).thenApply((Service service) -> {
