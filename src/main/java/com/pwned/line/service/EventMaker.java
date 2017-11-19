@@ -203,10 +203,12 @@ public class EventMaker extends DefaultService{
 			String[] temp = allTimeslot[i].split("-");
 			startTime = parser.parse(temp[0]);
 			endTime = parser.parse(temp[1]);
-			System.out.println("\n\nef timeslot " + startTime.toString() + ":" + endTime.toString() + "\n\n");
+			System.out.println("\n\nRef timeslot " + startTime.toString() + ":" + endTime.toString() + "\n\n");
 			break;
 		}
+
 		for(int j = 0 ; j != i && j < allTimeslot.length; j++){
+			System.out.printf("\n\n j = %d", j);
 			if(allTimeslot[i].equals("WHOLE DAY")){
 				//count--;
 				continue;
