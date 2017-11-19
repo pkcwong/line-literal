@@ -136,7 +136,7 @@ public class EventMaker extends DefaultService{
 
 	private String getCommonTimeSlot(MongoDB mongo, ArrayList<Document> group, String date) throws JSONException {
 		JSONObject userArr = new JSONObject(group.get(0).toJson());
-		StringBuilder common = new StringBuilder();
+		StringBuilder common = new StringBuilder("");
 		for(int i = 0; i < userArr.getJSONArray("uid").length(); i++){
 			if(userArr.getJSONArray("uid").length() == 1){
 				return getTimeSlot(mongo,new BasicDBObject().append("uid", userArr.getJSONArray("uid").getString(i)),date);
@@ -147,6 +147,9 @@ public class EventMaker extends DefaultService{
 				common.append(getTimeSlot(mongo,new BasicDBObject().append("uid", userArr.getJSONArray("uid").getString(i)),date));
 			}
 
+		}
+		if(common.toString().equals("")){
+			return "WHOLE DAY";
 		}
 		return common.toString();
 
