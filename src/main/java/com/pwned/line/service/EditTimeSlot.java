@@ -57,15 +57,30 @@ public class EditTimeSlot extends DefaultService {
 				end = matcher.group(2);
 				date = matcher.group(3);
 			}
+
 			if(start.equals("")||end.equals("")||date.equals("")){
 				this.fulfillment = "Please follow the format hh:mm-hh:mm@yyyy/mm/dd";
+				return;
+			}
+			if(user.contains(date)){
+				this.fulfillment = "Sorry, you can only create one timeslot for single day, please edit your timeslot by edit timeslot";
 				return;
 			}
 			createNewTimeSlot(mongo,SELF,start,end,date);
 			finish(mongo,SELF);
 		}
-		else if (keyword.contains("add")){
-			return;
+		else if (keyword.contains("drop")){
+			Pattern regex = Pattern.compile("add\\s(.+)-(.+)@(.+)");
+			Matcher matcher = regex.matcher(keyword);
+			if (matcher.find()) {
+				start = matcher.group(1);
+				end = matcher.group(2);
+				date = matcher.group(3);
+			}
+			if(start.equals("")||end.equals("")||date.equals("")){
+				this.fulfillment = "Please follow the format hh:mm-hh:mm@yyyy/mm/dd";
+				return;
+			}
 		}
 
 	}
