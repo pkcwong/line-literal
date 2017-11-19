@@ -58,6 +58,11 @@ public class CourseName extends DefaultService {
 		return this.fulfillment.replace("@course::title", courseName);
 	}
 
+	/***
+	 * Resolve fulfillment
+	 * @return Instance
+	 * @throws Exception Exception
+	 */
 	@Override
 	public Service chain() throws Exception {
 		return this;
