@@ -122,13 +122,7 @@ public class PushNineDaysWeather extends DefaultJob{
             if(desription[weather].length() > 60){
                 desription[weather] = desription[weather].substring(0, 59);
             }
-            System.out.println(fulldesription[weather].length());
             desriptionsstring = desriptionsstring.substring(2);
-        }
-        for (int day = 0; day < 9; day++){
-            System.out.println(imageurl[day]);
-            System.out.println(date[day]);
-            System.out.println(desription[day]);
         }
         CarouselTemplate carouselTemplate = new CarouselTemplate(
             Arrays.asList(

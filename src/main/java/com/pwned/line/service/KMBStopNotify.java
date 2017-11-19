@@ -22,7 +22,7 @@ public class KMBStopNotify extends DefaultService{
 	public void payload() throws Exception{
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
 		BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
-		this.fulfillment = this.fulfillment.replace("@kmb::stop", stopNotification(mongo, SELF));
+		this.fulfillment = stopNotification(mongo, SELF);
 	}
 
 	public static String stopNotification(MongoDB mongo, BasicDBObject SELF){

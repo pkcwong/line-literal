@@ -21,15 +21,7 @@ public class KMB extends DefaultService{
 
     @Override
     public void payload() throws Exception{
-        String busstop = new JSONObject(this.getParam("parameters").toString()).getString("busstop").toString();
-
-        for(int i = 0; i < 20; i++){
-            System.out.println("hi");
-            System.out.println(busstop);
-            System.out.println(new JSONObject(this.getParam("parameters").toString()).getString("busstop"));
-        }
-        String eta = getETA(busstop);
-        this.fulfillment = this.fulfillment.replace("@kmb::eta", eta);
+        this.fulfillment = this.fulfillment.replace("@kmb::eta", getETA(new JSONObject(this.getParam("parameters").toString()).getString("busstop").toString()));
     }
 
     public static String getETA(String busstop) throws JSONException{
@@ -38,8 +30,6 @@ public class KMB extends DefaultService{
             eta = "Please enter a valid bus route or bus stop";
             return eta;
         }
-        for(int i = 0; i < 20; i++)
-        System.out.println(busstop);
         if(Link.getBusStopLink(busstop) == null) {
             eta = "The busstop in not in our database.";
             return eta;
