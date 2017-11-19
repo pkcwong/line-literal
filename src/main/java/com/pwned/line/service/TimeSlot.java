@@ -54,6 +54,25 @@ public class TimeSlot extends DefaultService {
 				this.fulfillment = "You don't have any available timeslot, please create one first by calling edit timeslot.";
 				return;
 			}
+			JSONObject timeArr = new JSONObject(user.get(0).toJson());
+			StringBuilder result = new StringBuilder();
+			for(int i = 0; i < timeArr.getJSONArray("timeslot").length(); i++){
+				String time = timeArr.getJSONArray("timeslot").getString(i);
+				//{"EndTime":"15:30","StartTime":"13:00","Date":"2017/11/27"}
+				Pattern regex = Pattern.compile("\\{\"EndTime\":\"(.+)\",\"StartTime\":\"(.+)\",\"Date\":\"(.+)\"\\}");
+				Matcher matcher = regex.matcher(time);
+
+				while (matcher.find()) {
+					result.append(matcher.group(2));
+					result.append("-");
+					result.append(matcher.group(1));
+					result.append("@");
+					result.append(matcher.group(3));
+					result.append("\n");
+
+				}
+
+			}
 
 		}else{
 			this.fulfillment = "Sorry, this function for time slot is not supported";
