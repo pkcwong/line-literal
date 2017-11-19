@@ -62,6 +62,7 @@ public class EditTimeSlot extends DefaultService {
 				this.fulfillment = "Please follow the format hh:mm-hh:mm@yyyy/mm/dd";
 				return;
 			}
+			System.out.printf("\n\n\n %s \n\n\n\n", user.toString());
 			if(user.contains(date)){
 				this.fulfillment = "Sorry, you can only create one timeslot for single day, please edit your timeslot by edit timeslot";
 				return;
@@ -81,6 +82,7 @@ public class EditTimeSlot extends DefaultService {
 				this.fulfillment = "Please follow the format hh:mm-hh:mm@yyyy/mm/dd";
 				return;
 			}
+			
 		}
 
 	}
