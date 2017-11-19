@@ -137,8 +137,10 @@ public class EventMaker extends DefaultService{
 		for(int i = 0; i < timeArr.getJSONArray("timeslot").length(); i++){
 			if(timeArr.getJSONArray("timeslot").toString().contains(date)){
 				StringBuilder time = new StringBuilder(timeArr.getJSONArray("timeslot").getString(1));
+				System.out.println("\n\n\n\n\n"+time.toString()+"\n\n\n\n\n");
 				time.append("-");
 				time.append(timeArr.getJSONArray(timeArr.getJSONArray("timeslot").getString(2)));
+				System.out.println("\n\n\n\n\n"+time.toString()+"\n\n\n\n\n");
 				return time.toString();
 			}
 		}
