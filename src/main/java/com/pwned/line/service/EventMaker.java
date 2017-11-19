@@ -9,9 +9,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -132,7 +134,7 @@ public class EventMaker extends DefaultService{
 	}
 
 
-	private String getCommonTimeSlot(MongoDB mongo, ArrayList<Document> group, String date) throws JSONException {
+	private String getCommonTimeSlot(MongoDB mongo, ArrayList<Document> group, String date) throws JSONException, ParseException {
 		JSONObject userArr = new JSONObject(group.get(0).toJson());
 		StringBuilder common = new StringBuilder("");
 		String[] allTimeslot = new String[userArr.getJSONArray("uid").length()];
@@ -154,10 +156,11 @@ public class EventMaker extends DefaultService{
 	//private boolean checkAvailable(){
 
 
-	private void addAllCommonTimeslot(String[] allTimeslot, StringBuilder common){
-		int startHour,starMinute,endHour,endMinute,arrStartHour,arrStarMinute,arrEndHour,arrEndMinute;
-		Pattern regex = Pattern.compile("(.+):(.+)-(.+):(.+)");
-		//Matcher matcher = regex.matcher(timeslotFor1user[i][j]);
+	private void addAllCommonTimeslot(String[] allTimeslot, StringBuilder common) throws ParseException {
+
+		//Pattern regex = Pattern.compile("(.+)-(..+)");
+		Pattern regex = Pattern.compile("(.+)-(.+)");
+		SimpleDateFormat parser = new SimpleDateFormat ("hh:mm");
 
 		int i, j;
 
@@ -168,27 +171,10 @@ public class EventMaker extends DefaultService{
 				if(timeslotFor1user[i][j].equals("WHOLE DAY")){
 					break;
 				}
-				System.out.printf("\n\n\n%s\n\n\n", timeslotFor1user[i][j]);
 				Matcher matcher = regex.matcher(timeslotFor1user[i][j]);
-				System.out.printf("\n\n\nregex %s\n\n\n", regex.toString());
-				startHour = Integer.parseInt(matcher.group(1));
-				starMinute = Integer.parseInt(matcher.group(2));
-				endHour = Integer.parseInt(matcher.group(3));
-				endMinute = Integer.parseInt(matcher.group(4));
-				for(int x = 1 ; i < allTimeslot.length && x!=i; x++){
-					for(int y = 0 ; j < allTimeslot[i].split("\n").length; y++){
-						if(timeslotFor1user[x][y].equals("WHOLE DAY")){
-							break;
-						}
-						matcher = regex.matcher(timeslotFor1user[x][y]);
-						arrStartHour = Integer.parseInt(matcher.group(1));
-						arrStarMinute = Integer.parseInt(matcher.group(2));
-						arrEndHour = Integer.parseInt(matcher.group(3));
-						arrEndMinute = Integer.parseInt(matcher.group(4));
-						System.out.printf("\n\nComparing %d:%d-%d%d and %d:%d-%d:%d\n\n",startHour,starMinute,endHour,endMinute,arrStartHour,arrStarMinute,arrEndHour,arrEndMinute);
-
-					}
-				}
+				Date startTime = parser.parse(matcher.group(1));
+				Date endTime = parser.parse(matcher.group(2));
+				System.out.println("\n\n\n" + startTime.toString() + "\n\n\n" + endTime.toString() + "\n\n\n\n");
 			}
 		}
 
@@ -197,6 +183,11 @@ public class EventMaker extends DefaultService{
 
 		common.append("NOT FOUND");
 	}
+
+
+
+
+
 
 	private String getTimeSlot(MongoDB mongo, BasicDBObject SELF, String date) throws JSONException {
 		ArrayList<Document> user = MongoDB.get(mongo.getCollection("TimeSlot").find(SELF));
