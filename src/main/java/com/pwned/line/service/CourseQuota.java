@@ -7,7 +7,14 @@ import com.pwned.line.web.ApiAI;
 import org.json.JSONObject;
 
 public class CourseQuota extends DefaultService{
-
+	/***
+	 * Review, looks up course review in MongoDB.
+	 * Required params: [uid, parameters]
+	 * Reserved tokens: []
+	 * Resolved params: [department, code, reviews]
+	 * @author Calvin Ku
+	 */
+	
 	public CourseQuota(Service service){ super(service); }
 
 	@Override
