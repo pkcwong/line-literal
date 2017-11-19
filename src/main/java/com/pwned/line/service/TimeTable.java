@@ -38,19 +38,27 @@ public class TimeTable extends DefaultService {
         MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
         JSONObject apiParam = new JSONObject(this.getParam("parameters").toString());
         String add = apiParam.getString("ReviewAdd");
+        String OneByOne = apiParam.getString("oneByOneTrigger");
         //find
         if(!add.equals("add")){
+
             this.fulfillment = "";
-            ArrayList<Document> courseReview = MongoDB.get(mongo.getCollection("courseReview").find());
+            //ArrayList<Document> courseReview = MongoDB.get(mongo.getCollection("courseReview").find());
             if (this.fulfillment.equals("")) {
-                this.fulfillment = "Sorry, no timetable yet. Please login your Student Center, and then go to class schedule " +
-                        "to copy your timetable! :)";
+                this.fulfillment = "Sorry, no timetable yet. There are 2 ways to import your timetable:\n1. Please login your Student Center, and then go to class schedule " +
+                        "to copy your timetable! :)\n2. add the course with section number one by one.(enter\"add timetable one by one\")";
             }
         }
         else{
-            BasicDBObject SELF = new BasicDBObject("uid", this.getParam("uid").toString());
-            mongo.getCollection("user").updateOne(SELF, new BasicDBObject("$set", new BasicDBObject("buff", new BasicDBObject().append("cmd", "timetable::add"))));
-            this.fulfillment = "You can copy your timetable here: ";
+            if(OneByOne.equals("onebyone")){
+                BasicDBObject SELF = new BasicDBObject("uid", this.getParam("uid").toString());
+                mongo.getCollection("user").updateOne(SELF, new BasicDBObject("$set", new BasicDBObject("buff", new BasicDBObject().append("cmd", "timetable::addOneByOne"))));
+                this.fulfillment = "You can add your timetable here one by one: \n(Please follow the following format: course code(e.g COMP3111),section number1(e.g. 2632),section number 2,...";
+            }else {
+                BasicDBObject SELF = new BasicDBObject("uid", this.getParam("uid").toString());
+                mongo.getCollection("user").updateOne(SELF, new BasicDBObject("$set", new BasicDBObject("buff", new BasicDBObject().append("cmd", "timetable::add"))));
+                this.fulfillment = "You can copy your timetable here: ";
+            }
 
         }
 

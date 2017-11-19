@@ -31,9 +31,12 @@ public class TimeTableAdd extends DefaultService {
         BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
         ArrayList<Document> user = MongoDB.get(mongo.getCollection("user").find(SELF));
         JSONObject USER = new JSONObject(user.get(0).toJson());
-        Document userid = new Document();
-        userid.append("uid", this.getParam("uid").toString());
-        mongo.getCollection("Timetable").insertOne(userid);
+        ArrayList<Document> Timetableuser = MongoDB.get(mongo.getCollection("courseReview").find(SELF));
+        if(Timetableuser.size()==0){
+            Document userid = new Document();
+            userid.append("uid", this.getParam("uid").toString());
+            mongo.getCollection("Timetable").insertOne(userid);
+        }
 
         //String timetable = USER.getJSONObject("timetablebuff").getJSONObject("data").toString();
 
@@ -75,10 +78,9 @@ public class TimeTableAdd extends DefaultService {
             for(int i=0;i<c.sections.size();i++){
                 for(int j=0;j<classID.size();j++){
                     if(c.sections.get(i).code.equals(classID.get(j))){
-
                         boolean IsDayTBA = c.sections.get(i).dateAndTimes.get(0).day.equals("TBA");
-                        //System.out.println(IsDayTBA);
-                        //System.out.println(c.department+c.code+" and date and time size  of this section "+ c.sections.get(i).code+"= "+c.sections.get(i).dateAndTimes.size());
+                        System.out.println(IsDayTBA);
+                        System.out.println(c.department+c.code+" and date and time size  of this section "+ c.sections.get(i).code+"= "+c.sections.get(i).dateAndTimes.size());
                         if(c.sections.get(i).dateAndTimes.size()==1 && IsDayTBA){}
                         else {
                             for (int k = 0; k < c.sections.get(i).dateAndTimes.size(); k++) {
