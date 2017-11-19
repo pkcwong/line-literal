@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.regex.Matcher;
@@ -80,7 +81,8 @@ public class EventMaker extends DefaultService{
 		}else{
 			StringBuilder string = new StringBuilder("Event ");
 			string.append(eventName);
-			string.append(" has be found, the common timeslot for all of you are TESTING\n");
+			string.append(" has be found, the common timeslot for all of you are\n");
+			string.append(getCommonTimeSlot(mongo,group,uid,"2017/11/27"));
 			string.append("Please be reminded that not editing your available timeslot will be considered as available in whole day");
 			this.fulfillment = string.toString();
 			return;
@@ -110,6 +112,37 @@ public class EventMaker extends DefaultService{
 			}
 		}
 		return false;
+	}
+
+
+
+	private String getCommonTimeSlot(MongoDB mongo, ArrayList<Document> group,String uid, String date) throws JSONException {
+		JSONObject userArr = new JSONObject(group.get(0).toJson());
+		for(int i = 0; i < userArr.getJSONArray("uid").length(); i++){
+			if(userArr.getJSONArray("uid").length() == 1){
+				return getTimeSlot(mongo,new BasicDBObject().append("uid", uid),date);
+
+			}
+		}
+		return null;
+
+	}
+
+	private String getTimeSlot(MongoDB mongo, BasicDBObject SELF, String date) throws JSONException {
+		ArrayList<Document> user = MongoDB.get(mongo.getCollection("TimeSlot").find(SELF));
+		JSONObject timeArr = new JSONObject(user.get(0).toJson());
+		if(user.size() == 0){
+			return "WHOLE DAY";
+		}
+		for(int i = 0; i < timeArr.getJSONArray("timeslot").length(); i++){
+			if(timeArr.getJSONArray("timeslot").toString().contains(date)){
+				StringBuilder time = new StringBuilder(timeArr.getJSONArray("timeslot").getString(1));
+				time.append("-");
+				time.append(timeArr.getJSONArray(timeArr.getJSONArray("timeslot").getString(2));
+				return time.toString();
+			}
+		}
+		return "WHOLE DAY";
 	}
 
 	@Override
