@@ -75,6 +75,12 @@ public class TimeTableAdd extends DefaultService {
             for(int i=0;i<c.sections.size();i++){
                 for(int j=0;j<classID.size();j++){
                     if(c.sections.get(i).code.equals(classID.get(j))){
+                        if(c.sections.get(i).code.equals("3176")||c.sections.get(i).code.equals("3162")){
+                            System.out.println(c.sections.get(i).code+" found.\nsize = "+c.sections.get(i).dateAndTimes.size());
+                            for (int k = 0; k < c.sections.get(i).dateAndTimes.size(); k++) {
+                                System.out.println(c.sections.get(i).dateAndTimes.get(k).day);
+                            }
+                        }
                         boolean IsDayTBA = c.sections.get(i).dateAndTimes.get(0).day.equals("TBA");
                         System.out.println(IsDayTBA);
                         System.out.println(c.department+c.code+" and date and time size  of this section "+ c.sections.get(i).code+"= "+c.sections.get(i).dateAndTimes.size());
