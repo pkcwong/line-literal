@@ -154,10 +154,10 @@ public class EventMaker extends DefaultService{
 
 	private String getTimeSlot(MongoDB mongo, BasicDBObject SELF, String date) throws JSONException {
 		ArrayList<Document> user = MongoDB.get(mongo.getCollection("TimeSlot").find(SELF));
-		JSONObject timeArr = new JSONObject(user.get(0).toJson());
 		if(user.size() == 0){
 			return "WHOLE DAY";
 		}
+		JSONObject timeArr = new JSONObject(user.get(0).toJson());
 		StringBuilder result = new StringBuilder("");
 		for(int i = 0; i < timeArr.getJSONArray("timeslot").length(); i++){
 			if(timeArr.getJSONArray("timeslot").getString(i).contains(date)){
