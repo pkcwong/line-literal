@@ -157,27 +157,41 @@ public class EventMaker extends DefaultService{
 
 
 	private void addAllCommonTimeslot(String[] allTimeslot, StringBuilder common) throws ParseException {
-
-		//Pattern regex = Pattern.compile("(.+)-(..+)");
-		SimpleDateFormat parser = new SimpleDateFormat ("hh:mm");
+		/*
+		SimpleDateFormat parser = new SimpleDateFormat ("HH:mm");
 
 		int i, j;
+		int count =  allTimeslot.length;
 
 		String[][] timeslotFor1user = new String[allTimeslot.length][];
 		for(i = 0 ; i < allTimeslot.length; i++){
 			for(j = 0 ; j < allTimeslot[i].split("\n").length; j++){
 				timeslotFor1user[i] = allTimeslot[i].split("\n");
+				System.out.println("\n" + timeslotFor1user[i][j] + "\n");
 				if(timeslotFor1user[i][j].equals("WHOLE DAY")){
 					break;
 				}
-				String[] temp = timeslotFor1user[i][j].split("-");
-				Date startTime = parser.parse(temp[0]);
-				Date endTime = parser.parse(temp[1]);
-				System.out.println("\n\n\n" + startTime.toString() + "\n\n\n" + endTime.toString() + "\n\n\n\n");
+				for(int x = 1; x < allTimeslot.length; x++)
+					for(int y = 0 ; j < allTimeslot[i].split("\n").length; y++) {
+						String[] temp = timeslotFor1user[i][j].split("-");
+						Date startTime = parser.parse(temp[0]);
+						Date endTime = parser.parse(temp[1]);
+						String[] temp2 = timeslotFor1user[x][y].split("-");
+						Date startTime2 = parser.parse(temp[0]);
+						Date endTime2 = parser.parse(temp[1]);
+						if(startTime.before(startTime2) && endTime.after(endTime2)){
+							StringBuilder time = new StringBuilder(parser.format(startTime));
+							time.append("-");
+							time.append(parser.format(startTime));
+							common.append(parser.format(startTime));
+							startTime.
+						}
+					}
 			}
+		}*/
+		for(int i = 0 ; i < allTimeslot.length; i++){
+			System.out.printf("\n%s\n",allTimeslot[i]);
 		}
-
-
 
 
 		common.append("NOT FOUND");
