@@ -23,4 +23,14 @@ public class MasterControllerTest {
 		assertEquals(MasterController.class, service.chain().getClass());
 	}
 
+	@Test
+	public void smalltalk() throws Exception {
+		Service service = new MasterController(new DefaultService("hi"));
+		service.setParam("uid", "junit");
+		service.setParam("timestamp", "junit");
+		service.setParam("replyToken", "junit");
+		service.payload();
+		assertEquals(DialogFlowSmalltalk.class, service.chain().getClass());
+	}
+
 }
