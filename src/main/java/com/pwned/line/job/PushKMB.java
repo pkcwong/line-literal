@@ -15,10 +15,18 @@ public class PushKMB extends DefaultJob{
 
     public static ArrayList<Document> KMBArrayList;
 
+    /**
+     * Constructor
+     */
     public PushKMB(){
     }
 
-    @Override
+	/**
+	 *
+	 * @param context
+	 * @throws JobExecutionException
+	 */
+	@Override
     public void execute(JobExecutionContext context) throws JobExecutionException{
         System.out.println("PushKMB");
         try {
@@ -29,12 +37,21 @@ public class PushKMB extends DefaultJob{
         }
     }
 
-
+	/**
+	 *
+	 * @param job
+	 * @return
+	 */
     public static JobDetail buildJob(Class <? extends Job> job){
         return JobBuilder.newJob(PushKMB.class).build();
     }
 
-    public static Trigger buildTrigger(int seconds){
+	/**
+	 *
+	 * @param seconds Time of next trigger in seconds
+	 * @return
+	 */
+	public static Trigger buildTrigger(int seconds){
         return TriggerBuilder
                 .newTrigger()
                 .withSchedule(
@@ -43,7 +60,11 @@ public class PushKMB extends DefaultJob{
                 .build();
     }
 
-    public static void updateKMB() throws JSONException{
+	/**
+	 * Check if any bus is arriving in 10 minutes, if yes, call pushKMB()
+	 * @throws JSONException
+	 */
+	public static void updateKMB() throws JSONException{
         String kmb = "The following bus will arrive soon:";
         MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
         KMBArrayList = MongoDB.get(mongo.getCollection("kmb").find());
@@ -75,7 +96,12 @@ public class PushKMB extends DefaultJob{
         }
     }
 
-    public static void pushKMB(String kmb) throws JSONException{
+	/**
+	 * Push notification to user that has subscribed
+	 * @param kmb Users' uid list
+	 * @throws JSONException
+	 */
+	public static void pushKMB(String kmb) throws JSONException{
         for (int i = 0; i < KMBArrayList.size(); i++) {
             KitchenSinkController.push(new JSONObject(KMBArrayList.get(i).toJson()).getString("uid"), new TextMessage(kmb));
         }

@@ -14,10 +14,17 @@ import java.util.ArrayList;
 
 public class KMBStopNotify extends DefaultService{
 
+	/**
+	 * Constructor
+	 */
 	public KMBStopNotify(Service service){
 		super(service);
 	}
 
+	/**
+	 * Payload of Service module.
+	 * @throws Exception Exception
+	 */
 	@Override
 	public void payload() throws Exception{
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
@@ -25,6 +32,12 @@ public class KMBStopNotify extends DefaultService{
 		this.fulfillment = stopNotification(mongo, SELF);
 	}
 
+	/**
+	 *
+	 * @param mongo Database
+	 * @param SELF User's uid
+	 * @return Reply whether will stop the service for the user
+	 */
 	public static String stopNotification(MongoDB mongo, BasicDBObject SELF){
 		String stop = "You are not in our list of notification.";
 		ArrayList<Document> kmb = MongoDB.get(mongo.getCollection("kmb").find(SELF));
@@ -35,6 +48,11 @@ public class KMBStopNotify extends DefaultService{
 		return stop;
 	}
 
+	/**
+	 * Request processing from next Service module.
+	 * @return Service state
+	 * @throws Exception Exception
+	 */
 	@Override
 	public Service chain() throws Exception{
 		return this;
