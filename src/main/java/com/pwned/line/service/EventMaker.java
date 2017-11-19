@@ -211,8 +211,8 @@ public class EventMaker extends DefaultService{
 			if(i == j){
 				continue;
 			}
-			if(allTimeslot[i].equals("WHOLE DAY")){
-				//count--;
+			if(allTimeslot[j].equals("WHOLE DAY")){
+				count--;
 				continue;
 			}
 			String[] temp = allTimeslot[j].split("-");
