@@ -1,6 +1,7 @@
 package com.pwned.line.service;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.pwned.line.http.HTTP;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
@@ -58,8 +59,12 @@ public class EventMaker extends DefaultService{
 		if(group.size() == 0){
 			Document data = new Document();
 			data.append("groupId", groupId);
-			data.append("uid", uid);
 			mongo.getCollection("Event").insertOne(data);
+			data = new Document();
+			data.append("uid",uid);
+			mongo.getCollection("Event").findOneAndUpdate(GID, new BasicDBObject("$addToSet", data),
+					new FindOneAndUpdateOptions().upsert(true));
+
 		}
 		group = MongoDB.get(mongo.getCollection("Event").find(GID));
 		JSONObject events = new JSONObject(group.get(0).toJson());
