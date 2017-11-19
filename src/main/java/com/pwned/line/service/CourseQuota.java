@@ -26,15 +26,18 @@ public class CourseQuota extends DefaultService{
 	}
 
 	public void pushCourseMsg(Course course, String department, String code){
-		KitchenSinkController.push(this.getParam("uid").toString(), new TextMessage("Department: " + course.department + "\nCode: " + course.code  + "\nTitle: " + course.title +
-				"\nCredit: " + course.credit));
-		for(int i = 0; i < course.sections.size(); i++){
-			KitchenSinkController.push(this.getParam("uid").toString(), new TextMessage("Section name: " + course.sections.get(i).name + "\nSection Code: " + course.sections.get(i).code + "\nQuota: " + course.sections.get(i).quota +
-					"\nEnrol: " + course.sections.get(i).enrol +"\nAvail: " + course.sections.get(i).avail + "\nWait: " + course.sections.get(i).wait));
-		}
-		this.fulfillment = "";
 		if(course.title == null){
 			this.fulfillment = "Sorry " + department + code + " could not be found in Course Quota Page";
+		}else{
+			KitchenSinkController.push(this.getParam("uid").toString(), new TextMessage("Department: " + course.department + "\nCode: " + course.code  + "\nTitle: " + course.title +
+					"\nCredit: " + course.credit));
+			for(int i = 0; i < course.sections.size(); i++){
+				KitchenSinkController.push(this.getParam("uid").toString(), new TextMessage("Section name: " + course.sections.get(i).name + "\nSection Code: " + course.sections.get(i).code + "\nQuota: " + course.sections.get(i).quota +
+						"\nEnrol: " + course.sections.get(i).enrol +"\nAvail: " + course.sections.get(i).avail + "\nWait: " + course.sections.get(i).wait));
+			}
+			this.fulfillment = "";
 		}
+
+
 	}
 }
