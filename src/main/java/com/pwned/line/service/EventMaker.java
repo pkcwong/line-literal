@@ -82,7 +82,7 @@ public class EventMaker extends DefaultService{
 			StringBuilder string = new StringBuilder("Event ");
 			string.append(eventName);
 			string.append(" has be found, the common timeslot for all of you are\n");
-			string.append(getCommonTimeSlot(mongo,group,uid,"2017/11/27"));
+			string.append(getCommonTimeSlot(mongo,group,uid,"2017/11/27\n"));
 			string.append("Please be reminded that not editing your available timeslot will be considered as available in whole day");
 			this.fulfillment = string.toString();
 			return;
@@ -134,7 +134,7 @@ public class EventMaker extends DefaultService{
 		if(user.size() == 0){
 			return "WHOLE DAY";
 		}
-		StringBuilder result = new StringBuilder();
+		StringBuilder result = new StringBuilder("");
 		for(int i = 0; i < timeArr.getJSONArray("timeslot").length(); i++){
 			if(timeArr.getJSONArray("timeslot").getString(i).contains(date)){
 				String time = timeArr.getJSONArray("timeslot").getString(i);
@@ -146,13 +146,17 @@ public class EventMaker extends DefaultService{
 					result.append(matcher.group(2));
 					result.append("-");
 					result.append(matcher.group(1));
-					result.append(" ");
+					result.append("\n");
 				}
 
 			}
-			return result.toString();
+
 		}
-		return "WHOLE DAY";
+		if(result.toString().equals("")){
+			return "WHOLE DAY";
+		}
+		return result.toString();
+
 	}
 
 	@Override
