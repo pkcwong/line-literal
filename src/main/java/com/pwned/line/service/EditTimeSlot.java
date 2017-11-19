@@ -88,9 +88,9 @@ public class EditTimeSlot extends DefaultService {
 			timeslot.append("EndTime", end);
 
 			data.append("timeslot", timeslot);
-			mongo.getCollection("TimeSlot").findOneAndUpdate(SELF, new BasicDBObject("$pull", data),
-					new FindOneAndUpdateOptions().upsert(true));
-			this.fulfillment = "The timeslot is removed";
+			mongo.getCollection("TimeSlot").findOneAndUpdate(SELF, new BasicDBObject("$pull", data));
+			this.fulfillment = "The timeslot is removed.";
+			finish(mongo,SELF);
 			return;
 		}else{
 			this.fulfillment = "Sorry, this function for editing timeslot is not supported";
