@@ -1,33 +1,25 @@
-package com.pwned.line.service;
+package com.pwned.line.job;
 
-import com.pwned.line.job.PushKMB;
+import com.mongodb.BasicDBObject;
 import com.pwned.line.web.MongoDB;
+import org.json.JSONObject;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.quartz.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 
-public class PushKMBTest{
+public class PushWeatherTest{
 
 	@BeforeClass
 	public static void before() {
-		new MongoDB(System.getenv("MONGODB_URI")).drop("kmb");
-		try {
-			Service service = new MasterController(new DefaultService("anonymous"));
-			service.setParam("uid", "junit");
-			service.setParam("replyToken", "junit");
-			service.setParam("timestamp", "junit");
-			service.resolve().get();
-		} catch (Exception e) {
-			e.printStackTrace();
-			assert false;
-		}
+		new MongoDB(System.getenv("MONGODB_URI")).drop("weather");
 	}
 
 	@Test
-	public void payloadKMB() throws Exception {
-		Job job = new PushKMB();
+	public void payloadWeather() throws Exception {
+		Job job = new PushWeather();
 		job.execute(new JobExecutionContext() {
 			@Override
 			public Scheduler getScheduler() {
@@ -124,9 +116,21 @@ public class PushKMBTest{
 				return null;
 			}
 		});
-		PushKMB.updateKMB();
-		PushKMB.buildJob(PushKMB.class);
-		PushKMB.buildTrigger(0);
+		PushWeather.updateWeather();
+		PushWeather.updateWeather();
+		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
+		ArrayList<org.bson.Document> weatherArrayList = MongoDB.get(mongo.getCollection("weather").find());
+		BasicDBObject query = new BasicDBObject();
+		query.put("forecast", new JSONObject(weatherArrayList.get(0).toJson()).getString("forecast"));
+		BasicDBObject newSet = new BasicDBObject();
+		newSet.put("forecast", "Test");
+		BasicDBObject newValue = new BasicDBObject();
+		newValue.put("$set", newSet);
+		mongo.getCollection("weather").updateOne(query, newValue);
+		PushWeather.updateWeather();
+		PushWeather.pushWeather("rain, around 1, around 3, strong offshore");
+		PushWeather.buildJob(PushWeather.class);
+		PushWeather.buildTrigger(0);
 	}
 
 }

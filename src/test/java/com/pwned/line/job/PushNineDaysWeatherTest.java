@@ -1,4 +1,4 @@
-package com.pwned.line.service;
+package com.pwned.line.job;
 
 import com.pwned.line.job.PushNineDaysWeather;
 import org.junit.Test;

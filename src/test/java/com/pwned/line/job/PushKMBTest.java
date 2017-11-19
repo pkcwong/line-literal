@@ -1,26 +1,36 @@
-package com.pwned.line.service;
+package com.pwned.line.job;
 
-import com.mongodb.BasicDBObject;
-import com.pwned.line.job.PushWeather;
+import com.pwned.line.job.PushKMB;
+import com.pwned.line.service.DefaultService;
+import com.pwned.line.service.MasterController;
+import com.pwned.line.service.Service;
 import com.pwned.line.web.MongoDB;
-import org.json.JSONObject;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.quartz.*;
 
-import java.util.ArrayList;
 import java.util.Date;
 
-public class PushWeatherTest{
+public class PushKMBTest{
 
 	@BeforeClass
 	public static void before() {
-		new MongoDB(System.getenv("MONGODB_URI")).drop("weather");
+		new MongoDB(System.getenv("MONGODB_URI")).drop("kmb");
+		try {
+			Service service = new MasterController(new DefaultService("anonymous"));
+			service.setParam("uid", "junit");
+			service.setParam("replyToken", "junit");
+			service.setParam("timestamp", "junit");
+			service.resolve().get();
+		} catch (Exception e) {
+			e.printStackTrace();
+			assert false;
+		}
 	}
 
 	@Test
-	public void payloadWeather() throws Exception {
-		Job job = new PushWeather();
+	public void payloadKMB() throws Exception {
+		Job job = new PushKMB();
 		job.execute(new JobExecutionContext() {
 			@Override
 			public Scheduler getScheduler() {
@@ -117,21 +127,9 @@ public class PushWeatherTest{
 				return null;
 			}
 		});
-		PushWeather.updateWeather();
-		PushWeather.updateWeather();
-		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
-		ArrayList<org.bson.Document> weatherArrayList = MongoDB.get(mongo.getCollection("weather").find());
-		BasicDBObject query = new BasicDBObject();
-		query.put("forecast", new JSONObject(weatherArrayList.get(0).toJson()).getString("forecast"));
-		BasicDBObject newSet = new BasicDBObject();
-		newSet.put("forecast", "Test");
-		BasicDBObject newValue = new BasicDBObject();
-		newValue.put("$set", newSet);
-		mongo.getCollection("weather").updateOne(query, newValue);
-		PushWeather.updateWeather();
-		PushWeather.pushWeather("rain, around 1, around 3, strong offshore");
-		PushWeather.buildJob(PushWeather.class);
-		PushWeather.buildTrigger(0);
+		PushKMB.updateKMB();
+		PushKMB.buildJob(PushKMB.class);
+		PushKMB.buildTrigger(0);
 	}
 
 }

@@ -76,6 +76,11 @@ public class AnonymousChat extends DefaultService {
 		}
 	}
 
+	/***
+	 * Resolve fulfillment
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public Service chain() throws Exception {
 		return this;

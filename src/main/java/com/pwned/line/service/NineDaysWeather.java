@@ -12,9 +12,10 @@ import com.pwned.line.job.PushNineDaysWeather;
 
 public class NineDaysWeather extends DefaultService{
 
-    /**
-     * Constructor
-     */
+	/**
+	 * Constructor
+	 * @param service
+	 */
     public NineDaysWeather(Service service){
         super(service);
     }

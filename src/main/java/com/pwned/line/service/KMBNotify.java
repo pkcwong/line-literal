@@ -16,6 +16,7 @@ public class KMBNotify extends DefaultService{
 
 	/**
 	 * Constructor
+	 * @param service
 	 */
     public KMBNotify(Service service){
         super(service);

@@ -17,6 +17,7 @@ public class KMB extends DefaultService{
 
 	/**
 	 * Constructor
+	 * @param service
 	 */
     public KMB(Service service){
         super(service);

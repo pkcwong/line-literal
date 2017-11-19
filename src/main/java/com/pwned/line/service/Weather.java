@@ -14,6 +14,7 @@ public class Weather extends DefaultService{
 
 	/**
 	 * Constructor
+	 * @param service
 	 */
 	public Weather(Service service){
 		super(service);
