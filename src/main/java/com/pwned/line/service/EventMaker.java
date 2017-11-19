@@ -134,11 +134,23 @@ public class EventMaker extends DefaultService{
 		if(user.size() == 0){
 			return "WHOLE DAY";
 		}
+		StringBuilder result = new StringBuilder();
 		for(int i = 0; i < timeArr.getJSONArray("timeslot").length(); i++){
 			if(timeArr.getJSONArray("timeslot").getString(i).contains(date)){
 				String time = timeArr.getJSONArray("timeslot").getString(i);
-				System.out.println("\n\n\n" + time + "\n\n\n\n");
+				//{"EndTime":"15:30","StartTime":"13:00","Date":"2017/11/27"}
+				Pattern regex = Pattern.compile("{\"EndTime\":\"(.+)\",\"StartTime\":\"(.+)\",\"Date\":\"" + date + "\"}");
+				Matcher matcher = regex.matcher(time);
+
+				while (matcher.find()) {
+					result.append(matcher.group(2));
+					result.append("-");
+					result.append(matcher.group(1));
+					result.append(" ");
+				}
+
 			}
+			return result.toString();
 		}
 		return "WHOLE DAY";
 	}
