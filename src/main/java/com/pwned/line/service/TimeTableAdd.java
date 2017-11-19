@@ -75,7 +75,9 @@ public class TimeTableAdd extends DefaultService {
             for(int i=0;i<c.sections.size();i++){
                 for(int j=0;j<classID.size();j++){
                     if(c.sections.get(i).code.equals(classID.get(j))){
-                        if(c.sections.get(i).dateAndTimes.size()==0){}
+                        boolean IsDayTBA = c.sections.get(i).dateAndTimes.get(0).day.equals("TBA");
+                        System.out.println(IsDayTBA);
+                        if(c.sections.get(i).dateAndTimes.size()==1 && IsDayTBA){}
                         else {
                             for (int k = 0; k < c.sections.get(i).dateAndTimes.size(); k++) {
                                 Document timeslot = new Document();
