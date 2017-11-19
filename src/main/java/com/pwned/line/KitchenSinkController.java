@@ -17,11 +17,20 @@ import java.io.IOException;
 @LineMessageHandler
 public class KitchenSinkController {
 
+	/***
+	 * Default handler for incoming Line text messages.
+	 * @param event Line event
+	 * @throws Exception Exception
+	 */
 	@EventMapping
 	public static void handleTextMessageEvent(MessageEvent<TextMessageContent> event) throws Exception {
 		TextHandler.handle(event);
 	}
 
+	/***
+	 * Default handler for incoming postback events.
+	 * @param event Line event
+	 */
 	@EventMapping
 	public void handlePostbackEvent(PostbackEvent event) {
 		PostbackHandler.handle(event);
