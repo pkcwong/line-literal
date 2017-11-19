@@ -31,7 +31,6 @@ public class Course {
 	}
 
 	public void query() {
-		System.out.println(title);
 		String section_block = null;
 		HTTP http = new HTTP(BASE_URL + this.department);
 		String response = http.get();
@@ -41,8 +40,8 @@ public class Course {
 			this.title = matcher_course.group(3);
 			this.credit = matcher_course.group(4);
 			section_block = matcher_course.group(5);
+			System.out.println(title);
 		}
-		System.out.println(title);
 		if (this.title != null) {
 			Pattern regex_section_info = Pattern.compile(REGEX_GET_SECTION);
 			Matcher matcher_section = regex_section_info.matcher(section_block);
