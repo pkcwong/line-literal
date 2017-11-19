@@ -159,7 +159,6 @@ public class EventMaker extends DefaultService{
 	private void addAllCommonTimeslot(String[] allTimeslot, StringBuilder common) throws ParseException {
 
 		//Pattern regex = Pattern.compile("(.+)-(..+)");
-		Pattern regex = Pattern.compile("(.+)-(.+)");
 		SimpleDateFormat parser = new SimpleDateFormat ("hh:mm");
 
 		int i, j;
@@ -171,9 +170,9 @@ public class EventMaker extends DefaultService{
 				if(timeslotFor1user[i][j].equals("WHOLE DAY")){
 					break;
 				}
-				Matcher matcher = regex.matcher(timeslotFor1user[i][j]);
-				Date startTime = parser.parse(matcher.group(1));
-				Date endTime = parser.parse(matcher.group(2));
+				String[] temp = timeslotFor1user[i][j].split("-");
+				Date startTime = parser.parse(temp[0]);
+				Date endTime = parser.parse(temp[1]);
 				System.out.println("\n\n\n" + startTime.toString() + "\n\n\n" + endTime.toString() + "\n\n\n\n");
 			}
 		}
