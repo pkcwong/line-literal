@@ -41,7 +41,7 @@ public class TextHandler {
 				service.dump();
 			} catch (Exception e) {
 				e.printStackTrace();
-				KitchenSinkController.push(event.getSource().getUserId(), new TextMessage(e.getClass().getSimpleName()));
+				KitchenSinkController.push(event.getSource().getUserId(), new TextMessage("Invalid input"));
 			}
 			KitchenSinkController.reply(event.getReplyToken(), new TextMessage(service.getFulfillment()));
 			return null;
