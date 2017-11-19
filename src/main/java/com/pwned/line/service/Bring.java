@@ -55,7 +55,7 @@ public class Bring extends DefaultService{
 				mongo.getCollection("food").insertOne(data);
 				return "That's good! Please prepare five serves of " + bring + " to the party.";
 			}else{
-				return "Someone is bringing " + bring.toLowerCase() + " already, please bring another food.";
+				return "Someone is already bringing " + bring.toLowerCase() + ", please bring another food.";
 			}
 		}
 	}
