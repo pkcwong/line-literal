@@ -120,6 +120,7 @@ public class EventMaker extends DefaultService{
 				result = events.getJSONArray("events").get(i).toString();
 			}
 		}
+
 		Pattern regex = Pattern.compile("\\{\"EventName\":\"" + eventName + "\",\"Date\":\"(.+)\"\\}");
 		Matcher matcher = regex.matcher(result);
 		String date = new String();

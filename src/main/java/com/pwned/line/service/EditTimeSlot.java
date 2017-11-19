@@ -62,9 +62,7 @@ public class EditTimeSlot extends DefaultService {
 				this.fulfillment = "Please follow the format hh:mm-hh:mm@yyyy/mm/dd";
 				return;
 			}
-			System.out.printf("\n\n\n %s \n\n\n\n", date);
-			System.out.printf("\n\n\n %s \n\n\n\n", user.toString());
-			if(user.contains(date)){
+			if(user.toString().contains(date)){
 				this.fulfillment = "Sorry, you can only create one timeslot for single day, please edit your timeslot by edit timeslot";
 				return;
 			}
@@ -83,7 +81,15 @@ public class EditTimeSlot extends DefaultService {
 				this.fulfillment = "Please follow the format hh:mm-hh:mm@yyyy/mm/dd";
 				return;
 			}
+			BasicDBObject data = new BasicDBObject();
+			BasicDBObject timeslot = new BasicDBObject();
+			timeslot.append("Date", date);
+			timeslot.append("StartTime", start);
+			timeslot.append("EndTime", end);
 
+			data.append("timeslot", timeslot);
+			mongo.getCollection("TimeSlot").findOneAndUpdate(SELF, new BasicDBObject("$pull", data),
+					new FindOneAndUpdateOptions().upsert(true));
 		}
 
 	}
@@ -103,7 +109,6 @@ public class EditTimeSlot extends DefaultService {
 		data.append("timeslot", timeslot);
 		mongo.getCollection("TimeSlot").findOneAndUpdate(SELF, new BasicDBObject("$addToSet", data),
 				new FindOneAndUpdateOptions().upsert(true));
-
 		this.fulfillment = "Your available timeslot are successfully added";
 	}
 
