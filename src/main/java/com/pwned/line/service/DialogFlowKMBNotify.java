@@ -4,18 +4,18 @@ import com.pwned.line.web.ApiAI;
 import org.json.JSONObject;
 
 /***
-
  * Service module for DialogFlow KMB
  * Required params: [uid]
  * Reserved tokens: []
  * Resolved params: [parameters]
  * @author Timothy Pak
  */
-public class DialogFlowKMB extends DefaultService{
+
+public class DialogFlowKMBNotify extends DefaultService{
 
     private static String API_AI_ACCESS_TOKEN = "ebfd089f4d4b4dcdb0bc88acdb3b0e81";
 
-    public DialogFlowKMB(Service service){
+    public DialogFlowKMBNotify(Service service){
         super(service);
     }
 
@@ -28,7 +28,7 @@ public class DialogFlowKMB extends DefaultService{
 
     @Override
     public Service chain() throws Exception{
-        return new KMB(this).resolve().get();
+        return new KMBNotify(this).resolve().get();
     }
 
 }

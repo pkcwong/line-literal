@@ -75,6 +75,7 @@ public class PushWeather extends DefaultJob{
                 newSet.put("time", dateFormat.format(date));
                 newValue.put("$set", newSet);
                 mongo.getCollection("weather").updateOne(query, newValue);
+                weatherForecast = Weather.getWeather();
                 pushWeather(weatherForecast);
             }
         }
