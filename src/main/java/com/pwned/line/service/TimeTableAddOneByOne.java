@@ -42,7 +42,7 @@ public class TimeTableAddOneByOne extends DefaultService {
         String timetable = this.fulfillment;
         String[] key = {"Lecture", "Laboratory", "Tutorial", "Others"};
         String[] arr = timetable.split(",");
-        String[] courseCode = {arr[0].substring(0, 5), arr[0].substring(5)};
+        String[] courseCode = {arr[0].substring(0, 4), arr[0].substring(4)};
         Course c = new Course(courseCode[0], courseCode[1]);
         c.query();
         ArrayList<String> classID = new ArrayList<>();
