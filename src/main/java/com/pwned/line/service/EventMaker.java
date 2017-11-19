@@ -82,7 +82,7 @@ public class EventMaker extends DefaultService{
 			StringBuilder string = new StringBuilder("Event ");
 			string.append(eventName);
 			string.append(" has be found, the common timeslot for all of you are\n");
-			string.append(getCommonTimeSlot(mongo,group,uid,getEventDate(events,eventName)) + "\n");
+			string.append(getCommonTimeSlot(mongo,group,getEventDate(events,eventName)) + "\n");
 			string.append("Please be reminded that not editing your available timeslot will be considered as available in whole day");
 			this.fulfillment = string.toString();
 			return;
@@ -134,15 +134,21 @@ public class EventMaker extends DefaultService{
 	}
 
 
-	private String getCommonTimeSlot(MongoDB mongo, ArrayList<Document> group,String uid, String date) throws JSONException {
+	private String getCommonTimeSlot(MongoDB mongo, ArrayList<Document> group, String date) throws JSONException {
 		JSONObject userArr = new JSONObject(group.get(0).toJson());
+		StringBuilder common = new StringBuilder();
 		for(int i = 0; i < userArr.getJSONArray("uid").length(); i++){
 			if(userArr.getJSONArray("uid").length() == 1){
-				return getTimeSlot(mongo,new BasicDBObject().append("uid", uid),date);
-
+				return getTimeSlot(mongo,new BasicDBObject().append("uid", userArr.getJSONArray("uid").getString(i)),date);
+			}else{
+				if(getTimeSlot(mongo,new BasicDBObject().append("uid", userArr.getJSONArray("uid").getString(i)),date).equals("WHOLE DAY")){
+					continue;
+				}
+				common.append(getTimeSlot(mongo,new BasicDBObject().append("uid", userArr.getJSONArray("uid").getString(i)),date));
 			}
+
 		}
-		return null;
+		return common.toString();
 
 	}
 
