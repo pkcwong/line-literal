@@ -34,6 +34,8 @@ public class KMBStopNotify extends DefaultService{
 			for(int i = 0; i < 20; i++)
 				System.out.println("4th");
 			mongo.getCollection("user").deleteOne(SELF);
+			for(int i = 0; i < 20; i++)
+				System.out.println("5th");
 			this.fulfillment = this.fulfillment.replace("@kmb::stop", "Ok. We will stop notify you about bus arrival time.");
 		}
 
