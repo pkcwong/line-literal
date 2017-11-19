@@ -215,7 +215,7 @@ public class EventMaker extends DefaultService{
 				//count--;
 				continue;
 			}
-			String[] temp = allTimeslot[i].split("-");
+			String[] temp = allTimeslot[j].split("-");
 			Date startTime1 = parser.parse(temp[0]);
 			Date endTime1 = parser.parse(temp[1]);
 			if((startTime.before(startTime1) || startTime.equals(startTime1)) && (endTime.after(endTime1) || endTime.equals(endTime1))){
