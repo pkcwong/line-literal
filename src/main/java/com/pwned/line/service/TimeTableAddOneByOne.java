@@ -37,13 +37,20 @@ public class TimeTableAddOneByOne extends DefaultService {
             userid.append("uid", this.getParam("uid").toString());
             mongo.getCollection("Timetable").insertOne(userid);
         }
-
-
-
-        //String timetable = USER.getJSONObject("timetablebuff").getJSONObject("data").toString();
-
+        String[] ExitKey = {"addtimetable::end", "addtimetable::End", "addTimetable::end"};
+        String temp = this.fulfillment.toLowerCase();
+        for(String key: ExitKey){
+            if(key.equals(temp)){
+                Document data = new Document();
+                data.append("uid", this.getParam("uid").toString());
+                data.append("bind", this.getParam("uid").toString());
+                data.append("buff", new BasicDBObject("cmd", "master"));
+                mongo.getCollection("user").findOneAndUpdate(SELF, new BasicDBObject("$set", data));
+                this.fulfillment = "Finish adding course to your Timetable :)";
+                return;
+            }
+        }
         String timetable = this.fulfillment;
-        String[] key = {"Lecture", "Laboratory", "Tutorial", "Others"};
         String[] arr = timetable.split(",");
         String[] courseCode = {arr[0].substring(0, 4), arr[0].substring(4)};
         Course c = new Course(courseCode[0], courseCode[1]);
