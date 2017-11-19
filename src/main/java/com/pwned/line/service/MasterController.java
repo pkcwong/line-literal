@@ -87,6 +87,8 @@ public class MasterController extends DefaultService {
 		String[] event = {"event"};
 		String[] thanksgiving = {"accept","bring"};
 		String[] kmb = {"bus", "arrival", "departure", "arrive", "eta"};
+		String[] notify = {"notify", "remind", "inform"};
+		String[] stop = {"stop"};
 		String[] weather = {"weather", "climate", "report"};
 		String[] nine = {"9 days weather", "week weather", "next nine days", "next week", "next few days"};
 		String[] temperature = {"temperature", "degrees"};
@@ -121,6 +123,18 @@ public class MasterController extends DefaultService {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
 				return new DialogFlowKMB(this).resolve().get();
+			}
+		}
+		for (String keywords : notify) {
+			String temp = this.fulfillment.toLowerCase();
+			if(temp.contains(keywords)){
+				return new DialogFlowKMBNotify(this).resolve().get();
+			}
+		}
+		for (String keywords : stop) {
+			String temp = this.fulfillment.toLowerCase();
+			if(temp.contains(keywords)){
+				return new DialogFlowKMBStopNotify(this).resolve().get();
 			}
 		}
 		for (String keywords : nine) {
