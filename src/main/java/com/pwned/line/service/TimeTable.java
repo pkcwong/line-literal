@@ -1,11 +1,18 @@
 package com.pwned.line.service;
 
+import com.linecorp.bot.model.message.TextMessage;
 import com.mongodb.BasicDBObject;
+import com.pwned.line.KitchenSinkController;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /***
  * Store course timeslot in MongoDB.
@@ -17,21 +24,18 @@ import java.util.ArrayList;
 
 public class TimeTable extends DefaultService {
 
+    /**
+     * Constructor
+     * @param service
+     */
     public TimeTable(Service service) {
         super(service);
     }
 
-    /***
-     * The database - timetable will store the following element:
-     * 1. department
-     * 2. coursecode
-     * 3. classID
-     * 4. timeslot+venue(
-     *     4a. timeslot1
-     *     4b. timeslot2(if any)
-     *     4c. timeslot3(if any)
+
+    /**
      *
-     *
+     * query the user imported timetable from SIS Class schedule
      */
     @Override
     public void payload() throws Exception {
@@ -41,9 +45,29 @@ public class TimeTable extends DefaultService {
         String OneByOne = apiParam.getString("oneByOneTrigger");
         //find
         if(!add.equals("add")){
-
             this.fulfillment = "";
-            //ArrayList<Document> courseReview = MongoDB.get(mongo.getCollection("courseReview").find());
+            BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
+            ArrayList<Document> userTimetable = MongoDB.get(mongo.getCollection("Timetable").find(SELF));
+            System.out.println("getting the timeslot of uid");
+            System.out.println("userTimetable size = "+userTimetable.size());
+            if(userTimetable.size()==0){}
+            JSONArray USERT = new JSONObject(userTimetable.get(0).toJson()).getJSONArray("timeslot");
+            System.out.println("timeslot got");
+            if (USERT.length() == 0) {System.out.println("no time slot");
+            } else {
+                this.fulfillment = "Here is your timetable:";
+                for (int i = 0; i < USERT.length(); i++) {
+                    System.out.println("for "+i+" th timeslot");
+                    String department = USERT.getJSONObject(i).get("department").toString();
+                    String code = USERT.getJSONObject(i).get("code").toString();
+                    String day = USERT.getJSONObject(i).get("day").toString();
+                    String convertedDay = convertToFullDay(day);
+                    String venue = USERT.getJSONObject(i).get("venue").toString();
+                    String startTime = USERT.getJSONObject(i).get("start time").toString();
+                    String endTime = USERT.getJSONObject(i).get("end time").toString();
+                    this.fulfillment = this.fulfillment+"\n\n"+department + " " + code + "\nVenue " + venue + "\nday:" + convertedDay + "\nStart Time: "+startTime+"\nEnd Time: "+endTime;
+                    }
+            }
             if (this.fulfillment.equals("")) {
                 this.fulfillment = "Sorry, no timetable yet. There are 2 ways to import your timetable:\n1. Please login your Student Center, and then go to class schedule " +
                         "to copy your timetable! :)\n2. add the course with section number one by one.(enter\"add timetable one by one\")";
@@ -69,6 +93,19 @@ public class TimeTable extends DefaultService {
     @Override
     public Service chain() throws Exception {
         return this;
+    }
+    private static String convertToFullDay(String day){
+        String convertedDay=" ";
+        switch (day){
+            case "Mo": convertedDay = "Monday";break;
+            case "Tu": convertedDay = "Tuesday";break;
+            case "We": convertedDay = "Wednesday";break;
+            case "Th": convertedDay = "Thursday";break;
+            case "Fr": convertedDay = "Friday";break;
+            case "Sa": convertedDay = "Saturday";break;
+            case "Su": convertedDay = "Sunday";break;
+        }
+        return convertedDay;
     }
 
 }

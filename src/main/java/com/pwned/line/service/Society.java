@@ -4,7 +4,7 @@ import com.pwned.line.http.HTTP;
 import org.json.JSONObject;
 
 /***
- * Service for sending requests to HKUST QUOTA WEBSITE.
+ * Service for sending requests to HKUSTSU Society WEBSITE.
  * Required params: [parameters]
  * Reserved tokens: [@society::name]
  * Resolved params: []
@@ -23,7 +23,7 @@ public class Society extends DefaultService{
     }
 
     /***
-     * Fetch the course information from HKUST Society Page.
+     * Fetch the Society information from HKUST Society Page.
      */
     @Override
     public void payload() throws Exception{

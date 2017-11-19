@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 public class PushTimetable extends DefaultJob {
     public static ArrayList<Document> usersArrayList;
+    public static int PushPeriod;
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         try {
