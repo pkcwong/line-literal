@@ -146,7 +146,7 @@ public class MasterController extends DefaultService {
 		for (String keywords : quota) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
-				return new CourseQuota(this).resolve().get();
+				return new DialogFlowCourseQuota(this).resolve().get();
 			}
 		}
 		for (String keywords : translate) {
