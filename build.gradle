@@ -43,7 +43,7 @@ apply plugin: 'org.springframework.boot'
 
 test {
     environment "LINE_BOT_CHANNEL_SECRET", "LINE_BOT_CHANNEL_SECRET"
-    environment "LINE_BOT_CHANNEL_TOKEN", "LINE_BOT_CHANNEL_TOKEN"
+    environment "LINE_BOT_CHANNEL_TOKEN", "/AX+tcwr6e0NK8FE84OsGDoC5rePf1RrFOBsYQa+OPbIVWrPO369i9Nnbq904ApQiwN6KeU2a55A/3vVjhtNqjRH0PgDex021yyohstMz8u/lJYsiNo3T0guP+lN43bciNIXLC0zIl2WAeVfS8+cLQdB04t89/1O/w1cDnyilFU="
     environment "MONGODB_URI", "mongodb://user:password@ds113046.mlab.com:13046/line-literal-test"
 }
 
