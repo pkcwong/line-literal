@@ -164,13 +164,13 @@ public class EventMaker extends DefaultService{
 		String[][] timeslotFor1user = new String[allTimeslot.length][];
 		for(i = 0 ; i < allTimeslot.length; i++){
 			for(j = 0 ; j < allTimeslot[i].split("\n").length; j++){
+				timeslotFor1user[i] = allTimeslot[i].split("\n");
 				if(timeslotFor1user[i][j].equals("WHOLE DAY")){
 					break;
 				}
-				timeslotFor1user[i] = allTimeslot[i].split("\n");
 				System.out.printf("\n\n\n%s\n\n\n", timeslotFor1user[i][j]);
 				Matcher matcher = regex.matcher(timeslotFor1user[i][j]);
-				System.out.printf("\n\n\n%shaha\n\n\n", timeslotFor1user[i][j]);
+				System.out.printf("\n\n\nregex %s\n\n\n", regex.toString());
 				startHour = Integer.parseInt(matcher.group(1));
 				starMinute = Integer.parseInt(matcher.group(2));
 				endHour = Integer.parseInt(matcher.group(3));
