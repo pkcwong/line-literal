@@ -139,7 +139,7 @@ public class EventMaker extends DefaultService{
 			if(timeArr.getJSONArray("timeslot").getString(i).contains(date)){
 				String time = timeArr.getJSONArray("timeslot").getString(i);
 				//{"EndTime":"15:30","StartTime":"13:00","Date":"2017/11/27"}
-				Pattern regex = Pattern.compile("{\"EndTime\":\"(.+)\",\"StartTime\":\"(.+)\",\"Date\":\"" + date + "\"}");
+				Pattern regex = Pattern.compile("\\{\"EndTime\":\"(.+)\",\"StartTime\":\"(.+)\",\"Date\":\"" + date + "\"\\}");
 				Matcher matcher = regex.matcher(time);
 
 				while (matcher.find()) {
