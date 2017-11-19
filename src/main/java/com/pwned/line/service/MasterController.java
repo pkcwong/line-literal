@@ -97,7 +97,7 @@ public class MasterController extends DefaultService {
 		String[] weather = {"weather", "climate", "report"};
 		String[] nine = {"9 days weather", "week weather", "next nine days", "next week", "next few days"};
 		String[] temperature = {"temperature", "degrees"};
-		String[] EndAddingTimetable = {"timetable::addOneByOne"};
+
 
 		for (String keywords : thanksgiving) {
 			String temp = this.fulfillment.toLowerCase();
@@ -109,12 +109,6 @@ public class MasterController extends DefaultService {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
 				return new DialogFlowTimetable(this).resolve().get();
-			}
-		}
-		for (String keywords : EndAddingTimetable) {
-			String temp = this.fulfillment.toLowerCase();
-			if(temp.contains(keywords)){
-				return new EndTimeTableAdd(this).resolve().get();
 			}
 		}
 		for (String keywords : lift) {
