@@ -19,10 +19,10 @@ public class Course {
 	public static final String REGEX_GET_ALL_DATE_TIME_ROOM_PROF = "(Mo|Tu|We|Th|Fr|MoTu|MoWe|MoTh|MoFr|TuWe|TuTh|TuFr|WeTh|WeFr|ThFr|MoTuWe|MoTuTh|MoTuFr|MoWeTh|MoWeFr|MoThFr|TuWeTh|TuWeFr|WeThFr) ([^ ]*) - ([^<]*)<\\/td><td>([^<]*).+?instructor\\/([^\"]*)";
 	public static final String REGEX_GET_QUOTA_INFO = "(<td>TBA<\\/td><td align=\"center\">|<\\/a>.+?\".+?>)(\\d{1,3}).+?\">(\\d{1,3}).+?(\\d{1,3}).+?\">(\\d{1,3})";
 
-	public String department;
-	public String code;
-	public String title;
-	public String credit;
+	public String department = null;
+	public String code = null;
+	public String title = null;
+	public String credit = null;
 	public ArrayList<Section> sections = new ArrayList<>();
 
 	public Course(String department, String code) {

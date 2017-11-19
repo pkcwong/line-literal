@@ -14,7 +14,8 @@ public class CourseQuotaTest {
 		service.setParam("replyToken", "junit");
 		service.setParam("timestamp", "junit");
 		service.payload();
-		//assertEquals();
+
+		assertEquals();
 	}
 
 }
