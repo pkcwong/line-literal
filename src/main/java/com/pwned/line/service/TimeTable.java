@@ -50,23 +50,25 @@ public class TimeTable extends DefaultService {
             ArrayList<Document> userTimetable = MongoDB.get(mongo.getCollection("Timetable").find(SELF));
             System.out.println("getting the timeslot of uid");
             System.out.println("userTimetable size = "+userTimetable.size());
-            if(userTimetable.size()==0){}
-            JSONArray USERT = new JSONObject(userTimetable.get(0).toJson()).getJSONArray("timeslot");
-            System.out.println("timeslot got");
-            if (USERT.length() == 0) {System.out.println("no time slot");
-            } else {
-                this.fulfillment = "Here is your timetable:";
-                for (int i = 0; i < USERT.length(); i++) {
-                    System.out.println("for "+i+" th timeslot");
-                    String department = USERT.getJSONObject(i).get("department").toString();
-                    String code = USERT.getJSONObject(i).get("code").toString();
-                    String day = USERT.getJSONObject(i).get("day").toString();
-                    String convertedDay = convertToFullDay(day);
-                    String venue = USERT.getJSONObject(i).get("venue").toString();
-                    String startTime = USERT.getJSONObject(i).get("start time").toString();
-                    String endTime = USERT.getJSONObject(i).get("end time").toString();
-                    this.fulfillment = this.fulfillment+"\n\n"+department + " " + code + "\nVenue: " + venue + "\nDay: " + convertedDay + "\nStart Time: "+startTime+"\nEnd Time: "+endTime;
+            if(userTimetable.size()==0){}else {
+                JSONArray USERT = new JSONObject(userTimetable.get(0).toJson()).getJSONArray("timeslot");
+                System.out.println("timeslot got");
+                if (USERT.length() == 0) {
+                    System.out.println("no time slot");
+                } else {
+                    this.fulfillment = "Here is your timetable:";
+                    for (int i = 0; i < USERT.length(); i++) {
+                        System.out.println("for " + i + " th timeslot");
+                        String department = USERT.getJSONObject(i).get("department").toString();
+                        String code = USERT.getJSONObject(i).get("code").toString();
+                        String day = USERT.getJSONObject(i).get("day").toString();
+                        String convertedDay = convertToFullDay(day);
+                        String venue = USERT.getJSONObject(i).get("venue").toString();
+                        String startTime = USERT.getJSONObject(i).get("start time").toString();
+                        String endTime = USERT.getJSONObject(i).get("end time").toString();
+                        this.fulfillment = this.fulfillment + "\n\n" + department + " " + code + "\nVenue: " + venue + "\nDay: " + convertedDay + "\nStart Time: " + startTime + "\nEnd Time: " + endTime;
                     }
+                }
             }
             if (this.fulfillment.equals("")) {
                 this.fulfillment = "Sorry, no timetable yet. There are 2 ways to import your timetable:\n1. Please login your Student Center, and then go to class schedule " +
