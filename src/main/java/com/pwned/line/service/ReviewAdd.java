@@ -37,7 +37,7 @@ public class ReviewAdd extends DefaultService {
 		BasicDBObject courseRSELF = new BasicDBObject().append("department", department).append("code", code);
 		ArrayList<Document> courseRuser = MongoDB.get(mongo.getCollection("courseReview").find(courseRSELF));
 		// if arraylist.size is 0, create new coursereview doc, else do nothing
-		if(courseRuser.size() == 0){
+		if (courseRuser.size() == 0) {
 			Document data = new Document();
 			data.append("department", department);
 			data.append("code", code);
@@ -46,7 +46,7 @@ public class ReviewAdd extends DefaultService {
 		// add review
 
 		mongo.getCollection("courseReview").findOneAndUpdate(new BasicDBObject().append("department", department).append
-				("code", code), new BasicDBObject("$addToSet", new BasicDBObject("reviews", this.fulfillment)),
+						("code", code), new BasicDBObject("$addToSet", new BasicDBObject("reviews", this.fulfillment)),
 				new FindOneAndUpdateOptions().upsert(true));
 		Document data = new Document();
 		data.append("uid", this.getParam("uid").toString());
