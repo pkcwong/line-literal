@@ -89,6 +89,7 @@ public class PushTimetable extends DefaultJob {
                                 lessonHour += 12;
                                 System.out.println("is PM: " + department + " " + code + "hour is " + lessonHour);
                             }
+                            System.out.println("hour is " + lessonHour);
                             Date lessontime = format.parse(lessonHour + ":" + lessonMinutes);
                             long diff;
                             if (d.getTime() > lessontime.getTime()) {
