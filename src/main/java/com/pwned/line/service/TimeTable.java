@@ -53,7 +53,7 @@ public class TimeTable extends DefaultService {
             if(OneByOne.equals("onebyone")){
                 BasicDBObject SELF = new BasicDBObject("uid", this.getParam("uid").toString());
                 mongo.getCollection("user").updateOne(SELF, new BasicDBObject("$set", new BasicDBObject("buff", new BasicDBObject().append("cmd", "timetable::addOneByOne"))));
-                this.fulfillment = "You can add your timetable here one by one: \n(Please follow the following format: course code(e.g COMP3111),section number1(e.g. 2632),section number 2,...";
+                this.fulfillment = "You can add your timetable here one by one: \n***Please follow the following format:\ncourse code(e.g COMP3111),section number1(e.g. 2632),section number 2,...";
             }else {
                 BasicDBObject SELF = new BasicDBObject("uid", this.getParam("uid").toString());
                 mongo.getCollection("user").updateOne(SELF, new BasicDBObject("$set", new BasicDBObject("buff", new BasicDBObject().append("cmd", "timetable::add"))));

@@ -69,6 +69,9 @@ public class MasterController extends DefaultService {
 		if (USER.getJSONObject("buff").getString("cmd").equals("timetable::add")) {
 			return new TimeTableAdd(this).resolve().get();
 		}
+		if (USER.getJSONObject("buff").getString("cmd").equals("timetable::addOneByOne")) {
+			return new TimeTableAddOneByOne(this).resolve().get();
+		}
 		if (this.fulfillment.equals("anonymous") || this.fulfillment.equals("Anonymous")) {
 			return new AnonymousChat(this).resolve().get();
 		}
