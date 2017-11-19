@@ -15,6 +15,7 @@ public class Temperature extends DefaultService{
 
 	/**
 	 * Constructor
+	 * @param service
 	 */
 	public Temperature(Service service){
 		super(service);

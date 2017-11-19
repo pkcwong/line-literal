@@ -6,7 +6,7 @@ import org.json.JSONObject;
 /***
  * Service for course information.
  * Required params: [parameters]
- * Reserved tokens: [API_AI]
+ * Reserved tokens: []
  * Resolved params: []
  * @author Eric Kwan
  */
@@ -14,27 +14,33 @@ public class DialogFlowSociety extends DefaultService {
 
     private static final String ACCESS_TOKEN = "c567ffb3521c41dd859a6e4ab9dbfaf0"; //API Client Key of Society agent
 
+    /**
+     * Constructor
+     * @param service
+     */
     public DialogFlowSociety(Service service) {
         super(service);
     }
 
-    /***
-     * DialogFlow payload
-     */
+	/**
+	 * Payload of Service module.
+	 * @throws Exception Exception
+	 */
     @Override
     public void payload() throws Exception {
-        System.out.println("dialogflowSociety1");
         JSONObject json = new ApiAI(ACCESS_TOKEN, this.getParam("uid").toString(), this.fulfillment).execute();
-        System.out.println("dialogflowSociety2");
         this.fulfillment = json.getJSONObject("result").getJSONObject("fulfillment").getString("speech");
-        System.out.println("dialogflowSociety3");
         this.setParam("parameters", json.getJSONObject("result").getJSONObject("parameters"));
-        System.out.println("dialogflowSociety4");
     }
 
-    @Override
+	/**
+	 * Request processing from next Service module.
+	 * @return Service state
+	 * @throws Exception Exception
+	 */
+	@Override
     public Service chain() throws Exception {
-        return new StudentSociety(this).resolve().get();
+        return new Society(this).resolve().get();
     }
 
 }
