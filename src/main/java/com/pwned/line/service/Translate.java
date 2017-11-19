@@ -18,6 +18,10 @@ public class Translate extends DefaultService {
 		super(service);
 	}
 
+	/***
+	 * Sends query to Yandex Translation Service
+	 * @throws Exception Exception
+	 */
 	@Override
 	public void payload() throws Exception {
 		JSONObject parameters = new JSONObject(this.getParam("parameters").toString());
@@ -25,6 +29,11 @@ public class Translate extends DefaultService {
 		this.fulfillment = yandex.getJSONArray("text").get(0).toString();
 	}
 
+	/**
+	 * Resolve fulfillment
+	 * @return Instance
+	 * @throws Exception Exception
+	 */
 	@Override
 	public Service chain() throws Exception {
 		return this;

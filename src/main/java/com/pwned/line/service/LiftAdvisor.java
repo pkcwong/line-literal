@@ -15,6 +15,10 @@ import java.util.regex.Pattern;
  */
 public class LiftAdvisor extends DefaultService {
 
+	/***
+	 * Constructor
+	 * @param service Instance
+	 */
 	public LiftAdvisor(Service service) {
 		super(service);
 	}
@@ -40,6 +44,11 @@ public class LiftAdvisor extends DefaultService {
 		this.fulfillment = this.fulfillment.replace("@LiftAdvisor", "Lift " + lift);
 	}
 
+	/***
+	 * Resolve fulfillment
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public Service chain() throws Exception {
 		return this;
