@@ -218,7 +218,7 @@ public class EventMaker extends DefaultService{
 			String[] temp = allTimeslot[j].split("-");
 			Date startTime1 = parser.parse(temp[0]);
 			Date endTime1 = parser.parse(temp[1]);
-			if((startTime.before(startTime1) || startTime.equals(startTime1)) && (endTime.after(endTime1) || endTime.equals(endTime1))){
+			if((startTime.before(startTime1) || startTime.equals(startTime1)) && (endTime.after(startTime))){
 				count--;
 				System.out.printf("\nBefore %s - %s\n",parser.format(startTime),parser.format(endTime));
 				System.out.printf("\nBefore1 %s - %s\n",parser.format(startTime1),parser.format(endTime1) );
