@@ -19,10 +19,6 @@ public class ReviewTest {
 		service.resolve().get();
 	}
 
-//	@After
-//	public void tearDown() throws Exception {
-//	}
-
 	@Test
 	public void DialogFlowReviewPayload() throws Exception {
 		Service service = new DialogFlowReview(new DefaultService("Give me a review for COMP 3111"));

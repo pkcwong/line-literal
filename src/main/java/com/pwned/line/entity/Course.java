@@ -13,16 +13,16 @@ import java.util.regex.Pattern;
 public class Course {
 
 	private static final String BASE_URL = "https://w5.ab.ust.hk/wcq/cgi-bin/1710/subject/";
-	public static final String REGEX_COURSE = "<h2>(@department)\\s(@code)\\s- (.+?)\\s\\((\\d)\\sunit\\)<\\/h2>.+?1012\">([\\s\\S]+?)<\\/td><\\/tr><\\/table>";
+	public static final String REGEX_COURSE = "<h2>(@department)\\s(@code)\\s- (.+?)\\s\\((\\d)\\sunit\\w{0,1}\\)<\\/h2>.+?1012\">([\\s\\S]+?)<\\/td><\\/tr><\\/table>";
 	public static final String REGEX_GET_SECTION = "\\w{1,2}\\d{1,2} \\(\\d{4}\\).+?(?=&nbsp)";
 	public static final String REGEX_SECTION_NAME_CODE = "(\\w{1,2}\\d{1,2}) \\((\\d{4})\\)";
 	public static final String REGEX_GET_ALL_DATE_TIME_ROOM_PROF = "(Mo|Tu|We|Th|Fr|MoTu|MoWe|MoTh|MoFr|TuWe|TuTh|TuFr|WeTh|WeFr|ThFr|MoTuWe|MoTuTh|MoTuFr|MoWeTh|MoWeFr|MoThFr|TuWeTh|TuWeFr|WeThFr) ([^ ]*) - ([^<]*)<\\/td><td>([^<]*).+?instructor\\/([^\"]*)";
 	public static final String REGEX_GET_QUOTA_INFO = "(<td>TBA<\\/td><td align=\"center\">|<\\/a>.+?\".+?>)(\\d{1,3}).+?\">(\\d{1,3}).+?(\\d{1,3}).+?\">(\\d{1,3})";
 
-	public String department;
-	public String code;
-	public String title;
-	public String credit;
+	public String department = null;
+	public String code = null;
+	public String title = null;
+	public String credit = null;
 	public ArrayList<Section> sections = new ArrayList<>();
 
 	public Course(String department, String code) {
@@ -40,6 +40,7 @@ public class Course {
 			this.title = matcher_course.group(3);
 			this.credit = matcher_course.group(4);
 			section_block = matcher_course.group(5);
+			System.out.println(title);
 		}
 		if (this.title != null) {
 			Pattern regex_section_info = Pattern.compile(REGEX_GET_SECTION);
