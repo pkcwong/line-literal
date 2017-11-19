@@ -31,6 +31,7 @@ public class Course {
 	}
 
 	public void query() {
+		System.out.println(title);
 		String section_block = null;
 		HTTP http = new HTTP(BASE_URL + this.department);
 		String response = http.get();
