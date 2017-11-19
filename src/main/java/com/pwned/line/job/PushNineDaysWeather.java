@@ -16,20 +16,37 @@ import java.util.Date;
 import java.util.TimeZone;
 public class PushNineDaysWeather extends DefaultJob{
 
+	/**
+	 * Constructor
+	 */
     public PushNineDaysWeather(){
     }
 
-    @Override
+	/**
+	 *
+	 * @param context
+	 * @throws JobExecutionException
+	 */
+	@Override
     public void execute(JobExecutionContext context) throws JobExecutionException{
         System.out.println("PushNineDaysWeather");
     }
 
-
+	/**
+	 *
+	 * @param job
+	 * @return
+	 */
     public static JobDetail buildJob(Class <? extends Job> job){
         return JobBuilder.newJob(PushWeather.class).build();
     }
 
-    public static Trigger buildTrigger(int seconds){
+	/**
+	 *
+	 * @param seconds Time for next trigger in seconds
+	 * @return
+	 */
+	public static Trigger buildTrigger(int seconds){
         return TriggerBuilder
                 .newTrigger()
                 .withSchedule(
@@ -38,7 +55,11 @@ public class PushNineDaysWeather extends DefaultJob{
                 .build();
     }
 
-    public static void nineDaysWeather(String uid){
+	/**
+	 * Push the weather forecast for next nine days to the user
+	 * @param uid User's uid
+	 */
+	public static void nineDaysWeather(String uid){
         String link = "http://www.weather.gov.hk/wxinfo/currwx/fnd.htm";
         String[] text = {"http://www.weather.gov.hk", "<img border=\"0\" src=\"", "text-align:left;padding: 0px;font-size:100%;", "</div>"};
         String[] emoji = {
@@ -80,6 +101,20 @@ public class PushNineDaysWeather extends DefaultJob{
             imageurlstring = imageurlstring.substring(2);
             if(imageurl[url].contains("50")){
                 imageurl[url] = emoji[0];
+            }else if(imageurl[url].contains("63")){
+	            imageurl[url] = emoji[8];
+            }else if(imageurl[url].contains("64")){
+	            imageurl[url] = emoji[9];
+            }else if(imageurl[url].contains("65")){
+	            imageurl[url] = emoji[10];
+            }else if(imageurl[url].contains("90")){
+	            imageurl[url] = emoji[11];
+            }else if(imageurl[url].contains("91")){
+	            imageurl[url] = emoji[12];
+            }else if(imageurl[url].contains("92")){
+	            imageurl[url] = emoji[13];
+            }else if(imageurl[url].contains("93")){
+	            imageurl[url] = emoji[14];
             }else if(imageurl[url].contains("51")){
                 imageurl[url] = emoji[1];
             }else if(imageurl[url].contains("52")){
@@ -94,20 +129,6 @@ public class PushNineDaysWeather extends DefaultJob{
                 imageurl[url] = emoji[6];
             }else if(imageurl[url].contains("62")){
                 imageurl[url] = emoji[7];
-            }else if(imageurl[url].contains("63")){
-                imageurl[url] = emoji[8];
-            }else if(imageurl[url].contains("64")){
-                imageurl[url] = emoji[9];
-            }else if(imageurl[url].contains("65")){
-                imageurl[url] = emoji[10];
-            }else if(imageurl[url].contains("90")){
-                imageurl[url] = emoji[11];
-            }else if(imageurl[url].contains("91")){
-                imageurl[url] = emoji[12];
-            }else if(imageurl[url].contains("92")){
-                imageurl[url] = emoji[13];
-            }else if(imageurl[url].contains("93")){
-                imageurl[url] = emoji[14];
             }else{
                 imageurl[url] = emoji[15];
             }
@@ -122,13 +143,7 @@ public class PushNineDaysWeather extends DefaultJob{
             if(desription[weather].length() > 60){
                 desription[weather] = desription[weather].substring(0, 59);
             }
-            System.out.println(fulldesription[weather].length());
             desriptionsstring = desriptionsstring.substring(2);
-        }
-        for (int day = 0; day < 9; day++){
-            System.out.println(imageurl[day]);
-            System.out.println(date[day]);
-            System.out.println(desription[day]);
         }
         CarouselTemplate carouselTemplate = new CarouselTemplate(
             Arrays.asList(

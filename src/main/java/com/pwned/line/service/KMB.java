@@ -2,9 +2,10 @@ package com.pwned.line.service;
 
 import com.pwned.line.http.HTTP;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-/***
+/**
  * Service for course information.
  * Required params: [uid]
  * Reserved tokens: [@kmb::eta]
@@ -14,62 +15,118 @@ import org.json.JSONObject;
 
 public class KMB extends DefaultService{
 
-
-    public KMB(Service service) {
+	/**
+	 * Constructor
+	 * @param service
+	 */
+    public KMB(Service service){
         super(service);
     }
+
+	/**
+	 * Payload of Service module.
+	 * @throws Exception Exception
+	 */
     @Override
-    public void payload() throws Exception {
-        String[] route = {"KMB 91M", "KMB 91"};
-        String bus = new JSONObject(this.getParam("parameters").toString()).getString("bus");
-        String busstop = new JSONObject(this.getParam("parameters").toString()).getString("busstop");
-        String eta = "Sorry, there is no bus arriving";
-        int etaminutes = 200;
-        if(bus.equals("")||busstop.equals("")){
-            eta = "Please enter a valid bus route or bus stop";
-        }
-        if(busstop.equals("HKUST South Gate")){
-            String link = "https://citymapper.com/api/1/departures?headways=1&ids=HKStop_HkustSouth_NW_1&region_id=hk-hongkong";
-            HTTP http = new HTTP(link);
-            String info = http.get();
-            JSONObject stop = new JSONObject(info);
-            JSONArray stops = stop.getJSONArray("stops");
-            JSONObject layer = stops.getJSONObject(0);
-            JSONArray services = layer.getJSONArray("services");
-            String[] route_id = new String[services.length()];
-            String[] etasecond = new String[services.length()];
-            for(int i = 0; i < services.length(); i++){
-                route_id[i] = services.getJSONObject(i).getString("route_id");
-                if(services.getJSONObject(i).has("live_departures_seconds")){
-                    etasecond[i] = services.getJSONObject(i).getString("live_departures_seconds");
-                    etasecond[i] = etasecond[i].substring(1, etasecond[i].length() - 1);
-                }else if(services.getJSONObject(i).has("headway_seconds_range")){
-                    etasecond[i] = "1200";
-                }
-            }
-            for(int k = 0; k < 20; k++) {
-                System.out.println(bus);
-                System.out.println(route[1]);
-            }
-            if(bus.equals(route[0])){
-                for(int i = 0; i < services.length(); i++){
-                    if(route_id[i].equals("KMBBus91M")){
-                        etaminutes = Integer.parseInt(etasecond[i]) / 60;
-                    }
-                }
-            }else if(bus.equals(route[1])){
-                for(int i = 0; i < services.length(); i++){
-                    if(route_id[i].equals("KMBBus91")){
-                        etaminutes = Integer.parseInt(etasecond[i]) / 60;
-                    }
-                }
-            }
-            this.fulfillment = this.fulfillment.replace("@kmb::eta", "You requested for the arrival time of the next " + bus + " to " + busstop + ", the estimated time of arrival is " + etaminutes + " minutes.");
-        }
-        this.fulfillment = this.fulfillment.replace("@kmb::eta", eta);
+    public void payload() throws Exception{
+        this.fulfillment = this.fulfillment.replace("@kmb::eta", getETA(new JSONObject(this.getParam("parameters").toString()).getString("busstop").toString()));
     }
 
+	/**
+	 *
+	 * @param busstop Bus stop name
+	 * @return Estimate time of arrival of all buses at the bus stop
+	 * @throws JSONException
+	 */
+	public static String getETA(String busstop) throws JSONException{
+        String eta = "Sorry, there is no bus arriving";
+        if(busstop.equals("")){
+            eta = "Please enter a valid bus stop";
+            return eta;
+        }
+        if(Link.getBusStopLink(busstop) == null) {
+            eta = "The busstop in not in our database.";
+            return eta;
+        }
+        HTTP http = new HTTP(Link.getBusStopLink(busstop));
+        String info = http.get();
+        JSONObject stop = new JSONObject(info);
+        JSONArray stops = stop.getJSONArray("stops");
+        JSONObject layer = stops.getJSONObject(0);
+        JSONArray services = layer.getJSONArray("services");
+        String[] route_id = new String[services.length()];
+        String[] etaSecond = new String[services.length()];
+        eta = "The following are the arrival time of the buses at " + busstop + ":";
+        for(int i = 0; i < services.length(); i++){
+            route_id[i] = services.getJSONObject(i).getString("route_id");
+            if(services.getJSONObject(i).has("live_departures_seconds")){
+                etaSecond[i] = services.getJSONObject(i).getString("live_departures_seconds");
+                etaSecond[i] = etaSecond[i].substring(1, etaSecond[i].length() - 1);
+                if(etaSecond[i].contains(",")) {
+                    etaSecond[i] = etaSecond[i].substring(0, etaSecond[i].indexOf(","));
+                }
+                eta = eta + "\n" + route_id[i] + " will arrive in " + Integer.parseInt(etaSecond[i]) / 60 + " minutes.";
+            }else if(services.getJSONObject(i).has("headway_seconds_range")){
+                etaSecond[i] = services.getJSONObject(i).getString("headway_seconds_range");
+                etaSecond[i] = etaSecond[i].substring(1, etaSecond[i].length() - 1);
+                if(etaSecond[i].contains(",")) {
+                    etaSecond[i] = etaSecond[i].substring(0, etaSecond[i].indexOf(","));
+                }
+                eta = eta + "\n" + route_id[i] + " will arrive in " + Integer.parseInt(etaSecond[i]) / 60 + " minutes.";
+            }else if(services.getJSONObject(i).has("next_departures")){
+            	etaSecond[i] = null;
+            }else{
+                etaSecond[i] = null;
+            }
+        }
+        return eta;
+    }
 
+	/**
+	 *
+	 * @param route_id Bus route name
+	 * @param busstop Bus stop name
+	 * @return Estimate time of arrival of a bus at a busstop
+	 * @throws JSONException
+	 */
+	public static String getBusETA(String route_id, String busstop) throws JSONException{
+        HTTP http = new HTTP(Link.getBusStopLink(busstop));
+        String info = http.get();
+        JSONObject stop = new JSONObject(info);
+        JSONArray stops = stop.getJSONArray("stops");
+        JSONObject layer = stops.getJSONObject(0);
+        JSONArray services = layer.getJSONArray("services");
+        String etaSecond = "";
+        for(int i = 0; i < services.length(); i++){
+            if(route_id.equals(services.getJSONObject(i).getString("route_id"))){
+                if(services.getJSONObject(i).has("live_departures_seconds")){
+                    etaSecond = services.getJSONObject(i).getString("live_departures_seconds");
+                    etaSecond = etaSecond.substring(1, etaSecond.length() - 1);
+                    if(etaSecond.contains(",")) {
+                        etaSecond = etaSecond.substring(0, etaSecond.indexOf(","));
+                    }
+                }else if(services.getJSONObject(i).has("headway_seconds_range")){
+                    etaSecond = services.getJSONObject(i).getString("headway_seconds_range");
+                    etaSecond = etaSecond.substring(1, etaSecond.length() - 1);
+                    if(etaSecond.contains(",")) {
+                        etaSecond = etaSecond.substring(0, etaSecond.indexOf(","));
+                    }
+                }else if(services.getJSONObject(i).has("next_departures")){
+                	etaSecond = null;
+                }else{
+                    etaSecond = null;
+                }
+            }
+
+        }
+        return etaSecond;
+    }
+
+	/**
+	 * Request processing from next Service module.
+	 * @return Service state
+	 * @throws Exception Exception
+	 */
     @Override
     public Service chain() throws Exception {
         return this;

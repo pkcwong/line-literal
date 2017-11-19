@@ -1,7 +1,6 @@
 package com.pwned.line.service;
 
 import com.pwned.line.http.HTTP;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -20,7 +19,7 @@ public class StudentSociety extends DefaultService {
         super(service);
     }
 
-    /***
+    /**
      * Fetch the course information from HKUST Society Page.
      */
     @Override

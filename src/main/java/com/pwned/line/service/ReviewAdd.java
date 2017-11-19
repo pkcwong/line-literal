@@ -8,9 +8,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-/***
+/**
  * Adding review to MongoDB.
- * Required params: []
+ * Required params: [parameters]
  * Reserved tokens: []
  * Resolved params: []
  * @author Calvin Ku
@@ -18,10 +18,19 @@ import java.util.ArrayList;
 
 public class ReviewAdd extends DefaultService {
 
+	/**
+	 * Constructor of ReviewAdd
+	 * @param service
+	 */
 	public ReviewAdd(Service service) {
 		super(service);
 	}
 
+	/**
+	 * Payload for ReviewAdd
+	 * Looks at MongoDB for the indicated department and code and write a course review. After course review is written, fullfillment is updated to "Your course review has been added".
+	 * @throws Exception
+	 */
 	@Override
 	public void payload() throws Exception {
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
@@ -37,7 +46,7 @@ public class ReviewAdd extends DefaultService {
 		BasicDBObject courseRSELF = new BasicDBObject().append("department", department).append("code", code);
 		ArrayList<Document> courseRuser = MongoDB.get(mongo.getCollection("courseReview").find(courseRSELF));
 		// if arraylist.size is 0, create new coursereview doc, else do nothing
-		if(courseRuser.size() == 0){
+		if (courseRuser.size() == 0) {
 			Document data = new Document();
 			data.append("department", department);
 			data.append("code", code);
@@ -46,7 +55,7 @@ public class ReviewAdd extends DefaultService {
 		// add review
 
 		mongo.getCollection("courseReview").findOneAndUpdate(new BasicDBObject().append("department", department).append
-				("code", code), new BasicDBObject("$addToSet", new BasicDBObject("reviews", this.fulfillment)),
+						("code", code), new BasicDBObject("$addToSet", new BasicDBObject("reviews", this.fulfillment)),
 				new FindOneAndUpdateOptions().upsert(true));
 		Document data = new Document();
 		data.append("uid", this.getParam("uid").toString());
@@ -56,6 +65,11 @@ public class ReviewAdd extends DefaultService {
 		this.fulfillment = "Your course review had been added";
 	}
 
+	/**
+	 * Chain for ReviewAdd
+	 * @return Service state
+	 * @throws Exception
+	 */
 	@Override
 	public Service chain() throws Exception {
 		return this;

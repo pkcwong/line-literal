@@ -21,10 +21,18 @@ public class PushWeather extends DefaultJob{
     public static ArrayList<Document> usersArrayList;
     public static ArrayList<org.bson.Document> weatherArrayList;
 
-    public PushWeather(){
+	/**
+	 * Contructor
+	 */
+	public PushWeather(){
     }
 
-    @Override
+	/**
+	 *
+	 * @param context
+	 * @throws JobExecutionException
+	 */
+	@Override
     public void execute(JobExecutionContext context) throws JobExecutionException{
         System.out.println("PushWeather");
         try {
@@ -35,12 +43,21 @@ public class PushWeather extends DefaultJob{
         }
     }
 
-
+	/**
+	 *
+	 * @param job
+	 * @return
+	 */
     public static JobDetail buildJob(Class <? extends Job> job){
         return JobBuilder.newJob(PushWeather.class).build();
     }
 
-    public static Trigger buildTrigger(int seconds){
+	/**
+	 *
+	 * @param seconds Time for next trigger in seconds
+	 * @return
+	 */
+	public static Trigger buildTrigger(int seconds){
         return TriggerBuilder
                 .newTrigger()
                 .withSchedule(
@@ -49,7 +66,11 @@ public class PushWeather extends DefaultJob{
                 .build();
     }
 
-    public static void updateWeather() throws JSONException{
+	/**
+	 * Check if the weather forecast has changed, if yes, call pushWeather()
+	 * @throws JSONException
+	 */
+	public static void updateWeather() throws JSONException{
         MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
         usersArrayList = MongoDB.get(mongo.getCollection("user").find());
         weatherArrayList = MongoDB.get(mongo.getCollection("weather").find());
@@ -75,12 +96,17 @@ public class PushWeather extends DefaultJob{
                 newSet.put("time", dateFormat.format(date));
                 newValue.put("$set", newSet);
                 mongo.getCollection("weather").updateOne(query, newValue);
+                weatherForecast = Weather.getWeather();
                 pushWeather(weatherForecast);
             }
         }
     }
 
-    public static void pushWeather(String weatherForecast) {
+	/**
+	 * Push weather forecast to all users
+	 * @param weatherForecast
+	 */
+	public static void pushWeather(String weatherForecast) {
         for (int i = 0; i < usersArrayList.size(); i++) {
             try {
                 KitchenSinkController.push(new JSONObject(usersArrayList.get(i).toJson()).getString("uid"), new TextMessage(weatherForecast + "\n" + Weather.getDate()));

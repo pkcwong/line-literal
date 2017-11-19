@@ -3,7 +3,7 @@ package com.pwned.line.service;
 import com.pwned.line.web.YandexTranslate;
 import org.json.JSONObject;
 
-/***
+/**
  * Service module for translation.
  * Required params: [parameters]
  * Reserved tokens: []
@@ -14,10 +14,18 @@ public class Translate extends DefaultService {
 
 	private static String YANDEX_ACCESS_TOKEN = "trnsl.1.1.20171018T105910Z.b2c2d71c4cea2b88.deb0f12c301616942345158b7773860e9b9b80d3";
 
+	/***
+	 * Constructor
+	 * @param service instance
+	 */
 	public Translate(Service service) {
 		super(service);
 	}
 
+	/***
+	 * Sends query to Yandex Translation Service
+	 * @throws Exception Exception
+	 */
 	@Override
 	public void payload() throws Exception {
 		JSONObject parameters = new JSONObject(this.getParam("parameters").toString());
@@ -25,6 +33,11 @@ public class Translate extends DefaultService {
 		this.fulfillment = yandex.getJSONArray("text").get(0).toString();
 	}
 
+	/**
+	 * Resolve fulfillment
+	 * @return Instance
+	 * @throws Exception Exception
+	 */
 	@Override
 	public Service chain() throws Exception {
 		return this;

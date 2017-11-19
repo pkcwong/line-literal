@@ -102,6 +102,8 @@ public class MasterController extends DefaultService {
 		String[] timeslot = {"timeslot","check","edit"};
 		String[] thanksgiving = {"accept","bring"};
 		String[] kmb = {"bus", "arrival", "departure", "arrive", "eta"};
+		String[] notify = {"notify", "remind", "inform"};
+		String[] stop = {"stop"};
 		String[] weather = {"weather", "climate", "report"};
 		String[] nine = {"9 days weather", "week weather", "next nine days", "next week", "next few days"};
 		String[] temperature = {"temperature", "degrees"};
@@ -138,6 +140,18 @@ public class MasterController extends DefaultService {
 				return new DialogFlowKMB(this).resolve().get();
 			}
 		}
+		for (String keywords : notify) {
+			String temp = this.fulfillment.toLowerCase();
+			if(temp.contains(keywords)){
+				return new KMBNotify(this).resolve().get();
+			}
+		}
+		for (String keywords : stop) {
+			String temp = this.fulfillment.toLowerCase();
+			if(temp.contains(keywords)){
+				return new KMBStopNotify(this).resolve().get();
+			}
+		}
 		for (String keywords : nine) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
@@ -159,7 +173,7 @@ public class MasterController extends DefaultService {
 		for (String keywords : quota) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
-				return new CourseQuota(this).resolve().get();
+				return new DialogFlowCourseQuota(this).resolve().get();
 			}
 		}
 		for (String keywords : translate) {
