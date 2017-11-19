@@ -18,16 +18,29 @@ public class DefaultService implements Service {
 	protected String fulfillment = null;
 	protected Map<String, Object> args = null;
 
+	/***
+	 * Entry for service module chain
+	 * @param query query
+	 */
 	public DefaultService(String query) {
 		this.fulfillment = query;
 		this.args = new HashMap<>();
 	}
 
+	/***
+	 * Copy constructor
+	 * @param service instance
+	 */
 	public DefaultService(Service service) {
 		this.fulfillment = service.getFulfillment();
 		this.args = service.getArgs();
 	}
 
+	/***
+	 * Allocates a new Promise object for a task.
+	 * @return Promise
+	 * @throws Exception Exception
+	 */
 	@Override
 	public final CompletableFuture<Service> resolve() throws Exception {
 		this.dump();
@@ -61,26 +74,48 @@ public class DefaultService implements Service {
 		return this;
 	}
 
+	/***
+	 * Sets environment variables for a key
+	 * @param key key
+	 * @param value value
+	 */
 	@Override
 	public final void setParam(String key, Object value) {
 		this.args.put(key, value);
 	}
 
+	/***
+	 * Retrieves a value for key
+	 * @param key key
+	 * @return value
+	 */
 	@Override
 	public final Object getParam(String key) {
 		return this.args.get(key);
 	}
 
+	/***
+	 * Getter for fulfillment
+	 * @return fulfillment
+	 */
 	@Override
 	public final String getFulfillment() {
 		return this.fulfillment;
 	}
 
+	/***
+	 * Getter for environment variable hash map
+	 * @return Map
+	 */
 	@Override
 	public final Map<String, Object> getArgs() {
 		return this.args;
 	}
 
+	/***
+	 * Memory dump for pipeline entry and exit nodes
+	 * @throws Exception Exception
+	 */
 	@Override
 	public final void dump() throws Exception {
 		JSONObject dump = new JSONObject();
