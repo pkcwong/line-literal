@@ -189,11 +189,48 @@ public class EventMaker extends DefaultService{
 					}
 			}
 		}*/
-		for(int i = 0 ; i < allTimeslot.length; i++){
-			System.out.printf("\n%s\n",allTimeslot[i]);
+		SimpleDateFormat parser = new SimpleDateFormat ("HH:mm");
+
+		int count = allTimeslot.length;
+		int i;
+		Date startTime = new Date();
+		Date endTime = new Date();
+		for(i = 0 ; i < allTimeslot.length; i++){
+			if(allTimeslot[i].equals("WHOLE DAY")){
+				//count--;
+				continue;
+			}
+			String[] temp = allTimeslot[i].split("-");
+			startTime = parser.parse(temp[0]);
+			endTime = parser.parse(temp[1]);
+			System.out.println("\n\nef timeslot " + startTime.toString() + ":" + endTime.toString() + "\n\n");
+			break;
+		}
+		for(int j = 0 ; j != i && j < allTimeslot.length; j++){
+			if(allTimeslot[i].equals("WHOLE DAY")){
+				//count--;
+				continue;
+			}
+			String[] temp = allTimeslot[i].split("-");
+			Date startTime1 = parser.parse(temp[0]);
+			Date endTime2 = parser.parse(temp[1]);
+			if((startTime.before(startTime1) || startTime.equals(startTime1)) && (endTime.after(endTime2) || endTime.equals(endTime2))){
+				count --;
+				System.out.printf("\nBefore %s",startTime.toString());
+				startTime = startTime1;
+				endTime = endTime2;
+				System.out.printf("\nAfter %s",startTime.toString());
+			}
 		}
 
-
+		if(count == 0){
+			StringBuilder time = new StringBuilder(parser.format(startTime));
+			time.append("-");
+			time.append(parser.format(endTime));
+			System.out.printf("\ntime %s",time.toString());
+			common.append(time.toString());
+			return;
+		}
 		common.append("NOT FOUND");
 	}
 
