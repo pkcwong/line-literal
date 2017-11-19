@@ -85,15 +85,6 @@ public class TimeSlot extends DefaultService {
 		return this;
 	}
 
-	/*public static void createNewTimeSlot(){
-		BasicDBObject data = new BasicDBObject();
-		BasicDBObject timeslot = new BasicDBObject();
-		timeslot.append("Date", eventName);
-		timeslot.append("Time", eventDate);
-
-		data.append("events", event);
-		mongo.getCollection("Event").findOneAndUpdate(groupSELF, new BasicDBObject("$addToSet", timeslot));
-	}*/
 
 	private void callEditTimeSlot(String uid, BasicDBObject SELF, MongoDB mongo){
 		mongo.getCollection("user").updateOne(SELF,
