@@ -12,7 +12,7 @@ public class ReviewTest {
 	@Before
 	public void setUp() throws Exception {
 		new MongoDB(System.getenv("MONGODB_URI")).drop("CourseReview");
-		Service service = new MasterController(new DefaultService("review"));
+		Service service = new MasterController(new DefaultService("hi"));
 		service.setParam("uid", "junit");
 		service.setParam("replyToken", "junit");
 		service.setParam("timestamp", "junit");
@@ -44,12 +44,12 @@ public class ReviewTest {
 			assertEquals("You can type your detail review here: ", service.getFulfillment());
 		}
 		{
-			Service service = new ReviewAdd(new DefaultService("I LOVE DEBAGA <3"));
+			Service service = new MasterController(new DefaultService("I LOVE DEBAGA <3"));
 			service.setParam("uid", "junit");
 			service.setParam("replyToken", "junit");
 			service.setParam("timestamp", "junit");
-			service.payload();
-			assertEquals("Your course review had been added", service.getFulfillment());
+			Service result = service.resolve().get();
+			assertEquals("Your course review had been added", result.getFulfillment());
 		}
 		{
 			Service service = new DialogFlowReview(new DefaultService("Review of COMP 3111"));
