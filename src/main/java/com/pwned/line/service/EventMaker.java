@@ -192,6 +192,7 @@ public class EventMaker extends DefaultService{
 		SimpleDateFormat parser = new SimpleDateFormat ("HH:mm");
 
 		int count = allTimeslot.length;
+		System.out.printf("\n\n length = %d", count);
 		int i;
 		Date startTime = new Date();
 		Date endTime = new Date();
