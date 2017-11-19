@@ -15,9 +15,9 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /***
- * Store course timeslot in MongoDB.
- * Required params: []
- * Reserved tokens: []
+ * Store/show the timetable into MongoDB.
+ * Required params: [uid]
+ * Reserved tokens: [@review::add, @oneByOneTrigger]
  * Resolved params: []
  * @author Eric Kwan
  */
@@ -34,8 +34,12 @@ public class TimeTable extends DefaultService {
 
 
     /**
-     *
      * query the user imported timetable from SIS Class schedule
+     * if there is user's timetable in MongoDB
+     * the bot will suggest user to import it in two ways:
+     * 1. Copy from SIS class schedule
+     * 2. import Course code and section number one by one
+     *
      */
     @Override
     public void payload() throws Exception {

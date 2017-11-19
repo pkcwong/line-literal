@@ -12,21 +12,25 @@ import java.util.ArrayList;
 
 /***
  * Adding Course timeslot to MongoDB.
- * Required params: []
+ * Required params: [uid]
  * Reserved tokens: []
  * Resolved params: []
- * @author Eric
+ * @author Eric Kwan
  */
 
 public class TimeTableAddOneByOne extends DefaultService {
 
+    /**
+     * Constructor
+     * @param service
+     */
     public TimeTableAddOneByOne(Service service) {
         super(service);
     }
 
     @Override
     public void payload() throws Exception {
-        System.out.println("getting timetable");
+        //System.out.println("getting timetable");
         MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
         BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
         ArrayList<Document> user = MongoDB.get(mongo.getCollection("user").find(SELF));
@@ -68,15 +72,15 @@ public class TimeTableAddOneByOne extends DefaultService {
             for(int j=0;j<classID.size();j++){
                 if(c.sections.get(i).code.equals(classID.get(j))){
                     boolean IsDayTBA = c.sections.get(i).dateAndTimes.get(0).day.equals("TBA");
-                    System.out.println(IsDayTBA);
-                    System.out.println(c.department+c.code+" and date and time size  of this section "+ c.sections.get(i).code+"= "+c.sections.get(i).dateAndTimes.size());
+                    //System.out.println(IsDayTBA);
+                    //System.out.println(c.department+c.code+" and date and time size  of this section "+ c.sections.get(i).code+"= "+c.sections.get(i).dateAndTimes.size());
                     if(c.sections.get(i).dateAndTimes.size()==1 && IsDayTBA){}
                     else {
                         for (int k = 0; k < c.sections.get(i).dateAndTimes.size(); k++) {
                             Document timeslot = new Document();
                             timeslot.append("department", c.department);
                             timeslot.append("code", c.code);
-                            System.out.println(c.sections.get(i).dateAndTimes.get(k).day+" "+c.sections.get(i).dateAndTimes.get(k).day.length());
+                            //System.out.println(c.sections.get(i).dateAndTimes.get(k).day+" "+c.sections.get(i).dateAndTimes.get(k).day.length());
                             if(c.sections.get(i).dateAndTimes.get(k).day.length()!=2){
                                 String[] day = {c.sections.get(i).dateAndTimes.get(k).day.substring(0, 2), c.sections.get(i).dateAndTimes.get(k).day.substring(2)};
 
@@ -94,7 +98,7 @@ public class TimeTableAddOneByOne extends DefaultService {
                                 timeslot.append("end time", c.sections.get(i).dateAndTimes.get(k).endTime);
                                 timeslot.append("venue", c.sections.get(i).rooms.get(k));
                                 CourseList.append("timeslot", timeslot);
-                                System.out.println("length=2 append");
+                                //System.out.println("length=2 append");
                                 mongo.getCollection("Timetable").findOneAndUpdate(new BasicDBObject().append("uid", this.getParam("uid").toString()), new BasicDBObject("$addToSet", CourseList));
                             }
                         }

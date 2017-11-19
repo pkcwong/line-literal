@@ -22,6 +22,12 @@ import java.util.concurrent.TimeUnit;
 public class PushTimetable extends DefaultJob {
     public static ArrayList<Document> usersArrayList;
     public static int PushPeriod;
+
+    /**
+     * executing the job
+     * @param context
+     * @throws JobExecutionException
+     */
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         try {
@@ -32,6 +38,12 @@ public class PushTimetable extends DefaultJob {
             e.printStackTrace();
         }
     }
+
+    /**
+     * create a Trigger in minutes
+     * @param minutes
+     * @return
+     */
     public static Trigger buildTrigger(int minutes) {
         return TriggerBuilder
                 .newTrigger()
@@ -44,6 +56,11 @@ public class PushTimetable extends DefaultJob {
         return JobBuilder.newJob(PushTimetable.class).build();
     }
 
+    /**
+     * pushing Lesson Notification
+     * @throws JSONException
+     * @throws ParseException
+     */
     public static void pushNextLesson() throws JSONException, ParseException{
         System.out.println("Pushtimetable\n\n");
         MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
@@ -128,8 +145,14 @@ public class PushTimetable extends DefaultJob {
 
 
     }
+
+    /**
+     * convert day key to the value of day_of_week in Calender
+     * @param day
+     * @return
+     */
     private static int convertDay(String day){
-        int convertedDay=0;
+        int convertedDay = 0;
         switch (day){
             case "Mo": convertedDay = Calendar.MONDAY;break;
             case "Tu": convertedDay = Calendar.TUESDAY;break;

@@ -11,19 +11,27 @@ import java.util.ArrayList;
 
 
 /***
- * Adding Course timeslot to MongoDB.
- * Required params: []
+ * Adding Course timeslot into MongoDB.
+ * Required params: [uid]
  * Reserved tokens: []
  * Resolved params: []
- * @author Eric
+ * @author Eric Kwan
  */
 
 public class TimeTableAdd extends DefaultService {
 
+    /**
+     * Constructor
+     * @param service
+     */
     public TimeTableAdd(Service service) {
         super(service);
     }
 
+    /**
+     * query the user's import schedule from SIS
+     * @throws Exception
+     */
     @Override
     public void payload() throws Exception {
         System.out.println("getting timetable");
@@ -37,8 +45,6 @@ public class TimeTableAdd extends DefaultService {
             userid.append("uid", this.getParam("uid").toString());
             mongo.getCollection("Timetable").insertOne(userid);
         }
-
-        //String timetable = USER.getJSONObject("timetablebuff").getJSONObject("data").toString();
 
         String timetable = this.fulfillment;
         String[] key = {"Lecture", "Laboratory", "Tutorial", "Others"};
@@ -57,7 +63,6 @@ public class TimeTableAdd extends DefaultService {
                 String[] courseName= timetableArr.get(i-1).split(" ");
                 String department = courseName[0];
                 String code = courseName[1];
-                String courseCode = department+" "+code;
                 Course course = new Course(department, code);
                 course.query();
                 Courses.add(course);
@@ -79,15 +84,15 @@ public class TimeTableAdd extends DefaultService {
                 for(int j=0;j<classID.size();j++){
                     if(c.sections.get(i).code.equals(classID.get(j))){
                         boolean IsDayTBA = c.sections.get(i).dateAndTimes.get(0).day.equals("TBA");
-                        System.out.println(IsDayTBA);
-                        System.out.println(c.department+c.code+" and date and time size  of this section "+ c.sections.get(i).code+"= "+c.sections.get(i).dateAndTimes.size());
+                        //System.out.println(IsDayTBA);
+                        //System.out.println(c.department+c.code+" and date and time size  of this section "+ c.sections.get(i).code+"= "+c.sections.get(i).dateAndTimes.size());
                         if(c.sections.get(i).dateAndTimes.size()==1 && IsDayTBA){}
                         else {
                             for (int k = 0; k < c.sections.get(i).dateAndTimes.size(); k++) {
                                 Document timeslot = new Document();
                                 timeslot.append("department", c.department);
                                 timeslot.append("code", c.code);
-                                System.out.println(c.sections.get(i).dateAndTimes.get(k).day+" "+c.sections.get(i).dateAndTimes.get(k).day.length());
+                                //System.out.println(c.sections.get(i).dateAndTimes.get(k).day+" "+c.sections.get(i).dateAndTimes.get(k).day.length());
                                 if(c.sections.get(i).dateAndTimes.get(k).day.length()!=2){
                                     String[] day = {c.sections.get(i).dateAndTimes.get(k).day.substring(0, 2), c.sections.get(i).dateAndTimes.get(k).day.substring(2)};
 
@@ -119,7 +124,6 @@ public class TimeTableAdd extends DefaultService {
         data.append("buff", new BasicDBObject("cmd", "master"));
         mongo.getCollection("user").findOneAndUpdate(SELF, new BasicDBObject("$set", data));
         this.fulfillment = "Saved your Timetable";
-
 
     }
 
