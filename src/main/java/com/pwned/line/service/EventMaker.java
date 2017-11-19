@@ -165,6 +165,7 @@ public class EventMaker extends DefaultService{
 		for(i = 0 ; i < allTimeslot.length; i++){
 			for(j = 0 ; j < allTimeslot[i].split("\n").length; j++){
 				timeslotFor1user[i] = allTimeslot[i].split("\n");
+				System.out.printf("\n\n\nallTimeslot[i][j]\n\n");
 				Matcher matcher = regex.matcher(timeslotFor1user[i][j]);
 				startHour = Integer.parseInt(matcher.group(1));
 				starMinute = Integer.parseInt(matcher.group(2));
