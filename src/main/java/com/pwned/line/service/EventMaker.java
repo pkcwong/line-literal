@@ -167,6 +167,7 @@ public class EventMaker extends DefaultService{
 		int arrehr = 0;
 		int arremin = 0;
 		int count = userArr.getJSONArray("uid").length();
+		System.out.printf("\n\ncount before function = %d\n\n\n",count);
 
 		Pattern regex = Pattern.compile("(.+):(.+)-(.+):(.+)");
 		Matcher matcher = regex.matcher(timeslot);
@@ -210,6 +211,7 @@ public class EventMaker extends DefaultService{
 				}
 			}
 		}
+		System.out.printf("\n\ncount after function = %d\n\n\n",count);
 		return (count==0);
 	}
 
