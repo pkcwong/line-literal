@@ -1,6 +1,7 @@
 package com.pwned.line.service;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.pwned.line.http.HTTP;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
@@ -29,8 +30,19 @@ public class TimeSlot extends DefaultService {
 	public void payload() throws Exception {
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
 		String uid = this.getParam("uid").toString();
+		String groupId = this.getParam("groupId").toString();
 		BasicDBObject SELF = new BasicDBObject().append("uid", uid);
 		ArrayList<Document> user = MongoDB.get(mongo.getCollection("Timeslot").find(SELF));
+		BasicDBObject groupSELF = new BasicDBObject().append("groupId", groupId);
+		ArrayList<Document> group = MongoDB.get(mongo.getCollection("Event").find(groupSELF));
+
+		if(user.size() == 0){
+			BasicDBObject data = new BasicDBObject();
+			data.append("uid", uid);
+			mongo.getCollection("Event").findOneAndUpdate(groupSELF, new BasicDBObject("$addToSet", data),
+					new FindOneAndUpdateOptions().upsert(true));
+		}
+
 		if(keyword.contains("edit")){
 			callEditTimeSlot(uid,SELF,mongo);
 			this.fulfillment = "Please give your command by: \n" +
