@@ -115,7 +115,7 @@ public class EventMaker extends DefaultService{
 	}
 
 	private String getEventDate(JSONObject events, String eventName) throws JSONException {
-		// {"EventName": "milestone 3 submit","Date": "2017/11/21"
+		// {"EventName":"milestone 3 submit","Date":"2017/11/20"}
 		String result = new String();
 		for(int i = 0; i < events.getJSONArray("events").length(); i++){
 			if(events.getJSONArray("events").get(i).toString().contains(eventName)){
@@ -123,7 +123,7 @@ public class EventMaker extends DefaultService{
 				System.out.println("\n\n\nGet Event result = " + result + "\n\n\n");
 			}
 		}
-		Pattern regex = Pattern.compile("\\{\"Date\":\"(.+)\",\"EventName\":\"" + eventName + "\"\"\\}");
+		Pattern regex = Pattern.compile("\\{\"EventName\":\"" + eventName + "\",\"Date\":\"(.+)\"\\}");
 		Matcher matcher = regex.matcher(result);
 		String date = new String();
 		while (matcher.find()) {
@@ -156,6 +156,7 @@ public class EventMaker extends DefaultService{
 		for(int i = 0; i < timeArr.getJSONArray("timeslot").length(); i++){
 			if(timeArr.getJSONArray("timeslot").getString(i).contains(date)){
 				String time = timeArr.getJSONArray("timeslot").getString(i);
+				System.out.println("\n\nGet TimeSlot = " + time + "\n\n\n");
 				//{"EndTime":"15:30","StartTime":"13:00","Date":"2017/11/27"}
 				Pattern regex = Pattern.compile("\\{\"EndTime\":\"(.+)\",\"StartTime\":\"(.+)\",\"Date\":\"" + date + "\"\\}");
 				Matcher matcher = regex.matcher(time);
