@@ -77,6 +77,7 @@ public class TimeTableAdd extends DefaultService {
                     if(c.sections.get(i).code.equals(classID.get(j))){
                         boolean IsDayTBA = c.sections.get(i).dateAndTimes.get(0).day.equals("TBA");
                         System.out.println(IsDayTBA);
+                        System.out.println(c.department+c.code+" and date and time size  of this section "+ c.sections.get(i).code+"= "+c.sections.get(i).dateAndTimes.size());
                         if(c.sections.get(i).dateAndTimes.size()==1 && IsDayTBA){}
                         else {
                             for (int k = 0; k < c.sections.get(i).dateAndTimes.size(); k++) {
@@ -86,6 +87,7 @@ public class TimeTableAdd extends DefaultService {
                                 System.out.println(c.sections.get(i).dateAndTimes.get(k).day+" "+c.sections.get(i).dateAndTimes.get(k).day.length());
                                 if(c.sections.get(i).dateAndTimes.get(k).day.length()!=2){
                                     String[] day = {c.sections.get(i).dateAndTimes.get(k).day.substring(0, 2), c.sections.get(i).dateAndTimes.get(k).day.substring(2)};
+
                                     for(String d:day){
                                         timeslot.append("day", d);
                                         timeslot.append("start time", c.sections.get(i).dateAndTimes.get(k).startTime);
