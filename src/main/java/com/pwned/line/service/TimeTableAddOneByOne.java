@@ -87,6 +87,7 @@ public class TimeTableAddOneByOne extends DefaultService {
                                 timeslot.append("end time", c.sections.get(i).dateAndTimes.get(k).endTime);
                                 timeslot.append("venue", c.sections.get(i).rooms.get(k));
                                 CourseList.append("timeslot", timeslot);
+                                System.out.println("length=2 append");
                                 mongo.getCollection("Timetable").findOneAndUpdate(new BasicDBObject().append("uid", this.getParam("uid").toString()), new BasicDBObject("$addToSet", CourseList));
                             }
                         }
@@ -98,9 +99,9 @@ public class TimeTableAddOneByOne extends DefaultService {
         Document data = new Document();
         data.append("uid", this.getParam("uid").toString());
         data.append("bind", this.getParam("uid").toString());
-        data.append("buff", new BasicDBObject("cmd", "master"));
+        data.append("buff", new BasicDBObject("cmd", "timetable::addOneByOne"));
         mongo.getCollection("user").findOneAndUpdate(SELF, new BasicDBObject("$set", data));
-        this.fulfillment = "Saved your Timetable";
+        this.fulfillment = "Saved the course to your timetable, if you want to insert others, please do it again. If not, then type addTimetable::end ";
 
 
     }
