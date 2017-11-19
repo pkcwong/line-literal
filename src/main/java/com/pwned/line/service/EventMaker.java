@@ -166,6 +166,7 @@ public class EventMaker extends DefaultService{
 		int arrsmin = 0;
 		int arrehr = 0;
 		int arremin = 0;
+		int count = userArr.getJSONArray("uid").length();
 
 		Pattern regex = Pattern.compile("(.+):(.+)-(.+):(.+)");
 		Matcher matcher = regex.matcher(timeslot);
@@ -181,6 +182,10 @@ public class EventMaker extends DefaultService{
 		for(int i = 0; i < userArr.getJSONArray("uid").length(); i++){
 			BasicDBObject SELF = new BasicDBObject().append("uid", userArr.getJSONArray("uid").getString(i));
 			String resultTimeslot = getTimeSlot(mongo, SELF, date);
+			if(resultTimeslot.equals("WHOLE DAY")){
+				count--;
+				continue;
+			}
 			String[] resultTimeslotArr = resultTimeslot.split("\n");
 			for(int j = 0; j < resultTimeslotArr.length; j++){
 				matcher = regex.matcher(resultTimeslotArr[j]);
@@ -191,21 +196,21 @@ public class EventMaker extends DefaultService{
 					arremin = Integer.parseInt(matcher.group(4));
 					System.out.printf("\n\nARRTimeslot %d, %d, %d, %d\n\n\n",arrshr,arrsmin,arrehr,arremin);
 				}
-				if(arrshr <= shr && arrehr >= ehr){
-					return true;
-				}else if (arrshr == shr){
-					if(arremin >= emin){
-						return true;
-					}
-					return false;
-				}else if (arrshr >= shr){
-					return false;
+				//Equal timeslot
+				if(arrshr == shr && arrehr == ehr && arrsmin == smin && arremin == emin){
+					count--;
+					break;
 				}
-				continue;
+				else if(arrshr < shr && arrehr > ehr) {
+					count--;
+					break;
+				}else if(arrshr == shr && arrsmin <= smin && (arrehr > ehr || (arrehr == ehr && arremin >= emin))){
+					count--;
+					break;
+				}
 			}
-			return false;
 		}
-		return true;
+		return (count==0);
 	}
 
 	private String getTimeSlot(MongoDB mongo, BasicDBObject SELF, String date) throws JSONException {
