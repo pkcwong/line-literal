@@ -135,84 +135,44 @@ public class EventMaker extends DefaultService{
 	private String getCommonTimeSlot(MongoDB mongo, ArrayList<Document> group, String date) throws JSONException {
 		JSONObject userArr = new JSONObject(group.get(0).toJson());
 		StringBuilder common = new StringBuilder("");
+		String[] allTimeslot = new String[userArr.getJSONArray("uid").length()];
 		for(int i = 0; i < userArr.getJSONArray("uid").length(); i++){
+			allTimeslot[i] = getTimeSlot(mongo,new BasicDBObject().append("uid", userArr.getJSONArray("uid").getString(i)),date);
 			if(userArr.getJSONArray("uid").length() == 1){
-				return getTimeSlot(mongo,new BasicDBObject().append("uid", userArr.getJSONArray("uid").getString(i)),date);
-			}else{
-				if(getTimeSlot(mongo,new BasicDBObject().append("uid", userArr.getJSONArray("uid").getString(i)),date).equals("WHOLE DAY")){
-					continue;
-				}
-				String timeslot = getTimeSlot(mongo,new BasicDBObject().append("uid", userArr.getJSONArray("uid").getString(i)),date);
-				String[] timeslotArr = timeslot.split("\n");
-				for(int j = 0 ; j < timeslotArr.length; j++){
-					if(checkAllAvailable(userArr,mongo,timeslotArr[j],date))
-						common.append(timeslotArr[j]+"\n");
-				}
+				return allTimeslot[0];
 			}
-
 		}
-		if(common.toString().equals("")){
+		addAllCommonTimeslot(allTimeslot,common);
+		if(common.toString().equals("NOT FOUND")){
+			return "Sorry, no common timeslot are found";
+		}else if (common.toString().equals("")){
 			return "WHOLE DAY";
 		}
 		return common.toString();
 	}
 
-	private boolean checkAllAvailable(JSONObject userArr, MongoDB mongo, String timeslot, String date ) throws JSONException {
-		int shr = 0;
-		int smin = 0;
-		int ehr = 0;
-		int emin = 0;
-		int arrshr = 0;
-		int arrsmin = 0;
-		int arrehr = 0;
-		int arremin = 0;
-		int count = userArr.getJSONArray("uid").length();
-		System.out.printf("\n\ncount before function = %d\n\n\n",count);
+	//private boolean checkAvailable(){
 
-		Pattern regex = Pattern.compile("(.+):(.+)-(.+):(.+)");
-		Matcher matcher = regex.matcher(timeslot);
+
+	private void addAllCommonTimeslot(String[] allTimeslot, StringBuilder common){
+		/*
+		Pattern regex = Pattern.compile("\\{\"EventName\":\"" + eventName + "\",\"Date\":\"(.+)\"\\}");
+		Matcher matcher = regex.matcher(result);
+		String date = new String();
 		while (matcher.find()) {
-			shr = Integer.parseInt(matcher.group(1));
-			smin = Integer.parseInt(matcher.group(2));
-			ehr = Integer.parseInt(matcher.group(3));
-			emin = Integer.parseInt(matcher.group(4));
-		}
+			date = matcher.group(1);
+		}*/
+		int i, j;
 
-
-
-		for(int i = 0; i < userArr.getJSONArray("uid").length(); i++){
-			BasicDBObject SELF = new BasicDBObject().append("uid", userArr.getJSONArray("uid").getString(i));
-			String resultTimeslot = getTimeSlot(mongo, SELF, date);
-			if(resultTimeslot.equals("WHOLE DAY")){
-				count--;
-				continue;
-			}
-			String[] resultTimeslotArr = resultTimeslot.split("\n");
-			for(int j = 0; j < resultTimeslotArr.length; j++){
-				matcher = regex.matcher(resultTimeslotArr[j]);
-				while (matcher.find()) {
-					arrshr = Integer.parseInt(matcher.group(1));
-					arrsmin = Integer.parseInt(matcher.group(2));
-					arrehr = Integer.parseInt(matcher.group(3));
-					arremin = Integer.parseInt(matcher.group(4));
-					System.out.printf("\n\nARRTimeslot %d, %d, %d, %d\n\n\n",arrshr,arrsmin,arrehr,arremin);
-				}
-				//Equal timeslot
-				if(arrshr == shr && arrehr == ehr && arrsmin == smin && arremin == emin){
-					count--;
-					break;
-				}
-				else if(arrshr < shr && arrehr > ehr) {
-					count--;
-					break;
-				}else if(arrshr == shr && arrsmin <= smin && (arrehr > ehr || (arrehr == ehr && arremin >= emin))){
-					count--;
-					break;
-				}
+		String[][] timeslotFor1user = new String[allTimeslot.length][];
+		for(i = 0 ; i < allTimeslot.length; i++){
+			for(j = 0 ; j < allTimeslot[i].split("\n").length; j++){
+				timeslotFor1user[i] = allTimeslot[i].split("\n");
+				System.out.println("\n\n" + timeslotFor1user[i][j] + "\n\n\n");
 			}
 		}
-		System.out.printf("\n\ncount after function = %d\n\n\n",count);
-		return (count==0);
+
+		common.append("NOT FOUND");
 	}
 
 	private String getTimeSlot(MongoDB mongo, BasicDBObject SELF, String date) throws JSONException {
