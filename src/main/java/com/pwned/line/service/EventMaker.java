@@ -120,7 +120,6 @@ public class EventMaker extends DefaultService{
 		for(int i = 0; i < events.getJSONArray("events").length(); i++){
 			if(events.getJSONArray("events").get(i).toString().contains(eventName)){
 				result = events.getJSONArray("events").get(i).toString();
-				System.out.println("\n\n\nGet Event result = " + result + "\n\n\n");
 			}
 		}
 		Pattern regex = Pattern.compile("\\{\"EventName\":\"" + eventName + "\",\"Date\":\"(.+)\"\\}");
@@ -129,7 +128,6 @@ public class EventMaker extends DefaultService{
 		while (matcher.find()) {
 			date = matcher.group(1);
 		}
-		System.out.println("\n\n\nGet Event Date = " + date + "\n\n\n");
 		return date;
 	}
 
@@ -160,8 +158,14 @@ public class EventMaker extends DefaultService{
 	}
 
 	private boolean checkAllAvailable(JSONObject userArr, MongoDB mongo, String timeslot, String date ) throws JSONException {
-		int shr,smin,ehr,emin;
-		int arrshr,arrsmin,arrehr,arremin;
+		int shr = 0;
+		int smin = 0;
+		int ehr = 0;
+		int emin = 0;
+		int arrshr = 0;
+		int arrsmin = 0;
+		int arrehr = 0;
+		int arremin = 0;
 
 
 
@@ -170,7 +174,6 @@ public class EventMaker extends DefaultService{
 			String resultTimeslot = getTimeSlot(mongo, SELF, date);
 			String[] resultTimeslotArr = resultTimeslot.split("\n");
 			for(int j = 0; j < resultTimeslotArr.length; j++){
-				System.out.println("\n\nComparing " + resultTimeslotArr + " and\n " + timeslot + "\n\n\n");
 				Pattern regex = Pattern.compile("(.+):(.+)-(.+):(.+)");
 				Matcher matcher = regex.matcher(timeslot);
 				while (matcher.find()) {
@@ -178,7 +181,6 @@ public class EventMaker extends DefaultService{
 					smin = Integer.parseInt(matcher.group(2));
 					ehr = Integer.parseInt(matcher.group(3));
 					emin = Integer.parseInt(matcher.group(4));
-					System.out.printf("\n\nTimeslot %d, %d, %d, %d\n\n\n",shr,smin,ehr,emin);
 				}
 
 				matcher = regex.matcher(resultTimeslotArr[j]);
@@ -189,9 +191,18 @@ public class EventMaker extends DefaultService{
 					arremin = Integer.parseInt(matcher.group(4));
 					System.out.printf("\n\nARRTimeslot %d, %d, %d, %d\n\n\n",arrshr,arrsmin,arrehr,arremin);
 				}
+				if(arrshr <= shr && arrehr >= ehr){
+					return true;
+				}else if (arrshr == shr){
+					if(emin >= arremin){
+						return false;
+					}
+					return true;
+				}
+				continue;
 			}
+			return false;
 		}
-
 		return true;
 	}
 
