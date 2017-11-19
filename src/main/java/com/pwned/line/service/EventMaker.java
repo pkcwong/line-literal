@@ -82,7 +82,7 @@ public class EventMaker extends DefaultService{
 			StringBuilder string = new StringBuilder("Event ");
 			string.append(eventName);
 			string.append(" has be found, the common timeslot for all of you are\n");
-			string.append(getCommonTimeSlot(mongo,group,uid,"2017/11/27") + "\n");
+			string.append(getCommonTimeSlot(mongo,group,uid,getEventDate(events,eventName)) + "\n");
 			string.append("Please be reminded that not editing your available timeslot will be considered as available in whole day");
 			this.fulfillment = string.toString();
 			return;
@@ -114,6 +114,23 @@ public class EventMaker extends DefaultService{
 		return false;
 	}
 
+	private String getEventDate(JSONObject events, String eventName) throws JSONException {
+		// {"EventName": "milestone 3 submit","Date": "2017/11/21"
+		String result = new String();
+		for(int i = 0; i < events.getJSONArray("events").length(); i++){
+			if(events.getJSONArray("events").get(i).toString().contains(eventName)){
+				result = events.getJSONArray("events").get(i).toString();
+			}
+		}
+		Pattern regex = Pattern.compile("\\{\"Date\":\"(.+)\",\"EventName\":\"" + eventName + "\"\"\\}");
+		Matcher matcher = regex.matcher(result);
+		String date = new String();
+		while (matcher.find()) {
+			date = matcher.group(1);
+		}
+
+		return date;
+	}
 
 
 	private String getCommonTimeSlot(MongoDB mongo, ArrayList<Document> group,String uid, String date) throws JSONException {
