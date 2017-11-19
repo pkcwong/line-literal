@@ -4,30 +4,39 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
-import org.json.JSONObject;
 
-import javax.print.Doc;
+
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import java.util.ArrayList;
 
 /***
- * Timeslot editor for event maker
- * Required params: [keyword]
+ * Timeslot editor for TimeSlot
+ * Required params: [keyword, uid, parameters]
  * Reserved tokens: []
  * Resolved params: []
  * @author Bear
  */
 public class EditTimeSlot extends DefaultService {
 	private String keyword;
+
+	/***
+	 * Constructor for EditTimeSlot
+	 * @param service
+	 * @param keyword
+	 */
 	public EditTimeSlot(Service service, String keyword) {
 		super(service);
 		this.keyword = keyword;
 	}
 
 
+	/***
+	 * Payload for EditTimeSlot
+	 * If @param keyword contains add, user is required to add the timeslot by format hh:mm-hh:mm@yyyy/mm/dd. If @param keyword contains drop, user is required to drop the timeslot by format hh:mm-hh:mm@yyyy/mm/dd.
+	 * @throws Exception
+	 */
 	@Override
 	public void payload() throws Exception {
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
@@ -99,11 +108,16 @@ public class EditTimeSlot extends DefaultService {
 
 	}
 
-	@Override
-	public Service chain() throws Exception {
-		return this;
-	}
 
+	/***
+	 * Add timeslot method for Event maker
+	 * Call this method to add new timeslot on the date at start time to end time.
+	 * @param mongo
+	 * @param SELF
+	 * @param start
+	 * @param end
+	 * @param date
+	 */
 	public void createNewTimeSlot(MongoDB mongo, BasicDBObject SELF,String start, String end, String date){
 		BasicDBObject data = new BasicDBObject();
 		BasicDBObject timeslot = new BasicDBObject();
@@ -117,6 +131,14 @@ public class EditTimeSlot extends DefaultService {
 		this.fulfillment = "Your available timeslot are successfully added";
 	}
 
+	/***
+	 * finish editing timeslot method for Event maker
+	 * After user edited the timeslot, this method will be called to change the buff state of user to master.
+	 * @param mongo
+	 * @param SELF
+	 * @throws Exception
+	 */
+
 	private void finish(MongoDB mongo, BasicDBObject SELF){
 		Document doc = new Document();
 		doc.append("uid", this.getParam("uid").toString());
@@ -124,11 +146,17 @@ public class EditTimeSlot extends DefaultService {
 		doc.append("buff", new BasicDBObject("cmd", "master"));
 		mongo.getCollection("user").findOneAndUpdate(SELF, new BasicDBObject("$set", doc));
 
-
-
 	}
 
-
+	/***
+	 * Chain for Event maker
+	 * @return Service state
+	 * @throws Exception
+	 */
+	@Override
+	public Service chain() throws Exception {
+		return this;
+	}
 
 
 }

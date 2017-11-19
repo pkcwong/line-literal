@@ -2,7 +2,6 @@ package com.pwned.line.service;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.model.FindOneAndUpdateOptions;
-import com.pwned.line.http.HTTP;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 import org.json.JSONObject;
@@ -12,20 +11,29 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /***
- * Timeslot editor for event maker
- * Required params: [keyword]
+ * Timeslot for event maker
+ * Required params: [uid, parameters,keyword]
  * Reserved tokens: []
  * Resolved params: []
  * @author Bear
  */
 public class TimeSlot extends DefaultService {
 	private String keyword;
+	/**
+	 * Constructor for Review
+	 * @param service
+	 * @param keyword
+	 */
 	public TimeSlot(Service service, String keyword) {
 		super(service);
 		this.keyword = keyword;
 	}
 
-
+	/**
+	 * Payload for Time Slot.
+	 * This method provide methods for user to manipulate their time slot. They can edit their timeslot if @param keyword contains edit. User can also check their timeslot by check timeslot.
+	 * @throws Exception
+	 */
 	@Override
 	public void payload() throws Exception {
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
@@ -80,17 +88,28 @@ public class TimeSlot extends DefaultService {
 		}
 	}
 
-	@Override
-	public Service chain() throws Exception {
-		return this;
-	}
-
-
+	/**
+	 * callEditTimeSlot for EventMaker
+	 * This method is called by payload(). When user call edit timeslot, this method will be called and set buff's cmd to timeslot::edit and let user edit their timeslot.
+	 * @param uid
+	 * @param SELF
+	 * @param mongo
+	 */
 	private void callEditTimeSlot(String uid, BasicDBObject SELF, MongoDB mongo){
 		mongo.getCollection("user").updateOne(SELF,
 				new BasicDBObject("$set",
 						new BasicDBObject("buff",
 								new BasicDBObject().append("cmd", "timeslot::edit").append("data", new BasicDBObject().append("uid", uid)))));
+	}
+
+	/***
+	 * Chain for Event maker
+	 * @return Service state
+	 * @throws Exception
+	 */
+	@Override
+	public Service chain() throws Exception {
+		return this;
 	}
 
 

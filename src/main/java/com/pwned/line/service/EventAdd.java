@@ -1,7 +1,6 @@
 package com.pwned.line.service;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 import org.json.JSONObject;
@@ -12,7 +11,7 @@ import java.util.regex.Pattern;
 
 /***
  * Adding review to MongoDB.
- * Required params: []
+ * Required params: [uid, parameters,keyword]
  * Reserved tokens: []
  * Resolved params: []
  * @author Bear
@@ -26,6 +25,11 @@ public class EventAdd extends DefaultService {
 		keyword = s;
 	}
 
+	/***
+	 * Payload for EventAdd
+	 * Adding event into Database by format {EventName}@yyyy/mm/dd. Pass the date to checkInput() method to check the correctness of the input, if it's not correct, user will be asked to create again. If it's correct, the event with given date and name will be created.
+	 * @throws Exception
+	 */
 	@Override
 	public void payload() throws Exception {
 		//{EventName}@yyyy/mm/dd@hh:mm-hh:mm
@@ -57,10 +61,6 @@ public class EventAdd extends DefaultService {
 		}
 
 
-
-
-		//fetch buff -> data from MongoDB
-
 		ArrayList<Document> user = MongoDB.get(mongo.getCollection("user").find(SELF));
 		JSONObject USER = new JSONObject(user.get(0).toJson());
 		String groupId = USER.getJSONObject("buff").getJSONObject("data").getString("groupId");
@@ -88,11 +88,12 @@ public class EventAdd extends DefaultService {
 		this.fulfillment = "Your event had been added";
 	}
 
-	@Override
-	public Service chain() throws Exception {
-		return this;
-	}
-
+	/***
+	 * Checking input date for EventAdd
+	 * Checking whether the date input by user to create the event is make sense and with correct format.
+	 * @param date
+	 * @throws Exception
+	 */
 	private boolean checkInput(String date) throws Exception{
 		Pattern regex = Pattern.compile("(.+)/(.+)/(.+)");
 		Matcher matcher = regex.matcher(date);
@@ -113,7 +114,6 @@ public class EventAdd extends DefaultService {
 			return false;
 		}
 
-
 		if (year > 2018 || year < 2017){
 			this.fulfillment = "Invalid year";
 			return false;
@@ -126,5 +126,14 @@ public class EventAdd extends DefaultService {
 		}
 		return true;
 
+	}
+	/***
+	 * Chain for Event maker
+	 * @return Service state
+	 * @throws Exception
+	 */
+	@Override
+	public Service chain() throws Exception {
+		return this;
 	}
 }

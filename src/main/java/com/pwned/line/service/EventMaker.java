@@ -2,7 +2,6 @@ package com.pwned.line.service;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.model.FindOneAndUpdateOptions;
-import com.pwned.line.http.HTTP;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 import org.json.JSONException;
@@ -12,14 +11,13 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /***
  * Service for event maker.
- * Required params: [params]
+ * Required params: [uid, groupId parameters]
  * Reserved tokens: []
  * Resolved params: []
  * @author Bear
@@ -27,14 +25,23 @@ import java.util.regex.Pattern;
 
 public class EventMaker extends DefaultService{
 	private String keyword;
-	private String URI = "https://api.line.me/v2/bot/group/{groupId}/member/{userId}";
-	private static final String ACCESS_TOKEN = System.getenv("LINE_BOT_CHANNEL_TOKEN");
-	public EventMaker(Service service, String s){
+	/**
+	 * Constructor for EventMaker
+	 * @param service
+	 * @param keyword
+	 */
+	public EventMaker(Service service, String keyword){
 		super(service);
-		keyword = s;
+		this.keyword = keyword;
 
 	}
 
+	/**
+	 * Payload for Event maker.
+	 * The method search the event name pass by user. If it already exists, then search for the common available timeslot for every group members.
+	 * If the event doesn't exist, then user will be required to create the event by format {EventName}@yyyy/mm/dd.
+	 * @throws Exception
+	 */
 	@Override
 	public void payload() throws Exception{
 		String groupId = this.getParam("groupId").toString();
@@ -93,6 +100,13 @@ public class EventMaker extends DefaultService{
 
 	}
 
+	/**
+	 * callEventAdd for EventMaker
+	 * This method is called by payload(). When user call event {event name} which the event is not exists, this method will be called and set buff's cmd to event::add and ask user to create and event.
+	 * @param gid
+	 * @param SELF
+	 * @param mongo
+	 */
 	private void callEventAdd(String gid, BasicDBObject SELF, MongoDB mongo){
 		mongo.getCollection("user").updateOne(SELF,
 				new BasicDBObject("$set",
@@ -100,6 +114,14 @@ public class EventMaker extends DefaultService{
 								new BasicDBObject().append("cmd", "event::add").append("data", new BasicDBObject().append("groupId", gid)))));
 	}
 
+	/**
+	 * Check whether an event is exist for EventMaker and EventAdd
+	 * This static method will be called by EventAdd class and EventMaker class. In EventMaker, this method is called to check whether the event is exists. If not, then ask user to create one. In EventAdd class, it is called to secure the user will not create event with duplicated name.
+	 * @param events
+	 * @param eventName
+	 * @throws JSONException
+	 * @return Whether an event with existing name exist.
+	 */
 	public static boolean checkEventExist(JSONObject events, String eventName) throws JSONException {
 		if(!events.toString().contains("events")){
 			return false;
@@ -112,6 +134,13 @@ public class EventMaker extends DefaultService{
 		return false;
 	}
 
+	/**
+	 * Get the date of the event for EventMaker
+	 * @param events
+	 * @param eventName
+	 * @throws JSONException
+	 * @return The date of event
+	 */
 	private String getEventDate(JSONObject events, String eventName) throws JSONException {
 		// {"EventName":"milestone 3 submit","Date":"2017/11/20"}
 		String result = new String();
@@ -130,7 +159,54 @@ public class EventMaker extends DefaultService{
 		return date;
 	}
 
+	/**
+	 * Adding common time slot for EventMaker
+	 * Get the timeslot JSONArray and find the available timeslot of the user in @param date day.
+	 * @param mongo
+	 * @param SELF
+	 * @param date
+	 * @throws JSONException
+	 * @return Available time slot for one user in certain date
+	 */
+	public String getTimeSlot(MongoDB mongo, BasicDBObject SELF, String date) throws JSONException {
+		ArrayList<Document> user = MongoDB.get(mongo.getCollection("TimeSlot").find(SELF));
+		if(user.size() == 0){
+			return "WHOLE DAY";
+		}
+		JSONObject timeArr = new JSONObject(user.get(0).toJson());
+		StringBuilder result = new StringBuilder("");
+		for(int i = 0; i < timeArr.getJSONArray("timeslot").length(); i++){
+			if(timeArr.getJSONArray("timeslot").getString(i).contains(date)){
+				String time = timeArr.getJSONArray("timeslot").getString(i);
+				Pattern regex = Pattern.compile("\\{\"EndTime\":\"(.+)\",\"StartTime\":\"(.+)\",\"Date\":\"" + date + "\"\\}");
+				Matcher matcher = regex.matcher(time);
 
+				while (matcher.find()) {
+					result.append(matcher.group(2));
+					result.append("-");
+					result.append(matcher.group(1));
+					result.append("\n");
+				}
+
+			}
+
+		}
+		if(result.toString().equals("")){
+			return "WHOLE DAY";
+		}
+		return result.toString();
+
+	}
+
+	/**
+	 * Get common time slot according to the available time for EventMaker
+	 * Calling addAllCommonTimeslot() method to add all common time slot for the given event. Get the available time slot for all group members and pass it to addAllCommonTimeslot() method to compare the time slot.
+	 * @param mongo
+	 * @param group
+	 * @param date
+	 * @throws JSONException
+	 * @return The common available time slot
+	 */
 	private String getCommonTimeSlot(MongoDB mongo, ArrayList<Document> group, String date) throws JSONException, ParseException {
 		JSONObject userArr = new JSONObject(group.get(0).toJson());
 		StringBuilder common = new StringBuilder("");
@@ -153,6 +229,13 @@ public class EventMaker extends DefaultService{
 	//private boolean checkAvailable(){
 
 
+	/**
+	 * Adding common time slot for EventMaker
+	 * Compare the time slot in the @param allTimeslot, check if there exists a common time slot for the event and add it to @param common.
+	 * @param allTimeslot
+	 * @param common
+	 * @throws JSONException
+	 */
 	private void addAllCommonTimeslot(String[] allTimeslot, StringBuilder common) throws ParseException {
 
 		SimpleDateFormat parser = new SimpleDateFormat ("HH:mm");
@@ -209,37 +292,11 @@ public class EventMaker extends DefaultService{
 
 
 
-	public String getTimeSlot(MongoDB mongo, BasicDBObject SELF, String date) throws JSONException {
-		ArrayList<Document> user = MongoDB.get(mongo.getCollection("TimeSlot").find(SELF));
-		if(user.size() == 0){
-			return "WHOLE DAY";
-		}
-		JSONObject timeArr = new JSONObject(user.get(0).toJson());
-		StringBuilder result = new StringBuilder("");
-		for(int i = 0; i < timeArr.getJSONArray("timeslot").length(); i++){
-			if(timeArr.getJSONArray("timeslot").getString(i).contains(date)){
-				String time = timeArr.getJSONArray("timeslot").getString(i);
-				//{"EndTime":"15:30","StartTime":"13:00","Date":"2017/11/27"}
-				Pattern regex = Pattern.compile("\\{\"EndTime\":\"(.+)\",\"StartTime\":\"(.+)\",\"Date\":\"" + date + "\"\\}");
-				Matcher matcher = regex.matcher(time);
-
-				while (matcher.find()) {
-					result.append(matcher.group(2));
-					result.append("-");
-					result.append(matcher.group(1));
-					result.append("\n");
-				}
-
-			}
-
-		}
-		if(result.toString().equals("")){
-			return "WHOLE DAY";
-		}
-		return result.toString();
-
-	}
-
+	/***
+	 * Chain for Event maker
+	 * @return Service state
+	 * @throws Exception
+	 */
 	@Override
 	public Service chain() throws Exception {
 		return this;
