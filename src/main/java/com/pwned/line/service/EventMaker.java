@@ -167,6 +167,15 @@ public class EventMaker extends DefaultService{
 		int arrehr = 0;
 		int arremin = 0;
 
+		Pattern regex = Pattern.compile("(.+):(.+)-(.+):(.+)");
+		Matcher matcher = regex.matcher(timeslot);
+		while (matcher.find()) {
+			shr = Integer.parseInt(matcher.group(1));
+			smin = Integer.parseInt(matcher.group(2));
+			ehr = Integer.parseInt(matcher.group(3));
+			emin = Integer.parseInt(matcher.group(4));
+		}
+
 
 
 		for(int i = 0; i < userArr.getJSONArray("uid").length(); i++){
@@ -174,15 +183,6 @@ public class EventMaker extends DefaultService{
 			String resultTimeslot = getTimeSlot(mongo, SELF, date);
 			String[] resultTimeslotArr = resultTimeslot.split("\n");
 			for(int j = 0; j < resultTimeslotArr.length; j++){
-				Pattern regex = Pattern.compile("(.+):(.+)-(.+):(.+)");
-				Matcher matcher = regex.matcher(timeslot);
-				while (matcher.find()) {
-					shr = Integer.parseInt(matcher.group(1));
-					smin = Integer.parseInt(matcher.group(2));
-					ehr = Integer.parseInt(matcher.group(3));
-					emin = Integer.parseInt(matcher.group(4));
-				}
-
 				matcher = regex.matcher(resultTimeslotArr[j]);
 				while (matcher.find()) {
 					arrshr = Integer.parseInt(matcher.group(1));
@@ -194,10 +194,12 @@ public class EventMaker extends DefaultService{
 				if(arrshr <= shr && arrehr >= ehr){
 					return true;
 				}else if (arrshr == shr){
-					if(emin >= arremin){
-						return false;
+					if(arremin >= emin){
+						return true;
 					}
-					return true;
+					return false;
+				}else if (arrshr >= shr){
+					return false;
 				}
 				continue;
 			}
