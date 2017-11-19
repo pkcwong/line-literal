@@ -32,7 +32,7 @@ public class TimeTableAdd extends DefaultService {
         ArrayList<Document> user = MongoDB.get(mongo.getCollection("user").find(SELF));
         JSONObject USER = new JSONObject(user.get(0).toJson());
         Document userid = new Document();
-        userid.append("userid", this.getParam("uid").toString());
+        userid.append("uid", this.getParam("uid").toString());
         mongo.getCollection("Timetable").insertOne(userid);
 
         //String timetable = USER.getJSONObject("timetablebuff").getJSONObject("data").toString();
@@ -90,7 +90,7 @@ public class TimeTableAdd extends DefaultService {
                                         timeslot.append("end time", c.sections.get(i).dateAndTimes.get(k).endTime);
                                         timeslot.append("venue", c.sections.get(i).rooms.get(k));
                                         CourseList.append("timeslot", timeslot);
-                                        mongo.getCollection("Timetable").findOneAndUpdate(new BasicDBObject().append("userid", this.getParam("uid").toString()), new BasicDBObject("$addToSet", CourseList));
+                                        mongo.getCollection("Timetable").findOneAndUpdate(new BasicDBObject().append("uid", this.getParam("uid").toString()), new BasicDBObject("$addToSet", CourseList));
                                     }
                                 }else {
                                     timeslot.append("day", c.sections.get(i).dateAndTimes.get(k).day);
@@ -98,7 +98,7 @@ public class TimeTableAdd extends DefaultService {
                                     timeslot.append("end time", c.sections.get(i).dateAndTimes.get(k).endTime);
                                     timeslot.append("venue", c.sections.get(i).rooms.get(k));
                                     CourseList.append("timeslot", timeslot);
-                                    mongo.getCollection("Timetable").findOneAndUpdate(new BasicDBObject().append("userid", this.getParam("uid").toString()), new BasicDBObject("$addToSet", CourseList));
+                                    mongo.getCollection("Timetable").findOneAndUpdate(new BasicDBObject().append("uid", this.getParam("uid").toString()), new BasicDBObject("$addToSet", CourseList));
                                 }
                             }
                         }
