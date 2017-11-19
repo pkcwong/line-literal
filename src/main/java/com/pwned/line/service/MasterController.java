@@ -130,13 +130,13 @@ public class MasterController extends DefaultService {
 		for (String keywords : notify) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
-				return new DialogFlowKMBNotify(this).resolve().get();
+				return new KMBNotify(this).resolve().get();
 			}
 		}
 		for (String keywords : stop) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
-				return new DialogFlowKMBStopNotify(this).resolve().get();
+				return new KMBStopNotify(this).resolve().get();
 			}
 		}
 		for (String keywords : nine) {

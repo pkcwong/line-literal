@@ -15,8 +15,8 @@ import java.nio.file.Path;
 public class KitchenSinkApplication {
 
 	public static Path downloadedContentDir;
-	public static int builtVersion = 215;
-	public static String version = "0.2.5";
+	public static int builtVersion = 216;
+	public static String version = "0.2.6";
 
 	public static void main(String[] args) throws Exception {
 		KitchenSinkApplication.downloadedContentDir = Files.createTempDirectory("line-bot");
