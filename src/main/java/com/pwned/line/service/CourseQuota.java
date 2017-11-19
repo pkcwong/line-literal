@@ -33,7 +33,7 @@ public class CourseQuota extends DefaultService{
 					"\nEnrol: " + course.sections.get(i).enrol +"\nAvail: " + course.sections.get(i).avail + "\nWait: " + course.sections.get(i).wait));
 		}
 		this.fulfillment = "";
-		if(course.department == null){
+		if(course.title == null){
 			this.fulfillment = "Sorry " + department + code + " could not be found in Course Quota Page";
 		}
 	}
