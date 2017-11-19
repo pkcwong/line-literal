@@ -17,7 +17,7 @@ public class Course {
 	public static final String REGEX_GET_SECTION = "\\w{1,2}\\d{1,2} \\(\\d{4}\\).+?(?=&nbsp)";
 	public static final String REGEX_SECTION_NAME_CODE = "(\\w{1,2}\\d{1,2}) \\((\\d{4})\\)";
 	public static final String REGEX_GET_ALL_DATE_TIME_ROOM_PROF = "(Mo|Tu|We|Th|Fr|MoTu|MoWe|MoTh|MoFr|TuWe|TuTh|TuFr|WeTh|WeFr|ThFr|MoTuWe|MoTuTh|MoTuFr|MoWeTh|MoWeFr|MoThFr|TuWeTh|TuWeFr|WeThFr) ([^ ]*) - ([^<]*)<\\/td><td>([^<]*).+?instructor\\/([^\"]*)";
-	public static final String REGEX_GET_QUOTA_INFO = "(<td>TBA<\\/td><td align=\"center\">|<\\/a>.+?\".+?>)(\\w{1,3}).+?\">(\\w{1,3}).+?(\\d{1,3}).+?\">(\\w{1,3})";
+	public static final String REGEX_GET_QUOTA_INFO = "(<td>TBA<\\/td><td align=\"center\">|<\\/a>.+?\".+?>)(\\w{1,3}).+?\">(\\d{1,3}).+?(\\d{1,3}).+?\">(\\d{1,3})";
 
 	public String department;
 	public String code;
