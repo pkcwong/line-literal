@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-/***
+/**
  * Review, looks up course review in MongoDB.
  * Required params: [uid, parameters]
  * Reserved tokens: []

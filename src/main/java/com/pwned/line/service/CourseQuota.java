@@ -6,16 +6,16 @@ import com.pwned.line.entity.Course;
 import com.pwned.line.web.ApiAI;
 import org.json.JSONObject;
 
-/***
- * Review, looks up course review in MongoDB.
+/**
+ * Query and pushing information on Course quota
  * Required params: [uid, parameters]
  * Reserved tokens: []
- * Resolved params: [department, code, reviews]
+ * Resolved params: [course, department, code]
  * @author Calvin Ku
  */
 public class CourseQuota extends DefaultService {
 
-	/***
+	/**
 	 * Constructor
 	 * @param service Instance
 	 */
@@ -23,7 +23,7 @@ public class CourseQuota extends DefaultService {
 		super(service);
 	}
 
-	/***
+	/**
 	 * Handles parsed values from DialogFlow, using Course.java library.
 	 * @throws Exception Exception
 	 */
@@ -37,7 +37,7 @@ public class CourseQuota extends DefaultService {
 		pushCourseMsg(course, department, code);
 	}
 
-	/***
+	/**
 	 * Resolve fulfillment
 	 * @return Instance
 	 * @throws Exception Exception
@@ -47,7 +47,7 @@ public class CourseQuota extends DefaultService {
 		return this;
 	}
 
-	/***
+	/**
 	 * Iterative push messages for course sessions.
 	 * @param course query course
 	 * @param department department

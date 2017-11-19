@@ -20,7 +20,7 @@ public class StudentSociety extends DefaultService {
         super(service);
     }
 
-    /***
+    /**
      * Fetch the course information from HKUST Society Page.
      */
     @Override

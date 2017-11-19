@@ -3,7 +3,7 @@ package com.pwned.line.service;
 import com.pwned.line.web.ApiAI;
 import org.json.JSONObject;
 
-/***
+/**
  * Service module for DialogFlow translation
  * Required params: [uid]
  * Reserved tokens: [@translate]

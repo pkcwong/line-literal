@@ -2,7 +2,7 @@ package com.pwned.line.service;
 
 import com.pwned.line.http.HTTP;
 
-/***
+/**
  * Service for course information.
  * Required params: [uid]
  * Reserved tokens: [@weather::weather]
