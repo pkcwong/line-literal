@@ -144,7 +144,12 @@ public class EventMaker extends DefaultService{
 				if(getTimeSlot(mongo,new BasicDBObject().append("uid", userArr.getJSONArray("uid").getString(i)),date).equals("WHOLE DAY")){
 					continue;
 				}
-				common.append(getTimeSlot(mongo,new BasicDBObject().append("uid", userArr.getJSONArray("uid").getString(i)),date));
+				String timeslot = getTimeSlot(mongo,new BasicDBObject().append("uid", userArr.getJSONArray("uid").getString(i)),date);
+				String[] timeslotArr = timeslot.split("\n");
+				for(int j = 0 ; j < timeslotArr.length; j++){
+					if(checkAllAvailable(userArr,mongo,timeslotArr[j],date))
+						common.append(getTimeSlot(mongo,new BasicDBObject().append("uid", userArr.getJSONArray("uid").getString(i)),date));
+				}
 			}
 
 		}
@@ -152,7 +157,42 @@ public class EventMaker extends DefaultService{
 			return "WHOLE DAY";
 		}
 		return common.toString();
+	}
 
+	private boolean checkAllAvailable(JSONObject userArr, MongoDB mongo, String timeslot, String date ) throws JSONException {
+		int shr,smin,ehr,emin;
+		int arrshr,arrsmin,arrehr,arremin;
+
+
+
+		for(int i = 0; i < userArr.getJSONArray("uid").length(); i++){
+			BasicDBObject SELF = new BasicDBObject().append("uid", userArr.getJSONArray("uid").getString(i));
+			String resultTimeslot = getTimeSlot(mongo, SELF, date);
+			String[] resultTimeslotArr = resultTimeslot.split("\n");
+			for(int j = 0; j < resultTimeslotArr.length; j++){
+				System.out.println("\n\nComparing " + resultTimeslotArr + " and\n " + timeslot + "\n\n\n");
+				Pattern regex = Pattern.compile("(.+):(.+)-(.+):(.+)");
+				Matcher matcher = regex.matcher(timeslot);
+				while (matcher.find()) {
+					shr = Integer.parseInt(matcher.group(1));
+					smin = Integer.parseInt(matcher.group(2));
+					ehr = Integer.parseInt(matcher.group(3));
+					emin = Integer.parseInt(matcher.group(4));
+					System.out.printf("\n\nTimeslot %d, %d, %d, %d\n\n\n",shr,smin,ehr,emin);
+				}
+
+				matcher = regex.matcher(resultTimeslotArr[j]);
+				while (matcher.find()) {
+					arrshr = Integer.parseInt(matcher.group(1));
+					arrsmin = Integer.parseInt(matcher.group(2));
+					arrehr = Integer.parseInt(matcher.group(3));
+					arremin = Integer.parseInt(matcher.group(4));
+					System.out.printf("\n\nARRTimeslot %d, %d, %d, %d\n\n\n",arrshr,arrsmin,arrehr,arremin);
+				}
+			}
+		}
+
+		return true;
 	}
 
 	private String getTimeSlot(MongoDB mongo, BasicDBObject SELF, String date) throws JSONException {
