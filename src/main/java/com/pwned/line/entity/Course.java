@@ -37,7 +37,6 @@ public class Course {
 		Pattern regex_course = Pattern.compile(this.builder());
 		Matcher matcher_course = regex_course.matcher(response);
 		while (matcher_course.find()){
-			System.out.println(matcher_course.matches());
 			this.title = matcher_course.group(3);
 			this.credit = matcher_course.group(4);
 			section_block = matcher_course.group(5);
