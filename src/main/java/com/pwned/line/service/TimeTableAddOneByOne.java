@@ -117,6 +117,12 @@ public class TimeTableAddOneByOne extends DefaultService {
 
     }
 
+    /**
+     * Request processing from next Service module.
+     * @return Service state
+     * @throws Exception Exception
+     */
+
     @Override
     public Service chain() throws Exception {
         return this;

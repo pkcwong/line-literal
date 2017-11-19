@@ -39,7 +39,6 @@ public class TimeTable extends DefaultService {
      * the bot will suggest user to import it in two ways:
      * 1. Copy from SIS class schedule
      * 2. import Course code and section number one by one
-     *
      */
     @Override
     public void payload() throws Exception {
@@ -94,12 +93,21 @@ public class TimeTable extends DefaultService {
 
     }
 
-
-
+    /**
+     * Request processing from next Service module.
+     * @return Service state
+     * @throws Exception Exception
+     */
     @Override
     public Service chain() throws Exception {
         return this;
     }
+
+    /**
+     * Convert to Full Day String Methods
+     * @param day
+     * @return int convertedDay
+     */
     private static String convertToFullDay(String day){
         String convertedDay=" ";
         switch (day){
