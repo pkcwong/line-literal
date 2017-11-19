@@ -148,7 +148,7 @@ public class EventMaker extends DefaultService{
 				String[] timeslotArr = timeslot.split("\n");
 				for(int j = 0 ; j < timeslotArr.length; j++){
 					if(checkAllAvailable(userArr,mongo,timeslotArr[j],date))
-						common.append(getTimeSlot(mongo,new BasicDBObject().append("uid", userArr.getJSONArray("uid").getString(i)),date));
+						common.append(timeslotArr[j]+"\n");
 				}
 			}
 
@@ -205,7 +205,6 @@ public class EventMaker extends DefaultService{
 		for(int i = 0; i < timeArr.getJSONArray("timeslot").length(); i++){
 			if(timeArr.getJSONArray("timeslot").getString(i).contains(date)){
 				String time = timeArr.getJSONArray("timeslot").getString(i);
-				System.out.println("\n\nGet TimeSlot = " + time + "\n\n\n");
 				//{"EndTime":"15:30","StartTime":"13:00","Date":"2017/11/27"}
 				Pattern regex = Pattern.compile("\\{\"EndTime\":\"(.+)\",\"StartTime\":\"(.+)\",\"Date\":\"" + date + "\"\\}");
 				Matcher matcher = regex.matcher(time);
