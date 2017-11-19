@@ -27,7 +27,7 @@ public class KMB extends DefaultService{
     public static String getETA(String busstop) throws JSONException{
         String eta = "Sorry, there is no bus arriving";
         if(busstop.equals("")){
-            eta = "Please enter a valid bus route or bus stop";
+            eta = "Please enter a valid bus stop";
             return eta;
         }
         if(Link.getBusStopLink(busstop) == null) {
