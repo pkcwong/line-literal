@@ -11,6 +11,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/***
+ * Java Spring application launcher
+ */
 @SpringBootApplication
 public class KitchenSinkApplication {
 
@@ -18,6 +21,11 @@ public class KitchenSinkApplication {
 	public static int builtVersion = 217;
 	public static String version = "0.2.6";
 
+	/***
+	 * Launcher for chatbot. Starts timers for scheduler tasks.
+	 * @param args args
+	 * @throws Exception Exception
+	 */
 	public static void main(String[] args) throws Exception {
 		KitchenSinkApplication.downloadedContentDir = Files.createTempDirectory("line-bot");
 		SpringApplication.run(KitchenSinkApplication.class, args);

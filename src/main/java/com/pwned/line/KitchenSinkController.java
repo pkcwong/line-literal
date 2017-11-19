@@ -14,6 +14,9 @@ import com.pwned.line.handler.TextHandler;
 
 import java.io.IOException;
 
+/***
+ * Handler for Line messages.
+ */
 @LineMessageHandler
 public class KitchenSinkController {
 
