@@ -217,13 +217,14 @@ public class EventMaker extends DefaultService{
 			}
 			String[] temp = allTimeslot[i].split("-");
 			Date startTime1 = parser.parse(temp[0]);
-			Date endTime2 = parser.parse(temp[1]);
-			if((startTime.before(startTime1) || startTime.equals(startTime1)) && (endTime.after(endTime2) || endTime.equals(endTime2))){
+			Date endTime1 = parser.parse(temp[1]);
+			if((startTime.before(startTime1) || startTime.equals(startTime1)) && (endTime.after(endTime1) || endTime.equals(endTime2))){
 				count--;
-				System.out.printf("\nBefore %s",startTime.toString());
+				System.out.printf("\nBefore %s - %s\n",parser.format(startTime),parser.format(endTime));
+				System.out.printf("\nBefore1 %s - %s\n",parser.format(startTime1),parser.format(endTime1) );
 				startTime = parser.parse(temp[0]);
 				endTime = parser.parse(temp[1]);
-				System.out.printf("\nAfter %s",startTime.toString());
+				System.out.printf("\nAfter %s - %s\n",parser.format(startTime),parser.format(endTime));
 			}
 		}
 
@@ -231,7 +232,7 @@ public class EventMaker extends DefaultService{
 			StringBuilder time = new StringBuilder(parser.format(startTime));
 			time.append("-");
 			time.append(parser.format(endTime));
-			System.out.printf("\ntime %s",time.toString());
+			System.out.printf("\ntime %s\n",time.toString());
 			common.append(time.toString());
 			return;
 		}
