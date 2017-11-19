@@ -15,16 +15,29 @@ import org.json.JSONObject;
 
 public class KMB extends DefaultService{
 
+	/**
+	 * Constructor
+	 */
     public KMB(Service service){
         super(service);
     }
 
+	/**
+	 * Payload of Service module.
+	 * @throws Exception Exception
+	 */
     @Override
     public void payload() throws Exception{
         this.fulfillment = this.fulfillment.replace("@kmb::eta", getETA(new JSONObject(this.getParam("parameters").toString()).getString("busstop").toString()));
     }
 
-    public static String getETA(String busstop) throws JSONException{
+	/**
+	 *
+	 * @param busstop Bus stop name
+	 * @return Estimate time of arrival of all buses at the bus stop
+	 * @throws JSONException
+	 */
+	public static String getETA(String busstop) throws JSONException{
         String eta = "Sorry, there is no bus arriving";
         if(busstop.equals("")){
             eta = "Please enter a valid bus stop";
@@ -66,7 +79,14 @@ public class KMB extends DefaultService{
         return eta;
     }
 
-    public static String getBusETA(String route_id, String busstop) throws JSONException{
+	/**
+	 *
+	 * @param route_id Bus route name
+	 * @param busstop Bus stop name
+	 * @return Estimate time of arrival of a bus at a busstop
+	 * @throws JSONException
+	 */
+	public static String getBusETA(String route_id, String busstop) throws JSONException{
         HTTP http = new HTTP(Link.getBusStopLink(busstop));
         String info = http.get();
         JSONObject stop = new JSONObject(info);
@@ -97,6 +117,11 @@ public class KMB extends DefaultService{
         return etasecond;
     }
 
+	/**
+	 * Request processing from next Service module.
+	 * @return Service state
+	 * @throws Exception Exception
+	 */
     @Override
     public Service chain() throws Exception {
         return this;

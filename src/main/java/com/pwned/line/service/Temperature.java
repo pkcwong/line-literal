@@ -13,15 +13,27 @@ import org.json.JSONObject;
 
 public class Temperature extends DefaultService{
 
+	/**
+	 * Constructor
+	 */
 	public Temperature(Service service){
 		super(service);
 	}
 
+	/**
+	 * Payload of Service module.
+	 * @throws Exception Exception
+	 */
 	@Override
 	public void payload() throws Exception{
 		this.fulfillment = this.fulfillment.replace("@weather::temperature", getTemperature(new JSONObject(this.getParam("parameters").toString()).getString("Region1")));
 	}
 
+	/**
+	 *
+	 * @param city Region that the user entered
+	 * @return Temperature at city
+	 */
 	public static String getTemperature(String city){
 		String link = "http://rss.weather.gov.hk/rss/CurrentWeather.xml";
 		HTTP http = new HTTP(link);
@@ -41,6 +53,11 @@ public class Temperature extends DefaultService{
 		return temperature;
 	}
 
+	/**
+	 * Request processing from next Service module.
+	 * @return Service state
+	 * @throws Exception Exception
+	 */
 	@Override
 	public Service chain() throws Exception{
 		return this;
