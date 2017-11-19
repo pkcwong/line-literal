@@ -143,7 +143,7 @@ public class EventMaker extends DefaultService{
 			}
 		}
 		addAllCommonTimeslot(allTimeslot,common);
-		if(common.toString().equals("NOT FOUND")){
+		if(common.toString().contains("NOT FOUND")){
 			return "Sorry, no common timeslot are found";
 		}else if (common.toString().equals("")){
 			return "WHOLE DAY";
@@ -155,22 +155,40 @@ public class EventMaker extends DefaultService{
 
 
 	private void addAllCommonTimeslot(String[] allTimeslot, StringBuilder common){
-		/*
-		Pattern regex = Pattern.compile("\\{\"EventName\":\"" + eventName + "\",\"Date\":\"(.+)\"\\}");
-		Matcher matcher = regex.matcher(result);
-		String date = new String();
-		while (matcher.find()) {
-			date = matcher.group(1);
-		}*/
+		int startHour,starMinute,endHour,endMinute,arrStartHour,arrStarMinute,arrEndHour,arrEndMinute;
+		Pattern regex = Pattern.compile("(.+):(.+)-(.+):(.+)");
+		//Matcher matcher = regex.matcher(timeslotFor1user[i][j]);
+
 		int i, j;
 
 		String[][] timeslotFor1user = new String[allTimeslot.length][];
 		for(i = 0 ; i < allTimeslot.length; i++){
 			for(j = 0 ; j < allTimeslot[i].split("\n").length; j++){
 				timeslotFor1user[i] = allTimeslot[i].split("\n");
-				System.out.println("\n\n" + timeslotFor1user[i][j] + "\n\n\n");
+				Matcher matcher = regex.matcher(timeslotFor1user[i][j]);
+				startHour = Integer.parseInt(matcher.group(1));
+				starMinute = Integer.parseInt(matcher.group(2));
+				endHour = Integer.parseInt(matcher.group(3));
+				endMinute = Integer.parseInt(matcher.group(4));
+				for(int x = 1 ; i < allTimeslot.length; x++){
+					for(int y = 0 ; j < allTimeslot[i].split("\n").length; y++){
+						if(timeslotFor1user[x][y].equals("WHOLE DAY")){
+							break;
+						}
+						matcher = regex.matcher(timeslotFor1user[x][y]);
+						arrStartHour = Integer.parseInt(matcher.group(1));
+						arrStarMinute = Integer.parseInt(matcher.group(2));
+						arrEndHour = Integer.parseInt(matcher.group(3));
+						arrEndMinute = Integer.parseInt(matcher.group(4));
+						System.out.printf("\n\nComparing %d:%d-%d%d and %d:%d-%d:%d\n\n",startHour,starMinute,endHour,endMinute,arrStartHour,arrStarMinute,arrEndHour,arrEndMinute);
+
+					}
+				}
 			}
 		}
+
+
+
 
 		common.append("NOT FOUND");
 	}
