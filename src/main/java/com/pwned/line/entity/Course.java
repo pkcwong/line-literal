@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/***
+/**
  * Course Entity
  * @author Calvin Ku, Christopher Wong
  */
@@ -25,11 +25,19 @@ public class Course {
 	public String credit = null;
 	public ArrayList<Section> sections = new ArrayList<>();
 
+	/**
+	 * Course Constructor
+	 * @param department
+	 * @param code
+	 */
 	public Course(String department, String code) {
 		this.department = department.toUpperCase();
 		this.code = code;
 	}
 
+	/**
+	 * Query function that uses department and code to search HKUST Quota page to obtain course code, title, credit and section information.
+	 */
 	public void query() {
 		String section_block = null;
 		HTTP http = new HTTP(BASE_URL + this.department);
@@ -97,9 +105,14 @@ public class Course {
 		}
 	}
 
+	/**
+	 * Replaces @department and @code into regex for query() method.
+	 * @return REGEX_COURSE
+	 */
 	public String builder() {
 		return REGEX_COURSE.replace("@department", this.department).replace("@code", this.code);
 	}
+
 
 	public class Section {
 		public String name;
@@ -112,6 +125,18 @@ public class Course {
 		public String avail;
 		public String wait;
 
+		/**
+		 * Section Constructor
+		 * @param name
+		 * @param code
+		 * @param dateAndTimes
+		 * @param rooms
+		 * @param instructor
+		 * @param quota
+		 * @param enrol
+		 * @param avail
+		 * @param wait
+		 */
 		public Section(String name, String code, ArrayList<DateAndTime> dateAndTimes, ArrayList<String> rooms, ArrayList<String> instructor, String quota, String enrol, String avail, String wait){
 			this.name = name;
 			this.code = code;
@@ -129,6 +154,13 @@ public class Course {
 		public String day;
 		public String startTime;
 		public String endTime;
+
+		/**
+		 * Date Constructor
+		 * @param day
+		 * @param startTime
+		 * @param endTime
+		 */
 		public DateAndTime(String day, String startTime, String endTime){
 			this.day = day;
 			this.startTime = startTime;

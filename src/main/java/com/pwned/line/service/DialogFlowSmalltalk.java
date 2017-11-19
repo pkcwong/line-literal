@@ -10,7 +10,6 @@ import org.json.JSONObject;
  * Resolved params: []
  * @author Bear
  */
-
 public class DialogFlowSmalltalk extends DefaultService{
 
 	public DialogFlowSmalltalk(Service service) { super(service); }

@@ -4,7 +4,7 @@ import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 import java.util.ArrayList;
 
-/***
+/**
  * Service for course information.
  * Required params: [uid]
  * Reserved tokens: [@kmb::stop]

@@ -26,7 +26,7 @@ public class AnonymousChat extends DefaultService {
 		super(service);
 	}
 
-	/***
+	/**
 	 * Handles anonymous chat triggers
 	 * @throws Exception Exception
 	 */

@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-/***
+/**
  * Store course timeslot in MongoDB.
  * Required params: []
  * Reserved tokens: []
@@ -21,7 +21,7 @@ public class TimeTable extends DefaultService {
         super(service);
     }
 
-    /***
+    /**
      * The database - timetable will store the following element:
      * 1. department
      * 2. coursecode

@@ -5,7 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/***
+/**
  * Service for course information.
  * Required params: [uid]
  * Reserved tokens: [@kmb::eta]
