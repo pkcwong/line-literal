@@ -31,7 +31,7 @@ public class Bring extends DefaultService{
 	@Override
 	public void payload() throws Exception{
 		System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||||");
-		this.fulfillment = this.fulfillment.replace("@thanksgiving::bring", bring(this.getParam("food").toString(), this.getParam("uid").toString()));
+		this.fulfillment = this.fulfillment.replace("@thanksgiving::bring", bring("chink wings", this.getParam("uid").toString()));
 	}
 
 	/**
