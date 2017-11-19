@@ -120,6 +120,7 @@ public class EventMaker extends DefaultService{
 		for(int i = 0; i < events.getJSONArray("events").length(); i++){
 			if(events.getJSONArray("events").get(i).toString().contains(eventName)){
 				result = events.getJSONArray("events").get(i).toString();
+				System.out.println("\n\n\nGet Event result = " + result + "\n\n\n");
 			}
 		}
 		Pattern regex = Pattern.compile("\\{\"Date\":\"(.+)\",\"EventName\":\"" + eventName + "\"\"\\}");
@@ -128,7 +129,7 @@ public class EventMaker extends DefaultService{
 		while (matcher.find()) {
 			date = matcher.group(1);
 		}
-
+		System.out.println("\n\n\nGet Event Date = " + date + "\n\n\n");
 		return date;
 	}
 
