@@ -32,12 +32,12 @@ public class TimeSlot extends DefaultService {
 		String uid = this.getParam("uid").toString();
 		String groupId = this.getParam("groupId").toString();
 		BasicDBObject SELF = new BasicDBObject().append("uid", uid);
-		ArrayList<Document> user = MongoDB.get(mongo.getCollection("Timeslot").find(SELF));
+		ArrayList<Document> user = MongoDB.get(mongo.getCollection("TimeSlot").find(SELF));
 		BasicDBObject groupSELF = new BasicDBObject().append("groupId", groupId);
 		ArrayList<Document> group = MongoDB.get(mongo.getCollection("Event").find(groupSELF));
 
 		if(user.size() == 0){
-			BasicDBObject data = new BasicDBObject();
+			Document data = new Document();
 			data.append("uid", uid);
 			mongo.getCollection("Event").findOneAndUpdate(groupSELF, new BasicDBObject("$addToSet", data),
 					new FindOneAndUpdateOptions().upsert(true));
