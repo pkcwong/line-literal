@@ -18,7 +18,7 @@ public class NineDaysWeather extends DefaultService{
 
     @Override
     public void payload() throws Exception{
-        this.fulfillment = this.fulfillment.replace("@weather::ninedaysweather", "The above is the weather forecast for next 9 days:");
+        this.fulfillment = this.fulfillment.replace("@weather::ninedaysweather", "The above is the weather forecast for next 9 days.");
         PushNineDaysWeather.nineDaysWeather(this.getParam("uid").toString());
     }
 

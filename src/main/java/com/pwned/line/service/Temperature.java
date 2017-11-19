@@ -19,8 +19,7 @@ public class Temperature extends DefaultService{
 
 	@Override
 	public void payload() throws Exception{
-		String city = new JSONObject(this.getParam("parameters").toString()).getString("Region1");
-		this.fulfillment = this.fulfillment.replace("@weather::temperature", getTemperature(city));
+		this.fulfillment = this.fulfillment.replace("@weather::temperature", getTemperature(new JSONObject(this.getParam("parameters").toString()).getString("Region1")));
 	}
 
 	public static String getTemperature(String city){
