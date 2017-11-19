@@ -31,9 +31,12 @@ public class TimeTableAddOneByOne extends DefaultService {
         BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
         ArrayList<Document> user = MongoDB.get(mongo.getCollection("user").find(SELF));
         JSONObject USER = new JSONObject(user.get(0).toJson());
-        Document userid = new Document();
-        userid.append("uid", this.getParam("uid").toString());
-        mongo.getCollection("Timetable").insertOne(userid);
+        ArrayList<Document> Timetableuser = MongoDB.get(mongo.getCollection("courseReview").find(SELF));
+        if(Timetableuser.size()==0){
+            Document userid = new Document();
+            userid.append("uid", this.getParam("uid").toString());
+            mongo.getCollection("Timetable").insertOne(userid);
+        }
 
 
 
