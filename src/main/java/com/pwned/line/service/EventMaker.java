@@ -192,7 +192,6 @@ public class EventMaker extends DefaultService{
 		SimpleDateFormat parser = new SimpleDateFormat ("HH:mm");
 
 		int count = allTimeslot.length;
-		System.out.printf("\n\n length = %d", count);
 		int i;
 		Date startTime = new Date();
 		Date endTime = new Date();
@@ -208,7 +207,10 @@ public class EventMaker extends DefaultService{
 			break;
 		}
 
-		for(int j = 0 ; j != i && j < allTimeslot.length; j++){
+		for(int j = 0 ; j < allTimeslot.length; j++){
+			if(i == j){
+				continue;
+			}
 			System.out.printf("\n\n j = %d", j);
 			if(allTimeslot[i].equals("WHOLE DAY")){
 				//count--;
