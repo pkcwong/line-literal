@@ -65,7 +65,7 @@ public class TimeTable extends DefaultService {
                     String venue = USERT.getJSONObject(i).get("venue").toString();
                     String startTime = USERT.getJSONObject(i).get("start time").toString();
                     String endTime = USERT.getJSONObject(i).get("end time").toString();
-                    this.fulfillment = this.fulfillment+"\n\n"+department + " " + code + "\nVenue " + venue + "\nday:" + convertedDay + "\nStart Time: "+startTime+"\nEnd Time: "+endTime;
+                    this.fulfillment = this.fulfillment+"\n\n"+department + " " + code + "\nVenue: " + venue + "\nDay: " + convertedDay + "\nStart Time: "+startTime+"\nEnd Time: "+endTime;
                     }
             }
             if (this.fulfillment.equals("")) {
