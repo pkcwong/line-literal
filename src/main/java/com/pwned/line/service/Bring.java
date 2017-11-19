@@ -41,6 +41,9 @@ public class Bring extends DefaultService{
 	 * @return
 	 */
 	public static String bring(String bring, String uid){
+		System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||||");
+		System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||||");
+		System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||||");
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
 		BasicDBObject SELF = new BasicDBObject().append("uid", uid);
 		ArrayList<Document> user = MongoDB.get(mongo.getCollection("party").find(SELF));
