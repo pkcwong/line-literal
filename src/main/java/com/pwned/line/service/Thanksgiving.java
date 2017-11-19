@@ -2,6 +2,7 @@ package com.pwned.line.service;
 
 import com.mongodb.BasicDBObject;
 import com.pwned.line.http.HTTP;
+import com.pwned.line.job.PushThanksgiving;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 
@@ -14,7 +15,7 @@ import java.util.regex.Pattern;
 
 /***
  * Accept/Bring food for thanksgiving
- * Required params: []
+ * Required params: [keyword]
  * Reserved tokens: []
  * Resolved params: []
  * @author Bear
@@ -23,7 +24,7 @@ import java.util.regex.Pattern;
 public class Thanksgiving extends DefaultService{
 	private String keyword;
 	private static String userURI = "https://api.line.me/v2/bot/profile/";
-	private String ACCESS_TOKEN = System.getenv("LINE_BOT_CHANNEL_TOKEN");
+	private static String ACCESS_TOKEN = System.getenv("LINE_BOT_CHANNEL_TOKEN");
 
 	public Thanksgiving(Service service, String key){
 		super(service);
@@ -42,30 +43,17 @@ public class Thanksgiving extends DefaultService{
 
 
 			MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
-
-			BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
+			String uid = this.getParam("uid").toString();
+			BasicDBObject SELF = new BasicDBObject().append("uid", uid);
 			ArrayList<Document> user = MongoDB.get(mongo.getCollection("party").find(SELF));
+			if(user.size() == 0){
+				PushThanksgiving.addUserToParty(mongo);
+				user = MongoDB.get(mongo.getCollection("party").find(SELF));
+			}
 
-			HTTP http = new HTTP(userURI + this.getParam("uid").toString());
-			http.setHeaders("Authorization", "Bearer " + ACCESS_TOKEN);
-
-
-			if (user.size() == 0) {
-				String response = http.get();
-				System.out.println("Result of http get(): " + response);
-				//"displayName": "Calvin Ku",
-				Pattern regex = Pattern.compile("\"displayName\":\"(.+?)\"");
-				Matcher matcher = regex.matcher(response);
-				String name = "";
-				while (matcher.find()) {
-					name = matcher.group(1);
-				}
-				Document data = new Document();
-				data.append("uid", this.getParam("uid").toString());
-				data.append("name", name);
-
-				mongo.getCollection("party").insertOne(data);
-				this.fulfillment = "Thank you for your join, " + name + "! Have a fun night! See you on " + formatted;
+			if (user.get(0).getString("Accept").equals("N")) {
+				mongo.getCollection("party").findOneAndUpdate(new BasicDBObject().append("uid", uid),new BasicDBObject("$set", new BasicDBObject().append("Accept", "Y")));
+				this.fulfillment = "Thank you for your join, " + getName(uid) + "! Have a fun night! See you on " + formatted;
 			} else {
 				this.fulfillment = "Already accept the party. Please be reminded that the party will be held on " + formatted;
 			}
@@ -78,8 +66,8 @@ public class Thanksgiving extends DefaultService{
 			BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
 			ArrayList<Document> user = MongoDB.get(mongo.getCollection("party").find(SELF));
 
-			if (user.size() == 0) {
-				this.fulfillment = "You haven't accept the party invitation! Please enter Accpet by (your name) to join the party!";
+			if (user.get(0).getString("Accept").equals("N")) {
+				this.fulfillment = "You haven't accept the party invitation! Please enter Accpet to join the party!";
 				return;
 			}
 
@@ -103,6 +91,21 @@ public class Thanksgiving extends DefaultService{
 			}
 		}
 	}
+
+	public static String getName(String uid){
+		HTTP http = new HTTP(userURI + uid);
+		http.setHeaders("Authorization", "Bearer " + ACCESS_TOKEN);
+		String response = http.get();
+		Pattern regex = Pattern.compile("\"displayName\":\"(.+?)\"");
+		Matcher matcher = regex.matcher(response);
+		String name = "";
+		while (matcher.find()) {
+			name = matcher.group(1);
+		}
+		return name;
+	}
+
+
 
 	@Override
 	public Service chain(){
