@@ -14,6 +14,10 @@ public class Translate extends DefaultService {
 
 	private static String YANDEX_ACCESS_TOKEN = "trnsl.1.1.20171018T105910Z.b2c2d71c4cea2b88.deb0f12c301616942345158b7773860e9b9b80d3";
 
+	/***
+	 * Constructor
+	 * @param service instance
+	 */
 	public Translate(Service service) {
 		super(service);
 	}
