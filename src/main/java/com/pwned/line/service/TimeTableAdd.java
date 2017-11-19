@@ -81,6 +81,7 @@ public class TimeTableAdd extends DefaultService {
                                 Document timeslot = new Document();
                                 timeslot.append("department", c.department);
                                 timeslot.append("code", c.code);
+                                System.out.println(c.sections.get(i).dateAndTimes.get(k).day+" "+c.sections.get(i).dateAndTimes.get(k).day.length());
                                 if(c.sections.get(i).dateAndTimes.get(k).day.length()!=2){
                                     String[] day = {c.sections.get(i).dateAndTimes.get(k).day.substring(0, 2), c.sections.get(i).dateAndTimes.get(k).day.substring(2)};
                                     for(String d:day){
