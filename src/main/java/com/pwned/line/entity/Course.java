@@ -36,64 +36,63 @@ public class Course {
 		String response = http.get();
 		Pattern regex_course = Pattern.compile(this.builder());
 		Matcher matcher_course = regex_course.matcher(response);
-		String debug = null;
 		while (matcher_course.find()){
-			debug = matcher_course.group();
 			this.title = matcher_course.group(3);
 			this.credit = matcher_course.group(4);
 			section_block = matcher_course.group(5);
 		}
-		System.out.println(debug);
-		Pattern regex_section_info = Pattern.compile(REGEX_GET_SECTION);
-		Matcher matcher_section = regex_section_info.matcher(section_block);
-		ArrayList<String> section_info = new ArrayList<>();
-		while(matcher_section.find()){
-			section_info.add(matcher_section.group());
-		}
-		for(int i = 0; i <section_info.size(); i++){
-			Pattern regex_section_name_code = Pattern.compile(REGEX_SECTION_NAME_CODE);
-			Matcher matcher_section_name_code = regex_section_name_code.matcher(section_info.get(i));
-			String name = null;
-			String code = null;
-			while(matcher_section_name_code.find()) {
-				name = matcher_section_name_code.group(1);
-				code = matcher_section_name_code.group(2);
+		if (this.title != null) {
+			Pattern regex_section_info = Pattern.compile(REGEX_GET_SECTION);
+			Matcher matcher_section = regex_section_info.matcher(section_block);
+			ArrayList<String> section_info = new ArrayList<>();
+			while(matcher_section.find()){
+				section_info.add(matcher_section.group());
 			}
-			Pattern regex_section_data = Pattern.compile(REGEX_GET_ALL_DATE_TIME_ROOM_PROF);
-			Matcher matcher_section_data = regex_section_data.matcher(section_info.get(i));
-			ArrayList<DateAndTime> dateAndTimes = new ArrayList<>();
-			ArrayList<String> rooms = new ArrayList<>();
-			ArrayList<String> instructors = new ArrayList<>();
-			String day = null;
-			String startTime = null;
-			String endTime = null;
-			while(matcher_section_data.find()){
-				day = matcher_section_data.group(1);
-				startTime = matcher_section_data.group(2);
-				endTime = matcher_section_data.group(3);
-				DateAndTime dateAndTime = new DateAndTime(day, startTime, endTime);
-				dateAndTimes.add(dateAndTime);
-				rooms.add(matcher_section_data.group(4));
-				instructors.add(matcher_section_data.group(5));
+			for(int i = 0; i <section_info.size(); i++) {
+				Pattern regex_section_name_code = Pattern.compile(REGEX_SECTION_NAME_CODE);
+				Matcher matcher_section_name_code = regex_section_name_code.matcher(section_info.get(i));
+				String name = null;
+				String code = null;
+				while (matcher_section_name_code.find()) {
+					name = matcher_section_name_code.group(1);
+					code = matcher_section_name_code.group(2);
+				}
+				Pattern regex_section_data = Pattern.compile(REGEX_GET_ALL_DATE_TIME_ROOM_PROF);
+				Matcher matcher_section_data = regex_section_data.matcher(section_info.get(i));
+				ArrayList<DateAndTime> dateAndTimes = new ArrayList<>();
+				ArrayList<String> rooms = new ArrayList<>();
+				ArrayList<String> instructors = new ArrayList<>();
+				String day = null;
+				String startTime = null;
+				String endTime = null;
+				while (matcher_section_data.find()) {
+					day = matcher_section_data.group(1);
+					startTime = matcher_section_data.group(2);
+					endTime = matcher_section_data.group(3);
+					DateAndTime dateAndTime = new DateAndTime(day, startTime, endTime);
+					dateAndTimes.add(dateAndTime);
+					rooms.add(matcher_section_data.group(4));
+					instructors.add(matcher_section_data.group(5));
+				}
+				if (day == null && startTime == null && endTime == null) {
+					DateAndTime dateAndTime = new DateAndTime("TBA", "TBA", "TBA");
+					dateAndTimes.add(dateAndTime);
+				}
+				Pattern regex_section_quota_info = Pattern.compile(REGEX_GET_QUOTA_INFO);
+				Matcher matcher_section_quota_info = regex_section_quota_info.matcher(section_info.get(i));
+				String quota = null;
+				String enrol = null;
+				String avail = null;
+				String wait = null;
+				while (matcher_section_quota_info.find()) {
+					quota = matcher_section_quota_info.group(2);
+					enrol = matcher_section_quota_info.group(3);
+					avail = matcher_section_quota_info.group(4);
+					wait = matcher_section_quota_info.group(5);
+				}
+				Section section = new Section(name, code, dateAndTimes, rooms, instructors, quota, enrol, avail, wait);
+				sections.add(section);
 			}
-			if(day == null && startTime == null && endTime == null){
-				DateAndTime dateAndTime = new DateAndTime("TBA", "TBA", "TBA");
-				dateAndTimes.add(dateAndTime);
-			}
-			Pattern regex_section_quota_info = Pattern.compile(REGEX_GET_QUOTA_INFO);
-			Matcher matcher_section_quota_info = regex_section_quota_info.matcher(section_info.get(i));
-			String quota = null;
-			String enrol = null;
-			String avail = null;
-			String wait = null;
-			while(matcher_section_quota_info.find()){
-				quota = matcher_section_quota_info.group(2);
-				enrol = matcher_section_quota_info.group(3);
-				avail = matcher_section_quota_info.group(4);
-				wait = matcher_section_quota_info.group(5);
-			}
-			Section section = new Section(name, code, dateAndTimes, rooms, instructors, quota, enrol, avail, wait);
-			sections.add(section);
 		}
 	}
 
