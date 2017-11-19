@@ -75,10 +75,10 @@ public class Course {
 					rooms.add(matcher_section_data.group(4));
 					instructors.add(matcher_section_data.group(5));
 				}
-//				if (day == null && startTime == null && endTime == null) {
-//					DateAndTime dateAndTime = new DateAndTime("TBA", "TBA", "TBA");
-//					dateAndTimes.add(dateAndTime);
-//				}
+				if (day == null && startTime == null && endTime == null) {
+					DateAndTime dateAndTime = new DateAndTime("TBA", "TBA", "TBA");
+					dateAndTimes.add(dateAndTime);
+				}
 				Pattern regex_section_quota_info = Pattern.compile(REGEX_GET_QUOTA_INFO);
 				Matcher matcher_section_quota_info = regex_section_quota_info.matcher(section_info.get(i));
 				String quota = null;
