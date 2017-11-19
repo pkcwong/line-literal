@@ -3,6 +3,7 @@ package com.pwned.line.service;
 import com.mongodb.BasicDBObject;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -30,8 +31,7 @@ public class Bring extends DefaultService{
 	 */
 	@Override
 	public void payload() throws Exception{
-		System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||||");
-		this.fulfillment = this.fulfillment.replace("@thanksgiving::bring", bring("chink wings", this.getParam("uid").toString()));
+		this.fulfillment = this.fulfillment.replace("@thanksgiving::bring", bring(new JSONObject(this.getParam("parameters").toString()).getString("food"), this.getParam("uid").toString()));
 	}
 
 	/**
@@ -41,9 +41,6 @@ public class Bring extends DefaultService{
 	 * @return
 	 */
 	public static String bring(String bring, String uid){
-		System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||||");
-		System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||||");
-		System.out.println("||||||||||||||||||||||||||||||||||||||||||||||||||");
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
 		BasicDBObject SELF = new BasicDBObject().append("uid", uid);
 		ArrayList<Document> user = MongoDB.get(mongo.getCollection("party").find(SELF));

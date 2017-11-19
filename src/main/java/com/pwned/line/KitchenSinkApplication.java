@@ -18,7 +18,7 @@ import java.nio.file.Path;
 public class KitchenSinkApplication {
 
 	public static Path downloadedContentDir;
-	public static int builtVersion = 221;
+	public static int builtVersion = 222;
 	public static String version = "0.2.6";
 
 	/***
