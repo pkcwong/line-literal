@@ -53,7 +53,6 @@ public class DefaultService implements Service {
 				return this.chain();
 			} catch (Exception e) {
 				e.printStackTrace();
-				KitchenSinkController.push(this.getParam("uid").toString(), new TextMessage(e.getMessage()));
 			}
 			return null;
 		});
