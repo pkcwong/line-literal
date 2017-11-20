@@ -306,6 +306,14 @@ public class TimeTableTest {
             assertEquals("Sorry, no timetable yet. There are 2 ways to import your timetable:\n1. Please login your Student Center, and then go to class schedule " +
                     "to copy your timetable! :)\n2. add the course with section number one by one.(enter\"add timetable one by one\")", service.getFulfillment());
         }
+        {
+            Service service = new MasterController(new DefaultService("timetable::delete"));
+            service.setParam("uid", "junit");
+            service.setParam("replyToken", "junit");
+            service.setParam("timestamp", "junit");
+            Service result = service.resolve().get();
+            assertEquals("You didn't save your timetable yet!!", result.getFulfillment());
+        }
 
     }
     @Test
@@ -376,6 +384,14 @@ public class TimeTableTest {
             service.payload();
             assertEquals("Sorry, no timetable yet. There are 2 ways to import your timetable:\n1. Please login your Student Center, and then go to class schedule " +
                     "to copy your timetable! :)\n2. add the course with section number one by one.(enter\"add timetable one by one\")", service.getFulfillment());
+        }
+        {
+            Service service = new MasterController(new DefaultService("timetable::delete"));
+            service.setParam("uid", "junit");
+            service.setParam("replyToken", "junit");
+            service.setParam("timestamp", "junit");
+            Service result = service.resolve().get();
+            assertEquals("You didn't save your timetable yet!!", result.getFulfillment());
         }
 
     }
