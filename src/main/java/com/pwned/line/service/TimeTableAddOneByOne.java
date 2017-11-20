@@ -48,7 +48,7 @@ public class TimeTableAddOneByOne extends DefaultService {
                 data.append("bind", this.getParam("uid").toString());
                 data.append("buff", new BasicDBObject("cmd", "master"));
                 mongo.getCollection("user").findOneAndUpdate(SELF, new BasicDBObject("$set", data));
-                this.fulfillment = "Finish adding course to your Timetable :)";
+                this.fulfillment = "Finish adding course to your Timetable :), if you want to delete it, please enter timetable::delete";
                 return;
             }
         }

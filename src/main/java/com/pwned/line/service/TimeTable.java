@@ -71,6 +71,7 @@ public class TimeTable extends DefaultService {
                         String endTime = USERT.getJSONObject(i).get("end time").toString();
                         this.fulfillment = this.fulfillment + "\n\n" + department + " " + code + "\nVenue: " + venue + "\nDay: " + convertedDay + "\nStart Time: " + startTime + "\nEnd Time: " + endTime;
                     }
+                    this.fulfillment = this.fulfillment +"\nif you want to delete it, please enter timetable::delete";
                 }
             }
             if (this.fulfillment.equals("")) {

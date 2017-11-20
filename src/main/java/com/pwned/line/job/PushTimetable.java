@@ -99,7 +99,7 @@ public class PushTimetable extends DefaultJob {
                             System.out.println(i + "th time:\ndepartment: " + department + "\ncode: "
                                     + code + "\nday: " + day + "\nstart time: " + time[0] + " " + time[1] + " " + time[2] + "\nvenue: " + venue);
                             System.out.println("current Time = " + d.getTime() + ", LessonTime = " + lessontime.getTime() + "\ndiff = " + diff + ", diffMinutes = " + diffMinutes);
-                            if (lessontime.getTime() > d.getTime() && diffMinutes <= 45) {
+                            if (lessontime.getTime() > d.getTime() && diffMinutes <= 30) {
                                 System.out.println("you have lesson " + department + " " + code + " :Venue " + venue + "\nwithin " + diffMinutes + " minutes");
                                 KitchenSinkController.push(uid.get(x), new TextMessage("You have lesson: \n" + department + " " + code + " at " + venue + "\nwithin " + diffMinutes + " minutes."));
                             }

@@ -186,7 +186,56 @@ public class TimeTableTest {
             "Venue: Lecture Theater C (213)\n" +
             "Day: Monday\n" +
             "Start Time: 01:30PM\n" +
-            "End Time: 02:50PM";
+            "End Time: 02:50PM"+"\nif you want to delete it, please enter timetable::delete";
+    public final static String expectedOneByOneTimetable = "Here is your timetable:\n" +
+            "\n" +
+            "COMP 3111\n" +
+            "Venue: Lecture Theater D (216)\n" +
+            "Day: Tuesday\n" +
+            "Start Time: 12:00PM\n" +
+            "End Time: 01:20PM\n" +
+            "\n" +
+            "COMP 3111\n" +
+            "Venue: Lecture Theater D (216)\n" +
+            "Day: Thursday\n" +
+            "Start Time: 12:00PM\n" +
+            "End Time: 01:20PM\n" +
+            "\n" +
+            "COMP 3111\n" +
+            "Venue: Rm 1104, Acad Concourse (120)\n" +
+            "Day: Thursday\n" +
+            "Start Time: 05:00PM\n" +
+            "End Time: 05:50PM\n" +
+            "\n" +
+            "COMP 3111\n" +
+            "Venue: Rm 4210, Lift 19 (67)\n" +
+            "Day: Friday\n" +
+            "Start Time: 11:00AM\n" +
+            "End Time: 11:50AM\n" +
+            "\n" +
+            "HUMA 1001A\n" +
+            "Venue: Lecture Theater A (400)\n" +
+            "Day: Monday\n" +
+            "Start Time: 12:00PM\n" +
+            "End Time: 12:50PM\n" +
+            "\n" +
+            "HUMA 1001A\n" +
+            "Venue: Lecture Theater A (400)\n" +
+            "Day: Wednesday\n" +
+            "Start Time: 12:00PM\n" +
+            "End Time: 12:50PM\n" +
+            "\n" +
+            "HUMA 1001A\n" +
+            "Venue: Lecture Theater A (400)\n" +
+            "Day: Monday\n" +
+            "Start Time: 01:00PM\n" +
+            "End Time: 01:20PM\n" +
+            "\n" +
+            "HUMA 1001A\n" +
+            "Venue: Lecture Theater A (400)\n" +
+            "Day: Wednesday\n" +
+            "Start Time: 01:00PM\n" +
+            "End Time: 01:20PM"+"\nif you want to delete it, please enter timetable::delete";
     @Before
     public void setUp() throws Exception {
         new MongoDB(System.getenv("MONGODB_URI")).drop("Timetable");
@@ -226,7 +275,7 @@ public class TimeTableTest {
             service.setParam("replyToken", "junit");
             service.setParam("timestamp", "junit");
             Service result = service.resolve().get();
-            assertEquals("Saved your Timetable", result.getFulfillment());
+            assertEquals("Saved your Timetable, if you want to delete it, please enter timetable::delete", result.getFulfillment());
         }
         {
             Service service = new DialogFlowTimetable(new DefaultService("Timetable"));
@@ -237,6 +286,25 @@ public class TimeTableTest {
             service = new TimeTable(service);
             service.payload();
             assertEquals(expectedTimetable, service.getFulfillment());
+        }
+        {
+            Service service = new MasterController(new DefaultService("timetable::delete"));
+            service.setParam("uid", "junit");
+            service.setParam("replyToken", "junit");
+            service.setParam("timestamp", "junit");
+            Service result = service.resolve().get();
+            assertEquals("Deleted your Timetable :)", result.getFulfillment());
+        }
+        {
+            Service service = new DialogFlowTimetable(new DefaultService("Timetable"));
+            service.setParam("uid", "junit");
+            service.setParam("replyToken", "junit");
+            service.setParam("timestamp", "junit");
+            service.payload();
+            service = new TimeTable(service);
+            service.payload();
+            assertEquals("Sorry, no timetable yet. There are 2 ways to import your timetable:\n1. Please login your Student Center, and then go to class schedule " +
+                    "to copy your timetable! :)\n2. add the course with section number one by one.(enter\"add timetable one by one\")", service.getFulfillment());
         }
 
     }
@@ -278,7 +346,36 @@ public class TimeTableTest {
             service.payload();
             service = new TimeTableAddOneByOne(service);
             service.payload();
-            assertEquals("Finish adding course to your Timetable :)", service.getFulfillment());
+            assertEquals("Finish adding course to your Timetable :), if you want to delete it, please enter timetable::delete", service.getFulfillment());
+        }
+        {
+            Service service = new DialogFlowTimetable(new DefaultService("Timetable"));
+            service.setParam("uid", "junit");
+            service.setParam("replyToken", "junit");
+            service.setParam("timestamp", "junit");
+            service.payload();
+            service = new TimeTable(service);
+            service.payload();
+            assertEquals(expectedOneByOneTimetable, service.getFulfillment());
+        }
+        {
+            Service service = new MasterController(new DefaultService("timetable::delete"));
+            service.setParam("uid", "junit");
+            service.setParam("replyToken", "junit");
+            service.setParam("timestamp", "junit");
+            Service result = service.resolve().get();
+            assertEquals("Deleted your Timetable :)", result.getFulfillment());
+        }
+        {
+            Service service = new DialogFlowTimetable(new DefaultService("Timetable"));
+            service.setParam("uid", "junit");
+            service.setParam("replyToken", "junit");
+            service.setParam("timestamp", "junit");
+            service.payload();
+            service = new TimeTable(service);
+            service.payload();
+            assertEquals("Sorry, no timetable yet. There are 2 ways to import your timetable:\n1. Please login your Student Center, and then go to class schedule " +
+                    "to copy your timetable! :)\n2. add the course with section number one by one.(enter\"add timetable one by one\")", service.getFulfillment());
         }
 
     }

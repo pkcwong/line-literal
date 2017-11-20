@@ -50,7 +50,7 @@ public class TimeTableDelete extends DefaultService {
         for(String key: deleteKey){
             if(key.equals(temp1)){
                 Timetable.deleteOne(Filters.eq("uid", userid));
-                this.fulfillment = "Finish adding course to your Timetable :)";
+                this.fulfillment = "Deleted your Timetable :)";
                 return;
             }
         }
