@@ -124,7 +124,7 @@ public class PushTimetable extends DefaultJob {
 
 
     }
-    private static int convertDay(String day){
+    public static int convertDay(String day){
         int convertedDay=0;
         switch (day){
             case "Mo": convertedDay = Calendar.MONDAY;break;
