@@ -51,7 +51,7 @@ public class EventMakerTest {
 			service.setParam("timestamp", "junit");
 			service.setParam("groupId", "junitTeam");
 			Service result = service.resolve().get();
-			Assert.assertEquals("Event not found. Please create the event by format {EventName}@yyyy/mm/dd\n + " +
+			Assert.assertEquals("Event not found. Please create the event by format {EventName}@yyyy/mm/dd\n" +
 					"e.g. Milestone 3 submit@2017/11/20", result.getFulfillment());
 		}
 		{

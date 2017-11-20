@@ -43,7 +43,7 @@ public class EventAdd extends DefaultService {
 			eventDate = matcher.group(2);
 
 		}else{
-			this.fulfillment = "Please follow that format {EventName}@yyyy/mm/dd\n + " +
+			this.fulfillment = "Please follow that format {EventName}@yyyy/mm/dd\n" +
 					"e.g. Milestone 3 submit@2017/11/20";
 			return;
 		}
