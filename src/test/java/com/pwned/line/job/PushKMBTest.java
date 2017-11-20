@@ -1,6 +1,6 @@
 package com.pwned.line.job;
 
-import com.pwned.line.job.PushKMB;
+
 import com.pwned.line.service.DefaultService;
 import com.pwned.line.service.MasterController;
 import com.pwned.line.service.Service;
@@ -127,6 +127,10 @@ public class PushKMBTest{
 				return null;
 			}
 		});
+		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
+		org.bson.Document data0 = new org.bson.Document();
+		data0.append("uid", "junit0");
+		mongo.getCollection("kmb").insertOne(data0);
 		PushKMB.updateKMB();
 		PushKMB.buildJob(PushKMB.class);
 		PushKMB.buildTrigger(0);

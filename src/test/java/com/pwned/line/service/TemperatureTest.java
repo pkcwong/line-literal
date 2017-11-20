@@ -1,14 +1,12 @@
 package com.pwned.line.service;
-
 import org.json.JSONObject;
 import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
 
 public class TemperatureTest {
 
 	@Test
-	public void payloadHKUST() throws Exception {
+	public void payloadHKUST() throws Exception{
 		Service service = new DialogFlowTemperature(new DefaultService("Temperature at HKUST"));
 		service.setParam("uid", "junit");
 		service.payload();
@@ -22,7 +20,7 @@ public class TemperatureTest {
 	}
 
 	@Test
-	public void payloadHK() throws Exception {
+	public void payloadHK() throws Exception{
 		Service service = new DialogFlowTemperature(new DefaultService("Temperature at Hong Kong"));
 		service.setParam("uid", "junit");
 		service.payload();
@@ -36,7 +34,7 @@ public class TemperatureTest {
 	}
 
 	@Test
-	public void payloadhome() throws Exception {
+	public void payloadhome() throws Exception{
 		Service service = new DialogFlowTemperature(new DefaultService("Temperature at home"));
 		service.setParam("uid", "junit");
 		service.payload();
@@ -50,7 +48,7 @@ public class TemperatureTest {
 	}
 
 	@Test
-	public void payloadChrishome() throws Exception {
+	public void payloadChrishome() throws Exception{
 		Service service = new DialogFlowTemperature(new DefaultService("Temperature at Chris' home"));
 		service.setParam("uid", "junit");
 		service.payload();

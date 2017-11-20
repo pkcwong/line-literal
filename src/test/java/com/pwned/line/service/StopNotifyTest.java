@@ -1,20 +1,18 @@
 package com.pwned.line.service;
-
 import com.pwned.line.web.MongoDB;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
 
-public class StopNotifyTest {
+public class StopNotifyTest{
 
 	@BeforeClass
-	public static void before() {
+	public static void before(){
 		new MongoDB(System.getenv("MONGODB_URI")).drop("kmb");
 	}
 
 	@Test
-	public void payloadStop() throws Exception {
+	public void payloadStop() throws Exception{
 		Service service = new KMBNotify(new DefaultService("Notify"));
 		service.setParam("uid", "junit");
 		service.payload();

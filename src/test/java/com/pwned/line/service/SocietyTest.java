@@ -1,13 +1,11 @@
 package com.pwned.line.service;
-
 import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
 
-public class SocietyTest {
+public class SocietyTest{
 
 	@Test
-	public void payloadMSA() throws Exception {
+	public void payloadMSA() throws Exception{
 		Service service = new DialogFlowSociety(new DefaultService("MSA"));
 		service.setParam("uid", "junit");
 		service.payload();
@@ -20,7 +18,7 @@ public class SocietyTest {
 	}
 
 	@Test
-	public void payloadCoding() throws Exception {
+	public void payloadCoding() throws Exception{
 		Service service = new DialogFlowSociety(new DefaultService("society coding"));
 		service.setParam("uid", "junit");
 		service.payload();
@@ -33,7 +31,7 @@ public class SocietyTest {
 	}
 
 	@Test
-	public void payloadCanDo() throws Exception {
+	public void payloadCanDo() throws Exception{
 		Service service = new DialogFlowSociety(new DefaultService("can do"));
 		service.setParam("uid", "junit");
 		service.payload();

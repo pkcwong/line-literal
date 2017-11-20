@@ -3,6 +3,7 @@ package com.pwned.line;
 import com.linecorp.bot.client.LineMessagingServiceBuilder;
 import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.ReplyMessage;
+import com.linecorp.bot.model.event.JoinEvent;
 import com.linecorp.bot.model.event.MessageEvent;
 import com.linecorp.bot.model.event.PostbackEvent;
 import com.linecorp.bot.model.event.message.TextMessageContent;
@@ -13,6 +14,7 @@ import com.pwned.line.handler.PostbackHandler;
 import com.pwned.line.handler.TextHandler;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 /***
  * Handler for Line messages.
@@ -39,11 +41,11 @@ public class KitchenSinkController {
 		PostbackHandler.handle(event);
 	}
 
-	/***
-	 * Respond to events from users, groups, and rooms.
-	 * @param replyToken replyToken received via webhook
-	 * @param message messages
-	 */
+		/***
+		 * Respond to events from users, groups, and rooms.
+		 * @param replyToken replyToken received via webhook
+		 * @param message messages
+		 */
 	public static void reply(String replyToken, Message message) {
 		try {
 			ReplyMessage replyMessage = new ReplyMessage(replyToken, message);

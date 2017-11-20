@@ -13,14 +13,14 @@ import java.util.Date;
 public class PushWeatherTest{
 
 	@BeforeClass
-	public static void before() {
+	public static void before(){
 		new MongoDB(System.getenv("MONGODB_URI")).drop("weather");
 	}
 
 	@Test
-	public void payloadWeather() throws Exception {
+	public void payloadWeather() throws Exception{
 		Job job = new PushWeather();
-		job.execute(new JobExecutionContext() {
+		job.execute(new JobExecutionContext(){
 			@Override
 			public Scheduler getScheduler() {
 				return null;
@@ -102,8 +102,7 @@ public class PushWeatherTest{
 			}
 
 			@Override
-			public long getJobRunTime() {
-				return 0;
+			public long getJobRunTime() {				return 0;
 			}
 
 			@Override
@@ -112,7 +111,7 @@ public class PushWeatherTest{
 			}
 
 			@Override
-			public Object get(Object key) {
+			public Object get(Object key){
 				return null;
 			}
 		});
