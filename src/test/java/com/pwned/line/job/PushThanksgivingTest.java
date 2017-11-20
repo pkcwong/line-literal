@@ -1,7 +1,6 @@
 package com.pwned.line.job;
 
 import com.mongodb.BasicDBObject;
-import com.pwned.line.service.Thanksgiving;
 import com.pwned.line.web.MongoDB;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 public class PushThanksgivingTest{
 
 	@BeforeClass
-	public static void before() {
+	public static void before(){
 		new MongoDB(System.getenv("MONGODB_URI")).drop("user");
 		new MongoDB(System.getenv("MONGODB_URI")).drop("party");
 	}
@@ -154,7 +153,7 @@ public class PushThanksgivingTest{
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		String formatted = format1.format(today.getTime());
 		PushThanksgiving.checkPushed(mongo, "Uda3b492d0d9349af4cb356e6d7d3c8d7", today);
-		assertEquals(true, Thanksgiving.getName("Uda3b492d0d9349af4cb356e6d7d3c8d7").equals("Timothy Pak"));
+		assertEquals(true, PushThanksgiving.getName("Uda3b492d0d9349af4cb356e6d7d3c8d7").equals("Timothy Pak"));
 		PushThanksgiving.checkSameDate(partyDate, partyDate);
 		PushThanksgiving.checkSameDate(partyDate, partyNext);
 	}

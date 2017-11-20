@@ -1,14 +1,12 @@
 package com.pwned.line.service;
-
 import org.json.JSONObject;
 import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
 
 public class KMBTest {
 
 	@Test
-	public void payloadHKUSTSouthGate() throws Exception {
+	public void payloadHKUSTSouthGate() throws Exception{
 		Service service = new DialogFlowKMB(new DefaultService("Next Bus at HKUST South Gate"));
 		service.setParam("uid", "junit");
 		service.payload();
@@ -22,7 +20,7 @@ public class KMBTest {
 	}
 
 	@Test
-	public void payloadHKUSTNorthGate() throws Exception {
+	public void payloadHKUSTNorthGate() throws Exception{
 		Service service = new DialogFlowKMB(new DefaultService("Next Bus at HKUST North Gate"));
 		service.setParam("uid", "junit");
 		service.payload();
@@ -36,7 +34,7 @@ public class KMBTest {
 	}
 
 	@Test
-	public void payloadLokFu() throws Exception {
+	public void payloadLokFu() throws Exception{
 		Service service = new DialogFlowKMB(new DefaultService("Next Bus at Lok Fu"));
 		service.setParam("uid", "junit");
 		service.payload();
@@ -50,7 +48,7 @@ public class KMBTest {
 	}
 
 	@Test
-	public void payloadNowhere() throws Exception {
+	public void payloadNowhere() throws Exception{
 		Service service = new DialogFlowKMB(new DefaultService("Next Bus at Nowhere"));
 		service.setParam("uid", "junit");
 		service.payload();

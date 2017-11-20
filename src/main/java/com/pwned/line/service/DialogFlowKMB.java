@@ -15,10 +15,11 @@ public class DialogFlowKMB extends DefaultService{
 
     private static String API_AI_ACCESS_TOKEN = "ebfd089f4d4b4dcdb0bc88acdb3b0e81";
 
-    /**
-     * Constructor
-     */
-    public DialogFlowKMB(Service service){
+	/**
+	 * Constructor
+	 * @param service
+	 */
+	public DialogFlowKMB(Service service){
         super(service);
     }
 

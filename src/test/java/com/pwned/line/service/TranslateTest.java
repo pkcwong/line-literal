@@ -1,14 +1,12 @@
 package com.pwned.line.service;
-
 import org.json.JSONObject;
 import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
 
-public class TranslateTest {
+public class TranslateTest{
 
 	@Test
-	public void payload() throws Exception {
+	public void payload() throws Exception{
 		Service service = new DialogFlowTranslate(new DefaultService("translate good morning to Indonesian"));
 		service.setParam("uid", "junit");
 		service.payload();

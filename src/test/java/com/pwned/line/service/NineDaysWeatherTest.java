@@ -1,13 +1,11 @@
 package com.pwned.line.service;
-
 import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
 
-public class NineDaysWeatherTest {
+public class NineDaysWeatherTest{
 
 	@Test
-	public void payloadWeather() throws Exception {
+	public void payloadWeather() throws Exception{
 		Service service = new DialogFlowNineDaysWeather(new DefaultService("Next Nine Days"));
 		service.setParam("uid", "junit");
 		service.payload();
