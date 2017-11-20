@@ -75,6 +75,9 @@ public class MasterController extends DefaultService {
 		if (USER.getJSONObject("buff").getString("cmd").equals("timetable::add")) {
 			return new TimeTableAdd(this).resolve().get();
 		}
+		if (USER.getJSONObject("buff").getString("cmd").equals("timetable::addOneByOne")) {
+			return new TimeTableAddOneByOne(this).resolve().get();
+		}
 
 		if (USER.getJSONObject("buff").getString("cmd").equals("timeslot::edit")) {
 			String temp = this.fulfillment.toLowerCase();
@@ -83,6 +86,9 @@ public class MasterController extends DefaultService {
 
 		if (this.fulfillment.equals("anonymous") || this.fulfillment.equals("Anonymous")) {
 			return new AnonymousChat(this).resolve().get();
+		}
+		if(this.fulfillment.toLowerCase().equals("timetable::delete")){
+			return  new TimeTableDelete(this).resolve().get();
 		}
 
 		if (!this.getParam("uid").toString().equals(this.getParam("bind").toString())) {
@@ -108,6 +114,7 @@ public class MasterController extends DefaultService {
 		String[] weather = {"weather", "climate", "report"};
 		String[] nine = {"9 days weather", "week weather", "next nine days", "next week", "next few days"};
 		String[] temperature = {"temperature", "degrees"};
+
 
 		for (String keywords : timetable) {
 			String temp = this.fulfillment.toLowerCase();
