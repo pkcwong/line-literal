@@ -68,29 +68,29 @@ public class PushKMB extends DefaultJob{
         String kmb = "The following bus will arrive soon:";
         MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
         KMBArrayList = MongoDB.get(mongo.getCollection("kmb").find());
-        String etasecondNorth91 = KMB.getBusETA("KMBBus91", "HKUST North Gate");
-        if(etasecondNorth91 == null){
-            etasecondNorth91 = "601";
+        String etaSecondNorth91 = KMB.getBusETA("KMBBus91", "HKUST North Gate");
+        if(etaSecondNorth91 == null){
+            etaSecondNorth91 = "601";
         }
-        String etasecondSouth91 = KMB.getBusETA("KMBBus91", "HKUST South Gate");
-        if(etasecondSouth91 == null){
-            etasecondSouth91 = "601";
+        String etaSecondSouth91 = KMB.getBusETA("KMBBus91", "HKUST South Gate");
+        if(etaSecondSouth91 == null){
+            etaSecondSouth91 = "601";
         }
-        String etasecondSouth91M = KMB.getBusETA("KMBBus91M", "HKUST South Gate");
-        if(etasecondSouth91 == null){
-            etasecondSouth91 = "601";
+        String etaSecondSouth91M = KMB.getBusETA("KMBBus91M", "HKUST South Gate");
+        if(etaSecondSouth91M == null){
+            etaSecondSouth91M = "601";
         }
-        if(Integer.parseInt(etasecondNorth91) > 600 && Integer.parseInt(etasecondSouth91) > 600 && Integer.parseInt(etasecondSouth91M) > 600){
+        if(Integer.parseInt(etaSecondNorth91) > 600 && Integer.parseInt(etaSecondSouth91) > 600 && Integer.parseInt(etaSecondSouth91M) > 600){
 
         }else{
-            if(Integer.parseInt(etasecondNorth91) <= 600){
-                kmb = kmb + "\nKMB 91 will arrive at HKUST North Gate in " + Integer.parseInt(etasecondNorth91) / 60 + " minutes";
+            if(Integer.parseInt(etaSecondNorth91) <= 600){
+                kmb = kmb + "\nKMB 91 will arrive at HKUST North Gate in " + Integer.parseInt(etaSecondNorth91) / 60 + " minutes";
             }
-            if(Integer.parseInt(etasecondSouth91) <= 600){
-                kmb = kmb + "\nKMB 91 will arrive at HKUST South Gate in " + Integer.parseInt(etasecondSouth91) / 60 + " minutes";
+            if(Integer.parseInt(etaSecondSouth91) <= 600){
+                kmb = kmb + "\nKMB 91 will arrive at HKUST South Gate in " + Integer.parseInt(etaSecondSouth91) / 60 + " minutes";
             }
-            if(Integer.parseInt(etasecondSouth91M) <= 600){
-                kmb = kmb + "\nKMB 91M will arrive at HKUST South Gate in " + Integer.parseInt(etasecondSouth91M) / 60 + " minutes";
+            if(Integer.parseInt(etaSecondSouth91M) <= 600){
+                kmb = kmb + "\nKMB 91M will arrive at HKUST South Gate in " + Integer.parseInt(etaSecondSouth91M) / 60 + " minutes";
             }
             pushKMB(kmb);
         }

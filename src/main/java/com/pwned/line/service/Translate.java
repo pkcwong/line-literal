@@ -3,7 +3,7 @@ package com.pwned.line.service;
 import com.pwned.line.web.YandexTranslate;
 import org.json.JSONObject;
 
-/***
+/**
  * Service module for translation.
  * Required params: [parameters]
  * Reserved tokens: []

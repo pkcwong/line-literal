@@ -90,7 +90,8 @@ public class MasterController extends DefaultService {
 		String[] review = {"review"};
 		String[] help = {"help"};
 		String[] event = {"event"};
-		String[] thanksgiving = {"accept","bring"};
+		String[] accept = {"accept"};
+		String[] bring = {"bring"};
 		String[] kmb = {"bus", "arrival", "departure", "arrive", "eta"};
 		String[] notify = {"notify", "remind", "inform"};
 		String[] stop = {"stop"};
@@ -98,17 +99,21 @@ public class MasterController extends DefaultService {
 		String[] nine = {"9 days weather", "week weather", "next nine days", "next week", "next few days"};
 		String[] temperature = {"temperature", "degrees"};
 
-
-		for (String keywords : thanksgiving) {
-			String temp = this.fulfillment.toLowerCase();
-			if(temp.contains(keywords)){
-				return new Thanksgiving(this, temp).resolve().get();
-			}
-		}
 		for (String keywords : timetable) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
 				return new DialogFlowTimetable(this).resolve().get();
+			}
+		}
+		for (String keywords : accept) {
+			String temp = this.fulfillment.toLowerCase();
+			if(temp.contains(keywords)){
+				return new DialogFlowAccept(this).resolve().get();
+			}
+		}for (String keywords : bring) {
+			String temp = this.fulfillment.toLowerCase();
+			if(temp.contains(keywords)){
+				return new DialogFlowBring(this).resolve().get();
 			}
 		}
 		for (String keywords : lift) {

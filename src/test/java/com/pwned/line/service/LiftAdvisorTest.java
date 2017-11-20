@@ -1,14 +1,12 @@
 package com.pwned.line.service;
-
 import org.json.JSONObject;
 import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
 
-public class LiftAdvisorTest {
+public class LiftAdvisorTest{
 
 	@Test
-	public void payload() throws Exception {
+	public void payload() throws Exception{
 		Service service = new DialogFlowLiftAdvisor(new DefaultService("where is room 3211?"));
 		service.setParam("uid", "junit");
 		service.payload();
