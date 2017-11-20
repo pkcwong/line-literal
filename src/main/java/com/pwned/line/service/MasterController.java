@@ -22,6 +22,10 @@ public class MasterController extends DefaultService {
 		super(service);
 	}
 
+	/***
+	 * Updates user messaging activity on database.
+	 * @throws Exception Exception
+	 */
 	@Override
 	public void payload() throws Exception {
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
