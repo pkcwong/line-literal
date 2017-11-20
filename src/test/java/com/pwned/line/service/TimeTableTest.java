@@ -312,7 +312,7 @@ public class TimeTableTest {
             service.setParam("replyToken", "junit");
             service.setParam("timestamp", "junit");
             Service result = service.resolve().get();
-            assertEquals("Deleted your Timetable :)", result.getFulfillment());
+            assertEquals("You didn't save your timetable yet!!", result.getFulfillment());
         }
 
     }
@@ -391,7 +391,7 @@ public class TimeTableTest {
             service.setParam("replyToken", "junit");
             service.setParam("timestamp", "junit");
             Service result = service.resolve().get();
-            assertEquals("Deleted your Timetable :)", result.getFulfillment());
+            assertEquals("You didn't save your timetable yet!!", result.getFulfillment());
         }
 
     }
