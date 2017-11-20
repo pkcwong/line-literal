@@ -2,7 +2,6 @@ package com.pwned.line;
 
 import com.pwned.line.job.PushKMB;
 import com.pwned.line.job.PushThanksgiving;
-import com.pwned.line.job.PushTimetable;
 import com.pwned.line.job.PushWeather;
 import org.quartz.Scheduler;
 import org.quartz.impl.StdSchedulerFactory;
@@ -35,7 +34,6 @@ public class KitchenSinkApplication {
 		scheduler.scheduleJob(PushWeather.buildJob(PushWeather.class), PushWeather.buildTrigger(300));
 		scheduler.scheduleJob(PushKMB.buildJob(PushKMB.class), PushKMB.buildTrigger(300));
 		scheduler.scheduleJob(PushThanksgiving.buildJob(PushThanksgiving.class), PushThanksgiving.buildTrigger(1));
-		scheduler.scheduleJob(PushTimetable.buildJob(PushTimetable.class), PushTimetable.buildTrigger(30));
 	}
 
 }

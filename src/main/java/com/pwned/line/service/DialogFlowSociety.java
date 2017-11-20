@@ -4,7 +4,7 @@ import com.pwned.line.web.ApiAI;
 import org.json.JSONObject;
 
 /***
- * Service for Society information.
+ * Service for course information.
  * Required params: [parameters]
  * Reserved tokens: []
  * Resolved params: []
