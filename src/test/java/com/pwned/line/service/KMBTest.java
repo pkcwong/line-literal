@@ -1,4 +1,3 @@
-/*
 package com.pwned.line.service;
 
 import org.json.JSONObject;
@@ -64,4 +63,3 @@ public class KMBTest {
 		assertEquals(KMB.class, service.chain().getClass());
 	}
 }
-*/

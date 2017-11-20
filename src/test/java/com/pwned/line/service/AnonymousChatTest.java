@@ -1,4 +1,3 @@
-/*
 package com.pwned.line.service;
 
 import com.pwned.line.web.MongoDB;
@@ -94,4 +93,3 @@ public class AnonymousChatTest {
 	}
 
 }
-*/

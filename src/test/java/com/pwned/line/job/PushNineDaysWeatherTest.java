@@ -1,4 +1,3 @@
-/*
 package com.pwned.line.job;
 
 import com.pwned.line.job.PushNineDaysWeather;
@@ -113,4 +112,3 @@ public class PushNineDaysWeatherTest{
 		PushNineDaysWeather.buildTrigger(0);
 	}
 }
-*/
