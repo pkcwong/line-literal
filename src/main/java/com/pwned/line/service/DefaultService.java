@@ -1,7 +1,5 @@
 package com.pwned.line.service;
 
-import com.linecorp.bot.model.message.TextMessage;
-import com.pwned.line.KitchenSinkController;
 import org.json.JSONObject;
 
 import java.util.HashMap;

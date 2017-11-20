@@ -31,7 +31,9 @@ public class TimeSlot extends DefaultService {
 
 	/**
 	 * Payload for Time Slot.
-	 * This method provide methods for user to manipulate their time slot. They can edit their timeslot if @param keyword contains edit. User can also check their timeslot by check timeslot.
+	 * This method provide methods for user to manipulate their time slot.
+	 * They can edit their timeslot if @param keyword contains edit by calling callEditTimeSlot method, which change the buff status of user to timeslot::edit.
+	 * User can also check their timeslot by check timeslot if @param keyword contains check.
 	 * @throws Exception
 	 */
 	@Override
