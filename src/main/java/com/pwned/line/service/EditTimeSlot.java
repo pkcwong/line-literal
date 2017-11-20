@@ -34,7 +34,8 @@ public class EditTimeSlot extends DefaultService {
 
 	/***
 	 * Payload for EditTimeSlot
-	 * If @param keyword contains add, user is required to add the timeslot by format hh:mm-hh:mm@yyyy/mm/dd. If @param keyword contains drop, user is required to drop the timeslot by format hh:mm-hh:mm@yyyy/mm/dd.
+	 * If @param keyword contains add, user is required to add the timeslot by format hh:mm-hh:mm@yyyy/mm/dd.
+	 * If @param keyword contains drop, user is required to drop the timeslot by format hh:mm-hh:mm@yyyy/mm/dd.
 	 * @throws Exception
 	 */
 	@Override

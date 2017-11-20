@@ -38,7 +38,8 @@ public class EventMaker extends DefaultService{
 
 	/**
 	 * Payload for Event maker.
-	 * The method search the event name pass by user. If it already exists, then search for the common available timeslot for every group members.
+	 * The method search the event name pass by user. The user need to input exact wordings event {event name}.
+	 * If it already exists, then search for the common available timeslot for every group members.
 	 * If the event doesn't exist, then user will be required to create the event by format {EventName}@yyyy/mm/dd.
 	 * @throws Exception
 	 */

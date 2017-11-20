@@ -27,7 +27,9 @@ public class EventAdd extends DefaultService {
 
 	/***
 	 * Payload for EventAdd
-	 * Adding event into Database by format {EventName}@yyyy/mm/dd. Pass the date to checkInput() method to check the correctness of the input, if it's not correct, user will be asked to create again. If it's correct, the event with given date and name will be created.
+	 * Adding event into Database by format {EventName}@yyyy/mm/dd.
+	 * Pass the date to checkInput() method to check the correctness of the input, if it's not correct, user will be asked to create again.
+	 * If it's correct, the event with given date and name will be created.
 	 * @throws Exception
 	 */
 	@Override
