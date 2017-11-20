@@ -102,7 +102,7 @@ public class MasterController extends DefaultService {
 		}
 
 		String[] timetable = {"current", "timetable"};
-		String[] lift = {"classroom", "room", "lift", "where", "how to go"};
+		String[] lift = {"classroom", "room", "lift", "where", "how to go", "get to", "walk to"};
 		String[] societies = {"societies", "society", "student Club", "club", "interest group"};
 		String[] quota = {"class", "quota"};
 		String[] translate = {"translate", "english", "chinese", "korean", "malaysian", "indonesian", "indo"};
