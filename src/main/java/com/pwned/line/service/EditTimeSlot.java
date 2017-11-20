@@ -43,11 +43,7 @@ public class EditTimeSlot extends DefaultService {
 		String uid = this.getParam("uid").toString();
 		BasicDBObject SELF = new BasicDBObject().append("uid", uid);
 		ArrayList<Document> user = MongoDB.get(mongo.getCollection("TimeSlot").find(SELF));
-		if(keyword.equals("cancel")) {
-			finish(mongo, SELF);
-			this.fulfillment = "Timeslot edit is cancelled";
-			return;
-		}
+
 		if(user.size() == 0){
 			Document doc = new Document();
 			doc.append("uid",uid);
@@ -72,7 +68,7 @@ public class EditTimeSlot extends DefaultService {
 				return;
 			}
 			if(user.toString().contains(date)){
-				this.fulfillment = "Sorry, you can only create one timeslot for single day, please edit your timeslot by edit timeslot";
+				this.fulfillment = "Sorry, you can only create one timeslot for single day";
 				return;
 			}
 			createNewTimeSlot(mongo,SELF,start,end,date);
