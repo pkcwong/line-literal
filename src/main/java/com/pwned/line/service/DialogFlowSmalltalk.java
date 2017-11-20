@@ -14,7 +14,7 @@ public class DialogFlowSmalltalk extends DefaultService{
 
 	public DialogFlowSmalltalk(Service service) { super(service); }
 
-	private static final String API_AI_ACCESS_TOKEN = "42707c743551486f88aba92fa112b9a3";
+	private static final String API_AI_ACCESS_TOKEN = "8ced9810636e4273b57ac5af9335a2ab";
 
 	@Override
 	public void payload() throws Exception {
