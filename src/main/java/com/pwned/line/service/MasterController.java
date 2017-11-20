@@ -75,6 +75,9 @@ public class MasterController extends DefaultService {
 		if (this.fulfillment.equals("anonymous") || this.fulfillment.equals("Anonymous")) {
 			return new AnonymousChat(this).resolve().get();
 		}
+		if(this.fulfillment.toLowerCase().equals("timetable::delete")){
+			return  new TimeTableDelete(this).resolve().get();
+		}
 
 		if (!this.getParam("uid").toString().equals(this.getParam("bind").toString())) {
 			KitchenSinkController.push(this.getParam("bind").toString(), new TextMessage(this.fulfillment));

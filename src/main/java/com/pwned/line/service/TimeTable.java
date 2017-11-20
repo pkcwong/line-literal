@@ -116,8 +116,6 @@ public class TimeTable extends DefaultService {
             case "We": convertedDay = "Wednesday";break;
             case "Th": convertedDay = "Thursday";break;
             case "Fr": convertedDay = "Friday";break;
-            case "Sa": convertedDay = "Saturday";break;
-            case "Su": convertedDay = "Sunday";break;
         }
         return convertedDay;
     }
