@@ -1,4 +1,6 @@
+/*
 package com.pwned.line.job;
+
 
 import com.pwned.line.job.PushKMB;
 import com.pwned.line.service.DefaultService;
@@ -133,3 +135,4 @@ public class PushKMBTest{
 	}
 
 }
+*/

@@ -32,18 +32,9 @@ public class EventAdd extends DefaultService {
 	 */
 	@Override
 	public void payload() throws Exception {
-		//{EventName}@yyyy/mm/dd@hh:mm-hh:mm
+
 		MongoDB mongo = new MongoDB(System.getenv("MONGODB_URI"));
 		BasicDBObject SELF = new BasicDBObject().append("uid", this.getParam("uid").toString());
-		if(keyword.equals("cancel")){
-			Document doc = new Document();
-			doc.append("uid", this.getParam("uid").toString());
-			doc.append("bind", this.getParam("uid").toString());
-			doc.append("buff", new BasicDBObject("cmd", "master"));
-			mongo.getCollection("user").findOneAndUpdate(SELF, new BasicDBObject("$set", doc));
-			this.fulfillment = "Event creation has cancelled";
-			return;
-		}
 		Pattern regex = Pattern.compile("(.+?)@(.+)");
 		Matcher matcher = regex.matcher(keyword);
 		String eventName,eventDate;
@@ -105,8 +96,7 @@ public class EventAdd extends DefaultService {
 				day = Integer.parseInt(matcher.group(3));
 			}catch (Exception e){
 				this.fulfillment = "Please enter correct date.";
-				e.printStackTrace();
-				throw new Exception("Please enter correct date.");
+				return false;
 			}
 
 		}else{
@@ -120,7 +110,7 @@ public class EventAdd extends DefaultService {
 		}else if(month < 1 || month > 12){
 			this.fulfillment = "Invalid month";
 			return false;
-		}else if (day < 1 || day > 30){
+		}else if (day < 1 || day > 31){
 			this.fulfillment = "Invalid day";
 			return false;
 		}
