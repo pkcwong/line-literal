@@ -66,9 +66,21 @@ public class MasterController extends DefaultService {
 		if (USER.getJSONObject("buff").getString("cmd").equals("review::add")) {
 			return new ReviewAdd(this).resolve().get();
 		}
+
+		if (USER.getJSONObject("buff").getString("cmd").equals("event::add")) {
+			String temp = this.fulfillment.toLowerCase();
+			return new EventAdd(this, temp).resolve().get();
+		}
+
 		if (USER.getJSONObject("buff").getString("cmd").equals("timetable::add")) {
 			return new TimeTableAdd(this).resolve().get();
 		}
+
+		if (USER.getJSONObject("buff").getString("cmd").equals("timeslot::edit")) {
+			String temp = this.fulfillment.toLowerCase();
+			return new EditTimeSlot(this, temp).resolve().get();
+		}
+
 		if (this.fulfillment.equals("anonymous") || this.fulfillment.equals("Anonymous")) {
 			return new AnonymousChat(this).resolve().get();
 		}
@@ -87,6 +99,7 @@ public class MasterController extends DefaultService {
 		String[] review = {"review"};
 		String[] help = {"help"};
 		String[] event = {"event"};
+		String[] timeslot = {"timeslot","check","edit"};
 		String[] accept = {"accept"};
 		String[] bring = {"bring"};
 		String[] kmb = {"bus", "arrival", "departure", "arrive", "eta"};
@@ -184,9 +197,17 @@ public class MasterController extends DefaultService {
 		for (String keywords : event) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
-				//return new DialogFlowEventMaker(this).resolve().get();
+				return new EventMaker(this, temp).resolve().get();
 			}
 		}
+
+		for (String keywords : timeslot) {
+			String temp = this.fulfillment.toLowerCase();
+			if(temp.contains(keywords)){
+				return new TimeSlot(this, temp).resolve().get();
+			}
+		}
+
 		for (String keywords : help) {
 			String temp = this.fulfillment.toLowerCase();
 			if(temp.contains(keywords)){
@@ -199,8 +220,11 @@ public class MasterController extends DefaultService {
 						"6. Temperature: temperature at a place (e.g. HKUST, Sai Kung, CUHK, Kowloon City)\n" +
 						"7. Bus Arrival Time: Estimated time of arrival of next bus at busstop(e.g. South Gate)\n" +
 						"8. Society information: Socety ... (e.g. Hall 1)\n" +
-						"9. Bring food for party: Bring ...\n" +
-						"10. Join Thanksgiving party: accept\n";
+						"9. TimeTable: timetable\n" +
+						"10. Event Maker: event {Event Name} (e.g. event GroupMeeting)\n" +
+						"11. Timeslot for event making: check timeslot/edit timeslot\n" +
+						"12. Join Thanksgiving party: accept\n" +
+						"13. Bring food for party: Bring {food name}\n";
 
 				return this;
 			}
