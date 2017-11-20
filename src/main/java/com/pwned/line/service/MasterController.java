@@ -225,8 +225,8 @@ public class MasterController extends DefaultService {
 						"4. Course Review: review of the course ... (department + course code)\n" +
 						"5. Weather Forecast: weather forecast\n" +
 						"6. Temperature: temperature at a place (e.g. HKUST, Sai Kung, CUHK, Kowloon City)\n" +
-						"7. Bus Arrival Time: Estimated time of arrival of next bus at busstop(e.g. South Gate)\n" +
-						"8. Society information: Socety ... (e.g. Hall 1)\n" +
+						"7. Bus Arrival Time: Estimated time of arrival of next bus at [bus stop](e.g. South Gate)\n" +
+						"8. Society information: [Society ...] (e.g. Hall 1)\n" +
 						"9. TimeTable: timetable\n" +
 						"10. Event Maker: event {Event Name} (e.g. event GroupMeeting)\n" +
 						"11. Timeslot for event making: check timeslot/edit timeslot\n" +
