@@ -35,7 +35,7 @@ public class KitchenSinkApplication {
 		scheduler.scheduleJob(PushWeather.buildJob(PushWeather.class), PushWeather.buildTrigger(300));
 		scheduler.scheduleJob(PushKMB.buildJob(PushKMB.class), PushKMB.buildTrigger(300));
 		scheduler.scheduleJob(PushThanksgiving.buildJob(PushThanksgiving.class), PushThanksgiving.buildTrigger(1));
-		scheduler.scheduleJob(PushTimetable.buildJob(PushTimetable.class), PushTimetable.buildTrigger(30));
+		scheduler.scheduleJob(PushTimetable.buildJob(PushTimetable.class), PushTimetable.buildTrigger(1));
 	}
 
 }
