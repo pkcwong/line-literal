@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 public class PushTimetableTest {
 
 	@Test
-	private void convertDay() {
+	public void convertDay() {
 		assertEquals(Calendar.MONDAY, PushTimetable.convertDay("Mo"));
 		assertEquals(Calendar.TUESDAY, PushTimetable.convertDay("Tu"));
 		assertEquals(Calendar.WEDNESDAY, PushTimetable.convertDay("We"));
