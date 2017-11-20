@@ -42,7 +42,7 @@ public class TimeTableDelete extends DefaultService {
         String userid = this.getParam("uid").toString();
         ArrayList<Document> Timetableuser = MongoDB.get(mongo.getCollection("Timetable").find(SELF));
         if(Timetableuser.size()==0){
-            this.fulfillment = "You didn't save your timetable!!";
+            this.fulfillment = "You didn't save your timetable yet!!";
             return;
         }
         String[] deleteKey = {"timetable::delete", "Timetable::Delete", "Timetable::del"};
@@ -54,13 +54,6 @@ public class TimeTableDelete extends DefaultService {
                 return;
             }
         }
-
-        Document data = new Document();
-        data.append("uid", this.getParam("uid").toString());
-        data.append("bind", this.getParam("uid").toString());
-        data.append("buff", new BasicDBObject("cmd", "master"));
-        mongo.getCollection("user").findOneAndUpdate(SELF, new BasicDBObject("$set", data));
-        this.fulfillment = "Saved your Timetable";
 
     }
 
