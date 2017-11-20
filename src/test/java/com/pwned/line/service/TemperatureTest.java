@@ -1,8 +1,6 @@
 package com.pwned.line.service;
-
 import org.json.JSONObject;
 import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
 
 public class TemperatureTest {

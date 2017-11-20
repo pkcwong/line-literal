@@ -1,10 +1,8 @@
 package com.pwned.line.service;
-
 import com.pwned.line.web.MongoDB;
 import org.json.JSONObject;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
 
 public class AcceptTest{
@@ -32,7 +30,11 @@ public class AcceptTest{
 		service.payload();
 		assertEquals(true, service.getFulfillment().contains("Thank you for joining,"));
 		assertEquals(Accept.class, service.chain().getClass());
-		service.payload();
-		assertEquals("You have already accepted the invitation to the thanksgiving party.", service.getFulfillment());
+		Service newService = new DialogFlowAccept(new DefaultService("Accept"));
+		newService.setParam("uid", "junit");
+		newService.payload();
+		newService = new Accept(newService);
+		newService.payload();
+		assertEquals(true, newService.getFulfillment().contains("You have already accepted the invitation to the thanksgiving party."));
 	}
 }

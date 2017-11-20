@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 public class PushThanksgivingTest{
 
 	@BeforeClass
-	public static void before() {
+	public static void before(){
 		new MongoDB(System.getenv("MONGODB_URI")).drop("user");
 		new MongoDB(System.getenv("MONGODB_URI")).drop("party");
 	}

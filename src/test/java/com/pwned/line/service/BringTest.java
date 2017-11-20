@@ -1,6 +1,4 @@
 package com.pwned.line.service;
-
-import com.mongodb.BasicDBObject;
 import com.pwned.line.web.MongoDB;
 import org.json.JSONObject;
 import org.junit.BeforeClass;
@@ -14,6 +12,7 @@ public class BringTest{
 	public static void before(){
 		new MongoDB(System.getenv("MONGODB_URI")).drop("user");
 		new MongoDB(System.getenv("MONGODB_URI")).drop("party");
+		new MongoDB(System.getenv("MONGODB_URI")).drop("food");
 		try {
 			Service service = new MasterController(new DefaultService("anonymous"));
 			service.setParam("uid", "junit");
@@ -43,11 +42,22 @@ public class BringTest{
 		service = new Bring(service);
 		service.payload();
 		assertEquals(true, service.getFulfillment().contains("You haven't accept the invitation to the party!"));
-		mongo.getCollection("party").findOneAndUpdate(new BasicDBObject().append("uid", "junit"), new BasicDBObject("$set", new BasicDBObject().append("Accept", "Y")));
-		service.payload();
-		assertEquals("That's good!", service.getFulfillment());
-		assertEquals(Bring.class, service.chain().getClass());
-		service.payload();
-		assertEquals("Someone is already bringing ", service.getFulfillment());
+		Service newService = new DialogFlowAccept(new DefaultService("Accept"));
+		newService.setParam("uid", "junit");
+		newService.payload();
+		newService = new Accept(newService);
+		newService.payload();
+		Service oldService = new DialogFlowBring(new DefaultService("Bring chicken wings"));
+		oldService.setParam("uid", "junit");
+		oldService.payload();
+		oldService = new Bring(oldService);
+		oldService.payload();
+		assertEquals(true, oldService.getFulfillment().contains("That's good!"));
+		Service renewService = new DialogFlowBring(new DefaultService("Bring chicken wings"));
+		renewService.setParam("uid", "junit");
+		renewService.payload();
+		renewService = new Bring(renewService);
+		renewService.payload();
+		assertEquals(true, renewService.getFulfillment().contains("Someone is already bringing "));
 	}
 }
