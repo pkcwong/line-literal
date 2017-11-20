@@ -4,7 +4,7 @@ import com.linecorp.bot.model.message.ImageMessage;
 import com.linecorp.bot.model.message.TextMessage;
 import com.mongodb.BasicDBObject;
 import com.pwned.line.KitchenSinkController;
-import com.pwned.line.service.Thanksgiving;
+import com.pwned.line.http.HTTP;
 import com.pwned.line.web.MongoDB;
 import org.bson.Document;
 import org.json.JSONException;
@@ -23,6 +23,8 @@ import java.util.Calendar;
  * @author Bear
  */
 public class PushThanksgiving extends DefaultJob{
+	public static String userURI = "https://api.line.me/v2/bot/profile/";
+	public static String ACCESS_TOKEN = System.getenv("LINE_BOT_CHANNEL_TOKEN");
 	public static ArrayList<Document> usersArrayList = new ArrayList<>();
 	public static ArrayList<Document> acceptedUsersArrayList = new ArrayList<>();
 	private static String imageURI = "https://i.pinimg.com/736x/bc/bb/40/bcbb405562b44357e48c84eeadcd6d9b--thanksgiving--thanksgiving-decorations.jpg";
@@ -169,10 +171,26 @@ public class PushThanksgiving extends DefaultJob{
 			if(user.size() == 0){
 				Document data = new Document();
 				data.append("uid", uid);
-				data.append("name", Thanksgiving.getName(uid));
+				data.append("name", getName(uid));
 				data.append("Accept", "N");
 				mongo.getCollection("party").insertOne(data);
 			}
 		}
+	}
+
+	/**
+	 * Get user account name through uid
+	 * @param uid User's uid
+	 * @return User's account name
+	 * @throws JSONException
+	 */
+	public static String getName(String uid) throws JSONException{
+		HTTP http = new HTTP(userURI + uid);
+		http.setHeaders("Authorization", "Bearer " + ACCESS_TOKEN);
+		String response = http.get();
+		if(response != null) {
+			return new JSONObject(response).getString("displayName");
+		}
+		return "";
 	}
 }

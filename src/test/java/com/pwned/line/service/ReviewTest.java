@@ -1,16 +1,13 @@
 package com.pwned.line.service;
-
 import com.pwned.line.web.MongoDB;
 import org.json.JSONObject;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
-import static org.junit.Assert.*;
-
-public class ReviewTest {
+public class ReviewTest{
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Exception{
 		new MongoDB(System.getenv("MONGODB_URI")).drop("CourseReview");
 		Service service = new MasterController(new DefaultService("hi"));
 		service.setParam("uid", "junit");
@@ -20,7 +17,7 @@ public class ReviewTest {
 	}
 
 	@Test
-	public void DialogFlowReviewPayload() throws Exception {
+	public void DialogFlowReviewPayload() throws Exception{
 		Service service = new DialogFlowReview(new DefaultService("Give me a review for COMP 3111"));
 		service.setParam("uid", "junit");
 		service.setParam("replyToken", "junit");
@@ -32,7 +29,7 @@ public class ReviewTest {
 	}
 
 	@Test
-	public void ReviewAddPayload() throws Exception {
+	public void ReviewAddPayload() throws Exception{
 		{
 			Service service = new DialogFlowReview(new DefaultService("Add review for COMP 3111"));
 			service.setParam("uid", "junit");
@@ -65,7 +62,7 @@ public class ReviewTest {
 	}
 
 	@Test
-	public void ReviewAddChain() throws Exception {
+	public void ReviewAddChain() throws Exception{
 		Service service = new ReviewAdd(new DefaultService(""));
 		assertEquals(service, service.chain());
 	}

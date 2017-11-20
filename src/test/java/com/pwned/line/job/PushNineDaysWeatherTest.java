@@ -1,6 +1,5 @@
 package com.pwned.line.job;
 
-import com.pwned.line.job.PushNineDaysWeather;
 import org.junit.Test;
 import org.quartz.*;
 
@@ -9,9 +8,9 @@ import java.util.Date;
 public class PushNineDaysWeatherTest{
 
 	@Test
-	public void payloadNineDaysWeather() throws Exception {
+	public void payloadNineDaysWeather() throws Exception{
 		Job job = new PushNineDaysWeather();
-		job.execute(new JobExecutionContext() {
+		job.execute(new JobExecutionContext(){
 			@Override
 			public Scheduler getScheduler() {
 				return null;
