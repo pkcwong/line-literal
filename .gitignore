@@ -68,3 +68,5 @@ gradle-app.setting
 # bin
 bin/
 
+# mac
+.DS_Store
