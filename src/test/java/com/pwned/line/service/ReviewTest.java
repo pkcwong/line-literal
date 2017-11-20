@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 public class ReviewTest{
 	@Before
 	public void setUp() throws Exception{
-		new MongoDB(System.getenv("MONGODB_URI")).drop("CourseReview");
+		new MongoDB(System.getenv("MONGODB_URI")).drop("courseReview");
 		Service service = new MasterController(new DefaultService("hi"));
 		service.setParam("uid", "junit");
 		service.setParam("replyToken", "junit");
