@@ -19,7 +19,6 @@ public class DialogFlowSmalltalk extends DefaultService{
 	@Override
 	public void payload() throws Exception {
 		JSONObject response = new ApiAI(API_AI_ACCESS_TOKEN, this.getParam("uid").toString(), this.fulfillment).execute();
-		this.setParam("parameters", response.getJSONObject("result").getJSONObject("parameters"));
 		this.fulfillment = response.getJSONObject("result").getJSONObject("fulfillment").getString("speech");
 	}
 
